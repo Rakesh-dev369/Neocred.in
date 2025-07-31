@@ -1,4 +1,4 @@
-# 🛡️₹ NEOC₹ED - AI-Powered Financial Platform
+# 🛡️₹ Neocred - AI-Powered Financial Platform
 
 > **Master Your Financial Future** with 40+ calculators, AI assistant, and comprehensive learning resources.
 
@@ -57,8 +57,8 @@
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/neoced.git
-cd neoced
+git clone https://github.com/Rakesh-dev369/Neocred.in.git
+cd Neocred.in
 ```
 
 2. **Backend Setup**
@@ -86,7 +86,7 @@ docker-compose up --build
 ## 📁 Project Structure
 
 ```
-neoced/
+Neocred.in/
 ├── frontend/                 # React frontend
 │   ├── src/
 │   │   ├── components/      # Reusable components
@@ -189,9 +189,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 Email: support@neoced.com
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/neoced/issues)
-- 📖 Docs: [Documentation](https://docs.neoced.com)
+- 📧 Email: support@neocred.in
+- 🐛 Issues: [GitHub Issues](https://github.com/Rakesh-dev369/Neocred.in/issues)
+- 📖 Docs: [Documentation](https://docs.neocred.in)
 
 ---
 

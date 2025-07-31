@@ -13,7 +13,7 @@ We take security seriously. If you discover a security vulnerability, please fol
 
 ### 🔒 Private Disclosure
 - **DO NOT** create a public GitHub issue
-- Email: security@neoced.com
+- Email: security@neocred.in
 - Include detailed description and reproduction steps
 
 ### 📋 What to Include
@@ -51,4 +51,4 @@ We appreciate security researchers who:
 - Avoid data destruction or privacy violations
 - Follow coordinated disclosure principles
 
-Thank you for helping keep NEOC₹ED secure! 🙏
+Thank you for helping keep Neocred secure! 🙏
