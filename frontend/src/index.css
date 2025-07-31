@@ -27,7 +27,7 @@
   }
   
   .glass-card {
-    @apply bg-white dark:bg-white/5 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 p-6 hover:shadow-3xl dark:hover:bg-white/10 transition-all duration-500;
+    @apply bg-white dark:bg-white/5 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 p-6 hover:shadow-2xl dark:hover:bg-white/10 transition-all duration-500;
   }
   
   .input-field {
