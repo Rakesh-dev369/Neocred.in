@@ -1,4 +1,4 @@
-# 🚀 Savely.in - AI-Powered Financial Platform
+# 🛡️₹ NEOC₹ED - AI-Powered Financial Platform
 
 > **Master Your Financial Future** with 40+ calculators, AI assistant, and comprehensive learning resources.
 
@@ -57,8 +57,8 @@
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/savely.in.git
-cd savely.in
+git clone https://github.com/yourusername/neoced.git
+cd neoced
 ```
 
 2. **Backend Setup**
@@ -86,7 +86,7 @@ docker-compose up --build
 ## 📁 Project Structure
 
 ```
-savely.in/
+neoced/
 ├── frontend/                 # React frontend
 │   ├── src/
 │   │   ├── components/      # Reusable components
@@ -113,7 +113,7 @@ SECRET_KEY=your_secret_key_here
 ### Frontend Environment Variables
 ```env
 VITE_API_BASE_URL=http://localhost:8001
-VITE_APP_NAME=Savely.in
+VITE_APP_NAME=NEOC₹ED
 VITE_APP_VERSION=2.0.0
 ```
 
@@ -189,9 +189,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 Email: support@savely.in
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/savely.in/issues)
-- 📖 Docs: [Documentation](https://docs.savely.in)
+- 📧 Email: support@neoced.com
+- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/neoced/issues)
+- 📖 Docs: [Documentation](https://docs.neoced.com)
 
 ---
 
