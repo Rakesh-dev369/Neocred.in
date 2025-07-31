@@ -1,0 +1,61 @@
+{
+  "title": "📈 Investments & Capital Markets",
+  "description": "How people and institutions grow their money, build wealth, and fund businesses",
+  "icon": "📈",
+  "lessons": [
+    {
+      "id": 1,
+      "title": "📈 Why Investments Matter",
+      "duration": "10 min",
+      "topics": ["Beat inflation over time", "Build wealth, achieve goals", "Earn passive income", "Contribute to economic development"]
+    },
+    {
+      "id": 2,
+      "title": "💹 Types of Investments",
+      "duration": "25 min",
+      "topics": ["Equity: Direct stocks, dividends, blue chip vs penny", "Mutual Funds: Equity, Debt, Hybrid, Index, SIP", "ETFs: Exchange-traded funds", "Bonds: Government, Corporate, Tax-free", "Gold: SGB, Digital Gold, ETFs", "Real Estate: Property, REITs", "Alternative: Crypto, Startups, Art"]
+    },
+    {
+      "id": 3,
+      "title": "🏦 Capital Markets (Stock Market Backbone)",
+      "duration": "12 min",
+      "topics": ["Primary Market: IPOs", "Secondary Market: Daily trading", "SEBI: Market regulator", "Depositories: CDSL, NSDL", "Brokers: Zerodha, Angel One"]
+    },
+    {
+      "id": 4,
+      "title": "📜 Tax on Investments",
+      "duration": "14 min",
+      "topics": ["STCG: Short Term Capital Gains (15%)", "LTCG: Long Term Capital Gains (10% above ₹1L)", "Indexation benefit for debt", "Dividends: Taxed at slab rate"]
+    },
+    {
+      "id": 5,
+      "title": "🔮 Future of Investing",
+      "duration": "13 min",
+      "topics": ["Zero-commission investing apps", "Robo-advisors: AI portfolio management", "Smart Portfolios: Rule-based investing", "ESG Investing: Ethical companies", "Fractional Real Estate & Global Investing", "Tokenization: Buy pieces of assets"]
+    },
+    {
+      "id": 6,
+      "title": "💬 Popular Investment Strategies",
+      "duration": "16 min",
+      "topics": ["Value Investing: Warren Buffett style", "Growth Investing: Fast-growing companies", "Momentum Investing: Price trends", "Asset Allocation: Distribute across instruments", "Goal-Based Investing: Retirement, education"]
+    },
+    {
+      "id": 7,
+      "title": "🧮 Risk vs. Return",
+      "duration": "11 min",
+      "topics": ["Investment comparison table", "Risk assessment by asset class", "Return potential analysis", "Liquidity considerations"],
+      "table": {
+        "headers": ["Investment Type", "Risk", "Return Potential", "Liquidity"],
+        "rows": [
+          ["Stocks", "High", "High", "High"],
+          ["Mutual Funds", "Medium", "Medium to High", "Medium to High"],
+          ["Bonds", "Low", "Low to Medium", "Medium"],
+          ["Real Estate", "Medium", "Medium", "Low"],
+          ["Gold", "Medium", "Medium", "Medium"],
+          ["Crypto", "Very High", "Very High", "High"]
+        ]
+      }
+    }
+  ],
+  "summary": "✅ Investing is not gambling. It's about time in the market, not timing the market."
+}

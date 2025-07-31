@@ -1,0 +1,129 @@
+{
+  "title": "⚡ Alternative Finance & Emerging Technologies",
+  "description": "Disruptive, non-traditional ways of borrowing, investing, transacting, and managing money — often tech-driven and decentralized",
+  "icon": "⚡",
+  "lessons": [
+    {
+      "id": 1,
+      "title": "🔍 What Is Alternative Finance?",
+      "duration": "8 min",
+      "topics": ["Financial services outside traditional banking", "Technology-leveraged solutions", "Crowd-based finance", "Data-driven platforms"]
+    },
+    {
+      "id": 2,
+      "title": "📌 Key Segments: P2P Lending",
+      "duration": "12 min",
+      "topics": ["Direct lending between individuals", "Platforms: Faircent, LenDenClub", "RBI regulation (P2P NBFC License)", "Higher interest for lenders, easier access for borrowers"]
+    },
+    {
+      "id": 3,
+      "title": "💰 Crowdfunding",
+      "duration": "14 min",
+      "topics": ["Donation-based: Ketto, Milaap", "Reward-based: Kickstarter model", "Equity-based: SEBI regulated", "Debt-based: Business loans", "Popular among startups, artists, NGOs"]
+    },
+    {
+      "id": 4,
+      "title": "💳 Buy Now Pay Later (BNPL)",
+      "duration": "10 min",
+      "topics": ["E-commerce credit model", "ZestMoney, LazyPay platforms", "Instant checkout, EMI repayment", "Appeals to young consumers", "Convenience vs overspending risk"]
+    },
+    {
+      "id": 5,
+      "title": "🏦 Neobanks (Digital-only Banks)",
+      "duration": "13 min",
+      "topics": ["No physical branches, fully digital", "Jupiter, Fi, Niyo examples", "Partner with RBI-licensed banks", "Focus on UX, budgeting tools, faster KYC"]
+    },
+    {
+      "id": 6,
+      "title": "🔗 Decentralized Finance (DeFi)",
+      "duration": "16 min",
+      "topics": ["Blockchain-based lending/borrowing", "Smart contracts automation", "Uniswap, Aave, Compound examples", "No intermediaries", "High volatility, regulatory uncertainty"]
+    },
+    {
+      "id": 7,
+      "title": "🪙 Cryptocurrencies & Tokens",
+      "duration": "15 min",
+      "topics": ["Digital assets: Bitcoin, Ethereum, Solana", "Trading, investment, remittances", "CBDC: RBI's Digital Rupee (e₹)", "Global asset class, cautious Indian regulation"]
+    },
+    {
+      "id": 8,
+      "title": "🎨 Tokenization & NFTs",
+      "duration": "12 min",
+      "topics": ["Real-world asset tokenization", "NFTs: Digital collectibles, identity assets", "Gaming, IP, digital art applications", "Future in fractional investing"]
+    },
+    {
+      "id": 9,
+      "title": "🤖 Robo-Advisors & AI Finance",
+      "duration": "14 min",
+      "topics": ["Automated investment platforms", "Scripbox, INDmoney examples", "Age, income, risk-based portfolios", "Auto-rebalancing, tax harvesting", "Lower cost, unbiased, efficient"]
+    },
+    {
+      "id": 10,
+      "title": "📦 Embedded Finance",
+      "duration": "11 min",
+      "topics": ["Non-finance apps offering financial services", "Ola Money, Flipkart EMI, Swiggy Credit", "APIs and Banking-as-a-Service (BaaS)", "Invisible finance in daily apps"]
+    },
+    {
+      "id": 11,
+      "title": "🧠 AI & ML in Finance",
+      "duration": "13 min",
+      "topics": ["Fraud detection systems", "Loan underwriting automation", "Predictive investment tools", "Financial advice chatbots", "Real-time personalization"]
+    },
+    {
+      "id": 12,
+      "title": "🛡️ RegTech & InsurTech",
+      "duration": "12 min",
+      "topics": ["RegTech: Compliance automation (AML, KYC)", "InsurTech: Smart pricing, instant claims", "Micro-insurance solutions", "Efficiency improvement, fraud reduction"]
+    },
+    {
+      "id": 13,
+      "title": "🌱 Green & Impact Finance",
+      "duration": "15 min",
+      "topics": ["Climate + Social good + Profit focus", "Green Bonds, ESG Funds", "Carbon Credit Markets", "SEBI & World Bank programs", "Sustainability-driven finance"]
+    },
+    {
+      "id": 14,
+      "title": "📁 Account Aggregators (AA)",
+      "duration": "11 min",
+      "topics": ["RBI-regulated data-sharing framework", "Secure bank, investment, insurance data sharing", "Open Credit Enablement Network (OCEN)", "Consent-driven digital finance revolution"]
+    },
+    {
+      "id": 15,
+      "title": "🔮 Future of Alternative Finance",
+      "duration": "17 min",
+      "topics": ["Innovation impact overview", "Digital transformation trends", "Regulatory evolution"],
+      "table": {
+        "headers": ["Innovation", "Impact"],
+        "rows": [
+          ["**CBDC (Digital Rupee)**", "Faster, transparent digital currency under RBI"],
+          ["**AI+Finance**", "Hyper-personalized money management"],
+          ["**Open Banking**", "Bank APIs powering innovative services"],
+          ["**Tokenized Assets**", "Own/sell fractions of land, gold, or art"],
+          ["**DeFi 2.0**", "Safer, regulated decentralized finance"],
+          ["**Voice/Chat Finance**", "Conversational banking and investing via bots"]
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "title": "🧠 Summary Table",
+      "duration": "10 min",
+      "topics": ["Alternative finance overview", "Key platforms and examples", "Comprehensive category mapping"],
+      "table": {
+        "headers": ["Category", "Examples"],
+        "rows": [
+          ["P2P Lending", "Faircent, LenDenClub"],
+          ["Crowdfunding", "Ketto, Kickstarter"],
+          ["DeFi", "Uniswap, Aave"],
+          ["Robo Advisors", "Scripbox, INDmoney"],
+          ["Embedded Finance", "Ola, Flipkart, Swiggy"],
+          ["AI/ML Tools", "Credit scoring, fraud detection"],
+          ["CBDC", "RBI's Digital Rupee"],
+          ["Neobanks", "Jupiter, Fi, Niyo"],
+          ["Account Aggregators", "CAMS Finserv, Onemoney"]
+        ]
+      }
+    }
+  ],
+  "summary": "✅ Alternative Finance is where future-ready tools, digital freedom, and financial innovation meet. It's the backbone of 'Finance 2.0' — accessible, smart, inclusive."
+}

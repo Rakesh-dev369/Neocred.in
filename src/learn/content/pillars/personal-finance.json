@@ -1,0 +1,85 @@
+{
+  "title": "🧾 Personal Finance (Direct Impact on Individuals)",
+  "description": "Personal finance refers to how individuals manage their money—earning, saving, investing, spending, borrowing, protecting, and planning for their future.",
+  "icon": "💰",
+  "lessons": [
+    {
+      "id": 1,
+      "title": "💼 Income Management",
+      "duration": "12 min",
+      "topics": ["Active Income: Salary, Freelance, Business profits", "Passive Income: Rent, Dividends, Interest, Royalties", "Side Hustles: Freelancing, Gig work, Online tutoring", "Income Planning: Diversifying sources"],
+      "video": {
+        "url": "/videos/Personal Finance.mp4",
+        "thumbnail": "/images/income-management-thumb.jpg",
+        "description": "Learn the fundamentals of income management and diversification strategies"
+      }
+    },
+    {
+      "id": 2,
+      "title": "💳 Banking & Digital Payments",
+      "duration": "15 min",
+      "topics": ["Bank Accounts: Savings, Current, Salary, NRI", "Banking Tools: Debit cards, Internet banking", "UPI: PhonePe, GPay, Paytm", "Neo-banks: Jupiter, Fi, Zolve", "Security: OTP frauds, phishing, KYC scams"]
+    },
+    {
+      "id": 3,
+      "title": "💰 Saving Strategies",
+      "duration": "10 min",
+      "topics": ["Short-term: RD, FD", "Government Schemes: PPF, NSC, Sukanya Samriddhi", "Post Office Schemes", "Savings Goals: Emergency fund, travel, education"]
+    },
+    {
+      "id": 4,
+      "title": "📈 Investments",
+      "duration": "18 min",
+      "topics": ["Stock Market: NSE/BSE", "Mutual Funds: SIPs, ELSS, Index Funds", "Bonds: Corporate, Government, G-Secs", "Gold: Digital Gold, SGB, Gold ETFs", "Real Estate: REITs", "Alternative: Cryptocurrency, P2P Lending"]
+    },
+    {
+      "id": 5,
+      "title": "📊 Budgeting & Expense Management",
+      "duration": "12 min",
+      "topics": ["Frameworks: 50/30/20 rule, Zero-based budgeting", "Expense Tracking Apps: Walnut, Monefy", "Behavioral Finance: Needs vs Wants", "No-spend challenges, Subscription audits"]
+    },
+    {
+      "id": 6,
+      "title": "🏦 Loans & Credit",
+      "duration": "14 min",
+      "topics": ["Loan Types: Personal, Education, Home, Vehicle", "Credit Score: CIBIL, Experian, Equifax", "BNPL: ZestMoney, LazyPay", "EMI Planning: Calculators, prepayment", "Credit Cards: Features, rewards, debt traps"]
+    },
+    {
+      "id": 7,
+      "title": "🛡️ Insurance & Risk Management",
+      "duration": "16 min",
+      "topics": ["Life Insurance: Term Plan, ULIP, Endowment", "Health Insurance: Individual, Family Floater", "General Insurance: Motor, Home, Travel", "Government Schemes: PMJJBY, Ayushman Bharat", "Insurance Portals: Policybazaar, Coverfox"]
+    },
+    {
+      "id": 8,
+      "title": "👴 Retirement Planning",
+      "duration": "13 min",
+      "topics": ["Schemes: EPF, VPF, NPS, Atal Pension Yojana", "Private Plans: Retirement mutual funds", "Inflation Adjustment: Corpus calculation", "Retirement Calculators"]
+    },
+    {
+      "id": 9,
+      "title": "📄 Tax Planning & Filing",
+      "duration": "15 min",
+      "topics": ["Income Tax: Old vs New Regime", "Filing: PAN, Aadhaar, Form 16, TDS", "Tax Saving: 80C, 80D, 80E, HRA", "ITR Filing: Cleartax, IncomeTax portal"]
+    },
+    {
+      "id": 10,
+      "title": "🧠 Financial Literacy & Smart Habits",
+      "duration": "11 min",
+      "topics": ["Emergency Fund: 3-6 months expenses", "Smart Habits: Save before spend", "Debt Traps: EMI overspending", "Psychology of Money: Mindset, behavior", "Books: Rich Dad Poor Dad, Psychology of Money"]
+    },
+    {
+      "id": 11,
+      "title": "📚 Learning Resources & Tools",
+      "duration": "8 min",
+      "topics": ["Government: SEBI, RBI, NSE Academy", "Apps: Zerodha Varsity, Groww Academy", "Courses: NISM, AMFI Mutual Fund courses", "Simulators: TradingView, Moneybhai"]
+    },
+    {
+      "id": 12,
+      "title": "🚀 Future-Proofing Personal Finance",
+      "duration": "10 min",
+      "topics": ["Digital Identity & eKYC", "AI-Powered Financial Advisors", "Blockchain & DeFi", "Tokenized Real Estate & Gold", "Climate-Resilient Finance", "Behavioral Nudges via Apps"]
+    }
+  ],
+  "summary": "🔚 Personal Finance is the foundation of financial well-being. Whether it's saving for a dream, protecting your family with insurance, investing for long-term wealth, or staying debt-free—it all starts here."
+}

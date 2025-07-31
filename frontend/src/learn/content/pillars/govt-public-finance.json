@@ -1,0 +1,107 @@
+{
+  "title": "🏛️ Government & Public Finance",
+  "description": "How the government earns, spends, borrows, and manages the nation's money to run the country and serve the people",
+  "icon": "🏛️",
+  "lessons": [
+    {
+      "id": 1,
+      "title": "🏛️ What Is Public Finance?",
+      "duration": "8 min",
+      "topics": ["Government income & expenditure", "Economic impact", "Infrastructure & services", "Population welfare"]
+    },
+    {
+      "id": 2,
+      "title": "📌 Key Segments: Sources of Government Revenue",
+      "duration": "15 min",
+      "topics": ["Direct Taxes: Income, Corporate, Wealth", "Indirect Taxes: GST, Customs, Excise", "Non-Tax Revenue: PSU dividends, interest", "Grants & Aid: IMF, World Bank, bilateral"]
+    },
+    {
+      "id": 3,
+      "title": "💰 Government Expenditure",
+      "duration": "14 min",
+      "topics": ["Revenue Expenditure: Salaries, subsidies, pensions", "Capital Expenditure: Infrastructure, defense", "Subsidies: Fertilizer, Food, LPG", "Welfare Schemes: PM-KISAN, Ayushman Bharat, MNREGA"]
+    },
+    {
+      "id": 4,
+      "title": "📈 Budgets & Fiscal Policy",
+      "duration": "16 min",
+      "topics": ["Union Budget: Annual presentation", "Balanced vs Deficit vs Surplus Budget", "Fiscal Deficit = Total expenditure - Total revenue", "Primary Deficit, FRBM Act", "Fiscal discipline for stability"]
+    },
+    {
+      "id": 5,
+      "title": "💳 Public Debt & Borrowing",
+      "duration": "13 min",
+      "topics": ["Internal Borrowing: Bonds, Treasury Bills, RBI", "External Borrowing: IMF, World Bank", "Debt Sustainability: Debt-to-GDP ratio", "Interest burden management"]
+    },
+    {
+      "id": 6,
+      "title": "🏛️ Central vs. State Finance",
+      "duration": "12 min",
+      "topics": ["Finance Commission: Revenue-sharing every 5 years", "GST Council: Indirect tax coordination", "State Budgets: Annual state planning", "Grants-in-aid to weaker states", "Cooperative federalism"]
+    },
+    {
+      "id": 7,
+      "title": "🏢 Public Sector Enterprises (PSEs)",
+      "duration": "11 min",
+      "topics": ["Government-owned enterprises", "Examples: LIC, SBI, ONGC, Railways", "Dividend earnings from profitable PSEs", "Disinvestment: Air India, BPCL sales"]
+    },
+    {
+      "id": 8,
+      "title": "🏥 Welfare & Social Spending",
+      "duration": "17 min",
+      "topics": ["Healthcare: Ayushman Bharat, vaccination", "Education: Mid-day meals, NEP reforms", "Employment: MNREGA, Skill India", "Food & Housing: PDS, PMAY", "Inclusive growth funding"]
+    },
+    {
+      "id": 9,
+      "title": "🎁 Government Schemes & Transfers",
+      "duration": "18 min",
+      "topics": ["DBT: Direct Benefit Transfer for LPG, PM-KISAN", "Social Pensions: Widow, senior citizen, disabled", "Women/Youth: Beti Bachao, Start-up India", "Development: Smart Cities, PMGSY, Jal Jeevan"]
+    },
+    {
+      "id": 10,
+      "title": "🔍 Transparency & Accountability",
+      "duration": "14 min",
+      "topics": ["CAG: Comptroller & Auditor General audits", "RTI: Right to Information for citizens", "E-Governance: Online budget portals", "PPP: Public-Private Partnerships", "Democratic trust building"]
+    },
+    {
+      "id": 11,
+      "title": "🔮 Future of Public Finance",
+      "duration": "16 min",
+      "topics": ["AI in Budgeting: Predictive tools, fraud detection", "Blockchain Disbursement: Transparent subsidies", "Green Bonds: Climate project funding", "JAM Trinity: Jan Dhan, Aadhaar, Mobile", "Outcome Budgeting: Results tracking"]
+    },
+    {
+      "id": 12,
+      "title": "📌 Key Institutions",
+      "duration": "12 min",
+      "topics": ["Institutional roles in public finance", "Policy coordination", "Governance structure"],
+      "table": {
+        "headers": ["Body", "Role"],
+        "rows": [
+          ["**RBI**", "Manages monetary policy, deficit financing"],
+          ["**Ministry of Finance**", "Budget, taxation, economic strategy"],
+          ["**NITI Aayog**", "Policy planning, replacing Planning Commission"],
+          ["**CAG**", "Audit & accountability"],
+          ["**Finance Commission**", "Centre-state fiscal balance"],
+          ["**GST Council**", "Indirect tax governance"]
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "title": "🧠 Summary Table",
+      "duration": "10 min",
+      "topics": ["Public finance overview", "Key areas summary", "Comprehensive understanding"],
+      "table": {
+        "headers": ["Area", "Examples"],
+        "rows": [
+          ["Revenue", "Taxes, Dividends, Fees"],
+          ["Expenditure", "Infrastructure, subsidies, salaries"],
+          ["Deficit", "Fiscal, Revenue, Primary"],
+          ["Transparency", "CAG, RTI, E-governance"],
+          ["Welfare", "Healthcare, Education, DBT, Pensions"]
+        ]
+      }
+    }
+  ],
+  "summary": "✅ Strong public finance builds roads, schools, health, defense, and future opportunities — it's the financial backbone of national progress."
+}

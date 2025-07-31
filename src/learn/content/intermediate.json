@@ -1,0 +1,30 @@
+{
+  "title": "Intermediate Financial Planning",
+  "description": "Build on your basics with investment and planning strategies",
+  "lessons": [
+    {
+      "id": 1,
+      "title": "Investment Fundamentals",
+      "duration": "12 min",
+      "topics": ["Risk vs Return", "Asset Classes", "Diversification"]
+    },
+    {
+      "id": 2,
+      "title": "Mutual Funds Explained",
+      "duration": "15 min",
+      "topics": ["SIP", "NAV", "Fund Types"]
+    },
+    {
+      "id": 3,
+      "title": "Tax Planning Strategies",
+      "duration": "10 min",
+      "topics": ["Section 80C", "ELSS", "Tax Deductions"]
+    },
+    {
+      "id": 4,
+      "title": "Insurance Planning",
+      "duration": "13 min",
+      "topics": ["Term Insurance", "Health Insurance", "Coverage Amount"]
+    }
+  ]
+}
