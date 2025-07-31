@@ -24,7 +24,7 @@ const ContactPage = () => {
   }, []);
 
   const contactReasons = [
-    { value: 'general', label: '💬 General Inquiry', description: 'Questions about Savely platform' },
+    { value: 'general', label: '💬 General Inquiry', description: 'Questions about NEOC₹ED platform' },
     { value: 'support', label: '🛠️ Technical Support', description: 'Issues with tools or features' },
     { value: 'feedback', label: '💡 Feedback & Suggestions', description: 'Ideas to improve our platform' },
     { value: 'partnership', label: '🤝 Partnership', description: 'Business collaboration opportunities' },
@@ -42,7 +42,7 @@ const ContactPage = () => {
       answer: 'Yes, our calculators use standard financial formulas. However, consult a financial advisor for major decisions.'
     },
     {
-      question: 'Is Savely completely free?',
+      question: 'Is NEOC₹ED completely free?',
       answer: 'Yes! All our tools, lessons, and features are completely free for everyone.'
     },
     {
@@ -50,7 +50,7 @@ const ContactPage = () => {
       answer: 'We regularly update our content to reflect current financial policies and market conditions.'
     },
     {
-      question: 'Is my data secure on Savely?',
+      question: 'Is my data secure on NEOC₹ED?',
       answer: 'Yes, we use bank-level security and do not store sensitive financial information. Your privacy is our priority.'
     }
   ];
@@ -128,12 +128,12 @@ const ContactPage = () => {
           {/* Quick Contact Options */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <a 
-              href="mailto:hello@savely.in"
+              href="mailto:hello@neocred.in"
               className="glass-card hover:scale-105 transition-all duration-300 group"
             >
               <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">📧</div>
               <h3 className="text-lg font-semibold mb-2 text-blue-400">Email Us</h3>
-              <p className="text-gray-300 text-sm">hello@savely.in</p>
+              <p className="text-gray-300 text-sm">hello@neocred.in</p>
             </a>
             
             <div className="glass-card hover:scale-105 transition-all duration-300">
