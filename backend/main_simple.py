@@ -6,6 +6,7 @@ import os
 import time
 from dotenv import load_dotenv
 from typing import List, Optional
+from news_routes import router as news_router
 
 load_dotenv()
 
@@ -18,11 +19,14 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001", "http://127.0.0.1:3001"],
+    allow_origins=["http://localhost:3001", "http://127.0.0.1:3001", "http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include news routes
+app.include_router(news_router)
 
 # OpenAI client
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
