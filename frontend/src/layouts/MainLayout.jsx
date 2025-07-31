@@ -27,7 +27,7 @@ export default function MainLayout({ children, title, description }) {
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
         {!isChatbot && <Navbar />}
         <main className="flex-grow">{children}</main>
         {!isChatbot && <Footer />}

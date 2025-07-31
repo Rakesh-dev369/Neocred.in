@@ -135,7 +135,7 @@ export default function Home() {
 
 
       {/* Popular Tools Section */}
-      <section className="py-16 bg-gray-950 text-white">
+      <section className="py-16 bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -257,7 +257,7 @@ export default function Home() {
       )}
       
       {/* Features Section */}
-      <section className="py-20 bg-black text-white">
+      <section className="py-20 bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -279,7 +279,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gray-950 text-white">
+      <section className="py-20 bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -324,7 +324,7 @@ export default function Home() {
       </section>
       
       {/* Testimonials Section */}
-      <section className="py-20 bg-black text-white">
+      <section className="py-20 bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">

@@ -19,7 +19,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="glass-nav shadow-lg bg-white/10 dark:bg-gray-900/90 backdrop-blur-md">
+    <nav className="glass-nav shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -35,8 +35,8 @@ export default function Navbar() {
                 to={item.href}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
                   location.pathname === item.href
-                    ? 'text-white dark:text-white border-b-2 border-white'
-                    : 'text-white/70 dark:text-gray-300 hover:text-white dark:hover:text-white'
+                    ? 'text-gray-900 dark:text-white border-b-2 border-gray-900 dark:border-white'
+                    : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
                 {item.name}
@@ -52,7 +52,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white/70 hover:text-white"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
             >
               {isOpen ? (
                 <XMarkIcon className="h-6 w-6" />
@@ -71,7 +71,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 to={item.href}
-                className="block px-3 py-2 text-base font-medium text-white/70 hover:text-white"
+                className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
@@ -79,7 +79,7 @@ export default function Navbar() {
             ))}
             <Link
               to={ROUTES.CONTACT}
-              className="block px-3 py-2 text-base font-medium text-white"
+              className="block px-3 py-2 text-base font-medium text-gray-900 dark:text-white"
               onClick={() => setIsOpen(false)}
             >
               Contact
