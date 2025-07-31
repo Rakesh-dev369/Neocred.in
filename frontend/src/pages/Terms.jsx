@@ -34,7 +34,7 @@ export default function Terms() {
             Terms of <span className="text-blue-400">Service</span>
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Clear, fair terms that govern your use of Savely. We believe in transparency and simplicity.
+            Clear, fair terms that govern your use of NEOC₹ED. We believe in transparency and simplicity.
           </p>
           
           {/* Quick Summary Cards */}
@@ -116,7 +116,7 @@ export default function Terms() {
               {/* Introduction */}
               <div className="glass-card">
                 <p className="text-lg mb-6 leading-relaxed">
-                  Welcome to Savely.in ("we", "our", "us"). These Terms of Service ("Terms") govern your use of our website, 
+                  Welcome to NEOC₹ED ("we", "our", "us"). These Terms of Service ("Terms") govern your use of our website, 
                   content, tools, services, and features provided through our platform (collectively, the "Service").
                 </p>
                 <p className="text-gray-300 leading-relaxed">
@@ -133,7 +133,7 @@ export default function Terms() {
                 </div>
                 <div className="space-y-4 text-gray-300 leading-relaxed">
                   <p>
-                    Savely.in is an educational platform built to promote financial awareness, literacy, and independence. 
+                    NEOC₹ED is an educational platform built to promote financial awareness, literacy, and independence. 
                     While we offer tools, calculators, and content, we are not registered financial advisors or certified professionals.
                   </p>
                   <div className="bg-yellow-600/20 border border-yellow-500/30 rounded-lg p-4">
@@ -206,7 +206,7 @@ export default function Terms() {
                   <h2 className="text-3xl font-bold text-blue-400">4. Account Management</h2>
                 </div>
                 <div className="space-y-4 text-gray-300">
-                  <p>While Savely doesn't require account creation for basic use, you may provide information for enhanced features:</p>
+                  <p>While NEOC₹ED doesn't require account creation for basic use, you may provide information for enhanced features:</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4">
                       <div className="flex items-start justify-center gap-3">
@@ -240,8 +240,8 @@ export default function Terms() {
                   <div className="bg-yellow-600/20 border border-yellow-500/30 rounded-lg p-4">
                     <p className="text-yellow-100 text-sm">
                       📧 <strong>Account Deletion:</strong> Email us at 
-                      <a href="mailto:hello@savely.in" className="text-yellow-300 hover:text-yellow-200 underline">
-                        hello@savely.in
+                      <a href="mailto:hello@neocred.in" className="text-yellow-300 hover:text-yellow-200 underline">
+                        hello@neocred.in
                       </a> to request complete data removal.
                     </p>
                   </div>
@@ -296,7 +296,7 @@ export default function Terms() {
                     <div>
                       <h4 className="font-semibold text-red-300 mb-2">Important Disclaimer</h4>
                       <p className="text-red-100 leading-relaxed">
-                        Savely.in and its team shall not be liable for any losses, decisions, or damages (financial or otherwise) 
+                        NEOC₹ED and its team shall not be liable for any losses, decisions, or damages (financial or otherwise) 
                         resulting from the use of our content or tools. Always consult a licensed financial expert before making financial decisions.
                       </p>
                     </div>
@@ -318,7 +318,7 @@ export default function Terms() {
                       <div className="text-center">
                         <h4 className="font-semibold text-green-300 mb-2">Resolution Process</h4>
                         <ul className="text-green-100 text-sm space-y-1 text-left inline-block">
-                          <li>• Contact us directly first (hello@savely.in)</li>
+                          <li>• Contact us directly first (hello@neocred.in)</li>
                           <li>• 30-day good faith negotiation period</li>
                           <li>• Mediation through neutral third party</li>
                           <li>• Arbitration if mediation fails</li>
