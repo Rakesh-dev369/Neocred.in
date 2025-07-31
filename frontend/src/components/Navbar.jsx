@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../utils/constants';
+import Logo from './Logo';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to={ROUTES.HOME} className="flex-shrink-0">
-              <span className="text-2xl font-bold text-white">Savely</span>
+              <Logo size="md" />
             </Link>
           </div>
 

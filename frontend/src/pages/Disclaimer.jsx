@@ -116,7 +116,7 @@ export default function Disclaimer() {
               {/* Introduction */}
               <div className="glass-card">
                 <p className="text-lg mb-6 leading-relaxed">
-                  Savely.in is an educational platform designed to spread financial literacy and awareness. 
+                  NEOC₹ED is an educational platform designed to spread financial literacy and awareness. 
                   The content provided on our website, including articles, tools, calculators, tips, and AI responses, 
                   is for informational and educational purposes only.
                 </p>
@@ -135,7 +135,7 @@ export default function Disclaimer() {
                 </div>
                 <div className="space-y-4 text-gray-300 leading-relaxed">
                   <p>
-                    All content on Savely, including but not limited to:
+                    All content on NEOC₹ED, including but not limited to:
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="bg-white/5 p-4 rounded-lg">
@@ -319,8 +319,8 @@ export default function Disclaimer() {
                   <div className="bg-yellow-600/20 border border-yellow-500/30 rounded-lg p-4">
                     <p className="text-yellow-100 text-sm">
                       📧 <strong>Report Errors:</strong> Found outdated information? Email us at 
-                      <a href="mailto:content@savely.in" className="text-yellow-300 hover:text-yellow-200 underline">
-                        content@savely.in
+                      <a href="mailto:content@neocred.in" className="text-yellow-300 hover:text-yellow-200 underline">
+                        content@neocred.in
                       </a> for immediate review.
                     </p>
                   </div>
@@ -406,7 +406,7 @@ export default function Disclaimer() {
                     <div>
                       <h4 className="font-semibold text-red-300 mb-2">Limitation of Liability</h4>
                       <p className="text-red-100 leading-relaxed mb-4">
-                        Savely.in, its creators, and contributors shall not be held liable for any financial losses, 
+                        NEOC₹ED, its creators, and contributors shall not be held liable for any financial losses, 
                         investment decisions, or consequences arising from the use of our platform, tools, or content.
                       </p>
                       <p className="text-red-100 leading-relaxed">
@@ -424,7 +424,7 @@ export default function Disclaimer() {
                   <h3 className="text-2xl font-bold text-yellow-400">Remember</h3>
                 </div>
                 <p className="text-yellow-100 text-lg leading-relaxed mb-4">
-                  "Use Savely responsibly. The path is guided, but the choice is yours."
+                  "Use NEOC₹ED responsibly. The path is guided, but the choice is yours."
                 </p>
                 <p className="text-yellow-200 text-sm">
                   Always consult with certified professionals before making financial decisions.

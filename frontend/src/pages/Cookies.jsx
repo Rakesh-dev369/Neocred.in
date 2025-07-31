@@ -125,7 +125,7 @@ export default function Cookies() {
             <span className="text-orange-400">Cookies</span> Policy
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Learn how we use cookies to improve your experience and protect your privacy on Savely.
+            Learn how we use cookies to improve your experience and protect your privacy on NEOC₹ED.
           </p>
           
           {/* Key Points Cards */}
@@ -226,7 +226,7 @@ export default function Cookies() {
               {/* Introduction */}
               <div className="glass-card">
                 <p className="text-lg mb-6 leading-relaxed">
-                  Savely uses cookies to improve your experience and deliver personalized content. 
+                  NEOC₹ED uses cookies to improve your experience and deliver personalized content. 
                   This policy explains what cookies are, how we use them, and how you can control them.
                 </p>
                 <div className="bg-orange-600/20 border border-orange-500/30 rounded-lg p-4">
@@ -276,7 +276,7 @@ export default function Cookies() {
                   <span className="text-3xl">🔧</span>
                   <h2 className="text-3xl font-bold text-orange-400">2. How We Use Cookies</h2>
                 </div>
-                <p className="text-gray-300 mb-6">Savely uses cookies to enhance your experience in several ways:</p>
+                <p className="text-gray-300 mb-6">NEOC₹ED uses cookies to enhance your experience in several ways:</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
                     <h4 className="font-semibold text-blue-300 mb-3">🎯 Personalization</h4>

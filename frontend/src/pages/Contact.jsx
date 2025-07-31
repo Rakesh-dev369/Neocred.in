@@ -215,7 +215,7 @@ const ContactPage = () => {
                   ...formData,
                   category: 'feedback',
                   subject: 'General Feedback',
-                  message: 'I wanted to share some feedback about Savely:\n\nWhat I like:\n\nWhat could be improved:\n\nOverall experience:'
+                  message: 'I wanted to share some feedback about NEOC₹ED:\n\nWhat I like:\n\nWhat could be improved:\n\nOverall experience:'
                 });
                 document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' });
               }}

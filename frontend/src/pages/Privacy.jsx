@@ -340,8 +340,8 @@ export default function Privacy() {
                 <div className="mt-6 bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
                   <p className="text-blue-100 text-sm">
                     📧 To exercise any of these rights, email us at: 
-                    <a href="mailto:privacy@savely.in" className="text-blue-300 hover:text-blue-200 underline">
-                      privacy@savely.in
+                    <a href="mailto:privacy@neocred.in" className="text-blue-300 hover:text-blue-200 underline">
+                      privacy@neocred.in
                     </a>
                   </p>
                 </div>
@@ -447,8 +447,8 @@ export default function Privacy() {
                       <span className="text-2xl">📧</span>
                       <span className="font-medium">Privacy Team</span>
                     </div>
-                    <a href="mailto:privacy@savely.in" className="text-blue-400 hover:text-blue-300 transition-colors">
-                      privacy@savely.in
+                    <a href="mailto:privacy@neocred.in" className="text-blue-400 hover:text-blue-300 transition-colors">
+                      privacy@neocred.in
                     </a>
                   </div>
                   <div className="bg-white/5 p-4 rounded-lg">

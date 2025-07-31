@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Logo = ({ size = 'md', showText = true, className = '' }) => {
-  const sizeClasses = {
-    sm: 'w-6 h-6 text-sm',
-    md: 'w-8 h-8 text-lg',
-    lg: 'w-12 h-12 text-2xl',
-    xl: 'w-16 h-16 text-3xl'
+  const sizeMap = {
+    sm: { width: 24, height: 28, fontSize: 12 },
+    md: { width: 32, height: 36, fontSize: 16 },
+    lg: { width: 48, height: 54, fontSize: 24 },
+    xl: { width: 64, height: 72, fontSize: 32 }
   };
 
   const textSizeClasses = {
@@ -15,14 +15,36 @@ const Logo = ({ size = 'md', showText = true, className = '' }) => {
     xl: 'text-4xl'
   };
 
+  const { width, height, fontSize } = sizeMap[size];
+
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      {/* Shield with ₹ symbol */}
-      <div className={`${sizeClasses[size]} bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg`}>
-        <span className={`text-white font-bold ${size === 'sm' ? 'text-xs' : size === 'md' ? 'text-sm' : size === 'lg' ? 'text-lg' : 'text-xl'}`}>
+      {/* Shield SVG with ₹ symbol */}
+      <svg width={width} height={height} viewBox="0 0 32 36" className="drop-shadow-lg">
+        <defs>
+          <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#2563eb" />
+            <stop offset="100%" stopColor="#9333ea" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M16 2 L28 8 L28 20 C28 26 22 32 16 34 C10 32 4 26 4 20 L4 8 Z"
+          fill="url(#shieldGradient)"
+          stroke="rgba(255,255,255,0.2)"
+          strokeWidth="0.5"
+        />
+        <text
+          x="16"
+          y="22"
+          textAnchor="middle"
+          fill="white"
+          fontSize={fontSize}
+          fontWeight="bold"
+          fontFamily="system-ui"
+        >
           ₹
-        </span>
-      </div>
+        </text>
+      </svg>
       
       {/* Brand name */}
       {showText && (

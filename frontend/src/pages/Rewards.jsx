@@ -147,7 +147,7 @@ export default function Rewards() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            🎯 Savely Rewards Program
+            🎯 NEOC₹ED Rewards Program
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
             Turn your financial learning journey into exciting rewards. Every action counts!

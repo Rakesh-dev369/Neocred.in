@@ -331,7 +331,7 @@ export default function Home() {
               What Our Users Say
             </h2>
             <p className="text-xl text-gray-400">
-              Real stories from people who transformed their financial lives with Savely.
+              Real stories from people who transformed their financial lives with NEOC₹ED.
             </p>
           </div>
 

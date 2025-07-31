@@ -94,7 +94,7 @@ export default function Terms() {
                 <h4 className="text-sm font-semibold text-white mb-3">Quick Actions</h4>
                 <div className="space-y-2">
                   <a 
-                    href="mailto:hello@savely.in"
+                    href="mailto:hello@neocred.in"
                     className="block p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors text-sm"
                   >
                     📧 Contact Support
@@ -392,10 +392,10 @@ export default function Terms() {
                   If you have any questions or concerns about these Terms, email us at:
                 </p>
                 <a 
-                  href="mailto:hello@savely.in" 
+                  href="mailto:hello@neocred.in" 
                   className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
                 >
-                  📧 hello@savely.in
+                  📧 hello@neocred.in
                 </a>
               </div>
             </div>

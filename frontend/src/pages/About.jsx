@@ -19,7 +19,7 @@ export default function About() {
       <section className="py-20 bg-gradient-to-b from-blue-900/20 to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            About <span className="text-blue-400">Savely</span>
+            About <span className="text-blue-400">NEOC₹ED</span>
           </h1>
           <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
             Empowering millions of Indians with financial literacy, one person at a time.
@@ -52,7 +52,7 @@ export default function About() {
             </h2>
             <div className="glass-card max-w-4xl mx-auto">
               <p className="text-lg mb-6 leading-relaxed">
-                At Savely, we believe that financial literacy is the first step toward financial freedom. 
+                At NEOC₹ED, we believe that financial literacy is the first step toward financial freedom. 
                 Yet, in a country as diverse and dynamic as India, millions still lack access to clear, 
                 actionable, and trustworthy financial guidance.
               </p>
@@ -90,7 +90,7 @@ export default function About() {
             <div className="glass-card mt-8 text-center">
               <p className="text-lg text-gray-300">
                 Whether you're a student, salaried employee, small business owner, homemaker, or retired citizen — 
-                <span className="text-blue-400 font-semibold"> Savely is your friendly companion</span> on the journey to smarter financial decisions.
+                <span className="text-blue-400 font-semibold"> NEOC₹ED is your friendly companion</span> on the journey to smarter financial decisions.
               </p>
             </div>
           </section>
@@ -100,7 +100,7 @@ export default function About() {
             <h2 className="text-4xl font-bold text-center mb-12">
               🚀 What We <span className="text-purple-400">Offer</span>
             </h2>
-            <p className="text-center text-xl text-gray-300 mb-12">Savely is a growing platform focused on:</p>
+            <p className="text-center text-xl text-gray-300 mb-12">NEOC₹ED is a growing platform focused on:</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="glass-card hover:bg-white/10 transition-all duration-300 group">
@@ -220,8 +220,8 @@ export default function About() {
                   <div className="text-2xl">📧</div>
                   <div className="text-left">
                     <p className="text-white font-medium">Email Us</p>
-                    <a href="mailto:hello@savely.in" className="text-blue-400 hover:text-blue-300 transition-colors">
-                      hello@savely.in
+                    <a href="mailto:hello@neocred.in" className="text-blue-400 hover:text-blue-300 transition-colors">
+                      hello@neocred.in
                     </a>
                   </div>
                 </div>
@@ -243,7 +243,7 @@ export default function About() {
                   📝 Send Message
                 </Link>
                 <a
-                  href="mailto:hello@savely.in"
+                  href="mailto:hello@neocred.in"
                   className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white font-medium py-3 px-8 rounded-lg transition-all duration-300 inline-flex items-center justify-center gap-2"
                 >
                   📧 Direct Email
@@ -260,7 +260,7 @@ export default function About() {
               perfectly as adults. That gap stuck with me.
             </p>
             <p className="mb-4 italic">
-              With Savely, I'm building the platform I wish I had — a place where every Indian, regardless of background, 
+              With NEOC₹ED, I'm building the platform I wish I had — a place where every Indian, regardless of background, 
               can learn, use tools, and become financially confident without jargon or fear.
             </p>
             <p className="mb-4 italic">
@@ -271,7 +271,7 @@ export default function About() {
               This is just the beginning. Come, grow with us."
             </p>
             <p className="text-right font-semibold">
-              — Kalyanam Rakesh., Founder, Savely.in
+              — Kalyanam Rakesh., Founder, NEOC₹ED
             </p>
           </div>
           
@@ -290,7 +290,7 @@ export default function About() {
                   </div>
                 </div>
                 <p className="text-gray-300 text-sm italic mb-3">
-                  "Savely helped me understand SIP investments. I started with ₹2000/month and now I'm confident about my financial future!"
+                  "NEOC₹ED helped me understand SIP investments. I started with ₹2000/month and now I'm confident about my financial future!"
                 </p>
                 <div className="text-yellow-400 text-sm">⭐⭐⭐⭐⭐</div>
               </div>
@@ -485,7 +485,7 @@ export default function About() {
                 🚀 Ready to Start Your <span className="text-green-400">Financial Journey</span>?
               </h3>
               <p className="text-xl text-gray-300 mb-8">
-                Join thousands of Indians who are already building their financial future with Savely.
+                Join thousands of Indians who are already building their financial future with NEOC₹ED.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
