@@ -11,7 +11,7 @@ import StartCTA from "../learn/components/StartCTA";
 
 const LearnPage = () => {
   return (
-    <div className="bg-black text-white px-4 md:px-12 py-8 space-y-20">
+    <div className="bg-white dark:bg-black text-gray-900 dark:text-white px-4 md:px-12 py-8 space-y-20 transition-colors duration-300">
       {/* Hero Banner */}
       <HeroSection
         title="Master Financial Literacy"
