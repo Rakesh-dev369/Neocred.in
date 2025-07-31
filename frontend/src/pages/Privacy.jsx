@@ -93,7 +93,7 @@ export default function Privacy() {
                 <h4 className="text-sm font-semibold text-white mb-3">Quick Actions</h4>
                 <div className="space-y-2">
                   <a 
-                    href="mailto:privacy@savely.in"
+                    href="mailto:privacy@neocred.in"
                     className="block p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors text-sm"
                   >
                     📧 Email Privacy Team
@@ -115,7 +115,7 @@ export default function Privacy() {
               {/* Introduction */}
               <div className="glass-card">
                 <p className="text-lg mb-6 leading-relaxed">
-                  Welcome to Savely — where we help you learn and manage your finances, one step at a time.
+                  Welcome to NEOC₹ED — where we help you learn and manage your finances, one step at a time.
                 </p>
                 <p className="text-gray-300 leading-relaxed">
                   We believe that your privacy is your right, and protecting your data is a core part of our mission. 
@@ -131,7 +131,7 @@ export default function Privacy() {
                 </div>
                 <div className="space-y-4 text-gray-300 leading-relaxed">
                   <p>
-                    Savely is a financial education and awareness platform designed for India. We are a non-certified, 
+                    NEOC₹ED is a financial education and awareness platform designed for India. We are a non-certified, 
                     independent team of creators who aim to simplify personal finance for everyone — from beginners to experts.
                   </p>
                   <p>
@@ -400,8 +400,8 @@ export default function Privacy() {
                     <p className="text-yellow-100 text-sm">
                       📞 <strong>Emergency Contact:</strong> If you suspect a security issue, 
                       immediately email us at 
-                      <a href="mailto:security@savely.in" className="text-yellow-300 hover:text-yellow-200 underline">
-                        security@savely.in
+                      <a href="mailto:security@neocred.in" className="text-yellow-300 hover:text-yellow-200 underline">
+                        security@neocred.in
                       </a>
                     </p>
                   </div>
@@ -456,8 +456,8 @@ export default function Privacy() {
                       <span className="text-2xl">🌐</span>
                       <span className="font-medium">Policy Page</span>
                     </div>
-                    <a href="https://savely.in/privacy" className="text-blue-400 hover:text-blue-300 transition-colors">
-                      savely.in/privacy
+                    <a href="https://neocred.in/privacy" className="text-blue-400 hover:text-blue-300 transition-colors">
+                      neocred.in/privacy
                     </a>
                   </div>
                 </div>
