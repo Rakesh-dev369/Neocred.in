@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple setup script for Savely FinBot Backend
+Simple setup script for NEOC₹ED FinBot Backend
 """
 import os
 import subprocess
@@ -58,7 +58,7 @@ def setup_environment():
 
 def main():
     """Main setup function"""
-    print("🚀 Setting up Savely FinBot Backend (Simple Version)...")
+    print("🚀 Setting up NEOC₹ED FinBot Backend (Simple Version)...")
     print("=" * 50)
     
     # Check environment

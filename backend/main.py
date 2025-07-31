@@ -26,7 +26,7 @@ load_dotenv()
 init_db()
 
 app = FastAPI(
-    title="Savely FinBot API", 
+    title="NEOC₹ED FinBot API", 
     version="2.0.0",
     description="Enhanced AI-powered financial assistant with caching, monitoring, and analytics"
 )
@@ -37,7 +37,7 @@ app.add_middleware(MetricsMiddleware)
 # Security middleware
 app.add_middleware(
     TrustedHostMiddleware, 
-    allowed_hosts=["localhost", "127.0.0.1", "*.savely.in"]
+    allowed_hosts=["localhost", "127.0.0.1", "*.neocred.in"]
 )
 
 # CORS middleware
@@ -46,7 +46,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173", "http://127.0.0.1:5173",
         "https://localhost:5173", "https://127.0.0.1:5173",
-        "https://savely.in", "https://www.savely.in"
+        "https://neocred.in", "https://www.neocred.in"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -398,7 +398,7 @@ async def chat_endpoint(
 
 @app.get("/")
 async def root():
-    return {"message": "Savely FinBot API is running!"}
+    return {"message": "NEOC₹ED FinBot API is running!"}
 
 @app.get("/health", response_model=HealthResponse)
 async def health_check(db: Session = Depends(get_db)):
@@ -505,7 +505,7 @@ if __name__ == "__main__":
     host = os.getenv("HOST", "127.0.0.1")
     ssl_enabled = os.getenv("SSL_ENABLED", "false").lower() == "true"
     
-    print(f"🚀 Starting Savely FinBot API v2.0.0")
+    print(f"🚀 Starting NEOC₹ED FinBot API v2.0.0")
     print(f"📊 Monitoring: Enabled")
     print(f"🔄 Caching: {'Enabled' if cache_service.enabled else 'Disabled'}")
     print(f"🛡️ Circuit Breaker: Enabled")

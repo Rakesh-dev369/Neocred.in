@@ -10,10 +10,10 @@ from typing import List, Optional
 load_dotenv()
 
 app = FastAPI(
-    title="Savely FinBot API",
+    title="NEOC₹ED FinBot API",
     version="2.0.0",
     description="🤖 AI-Powered Financial Assistant API with 40+ tools integration",
-    contact={"name": "Savely.in", "url": "https://savely.in"}
+    contact={"name": "NEOC₹ED", "url": "https://neocred.in"}
 )
 
 app.add_middleware(
@@ -247,7 +247,7 @@ async def chat_endpoint(request: ChatRequest):
 )
 async def root():
     return {
-        "message": "Savely FinBot API is running!",
+        "message": "NEOC₹ED FinBot API is running!",
         "version": "2.0.0",
         "docs": "/docs",
         "features": ["AI Chat", "Tool Integration", "Smart Suggestions"]
