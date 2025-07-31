@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../utils/constants';
 import Logo from './Logo';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="glass-nav shadow-lg">
+    <nav className="glass-nav shadow-lg bg-white/10 dark:bg-gray-900/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -34,19 +35,21 @@ export default function Navbar() {
                 to={item.href}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
                   location.pathname === item.href
-                    ? 'text-white border-b-2 border-white'
-                    : 'text-white/70 hover:text-white'
+                    ? 'text-white dark:text-white border-b-2 border-white'
+                    : 'text-white/70 dark:text-gray-300 hover:text-white dark:hover:text-white'
                 }`}
               >
                 {item.name}
               </Link>
             ))}
+            <ThemeToggle />
             <Link to={ROUTES.CONTACT} className="btn-primary">
               Contact
             </Link>
           </div>
 
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white/70 hover:text-white"

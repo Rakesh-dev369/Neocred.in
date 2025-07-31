@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional, List, Dict
 from news_service import news_service
-import asyncio
+from datetime import datetime
 
 router = APIRouter(prefix="/api", tags=["News"])
 

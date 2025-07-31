@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import Learn from './pages/Learn';
@@ -20,25 +21,27 @@ import './App.css';
 
 function App() {
   return (
-    <ErrorBoundary>
-      <Routes>
-        <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-        <Route path="/learn" element={<MainLayout><Learn /></MainLayout>} />
-        <Route path="/tools" element={<MainLayout><Tools /></MainLayout>} />
-        <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/about" element={<MainLayout><About /></MainLayout>} />
-        <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
-        <Route path="/news" element={<MainLayout><News /></MainLayout>} />
-        <Route path="/rewards" element={<MainLayout><Rewards /></MainLayout>} />
-        <Route path="/pan-check" element={<MainLayout><PanCheck /></MainLayout>} />
-        <Route path="/loan-check" element={<MainLayout><LoanCheck /></MainLayout>} />
-        <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />
-        <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
-        <Route path="/disclaimer" element={<MainLayout><Disclaimer /></MainLayout>} />
-        <Route path="/cookies" element={<MainLayout><Cookies /></MainLayout>} />
-        <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
-      </Routes>
-    </ErrorBoundary>
+    <ThemeProvider>
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+          <Route path="/learn" element={<MainLayout><Learn /></MainLayout>} />
+          <Route path="/tools" element={<MainLayout><Tools /></MainLayout>} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/about" element={<MainLayout><About /></MainLayout>} />
+          <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
+          <Route path="/news" element={<MainLayout><News /></MainLayout>} />
+          <Route path="/rewards" element={<MainLayout><Rewards /></MainLayout>} />
+          <Route path="/pan-check" element={<MainLayout><PanCheck /></MainLayout>} />
+          <Route path="/loan-check" element={<MainLayout><LoanCheck /></MainLayout>} />
+          <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />
+          <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
+          <Route path="/disclaimer" element={<MainLayout><Disclaimer /></MainLayout>} />
+          <Route path="/cookies" element={<MainLayout><Cookies /></MainLayout>} />
+          <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
+        </Routes>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 }
 
