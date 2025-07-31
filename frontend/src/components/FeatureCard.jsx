@@ -9,14 +9,14 @@ export default function FeatureCard({ icon: Icon, title, description, link, badg
         </div>
       )}
       <div className="flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-md rounded-lg mb-4">
-        <Icon className="h-6 w-6 text-white" />
+        <Icon className="h-6 w-6 text-gray-900 dark:text-white" />
       </div>
-      <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-      <p className="text-white/70 mb-4 flex-1">{description}</p>
+      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
+      <p className="text-gray-700 dark:text-white/70 mb-4 flex-1">{description}</p>
       {link && (
         <Link
           to={link}
-          className="text-white hover:text-white/80 font-medium inline-flex items-center transition-colors mt-auto"
+          className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-white/80 font-medium inline-flex items-center transition-colors mt-auto"
         >
           Learn more
           <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">

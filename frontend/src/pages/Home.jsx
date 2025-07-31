@@ -107,16 +107,16 @@ export default function Home() {
               {isLoading ? (
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-yellow-400"></div>
-                  <span className="text-white/70">Loading your progress...</span>
+                  <span className="text-gray-600 dark:text-white/70">Loading your progress...</span>
                 </div>
               ) : userPoints > 0 ? (
                 <>
                   <div className="flex items-center justify-center gap-3 mb-2">
                     <Coins className="h-6 w-6 text-yellow-400" />
                     <span className="text-2xl font-bold text-yellow-400">{userPoints.toLocaleString()}</span>
-                    <span className="text-white/70">Learning Points Earned</span>
+                    <span className="text-gray-600 dark:text-white/70">Learning Points Earned</span>
                   </div>
-                  <p className="text-white/60 text-sm mb-4">
+                  <p className="text-gray-500 dark:text-white/60 text-sm mb-4">
                     Keep learning to earn more points and unlock exclusive rewards!
                   </p>
                   <Link 
@@ -312,12 +312,12 @@ export default function Home() {
           <div className="glass-card">
             <div className="flex items-center justify-center gap-4 text-sm">
               <span className="text-green-400 animate-pulse">•</span>
-              <span className="text-white/80">Live Activity:</span>
-              <span className="text-white">Priya just earned 25 points from SIP Calculator</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white">Rahul completed Budget Planning lesson</span>
-              <span className="text-white/50">|</span>
-              <span className="text-white">Anita redeemed Premium Features</span>
+              <span className="text-gray-700 dark:text-white/80">Live Activity:</span>
+              <span className="text-gray-900 dark:text-white">Priya just earned 25 points from SIP Calculator</span>
+              <span className="text-gray-500 dark:text-white/50">|</span>
+              <span className="text-gray-900 dark:text-white">Rahul completed Budget Planning lesson</span>
+              <span className="text-gray-500 dark:text-white/50">|</span>
+              <span className="text-gray-900 dark:text-white">Anita redeemed Premium Features</span>
             </div>
           </div>
         </div>
