@@ -14,8 +14,7 @@ export default function Navbar() {
     { name: 'Learn', href: ROUTES.LEARN },
     { name: 'Tools', href: ROUTES.TOOLS },
     { name: 'News', href: ROUTES.NEWS },
-    { name: 'Rewards', href: ROUTES.REWARDS },
-    { name: 'About', href: ROUTES.ABOUT }
+    { name: 'Rewards', href: ROUTES.REWARDS }
   ];
 
   return (
