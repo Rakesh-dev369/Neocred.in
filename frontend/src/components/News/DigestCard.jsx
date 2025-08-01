@@ -108,13 +108,22 @@ const DigestCard = () => {
       </p>
 
       {/* AI Overview */}
-      <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg p-4 mb-4 border border-blue-200 dark:border-blue-700">
-        <div className="flex items-center mb-2">
-          <Sparkles className="w-4 h-4 text-blue-600 mr-2" />
-          <span className="text-sm font-medium text-blue-800 dark:text-blue-300">AI Overview</span>
+      <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg p-5 mb-4 border border-blue-200 dark:border-blue-700">
+        <div className="flex items-center mb-3">
+          <Sparkles className="w-5 h-5 text-blue-600 mr-2" />
+          <span className="text-base font-semibold text-blue-800 dark:text-blue-300">AI Overview</span>
         </div>
-        <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-          {digest.overview}
+        <div className="prose prose-sm max-w-none text-gray-700 dark:text-gray-300 leading-relaxed">
+          <div 
+            className="whitespace-pre-line"
+            dangerouslySetInnerHTML={{
+              __html: digest.overview
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/### (.*?)\n/g, '<h3 class="text-lg font-semibold text-blue-900 dark:text-blue-300 mb-2 mt-4">$1</h3>')
+                .replace(/- \*\*(.*?)\*\*/g, '• <strong>$1</strong>')
+                .replace(/^- (.*?)$/gm, '• $1')
+            }}
+          />
         </div>
       </div>
 
@@ -123,7 +132,7 @@ const DigestCard = () => {
         <div>
           <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-3">Top Headlines ({digest.total_count})</h4>
           <div className="space-y-2">
-            {digest.top_news.slice(0, 5).map((news, index) => (
+            {digest.top_news.slice(0, 6).map((news, index) => (
               <div key={index} className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-3 border border-blue-100 dark:border-blue-700">
                 <h5 className="text-sm font-medium text-gray-900 dark:text-white mb-1 line-clamp-2">
                   {news.title}

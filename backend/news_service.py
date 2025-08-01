@@ -152,50 +152,64 @@ class NewsService:
             return "Summary not available."
 
     def generate_daily_digest(self, news_items: List[Dict]) -> Dict:
-        """Generate daily digest with top 5 news and summaries"""
+        """Generate daily digest with comprehensive AI analysis"""
         try:
-            # Get top 5 news from today
+            # Get top 8 news from today
             today = datetime.now().date()
             today_news = [
                 item for item in news_items
                 if datetime.fromisoformat(item['published'].replace('Z', '+00:00')).date() == today
-            ][:5]
+            ][:8]
             
             if not today_news:
-                today_news = news_items[:5]  # Fallback to latest 5
+                today_news = news_items[:8]  # Fallback to latest 8
             
-            # Generate digest summary
-            titles = [item['title'] for item in today_news]
+            # Generate comprehensive digest summary
+            news_details = []
+            for i, item in enumerate(today_news, 1):
+                news_details.append(f"{i}. **{item['title']}** - {item['source']}")
+                if item.get('summary'):
+                    news_details.append(f"   Summary: {item['summary'][:150]}...")
+            
             digest_prompt = f"""
-            Create a brief daily financial digest for these top Indian finance news headlines:
+            Create a comprehensive daily financial digest for Indian investors based on these top finance news stories:
             
-            {chr(10).join([f"{i+1}. {title}" for i, title in enumerate(titles)])}
+            {chr(10).join(news_details)}
             
-            Provide:
-            1. A 2-line overview of today's key financial themes
-            2. Brief bullet points for each headline (1 line each)
+            Please provide:
             
-            Keep it professional and relevant for Indian investors.
+            ### Daily Financial Digest
+            
+            **Overview of Today's Key Financial Themes:**
+            Write a 3-4 sentence overview highlighting the main financial themes, market trends, and important developments that Indian investors should know about today.
+            
+            **Headlines Briefs:**
+            
+            For each headline, provide:
+            - **[Headline Title] - [Source]**
+            - A concise 1-2 sentence explanation of what this means for Indian investors, focusing on practical impact and relevance.
+            
+            Keep the tone professional yet accessible, and focus on actionable insights for retail investors in India.
             """
             
             response = self.openai_client.chat.completions.create(
                 model=os.getenv("OPENAI_MODEL", "gpt-4-turbo-preview"),
                 messages=[{"role": "user", "content": digest_prompt}],
-                max_tokens=300,
+                max_tokens=800,
                 temperature=0.3
             )
             
             return {
                 "date": today.isoformat(),
                 "overview": response.choices[0].message.content.strip(),
-                "top_news": today_news,
+                "top_news": today_news[:5],  # Still show top 5 in the UI
                 "total_count": len(today_news)
             }
         except Exception as e:
             print(f"Error generating daily digest: {e}")
             return {
                 "date": datetime.now().date().isoformat(),
-                "overview": "Daily digest not available.",
+                "overview": "### Daily Financial Digest\n\n**Overview of Today's Key Financial Themes:**\nUnable to generate AI digest at this time. Please check back later for comprehensive market analysis and news summaries.\n\n**Headlines Briefs:**\nPlease refer to the individual news items below for the latest financial updates.",
                 "top_news": news_items[:5],
                 "total_count": 5
             }
