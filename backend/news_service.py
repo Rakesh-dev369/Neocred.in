@@ -4,29 +4,27 @@ import os
 import re
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 import requests
 from dotenv import load_dotenv
+# from bs4 import BeautifulSoup  # Not needed for current implementation
 
 load_dotenv()
 
 class NewsService:
     def __init__(self):
         self.openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.session = requests.Session()
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        })
         self.rss_feeds = [
-            {"url": "https://pib.gov.in/PressRelease/rssfeed.aspx", "source": "PIB"},
-            {"url": "https://www.rbi.org.in/scripts/RSSView.aspx?head=Press%20Releases", "source": "RBI"},
-            {"url": "https://www.moneycontrol.com/rss/MCtopnews.xml", "source": "MoneyControl"},
-            {"url": "https://www.business-standard.com/rss/home_page_top_stories.rss", "source": "Business Standard"},
-            {"url": "https://news.google.com/rss/search?q=finance+india", "source": "Google News"},
-            {"url": "https://economictimes.indiatimes.com/rssfeedstopstories.cms", "source": "Economic Times"},
-            {"url": "https://www.livemint.com/rss/money", "source": "Mint"},
-            {"url": "https://www.financialexpress.com/market/rss", "source": "Financial Express"},
-            {"url": "https://feeds.feedburner.com/ndtvprofit-latest", "source": "NDTV Profit"},
-            {"url": "https://www.thehindubusinessline.com/markets/feeder/default.rss", "source": "Hindu BusinessLine"},
-            {"url": "https://news.google.com/rss/search?q=RBI+india", "source": "Google News - RBI"},
-            {"url": "https://news.google.com/rss/search?q=stock+market+india", "source": "Google News - Markets"},
-            {"url": "https://news.google.com/rss/search?q=mutual+funds+india", "source": "Google News - MF"}
+            {"url": "https://feeds.feedburner.com/ndtvprofit-latest", "source": "NDTV Profit", "has_images": True},
+            {"url": "https://www.moneycontrol.com/rss/MCtopnews.xml", "source": "MoneyControl", "has_images": True},
+            {"url": "https://economictimes.indiatimes.com/rssfeedstopstories.cms", "source": "Economic Times", "has_images": False},
+            {"url": "https://news.google.com/rss/search?q=finance+india&hl=en-IN&gl=IN&ceid=IN:en", "source": "Google News", "has_images": False},
+            {"url": "https://news.google.com/rss/search?q=RBI+Reserve+Bank+India&hl=en-IN&gl=IN&ceid=IN:en", "source": "Google News - RBI", "has_images": False},
+            {"url": "https://news.google.com/rss/search?q=stock+market+india+NSE+BSE&hl=en-IN&gl=IN&ceid=IN:en", "source": "Google News - Markets", "has_images": False}
         ]
         
         self.finance_keywords = [
@@ -36,6 +34,28 @@ class NewsService:
             'inflation', 'interest rate', 'nifty', 'sensex', 'rupee', 'currency',
             'sebi', 'ipo', 'bond', 'fd', 'ppf', 'nps', 'epf', 'pension'
         ]
+
+    def generate_content_thumbnail(self, title: str, source: str) -> str:
+        """Generate a content-aware thumbnail using a reliable service"""
+        # Use a more sophisticated thumbnail generation
+        source_themes = {
+            'Economic Times': {'bg': '1a365d', 'icon': 'ET'},
+            'MoneyControl': {'bg': '553c9a', 'icon': 'MC'},
+            'NDTV Profit': {'bg': 'c53030', 'icon': 'NDTV'},
+            'Google News': {'bg': '4285f4', 'icon': 'NEWS'},
+            'Google News - RBI': {'bg': '1976d2', 'icon': 'RBI'},
+            'Google News - Markets': {'bg': '388e3c', 'icon': 'MARKET'},
+            'Google News - MF': {'bg': '7b1fa2', 'icon': 'MF'},
+            'Google News - Banking': {'bg': 'f57c00', 'icon': 'BANK'}
+        }
+        
+        theme = source_themes.get(source, {'bg': '6b7280', 'icon': '📰'})
+        
+        # Create a more informative thumbnail with title preview
+        title_preview = title[:40] + '...' if len(title) > 40 else title
+        title_encoded = title_preview.replace(' ', '%20').replace('&', '%26')
+        
+        return f"https://via.placeholder.com/400x250/{theme['bg']}/ffffff?text={theme['icon']}+{source.replace(' ', '+')}"
 
     def extract_tags(self, text: str) -> List[str]:
         """Extract relevant finance tags from text"""
@@ -63,62 +83,110 @@ class NewsService:
         text = f"{title} {summary}".lower()
         return any(keyword in text for keyword in self.finance_keywords)
 
-    def parse_feed(self, feed_url: str, source: str) -> List[Dict]:
+    def parse_feed(self, feed_url: str, source: str, has_images: bool = False) -> List[Dict]:
         """Parse RSS feed and extract news items"""
         try:
+            print(f"Parsing feed: {source} - {feed_url}")
             feed = feedparser.parse(feed_url)
+            
+            if not feed.entries:
+                print(f"No entries found in feed: {source}")
+                return []
+            
+            print(f"Found {len(feed.entries)} entries in {source}")
             news_items = []
             
-            for entry in feed.entries[:20]:  # Limit to 20 items per feed
+            for entry in feed.entries[:15]:  # Limit to 15 items per feed
                 title = entry.get('title', '')
                 summary = entry.get('summary', entry.get('description', ''))
                 
-                # Filter finance-related news
-                if not self.is_finance_related(title, summary):
+                # For Google News, assume all are finance-related since we're using finance queries
+                # For other sources, check if finance-related
+                if 'google' not in feed_url.lower() and not self.is_finance_related(title, summary):
                     continue
                 
                 # Clean HTML tags from summary
                 summary = re.sub(r'<[^>]+>', '', summary)
                 summary = summary.strip()[:300]  # Limit summary length
                 
-                # Parse date
+                # Parse date with multiple formats
                 published = entry.get('published', '')
-                try:
-                    pub_date = datetime.strptime(published, '%a, %d %b %Y %H:%M:%S %z')
-                except:
-                    try:
-                        pub_date = datetime.strptime(published, '%a, %d %b %Y %H:%M:%S %Z')
-                    except:
-                        pub_date = datetime.now()
+                pub_date = datetime.now()
+                
+                if published:
+                    date_formats = [
+                        '%a, %d %b %Y %H:%M:%S %z',
+                        '%a, %d %b %Y %H:%M:%S %Z',
+                        '%Y-%m-%dT%H:%M:%SZ',
+                        '%Y-%m-%dT%H:%M:%S%z',
+                        '%a, %d %b %Y %H:%M:%S GMT'
+                    ]
+                    
+                    for fmt in date_formats:
+                        try:
+                            pub_date = datetime.strptime(published, fmt)
+                            break
+                        except:
+                            continue
                 
                 # Extract thumbnail if available
                 thumbnail = None
                 
-                # Try multiple methods to get thumbnail
+                # Method 1: Media thumbnail
                 if hasattr(entry, 'media_thumbnail') and entry.media_thumbnail:
                     thumbnail = entry.media_thumbnail[0].get('url')
-                elif hasattr(entry, 'media_content') and entry.media_content:
+                
+                # Method 2: Media content
+                if not thumbnail and hasattr(entry, 'media_content') and entry.media_content:
                     for media in entry.media_content:
                         if media.get('type', '').startswith('image'):
                             thumbnail = media.get('url')
                             break
-                elif hasattr(entry, 'enclosures') and entry.enclosures:
+                
+                # Method 3: Enclosures
+                if not thumbnail and hasattr(entry, 'enclosures') and entry.enclosures:
                     for enclosure in entry.enclosures:
                         if hasattr(enclosure, 'type') and enclosure.type and 'image' in enclosure.type:
                             thumbnail = enclosure.href
                             break
-                elif hasattr(entry, 'links'):
+                
+                # Method 4: Links with image type
+                if not thumbnail and hasattr(entry, 'links'):
                     for link in entry.links:
                         if link.get('type', '').startswith('image'):
                             thumbnail = link.get('href')
                             break
                 
-                # For Google News, try to extract image from description
-                if not thumbnail and 'google' in feed_url.lower():
-                    import re
-                    img_match = re.search(r'<img[^>]+src=["\']([^"\'>]+)["\']', summary)
-                    if img_match:
-                        thumbnail = img_match.group(1)
+                # Method 5: Extract from HTML content (summary/description)
+                if not thumbnail:
+                    html_content = entry.get('summary', '') + ' ' + entry.get('description', '')
+                    if hasattr(entry, 'content') and entry.content:
+                        for content_item in entry.content:
+                            if hasattr(content_item, 'value'):
+                                html_content += ' ' + content_item.value
+                    
+                    # Look for img tags
+                    img_patterns = [
+                        r'<img[^>]+src=["\']([^"\'>]+\.(jpg|jpeg|png|gif|webp))["\'][^>]*>',
+                        r'<img[^>]+src=["\']([^"\'>]+)["\'][^>]*>',
+                        r'https?://[^\s<>"]+\.(jpg|jpeg|png|gif|webp)',
+                    ]
+                    
+                    for pattern in img_patterns:
+                        img_match = re.search(pattern, html_content, re.IGNORECASE)
+                        if img_match:
+                            potential_url = img_match.group(1)
+                            # Skip small icons and logos
+                            if not any(skip in potential_url.lower() for skip in ['icon', 'logo', 'favicon', '1x1', '16x16', '32x32']):
+                                thumbnail = potential_url
+                                break
+                    
+                    if thumbnail:
+                        break
+                
+                # Method 6: Generate better thumbnails using article content
+                if not thumbnail:
+                    thumbnail = self.generate_content_thumbnail(title, source)
                 
                 news_item = {
                     'title': title,
@@ -127,11 +195,12 @@ class NewsService:
                     'published': pub_date.isoformat(),
                     'source': source,
                     'tags': self.extract_tags(f"{title} {summary}"),
-                    'thumbnail': thumbnail
+                    'thumbnail': thumbnail  # Will be None if no real image found
                 }
                 
                 news_items.append(news_item)
             
+            print(f"Successfully parsed {len(news_items)} items from {source}")
             return news_items
         except Exception as e:
             print(f"Error parsing feed {feed_url}: {e}")
@@ -142,7 +211,7 @@ class NewsService:
         all_news = []
         
         for feed_info in self.rss_feeds:
-            news_items = self.parse_feed(feed_info['url'], feed_info['source'])
+            news_items = self.parse_feed(feed_info['url'], feed_info['source'], feed_info.get('has_images', False))
             all_news.extend(news_items)
         
         # Sort by published date (newest first)

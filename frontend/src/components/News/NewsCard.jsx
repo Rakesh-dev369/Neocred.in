@@ -40,7 +40,7 @@ const NewsCard = ({ article, onSummaryClick }) => {
 
     setLoadingSummary(true);
     try {
-      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8002';
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8003';
       const response = await fetch(`${API_BASE}/api/news/summary?title=${encodeURIComponent(article.title)}&content=${encodeURIComponent(article.summary)}`, {
         method: 'POST',
         headers: {
@@ -71,23 +71,33 @@ const NewsCard = ({ article, onSummaryClick }) => {
   };
 
   const getThumbnailUrl = (article) => {
-    // Use real thumbnail if available, otherwise generate placeholder
-    if (article.thumbnail) {
+    // Use real thumbnail if available
+    if (article.thumbnail && 
+        article.thumbnail !== 'null' && 
+        article.thumbnail.trim() !== '' &&
+        !article.thumbnail.includes('placeholder')) {
       return article.thumbnail;
     }
     
+    // Generate placeholder only when no real image
     const sourceColors = {
       'RBI': '3B82F6',
       'PIB': '10B981', 
       'MoneyControl': '8B5CF6',
       'Business Standard': 'F59E0B',
-      'Google News': '6B7280'
+      'Google News': '6B7280',
+      'Google News - RBI': '1976D2',
+      'Google News - Markets': '388E3C', 
+      'Google News - MF': '7B1FA2',
+      'Google News - Banking': 'F57C00',
+      'NDTV Profit': 'D32F2F',
+      'Economic Times': 'E65100'
     };
     
     const color = sourceColors[article.source] || '6B7280';
-    const text = encodeURIComponent(article.source);
+    const text = encodeURIComponent(article.source.replace(' ', '+'));
     
-    return `https://via.placeholder.com/300x200/${color}/FFFFFF?text=${text}`;
+    return `https://via.placeholder.com/400x250/${color}/FFFFFF?text=${text}`;
   };
 
   return (
@@ -99,8 +109,14 @@ const NewsCard = ({ article, onSummaryClick }) => {
           alt={article.title}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
           onError={(e) => {
-            e.target.style.display = 'none';
-            e.target.nextSibling.style.display = 'flex';
+            // If image fails to load, show fallback
+            const fallbackUrl = `https://via.placeholder.com/400x250/6B7280/FFFFFF?text=${encodeURIComponent(article.source.replace(' ', '+'))}`;
+            if (e.target.src !== fallbackUrl) {
+              e.target.src = fallbackUrl;
+            } else {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'flex';
+            }
           }}
         />
         <div className="hidden absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 items-center justify-center">

@@ -32,7 +32,7 @@ export default function News() {
         params.append('q', searchQuery);
       }
       
-      const url = `http://localhost:8002/api/news?${params}`;
+      const url = `http://localhost:8003/api/news?${params}`;
       const response = await fetch(url);
       const data = await response.json();
       

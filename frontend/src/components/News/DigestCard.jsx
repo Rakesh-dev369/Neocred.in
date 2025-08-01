@@ -10,7 +10,8 @@ const DigestCard = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8002/api/news/daily-digest');
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8003';
+      const response = await fetch(`${API_BASE}/api/news/daily-digest`);
       const data = await response.json();
       
       if (data.success) {
