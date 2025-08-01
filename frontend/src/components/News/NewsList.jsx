@@ -2,7 +2,7 @@ import React from 'react';
 import NewsCard from './NewsCard';
 import { Newspaper, AlertCircle } from 'lucide-react';
 
-const NewsList = ({ articles, loading, error, query }) => {
+const NewsList = ({ articles, loading, error, query, pagination, onLoadMore, loadingMore }) => {
   if (loading) {
     return (
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
@@ -86,6 +86,38 @@ const NewsList = ({ articles, loading, error, query }) => {
           />
         ))}
       </div>
+
+      {/* Load More Button */}
+      {pagination && pagination.has_next && (
+        <div className="mt-12 text-center">
+          <button
+            onClick={onLoadMore}
+            disabled={loadingMore}
+            className="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+          >
+            {loadingMore ? (
+              <>
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                Loading More...
+              </>
+            ) : (
+              <>
+                <Newspaper className="w-5 h-5 mr-2" />
+                Load More News
+              </>
+            )}
+          </button>
+          
+          {pagination && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+              Showing {articles.length} of {pagination.total_items} articles
+              {pagination.total_pages > 1 && (
+                <span> • Page {pagination.page} of {pagination.total_pages}</span>
+              )}
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

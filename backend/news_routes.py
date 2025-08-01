@@ -6,21 +6,40 @@ from datetime import datetime
 router = APIRouter(prefix="/api", tags=["News"])
 
 @router.get("/news")
-def get_news(q: Optional[str] = Query(None, description="Search query for filtering news")):
+def get_news(
+    q: Optional[str] = Query(None, description="Search query for filtering news"),
+    page: int = Query(1, ge=1, description="Page number (starts from 1)"),
+    limit: int = Query(20, ge=1, le=100, description="Number of items per page (max 100)")
+):
     """
-    Fetch finance-related news from multiple RSS sources
+    Fetch finance-related news from multiple RSS sources with pagination
     
     - **q**: Optional search query to filter news by title, summary, or tags
+    - **page**: Page number (starts from 1)
+    - **limit**: Number of items per page (max 100)
     """
     try:
-        news_items = news_service.fetch_all_news(query=q)
+        # Fetch more items to support pagination
+        all_news = news_service.fetch_all_news(query=q, limit=500)
+        
+        # Calculate pagination
+        start_idx = (page - 1) * limit
+        end_idx = start_idx + limit
+        paginated_news = all_news[start_idx:end_idx]
         
         return {
             "success": True,
-            "data": news_items,
-            "total": len(news_items),
+            "data": paginated_news,
+            "pagination": {
+                "page": page,
+                "limit": limit,
+                "total_items": len(all_news),
+                "total_pages": (len(all_news) + limit - 1) // limit,
+                "has_next": end_idx < len(all_news),
+                "has_prev": page > 1
+            },
             "query": q,
-            "sources": ["PIB", "RBI", "MoneyControl", "Business Standard", "Google News"]
+            "sources": ["PIB", "RBI", "MoneyControl", "Business Standard", "Google News", "Economic Times", "Mint", "Financial Express"]
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch news: {str(e)}")
@@ -82,6 +101,9 @@ def get_news_sources():
             {"name": "RBI", "description": "Reserve Bank of India", "type": "Central Bank"},
             {"name": "MoneyControl", "description": "Financial News Portal", "type": "Media"},
             {"name": "Business Standard", "description": "Business Newspaper", "type": "Media"},
+            {"name": "Economic Times", "description": "Business & Finance News", "type": "Media"},
+            {"name": "Mint", "description": "Business & Financial News", "type": "Media"},
+            {"name": "Financial Express", "description": "Financial Daily", "type": "Media"},
             {"name": "Google News", "description": "Aggregated Finance News", "type": "Aggregator"}
         ]
     }

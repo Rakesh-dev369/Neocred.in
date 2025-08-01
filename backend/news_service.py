@@ -18,7 +18,15 @@ class NewsService:
             {"url": "https://www.rbi.org.in/scripts/RSSView.aspx?head=Press%20Releases", "source": "RBI"},
             {"url": "https://www.moneycontrol.com/rss/MCtopnews.xml", "source": "MoneyControl"},
             {"url": "https://www.business-standard.com/rss/home_page_top_stories.rss", "source": "Business Standard"},
-            {"url": "https://news.google.com/rss/search?q=finance+india", "source": "Google News"}
+            {"url": "https://news.google.com/rss/search?q=finance+india", "source": "Google News"},
+            {"url": "https://economictimes.indiatimes.com/rssfeedstopstories.cms", "source": "Economic Times"},
+            {"url": "https://www.livemint.com/rss/money", "source": "Mint"},
+            {"url": "https://www.financialexpress.com/market/rss", "source": "Financial Express"},
+            {"url": "https://feeds.feedburner.com/ndtvprofit-latest", "source": "NDTV Profit"},
+            {"url": "https://www.thehindubusinessline.com/markets/feeder/default.rss", "source": "Hindu BusinessLine"},
+            {"url": "https://news.google.com/rss/search?q=RBI+india", "source": "Google News - RBI"},
+            {"url": "https://news.google.com/rss/search?q=stock+market+india", "source": "Google News - Markets"},
+            {"url": "https://news.google.com/rss/search?q=mutual+funds+india", "source": "Google News - MF"}
         ]
         
         self.finance_keywords = [
@@ -85,13 +93,32 @@ class NewsService:
                 
                 # Extract thumbnail if available
                 thumbnail = None
-                if hasattr(entry, 'media_thumbnail'):
-                    thumbnail = entry.media_thumbnail[0]['url'] if entry.media_thumbnail else None
+                
+                # Try multiple methods to get thumbnail
+                if hasattr(entry, 'media_thumbnail') and entry.media_thumbnail:
+                    thumbnail = entry.media_thumbnail[0].get('url')
+                elif hasattr(entry, 'media_content') and entry.media_content:
+                    for media in entry.media_content:
+                        if media.get('type', '').startswith('image'):
+                            thumbnail = media.get('url')
+                            break
                 elif hasattr(entry, 'enclosures') and entry.enclosures:
                     for enclosure in entry.enclosures:
-                        if enclosure.type and 'image' in enclosure.type:
+                        if hasattr(enclosure, 'type') and enclosure.type and 'image' in enclosure.type:
                             thumbnail = enclosure.href
                             break
+                elif hasattr(entry, 'links'):
+                    for link in entry.links:
+                        if link.get('type', '').startswith('image'):
+                            thumbnail = link.get('href')
+                            break
+                
+                # For Google News, try to extract image from description
+                if not thumbnail and 'google' in feed_url.lower():
+                    import re
+                    img_match = re.search(r'<img[^>]+src=["\']([^"\'>]+)["\']', summary)
+                    if img_match:
+                        thumbnail = img_match.group(1)
                 
                 news_item = {
                     'title': title,
@@ -110,7 +137,7 @@ class NewsService:
             print(f"Error parsing feed {feed_url}: {e}")
             return []
 
-    def fetch_all_news(self, query: Optional[str] = None) -> List[Dict]:
+    def fetch_all_news(self, query: Optional[str] = None, limit: int = 50) -> List[Dict]:
         """Fetch news from all RSS feeds"""
         all_news = []
         
@@ -131,7 +158,7 @@ class NewsService:
                    any(query_lower in tag.lower() for tag in item['tags'])
             ]
         
-        return all_news[:50]  # Limit to 50 items
+        return all_news[:limit]
 
     def generate_summary(self, title: str, content: str = "") -> str:
         """Generate AI summary for news article"""

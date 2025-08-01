@@ -7,22 +7,43 @@ import DigestCard from '../components/News/DigestCard';
 export default function News() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
+  const [pagination, setPagination] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchNews = async (searchQuery = '') => {
-    setLoading(true);
+  const fetchNews = async (searchQuery = '', page = 1, append = false) => {
+    if (append) {
+      setLoadingMore(true);
+    } else {
+      setLoading(true);
+      setCurrentPage(1);
+    }
     setError(null);
+    
     try {
-      const url = searchQuery 
-        ? `http://localhost:8002/api/news?q=${encodeURIComponent(searchQuery)}`
-        : 'http://localhost:8002/api/news';
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: '20'
+      });
       
+      if (searchQuery) {
+        params.append('q', searchQuery);
+      }
+      
+      const url = `http://localhost:8002/api/news?${params}`;
       const response = await fetch(url);
       const data = await response.json();
       
       if (data.success) {
-        setArticles(data.data);
+        if (append) {
+          setArticles(prev => [...prev, ...data.data]);
+        } else {
+          setArticles(data.data);
+        }
+        setPagination(data.pagination);
+        setCurrentPage(page);
       } else {
         setError('Failed to fetch news');
       }
@@ -30,6 +51,7 @@ export default function News() {
       setError('Network error occurred');
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
   };
 
@@ -39,7 +61,14 @@ export default function News() {
 
   const handleSearch = (searchQuery) => {
     setQuery(searchQuery);
-    fetchNews(searchQuery);
+    setArticles([]);
+    fetchNews(searchQuery, 1, false);
+  };
+
+  const handleLoadMore = () => {
+    if (pagination && pagination.has_next) {
+      fetchNews(query, currentPage + 1, true);
+    }
   };
 
 
@@ -88,6 +117,9 @@ export default function News() {
           loading={loading} 
           error={error} 
           query={query}
+          pagination={pagination}
+          onLoadMore={handleLoadMore}
+          loadingMore={loadingMore}
         />
       </div>
     </div>
