@@ -68,12 +68,12 @@ const TaxSaverCalculator = () => {
 
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">Income Tax Calculator (Old vs New)</h2>
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Income Tax Calculator (Old vs New)</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
-          <h3 className="text-xl font-semibold mb-6 text-white">Income Tax Calculator</h3>
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Income Tax Calculator</h3>
           
           <Formik
             initialValues={{
@@ -89,33 +89,33 @@ const TaxSaverCalculator = () => {
             {({ values, isSubmitting }) => (
               <Form className="space-y-4">
                 <div className="flex gap-4 mb-4">
-                  <label className="flex items-center gap-2 text-white">
+                  <label className="flex items-center gap-2 text-gray-900 dark:text-white">
                     <Field
                       type="radio"
                       name="regime"
                       value="old"
-                      className="text-white"
+                      className="text-gray-900 dark:text-white"
                     />
                     Old Regime
                   </label>
-                  <label className="flex items-center gap-2 text-white">
+                  <label className="flex items-center gap-2 text-gray-900 dark:text-white">
                     <Field
                       type="radio"
                       name="regime"
                       value="new"
-                      className="text-white"
+                      className="text-gray-900 dark:text-white"
                     />
                     New Regime
                   </label>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Annual Income (₹)
                   </label>
                   <Field
                     name="annualIncome"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="800000"
                   />
@@ -125,12 +125,12 @@ const TaxSaverCalculator = () => {
                 {values.regime === "old" && (
                   <>
                     <div>
-                      <label className="block text-sm font-medium text-white/80 mb-1">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                         Investments under Section 80C (max ₹1,50,000)
                       </label>
                       <Field
                         name="investment80C"
-                        type="number"
+                        type="number" onWheel={(e) => e.target.blur()}
                         className="input-field"
                         placeholder="100000"
                       />
@@ -138,12 +138,12 @@ const TaxSaverCalculator = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-white/80 mb-1">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                         Medical Insurance (Section 80D, max ₹25,000)
                       </label>
                       <Field
                         name="medicalInsurance"
-                        type="number"
+                        type="number" onWheel={(e) => e.target.blur()}
                         className="input-field"
                         placeholder="20000"
                       />
@@ -151,12 +151,12 @@ const TaxSaverCalculator = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-white/80 mb-1">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                         HRA Exemption
                       </label>
                       <Field
                         name="hraExemption"
-                        type="number"
+                        type="number" onWheel={(e) => e.target.blur()}
                         className="input-field"
                         placeholder="60000"
                       />
@@ -180,67 +180,67 @@ const TaxSaverCalculator = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4">Tax Calculation Results</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tax Calculation Results</h3>
               <div className="space-y-3">
                 {result.inputs.regime === "old" && (
                   <>
-                    <div className="flex justify-between items-center py-2 border-b border-white/20">
-                      <span className="text-white/80">Standard Deduction:</span>
-                      <span className="text-blue-400 font-semibold">₹{STANDARD_DEDUCTION.toLocaleString()}</span>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                      <span className="text-gray-700 dark:text-white/80">Standard Deduction:</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-semibold">₹{STANDARD_DEDUCTION.toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-white/20">
-                      <span className="text-white/80">Total Deductions:</span>
-                      <span className="text-green-400 font-semibold">₹{result.totalDeductions.toLocaleString()}</span>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                      <span className="text-gray-700 dark:text-white/80">Total Deductions:</span>
+                      <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.totalDeductions.toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-white/20">
-                      <span className="text-white/80">Taxable Income (Old):</span>
-                      <span className="text-white font-semibold">₹{result.taxableIncomeOld.toLocaleString()}</span>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                      <span className="text-gray-700 dark:text-white/80">Taxable Income (Old):</span>
+                      <span className="text-gray-900 dark:text-white font-semibold">₹{result.taxableIncomeOld.toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-white/20">
-                      <span className="text-white/80">Tax (Old Regime):</span>
-                      <span className="text-red-400 font-semibold">₹{result.taxOld.toLocaleString()}</span>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                      <span className="text-gray-700 dark:text-white/80">Tax (Old Regime):</span>
+                      <span className="text-red-600 dark:text-red-400 font-semibold">₹{result.taxOld.toLocaleString()}</span>
                     </div>
                   </>
                 )}
 
                 {result.inputs.regime === "new" && (
                   <>
-                    <div className="flex justify-between items-center py-2 border-b border-white/20">
-                      <span className="text-white/80">Taxable Income:</span>
-                      <span className="text-white font-semibold">₹{result.inputs.annualIncome.toLocaleString()}</span>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                      <span className="text-gray-700 dark:text-white/80">Taxable Income:</span>
+                      <span className="text-gray-900 dark:text-white font-semibold">₹{result.inputs.annualIncome.toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-white/20">
-                      <span className="text-white/80">Tax (New Regime):</span>
-                      <span className="text-green-400 font-semibold">₹{result.taxNew.toLocaleString()}</span>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                      <span className="text-gray-700 dark:text-white/80">Tax (New Regime):</span>
+                      <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.taxNew.toLocaleString()}</span>
                     </div>
                   </>
                 )}
 
                 <div className="flex justify-between items-center py-2 pt-4">
-                  <span className="text-white/80 text-lg">Final Estimated Tax:</span>
-                  <span className="text-yellow-400 font-bold text-xl">₹{result.selectedTax.toLocaleString()}</span>
+                  <span className="text-gray-700 dark:text-white/80 text-lg">Final Estimated Tax:</span>
+                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-xl">₹{result.selectedTax.toLocaleString()}</span>
                 </div>
               </div>
             </div>
 
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4 text-center">Tax Comparison</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Tax Comparison</h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 bg-white/5 rounded">
-                  <span className="text-white/80">Old Regime Tax:</span>
-                  <span className="text-red-400 font-semibold">₹{result.taxOld.toLocaleString()}</span>
+                <div className="flex justify-between items-center p-3 bg-gray-200 dark:bg-white/5 rounded">
+                  <span className="text-gray-700 dark:text-white/80">Old Regime Tax:</span>
+                  <span className="text-red-600 dark:text-red-400 font-semibold">₹{result.taxOld.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-white/5 rounded">
-                  <span className="text-white/80">New Regime Tax:</span>
-                  <span className="text-green-400 font-semibold">₹{result.taxNew.toLocaleString()}</span>
+                <div className="flex justify-between items-center p-3 bg-gray-200 dark:bg-white/5 rounded">
+                  <span className="text-gray-700 dark:text-white/80">New Regime Tax:</span>
+                  <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.taxNew.toLocaleString()}</span>
                 </div>
-                <div className="text-center p-3 bg-white/10 rounded">
-                  <p className="text-white/80 text-sm mb-1">Recommended:</p>
-                  <p className="text-yellow-400 font-bold">
+                <div className="text-center p-3 bg-blue-100 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-500/30 rounded">
+                  <p className="text-blue-800 dark:text-blue-900 dark:text-blue-100 text-sm mb-1">💡 <strong>Recommended:</strong></p>
+                  <p className="text-blue-900 dark:text-blue-200 font-bold">
                     {result.taxOld < result.taxNew ? 'Old Regime' : 'New Regime'}
                   </p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-blue-700 dark:text-blue-700 dark:text-blue-300 text-xs mt-1">
                     Save ₹{Math.abs(result.taxOld - result.taxNew).toLocaleString()}
                   </p>
                 </div>

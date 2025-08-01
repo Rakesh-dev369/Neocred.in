@@ -24,7 +24,7 @@ const ContactPage = () => {
   }, []);
 
   const contactReasons = [
-    { value: 'general', label: '💬 General Inquiry', description: 'Questions about NEOC₹ED platform' },
+    { value: 'general', label: '💬 General Inquiry', description: 'Questions about NeoCred platform' },
     { value: 'support', label: '🛠️ Technical Support', description: 'Issues with tools or features' },
     { value: 'feedback', label: '💡 Feedback & Suggestions', description: 'Ideas to improve our platform' },
     { value: 'partnership', label: '🤝 Partnership', description: 'Business collaboration opportunities' },
@@ -42,7 +42,7 @@ const ContactPage = () => {
       answer: 'Yes, our calculators use standard financial formulas. However, consult a financial advisor for major decisions.'
     },
     {
-      question: 'Is NEOC₹ED completely free?',
+      question: 'Is NeoCred completely free?',
       answer: 'Yes! All our tools, lessons, and features are completely free for everyone.'
     },
     {
@@ -50,7 +50,7 @@ const ContactPage = () => {
       answer: 'We regularly update our content to reflect current financial policies and market conditions.'
     },
     {
-      question: 'Is my data secure on NEOC₹ED?',
+      question: 'Is my data secure on NeoCred?',
       answer: 'Yes, we use bank-level security and do not store sensitive financial information. Your privacy is our priority.'
     }
   ];
@@ -115,12 +115,12 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-blue-900/20 to-black">
+      <section className="py-20 bg-gradient-to-b from-blue-100/50 to-gray-200 dark:from-blue-900/20 dark:to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Get In <span className="text-blue-400">Touch</span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
             Have questions, feedback, or ideas? We'd love to hear from you. 
             Our team typically responds within 24 hours.
           </p>
@@ -133,26 +133,26 @@ const ContactPage = () => {
             >
               <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">📧</div>
               <h3 className="text-lg font-semibold mb-2 text-blue-400">Email Us</h3>
-              <p className="text-gray-300 text-sm">hello@neocred.in</p>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">hello@neocred.in</p>
             </a>
             
             <div className="glass-card hover:scale-105 transition-all duration-300">
               <div className="text-3xl mb-3">⏰</div>
               <h3 className="text-lg font-semibold mb-2 text-green-400">Response Time</h3>
-              <p className="text-gray-300 text-sm">Within 24 hours</p>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">Within 24 hours</p>
             </div>
             
             <div className="glass-card hover:scale-105 transition-all duration-300">
               <div className="text-3xl mb-3">🌍</div>
               <h3 className="text-lg font-semibold mb-2 text-purple-400">Location</h3>
-              <p className="text-gray-300 text-sm">India (Remote Team)</p>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">India (Remote Team)</p>
             </div>
           </div>
         </div>
       </section>
       
       {/* Quick Action Buttons */}
-      <section className="py-8 bg-gray-900/50">
+      <section className="py-8 bg-gray-200/80 dark:bg-gray-900/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-center mb-8">
             🚀 Quick <span className="text-blue-400">Actions</span>
@@ -172,7 +172,7 @@ const ContactPage = () => {
             >
               <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🐛</div>
               <h3 className="font-semibold text-red-400 mb-1">Report Bug</h3>
-              <p className="text-gray-400 text-xs">Found an issue?</p>
+              <p className="text-gray-600 dark:text-gray-400 text-xs">Found an issue?</p>
             </button>
             
             <button
@@ -189,7 +189,7 @@ const ContactPage = () => {
             >
               <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">💡</div>
               <h3 className="font-semibold text-green-400 mb-1">Feature Request</h3>
-              <p className="text-gray-400 text-xs">Suggest improvements</p>
+              <p className="text-gray-600 dark:text-gray-400 text-xs">Suggest improvements</p>
             </button>
             
             <button
@@ -206,7 +206,7 @@ const ContactPage = () => {
             >
               <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🛠️</div>
               <h3 className="font-semibold text-blue-400 mb-1">Get Support</h3>
-              <p className="text-gray-400 text-xs">Need technical help?</p>
+              <p className="text-gray-600 dark:text-gray-400 text-xs">Need technical help?</p>
             </button>
             
             <button
@@ -223,7 +223,7 @@ const ContactPage = () => {
             >
               <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">💬</div>
               <h3 className="font-semibold text-purple-400 mb-1">Send Feedback</h3>
-              <p className="text-gray-400 text-xs">Share your thoughts</p>
+              <p className="text-gray-600 dark:text-gray-400 text-xs">Share your thoughts</p>
             </button>
           </div>
         </div>
@@ -254,7 +254,7 @@ const ContactPage = () => {
                 {/* Name and Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-gray-900 dark:text-white font-medium mb-2">
                       Name <span className="text-red-400">*</span>
                     </label>
                     <input
@@ -262,8 +262,8 @@ const ContactPage = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-colors ${
-                        errors.name ? 'border-red-500 focus:ring-red-500' : 'border-white/20 focus:ring-blue-500'
+                      className={`w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 transition-colors ${
+                        errors.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-white/20 focus:ring-blue-500'
                       }`}
                       placeholder="Your full name"
                     />
@@ -271,7 +271,7 @@ const ContactPage = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-white font-medium mb-2">
+                    <label className="block text-gray-900 dark:text-white font-medium mb-2">
                       Email <span className="text-red-400">*</span>
                     </label>
                     <input
@@ -279,8 +279,8 @@ const ContactPage = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-colors ${
-                        errors.email ? 'border-red-500 focus:ring-red-500' : 'border-white/20 focus:ring-blue-500'
+                      className={`w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 transition-colors ${
+                        errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-white/20 focus:ring-blue-500'
                       }`}
                       placeholder="your.email@example.com"
                     />
@@ -290,29 +290,29 @@ const ContactPage = () => {
 
                 {/* Category */}
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-gray-900 dark:text-white font-medium mb-2">
                     What's this about?
                   </label>
                   <select
                     name="category"
                     value={formData.category}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     {contactReasons.map(reason => (
-                      <option key={reason.value} value={reason.value} className="bg-gray-800">
+                      <option key={reason.value} value={reason.value} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
                         {reason.label}
                       </option>
                     ))}
                   </select>
-                  <p className="text-gray-400 text-sm mt-1">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
                     {contactReasons.find(r => r.value === formData.category)?.description}
                   </p>
                 </div>
 
                 {/* Subject */}
                 <div>
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-gray-900 dark:text-white font-medium mb-2">
                     Subject <span className="text-red-400">*</span>
                   </label>
                   <input
@@ -320,8 +320,8 @@ const ContactPage = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-colors ${
-                      errors.subject ? 'border-red-500 focus:ring-red-500' : 'border-white/20 focus:ring-blue-500'
+                    className={`w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 transition-colors ${
+                      errors.subject ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-white/20 focus:ring-blue-500'
                     }`}
                     placeholder="Brief description of your message"
                   />
@@ -330,21 +330,21 @@ const ContactPage = () => {
 
                 {/* Message */}
                 <div className="flex-1 flex flex-col">
-                  <label className="block text-white font-medium mb-2">
+                  <label className="block text-gray-900 dark:text-white font-medium mb-2">
                     Message <span className="text-red-400">*</span>
                   </label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 bg-white/10 border rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 resize-none transition-colors flex-1 min-h-[120px] ${
-                      errors.message ? 'border-red-500 focus:ring-red-500' : 'border-white/20 focus:ring-blue-500'
+                    className={`w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 resize-none transition-colors flex-1 min-h-[120px] ${
+                      errors.message ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-white/20 focus:ring-blue-500'
                     }`}
                     placeholder="Tell us more about your question, feedback, or idea..."
                   />
                   <div className="flex justify-between items-center mt-1">
                     {errors.message && <p className="text-red-400 text-sm">{errors.message}</p>}
-                    <p className="text-gray-400 text-sm ml-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm ml-auto">
                       {formData.message.length}/500 characters
                     </p>
                   </div>
@@ -382,14 +382,14 @@ const ContactPage = () => {
                   <table className="w-full text-sm">
                     <tbody>
                       <tr className="border-b border-white/10">
-                        <td className="py-3 px-4 text-center font-medium text-blue-300">General Inquiries</td>
-                        <td className="py-3 px-4 text-center font-medium text-green-300">Technical Support</td>
-                        <td className="py-3 px-4 text-center font-medium text-purple-300">Partnerships</td>
+                        <td className="py-3 px-4 text-center font-medium text-blue-600 dark:text-blue-300">General Inquiries</td>
+                        <td className="py-3 px-4 text-center font-medium text-green-600 dark:text-green-300">Technical Support</td>
+                        <td className="py-3 px-4 text-center font-medium text-purple-600 dark:text-purple-300">Partnerships</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-4 text-center text-gray-300">Within 24 hours</td>
-                        <td className="py-3 px-4 text-center text-gray-300">Within 12 hours</td>
-                        <td className="py-3 px-4 text-center text-gray-300">Within 48 hours</td>
+                        <td className="py-3 px-4 text-center text-gray-700 dark:text-gray-300">Within 24 hours</td>
+                        <td className="py-3 px-4 text-center text-gray-700 dark:text-gray-300">Within 12 hours</td>
+                        <td className="py-3 px-4 text-center text-gray-700 dark:text-gray-300">Within 48 hours</td>
                       </tr>
                     </tbody>
                   </table>
@@ -408,8 +408,8 @@ const ContactPage = () => {
               <div className="space-y-4 flex-1">
                 {faqs.map((faq, index) => (
                   <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
-                    <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                    <p className="text-gray-300 text-sm leading-relaxed">{faq.answer}</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">{faq.question}</h4>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -433,8 +433,8 @@ const ContactPage = () => {
                           {contactReasons.find(r => r.value === message.category)?.label.split(' ')[0] || '💬'}
                         </div>
                         <div>
-                          <h4 className="font-semibold text-white">{message.subject}</h4>
-                          <p className="text-sm text-gray-400">
+                          <h4 className="font-semibold text-gray-900 dark:text-white">{message.subject}</h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
                             {new Date(message.date).toLocaleDateString('en-US', {
                               year: 'numeric',
                               month: 'short',
@@ -451,7 +451,7 @@ const ContactPage = () => {
                         </span>
                       </div>
                     </div>
-                    <p className="text-gray-300 text-sm leading-relaxed pl-8">
+                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed pl-8">
                       {message.message.length > 150 
                         ? `${message.message.substring(0, 150)}...` 
                         : message.message
@@ -463,7 +463,7 @@ const ContactPage = () => {
               
               {contactHistory.length > 3 && (
                 <div className="text-center mt-4 pt-4 border-t border-white/10">
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
                     Showing {Math.min(contactHistory.length, 10)} of {contactHistory.length} messages
                   </p>
                 </div>

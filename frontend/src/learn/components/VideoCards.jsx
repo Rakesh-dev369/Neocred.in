@@ -25,18 +25,18 @@ const videos = [
 const VideoCards = () => {
   return (
     <div className="mt-20">
-      <h2 className="text-3xl font-bold text-white mb-6">Featured Videos</h2>
+      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Featured Videos</h2>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {videos.map(({ title, duration, views, level }, index) => (
           <div
             key={index}
-            className="bg-[#111] rounded-xl border border-gray-800 hover:border-white transition-all overflow-hidden text-white"
+            className="bg-gray-100 dark:bg-[#111] rounded-xl border border-gray-300 dark:border-gray-800 hover:border-gray-600 dark:hover:border-white transition-all overflow-hidden text-gray-900 dark:text-white"
           >
-            <div className="bg-gray-900 aspect-video flex items-center justify-center text-xl font-semibold">
+            <div className="bg-gray-200 dark:bg-gray-900 aspect-video flex items-center justify-center text-xl font-semibold">
               🎥 {title}
             </div>
             <div className="p-4">
-              <p className="text-sm text-gray-300">⏱ {duration} • 👁 {views} views • 🎓 {level}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">⏱ {duration} • 👁 {views} views • 🎓 {level}</p>
             </div>
           </div>
         ))}

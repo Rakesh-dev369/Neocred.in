@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../utils/constants';
-import Logo from './Logo';
+import HorizontalLogo from './HorizontalLogo';
 import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to={ROUTES.HOME} className="flex-shrink-0">
-              <Logo size="md" />
+              <HorizontalLogo className="scale-75" />
             </Link>
           </div>
 
@@ -66,7 +66,7 @@ export default function Navbar() {
 
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
             {navigation.map((item) => (
               <Link
                 key={item.name}

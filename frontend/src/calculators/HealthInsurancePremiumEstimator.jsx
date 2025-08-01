@@ -60,12 +60,12 @@ const HealthInsurancePremiumEstimator = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">Health Insurance Premium Estimator</h2>
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Health Insurance Premium Estimator</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
-          <h3 className="text-xl font-semibold mb-6 text-white">🏥 Health Insurance Premium Estimator</h3>
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">🏥 Health Insurance Premium Estimator</h3>
           
           <Formik
             initialValues={{
@@ -80,12 +80,12 @@ const HealthInsurancePremiumEstimator = () => {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Number of Family Members
                   </label>
                   <Field
                     name="members"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="2"
                   />
@@ -93,12 +93,12 @@ const HealthInsurancePremiumEstimator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Sum Insured (₹)
                   </label>
                   <Field
                     name="sumInsured"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="500000"
                   />
@@ -106,7 +106,7 @@ const HealthInsurancePremiumEstimator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     City Type
                   </label>
                   <Field
@@ -123,12 +123,12 @@ const HealthInsurancePremiumEstimator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Average Age of Members
                   </label>
                   <Field
                     name="age"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="35"
                   />
@@ -150,40 +150,40 @@ const HealthInsurancePremiumEstimator = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4">Premium Estimate</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Premium Estimate</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Family Members:</span>
-                  <span className="text-white font-semibold">{result.members}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Family Members:</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">{result.members}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Sum Insured:</span>
-                  <span className="text-blue-400 font-semibold">₹{result.sumInsured.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Sum Insured:</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-semibold">₹{result.sumInsured.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">City Type:</span>
-                  <span className="text-white font-semibold">{result.city === 'metro' ? 'Metro' : result.city === 'tier1' ? 'Tier 1' : 'Tier 2/3'}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">City Type:</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">{result.city === 'metro' ? 'Metro' : result.city === 'tier1' ? 'Tier 1' : 'Tier 2/3'}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Monthly Premium:</span>
-                  <span className="text-green-400 font-semibold">₹{result.monthlyPremium.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Monthly Premium:</span>
+                  <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.monthlyPremium.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">Annual Premium:</span>
-                  <span className="text-yellow-400 font-bold text-xl">₹{result.annualPremium.toLocaleString()}</span>
+                  <span className="text-gray-700 dark:text-white/80">Annual Premium:</span>
+                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-xl">₹{result.annualPremium.toLocaleString()}</span>
                 </div>
               </div>
               
-              <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
-                <p className="text-green-100 text-sm">
+              <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-lg">
+                <p className="text-green-900 dark:text-green-100 text-sm">
                   🏥 <strong>Health Tip:</strong> Consider higher sum insured for better coverage. Family floater plans offer cost savings.
                 </p>
               </div>
             </div>
 
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4 text-center">Premium Factors</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Premium Factors</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
                   <Pie
@@ -194,7 +194,7 @@ const HealthInsurancePremiumEstimator = () => {
                     cy="50%"
                     outerRadius={80}
                     innerRadius={30}
-                    stroke="#ffffff"
+                    stroke="currentColor"
                     strokeWidth={2}
                   >
                     {result.data.map((entry, index) => (
@@ -204,14 +204,15 @@ const HealthInsurancePremiumEstimator = () => {
                   <Tooltip 
                     formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
                     contentStyle={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      border: '1px solid rgba(0, 0, 0, 0.1)',
                       borderRadius: '8px',
-                      color: '#ffffff'
+                      color: '#000000'
                     }}
+                    labelStyle={{ color: '#000000' }}
                   />
                   <Legend 
-                    wrapperStyle={{ paddingTop: '10px', color: '#ffffff' }}
+                    wrapperStyle={{ paddingTop: '10px', color: 'currentColor' }}
                     iconType="circle"
                   />
                 </PieChart>

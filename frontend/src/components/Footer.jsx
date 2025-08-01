@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">NEOC₹ED</h3>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">NeoC₹ed</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               Your trusted partner for financial literacy and smart money management.
               Learn, plan, and grow your wealth with our comprehensive tools and resources.
@@ -60,7 +60,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-300 dark:border-white/20 mt-8 pt-8 text-center">
           <p className="text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} NEOC₹ED. All rights reserved.
+            © {new Date().getFullYear()} NeoC₹ed. All rights reserved.
           </p>
         </div>
       </div>

@@ -25,7 +25,7 @@ export const TESTIMONIALS = [
   {
     name: 'Priya Sharma',
     role: 'Software Engineer',
-    content: 'NEOC₹ED helped me understand investing basics and plan my retirement. The calculators are incredibly useful!',
+    content: 'NeoCred helped me understand investing basics and plan my retirement. The calculators are incredibly useful!',
     rating: 5
   },
   {

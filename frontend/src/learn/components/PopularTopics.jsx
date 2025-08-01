@@ -21,14 +21,14 @@ const PopularTopics = () => {
 
   return (
     <div className="mt-16">
-      <h2 className="text-3xl font-bold mb-4 text-white">Popular Topics</h2>
-      <p className="text-gray-400 mb-6">Click on any topic to get detailed guidance from our AI assistant</p>
+      <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">Popular Topics</h2>
+      <p className="text-gray-600 dark:text-gray-400 mb-6">Click on any topic to get detailed guidance from our AI assistant</p>
       <ul className="grid sm:grid-cols-2 gap-4 text-left">
         {topics.map((topic, index) => (
           <li
             key={index}
             onClick={() => handleTopicClick(topic)}
-            className="bg-[#111] p-4 rounded-xl border border-gray-800 hover:border-blue-500 hover:bg-blue-500/10 transition-all text-gray-300 hover:text-white cursor-pointer group"
+            className="bg-gray-100 dark:bg-[#111] p-4 rounded-xl border border-gray-300 dark:border-gray-800 hover:border-blue-500 hover:bg-blue-500/10 transition-all text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white cursor-pointer group"
           >
             <div className="flex items-center justify-between">
               <span>• {topic}</span>

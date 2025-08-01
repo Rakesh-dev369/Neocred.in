@@ -46,12 +46,12 @@ const HomeLoanEMICalculator = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">Home Loan EMI Calculator</h2>
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Home Loan EMI Calculator</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
-          <h3 className="text-xl font-semibold mb-6 text-white">🏠 Home Loan EMI Calculator</h3>
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">🏠 Home Loan EMI Calculator</h3>
           
           <Formik
             initialValues={{
@@ -65,12 +65,12 @@ const HomeLoanEMICalculator = () => {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Loan Amount (₹)
                   </label>
                   <Field
                     name="amount"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="3000000"
                   />
@@ -78,26 +78,25 @@ const HomeLoanEMICalculator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Interest Rate (% per annum)
                   </label>
                   <Field
                     name="interest"
-                    type="number"
-                    step="0.1"
-                    className="input-field"
+                    type="number" onWheel={(e) => e.target.blur()}
+                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="8"
                   />
                   <ErrorMessage name="interest" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Loan Tenure (Years)
                   </label>
                   <Field
                     name="years"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="20"
                   />
@@ -119,50 +118,57 @@ const HomeLoanEMICalculator = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4">EMI Breakdown</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">EMI Breakdown</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Monthly EMI:</span>
-                  <span className="text-blue-400 font-bold text-xl">₹{result.emi.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Monthly EMI:</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-bold text-xl">₹{result.emi.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Principal Amount:</span>
-                  <span className="text-green-400 font-semibold">₹{result.principal.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Principal Amount:</span>
+                  <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.principal.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Total Interest:</span>
-                  <span className="text-red-400 font-semibold">₹{result.totalInterest.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Total Interest:</span>
+                  <span className="text-red-600 dark:text-red-400 font-semibold">₹{result.totalInterest.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">Total Amount:</span>
-                  <span className="text-yellow-400 font-bold text-lg">₹{result.totalAmount.toLocaleString()}</span>
+                  <span className="text-gray-700 dark:text-white/80">Total Amount:</span>
+                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-lg">₹{result.totalAmount.toLocaleString()}</span>
                 </div>
+              </div>
+              
+              <div className="mt-6 p-4 bg-blue-100 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-500/30 rounded-lg">
+                <p className="text-blue-800 dark:text-blue-900 dark:text-blue-100 text-sm">
+                  🏠 <strong>Home Loan Tip:</strong> Consider prepayment options and tax benefits under Section 80C (principal) and 24(b) (interest).
+                </p>
               </div>
             </div>
 
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4 text-center">Loan Breakdown</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Loan Breakdown</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
                   <XAxis 
                     dataKey="name" 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                   />
                   <YAxis 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                     tickFormatter={(val) => `₹${(val/100000).toFixed(0)}L`}
                   />
                   <Tooltip 
                     formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
                     contentStyle={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      border: '1px solid rgba(0, 0, 0, 0.1)',
                       borderRadius: '8px',
-                      color: '#ffffff'
+                      color: '#000000'
                     }}
+                    labelStyle={{ color: '#000000' }}
                   />
                   <Bar 
                     dataKey="amount" 

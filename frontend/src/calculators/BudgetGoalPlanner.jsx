@@ -61,9 +61,9 @@ export default function BudgetGoalPlanner() {
 
   const getTypeColor = (type) => {
     switch(type) {
-      case 'short': return 'bg-green-500/20 text-green-300 border-green-500/30';
-      case 'medium': return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
-      case 'long': return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+      case 'short': return 'bg-green-500/20 text-green-700 dark:text-green-300 border-green-500/30';
+      case 'medium': return 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-300 border-yellow-500/30';
+      case 'long': return 'bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30';
       default: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
     }
   };
@@ -76,34 +76,34 @@ export default function BudgetGoalPlanner() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">Budget Goal Planner</h2>
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Budget Goal Planner</h2>
       
       <div className="space-y-6">
         {/* Inflation Rate Setting */}
-        <div className="glass-card">
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
           <div className="flex items-center gap-4">
-            <label className="text-white font-semibold">📈 Inflation Rate (annual %):</label>
+            <label className="text-gray-900 dark:text-white font-semibold">📈 Inflation Rate (annual %):</label>
             <input
               className="input-field w-24 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              type="number"
+              type="number" onWheel={(e) => e.target.blur()}
               value={inflationRate}
               onChange={e => setInflationRate(e.target.value)}
             />
-            <span className="text-white/70 text-sm">Used to adjust future goal values</span>
+            <span className="text-gray-700 dark:text-white/80 text-sm">Used to adjust future goal values</span>
           </div>
         </div>
 
         {/* Goals List */}
         <div className="space-y-4">
           {goals.map((goal, index) => (
-            <div key={goal.id} className="glass-card">
+            <div key={goal.id} className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">🎯 Goal #{index + 1}</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">🎯 Goal #{index + 1}</h3>
                 {goals.length > 1 && (
                   <button
                     onClick={() => removeGoal(goal.id)}
-                    className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
+                    className="p-2 text-red-400 hover:text-red-700 dark:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
                   >
                     <TrashIcon className="h-4 w-4" />
                   </button>
@@ -112,7 +112,7 @@ export default function BudgetGoalPlanner() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Goal Name</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Goal Name</label>
                   <input
                     className="input-field"
                     placeholder="e.g., New Car, Vacation"
@@ -122,7 +122,7 @@ export default function BudgetGoalPlanner() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Goal Type</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Goal Type</label>
                   <select
                     className="input-field"
                     value={goal.type}
@@ -135,10 +135,10 @@ export default function BudgetGoalPlanner() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Target Amount (₹)</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Target Amount (₹)</label>
                   <input
                     className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     placeholder="100000"
                     value={goal.amount}
                     onChange={e => handleChange(goal.id, "amount", e.target.value)}
@@ -146,10 +146,10 @@ export default function BudgetGoalPlanner() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Months to Save</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Months to Save</label>
                   <input
                     className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     placeholder="24"
                     value={goal.months}
                     onChange={e => handleChange(goal.id, "months", e.target.value)}
@@ -157,10 +157,10 @@ export default function BudgetGoalPlanner() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Already Saved (₹)</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Already Saved (₹)</label>
                   <input
                     className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     placeholder="10000"
                     value={goal.saved}
                     onChange={e => handleChange(goal.id, "saved", e.target.value)}
@@ -168,7 +168,7 @@ export default function BudgetGoalPlanner() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Monthly Required</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Monthly Required</label>
                   <div className="input-field bg-white/5 text-green-400 font-semibold">
                     ₹ {goal.monthly}
                   </div>
@@ -182,7 +182,7 @@ export default function BudgetGoalPlanner() {
                     <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getTypeColor(goal.type)}`}>
                       {goal.type.charAt(0).toUpperCase() + goal.type.slice(1)}-Term Goal
                     </span>
-                    <span className="text-white/70 text-sm">
+                    <span className="text-gray-700 dark:text-white/80 text-sm">
                       Inflation-adjusted: ₹ {parseFloat(goal.adjusted).toLocaleString()}
                     </span>
                   </div>
@@ -190,8 +190,8 @@ export default function BudgetGoalPlanner() {
                   {/* Progress Bar */}
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-white/80">Progress: {goal.progress}%</span>
-                      <span className="text-white/80">
+                      <span className="text-gray-700 dark:text-white/80">Progress: {goal.progress}%</span>
+                      <span className="text-gray-700 dark:text-white/80">
                         ₹ {parseFloat(goal.saved || 0).toLocaleString()} / ₹ {parseFloat(goal.adjusted).toLocaleString()}
                       </span>
                     </div>
@@ -228,25 +228,25 @@ export default function BudgetGoalPlanner() {
 
         {/* Summary */}
         {totalMonthly > 0 && (
-          <div className="glass-card">
-            <h3 className="text-xl font-semibold text-white mb-4">📊 Savings Summary</h3>
+          <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">📊 Savings Summary</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-400">₹ {totalTarget.toLocaleString()}</div>
-                <div className="text-white/70 text-sm">Total Target (Inflation-Adjusted)</div>
+                <div className="text-gray-700 dark:text-white/80 text-sm">Total Target (Inflation-Adjusted)</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-400">₹ {totalSaved.toLocaleString()}</div>
-                <div className="text-white/70 text-sm">Total Already Saved</div>
+                <div className="text-gray-700 dark:text-white/80 text-sm">Total Already Saved</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-yellow-400">₹ {totalMonthly.toLocaleString()}</div>
-                <div className="text-white/70 text-sm">Total Monthly Required</div>
+                <div className="text-gray-700 dark:text-white/80 text-sm">Total Monthly Required</div>
               </div>
             </div>
             
-            <div className="mt-6 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-              <p className="text-blue-100 text-sm">
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30 rounded-lg">
+              <p className="text-blue-900 dark:text-blue-100 text-sm">
                 💡 <strong>Tip:</strong> Review and adjust your goals quarterly. Consider increasing savings when you get salary increments or bonuses.
               </p>
             </div>

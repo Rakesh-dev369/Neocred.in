@@ -101,27 +101,27 @@ export default function Home() {
       
       {/* User Points Display */}
       {(userPoints > 0 || isLoading) && (
-        <section className="py-8 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
+        <section className="py-8 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="glass-card text-center">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl text-center">
               {isLoading ? (
                 <div className="flex items-center justify-center gap-3 mb-2">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-yellow-400"></div>
-                  <span className="text-gray-600 dark:text-white/70">Loading your progress...</span>
+                  <span className="text-gray-700 dark:text-white/70">Loading your progress...</span>
                 </div>
               ) : userPoints > 0 ? (
                 <>
                   <div className="flex items-center justify-center gap-3 mb-2">
                     <Coins className="h-6 w-6 text-yellow-400" />
                     <span className="text-2xl font-bold text-yellow-400">{userPoints.toLocaleString()}</span>
-                    <span className="text-gray-600 dark:text-white/70">Learning Points Earned</span>
+                    <span className="text-gray-700 dark:text-white/70">Learning Points Earned</span>
                   </div>
-                  <p className="text-gray-500 dark:text-white/60 text-sm mb-4">
+                  <p className="text-gray-600 dark:text-white/60 text-sm mb-4">
                     Keep learning to earn more points and unlock exclusive rewards!
                   </p>
                   <Link 
                     to={ROUTES.REWARDS} 
-                    className="inline-flex items-center gap-2 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                    className="inline-flex items-center gap-2 bg-yellow-100 dark:bg-yellow-500/20 hover:bg-yellow-200 dark:hover:bg-yellow-500/30 text-yellow-800 dark:text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   >
                     <span>🏆</span>
                     View Rewards
@@ -141,7 +141,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               🔥 Most Popular Tools
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Start with these essential calculators used by thousands of users daily.
             </p>
           </div>
@@ -180,20 +180,20 @@ export default function Home() {
               <Link
                 key={index}
                 to={ROUTES.TOOLS}
-                className="glass-card hover:scale-105 transition-all duration-300 cursor-pointer group block"
+                className="bg-white dark:bg-white/5 p-6 rounded-xl hover:scale-105 transition-all duration-300 cursor-pointer group block"
               >
                 <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${tool.color} flex items-center justify-center mb-4`}>
                   <span className="text-2xl">{tool.icon}</span>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-400 transition-colors">
                   {tool.title}
                 </h3>
-                <p className="text-gray-400 text-sm mb-3">{tool.description}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">{tool.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs bg-green-500/20 text-green-300 px-2 py-1 rounded-full">
+                  <span className="text-xs bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300 px-2 py-1 rounded-full">
                     {tool.popularity} Popular
                   </span>
-                  <span className="text-gray-400 group-hover:text-blue-400 transition-colors">→</span>
+                  <span className="text-gray-600 dark:text-gray-400 group-hover:text-blue-400 transition-colors">→</span>
                 </div>
               </Link>
             ))}
@@ -202,7 +202,7 @@ export default function Home() {
           <div className="text-center">
             <Link
               to={ROUTES.TOOLS}
-              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 border border-white/20"
+              className="inline-flex items-center gap-2 bg-gray-900 dark:bg-white/10 hover:bg-gray-800 dark:hover:bg-white/20 text-white dark:text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 border border-gray-700 dark:border-white/20"
             >
               View All 40+ Tools
               <span>→</span>
@@ -219,35 +219,35 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 🎆 Welcome Back, Financial Explorer!
               </h2>
-              <p className="text-xl text-gray-400">
+              <p className="text-xl text-gray-600 dark:text-gray-400">
                 Continue your journey to financial mastery with personalized recommendations.
               </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="glass-card text-center hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white dark:bg-white/5 p-6 rounded-xl text-center hover:bg-gray-50 dark:hover:bg-white/10 transition-all duration-300">
                 <div className="text-3xl mb-3">📚</div>
-                <h3 className="text-lg font-semibold text-white mb-2">Continue Learning</h3>
-                <p className="text-gray-400 text-sm mb-4">Pick up where you left off in your financial education journey.</p>
-                <Link to={ROUTES.LEARN} className="text-blue-400 hover:text-blue-300 font-medium text-sm">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Continue Learning</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">Pick up where you left off in your financial education journey.</p>
+                <Link to={ROUTES.LEARN} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm">
                   Resume Learning →
                 </Link>
               </div>
               
-              <div className="glass-card text-center hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white dark:bg-white/5 p-6 rounded-xl text-center hover:bg-gray-50 dark:hover:bg-white/10 transition-all duration-300">
                 <div className="text-3xl mb-3">🎯</div>
-                <h3 className="text-lg font-semibold text-white mb-2">Your Progress</h3>
-                <p className="text-gray-400 text-sm mb-4">You've earned {userPoints} points! Keep going to unlock more rewards.</p>
-                <Link to={ROUTES.REWARDS} className="text-yellow-400 hover:text-yellow-300 font-medium text-sm">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Your Progress</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">You've earned {userPoints} points! Keep going to unlock more rewards.</p>
+                <Link to={ROUTES.REWARDS} className="text-yellow-600 dark:text-yellow-400 hover:text-yellow-800 dark:hover:text-yellow-300 font-medium text-sm">
                   View Achievements →
                 </Link>
               </div>
               
-              <div className="glass-card text-center hover:bg-white/10 transition-all duration-300">
+              <div className="bg-white dark:bg-white/5 p-6 rounded-xl text-center hover:bg-gray-50 dark:hover:bg-white/10 transition-all duration-300">
                 <div className="text-3xl mb-3">🚀</div>
-                <h3 className="text-lg font-semibold text-white mb-2">Recommended Tools</h3>
-                <p className="text-gray-400 text-sm mb-4">Based on your activity, try these advanced calculators next.</p>
-                <Link to={ROUTES.TOOLS} className="text-green-400 hover:text-green-300 font-medium text-sm">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Recommended Tools</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">Based on your activity, try these advanced calculators next.</p>
+                <Link to={ROUTES.TOOLS} className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium text-sm">
                   Explore Tools →
                 </Link>
               </div>
@@ -263,7 +263,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Everything You Need for Financial Success
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
               From learning basics to advanced planning, we provide all the tools and knowledge you need.
             </p>
           </div>
@@ -285,7 +285,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Take Control of Your Finances?
             </h2>
-            <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
               Join thousands of users who have already started their journey to financial freedom.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -297,7 +297,7 @@ export default function Home() {
               </Link>
               <Link
                 to={ROUTES.CHATBOT}
-                className="border-2 border-white text-white hover:bg-white hover:text-black font-medium py-3 px-8 rounded-2xl transition-all duration-300"
+                className="border-2 border-gray-900 dark:border-white text-gray-900 dark:text-white hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-black font-medium py-3 px-8 rounded-2xl transition-all duration-300"
               >
                 Ask AI Assistant
               </Link>
@@ -307,16 +307,16 @@ export default function Home() {
       </section>
 
       {/* Live Activity Ticker */}
-      <section className="py-8 bg-gradient-to-r from-green-900/20 to-blue-900/20">
+      <section className="py-8 bg-gradient-to-r from-green-100 to-blue-100 dark:from-green-900/20 dark:to-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="glass-card">
+          <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl">
             <div className="flex items-center justify-center gap-4 text-sm">
               <span className="text-green-400 animate-pulse">•</span>
               <span className="text-gray-700 dark:text-white/80">Live Activity:</span>
               <span className="text-gray-900 dark:text-white">Priya just earned 25 points from SIP Calculator</span>
-              <span className="text-gray-500 dark:text-white/50">|</span>
+              <span className="text-gray-600 dark:text-white/50">|</span>
               <span className="text-gray-900 dark:text-white">Rahul completed Budget Planning lesson</span>
-              <span className="text-gray-500 dark:text-white/50">|</span>
+              <span className="text-gray-600 dark:text-white/50">|</span>
               <span className="text-gray-900 dark:text-white">Anita redeemed Premium Features</span>
             </div>
           </div>
@@ -330,8 +330,8 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               What Our Users Say
             </h2>
-            <p className="text-xl text-gray-400">
-              Real stories from people who transformed their financial lives with NEOC₹ED.
+            <p className="text-xl text-gray-600 dark:text-gray-400">
+              Real stories from people who transformed their financial lives with NeoCred.
             </p>
           </div>
 

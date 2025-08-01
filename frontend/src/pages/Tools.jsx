@@ -256,8 +256,8 @@ export default function Tools() {
   const renderToolCard = (tool) => (
     <div 
       key={tool.name}
-      className={`glass-card transition-all duration-300 group ${
-        tool.locked ? 'opacity-75 cursor-not-allowed' : 'hover:bg-white/15 cursor-pointer'
+      className={`bg-gray-100 dark:bg-white/5 p-6 rounded-xl transition-all duration-300 group ${
+        tool.locked ? 'opacity-75 cursor-not-allowed' : 'hover:bg-gray-200 dark:hover:bg-white/15 cursor-pointer'
       }`}
       onClick={() => {
         if (!tool.locked) {
@@ -269,12 +269,12 @@ export default function Tools() {
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <tool.icon className={`h-6 w-6 transition-colors ${
-            tool.locked ? 'text-white/50' : 'text-white group-hover:text-blue-400'
+            tool.locked ? 'text-gray-500 dark:text-white/50' : 'text-gray-900 dark:text-white group-hover:text-blue-400'
           }`} />
           <div>
             <div className="flex items-center gap-2">
               <h3 className={`text-lg font-semibold transition-colors ${
-                tool.locked ? 'text-white/60' : 'text-white group-hover:text-blue-400'
+                tool.locked ? 'text-gray-500 dark:text-white/60' : 'text-gray-900 dark:text-white group-hover:text-blue-400'
               }`}>{tool.name}</h3>
               {tool.locked && (
                 <span className="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-full border border-yellow-500/30">
@@ -284,8 +284,8 @@ export default function Tools() {
             </div>
             <div className="flex items-center gap-2 mt-1">
               <span className="text-xs">{getLevelColor(tool.level)} {tool.level}</span>
-              <span className="text-xs text-white/50">•</span>
-              <span className="text-xs text-white/70">{tool.category}</span>
+              <span className="text-xs text-gray-500 dark:text-white/50">•</span>
+              <span className="text-xs text-gray-600 dark:text-white/70">{tool.category}</span>
             </div>
           </div>
         </div>
@@ -299,7 +299,7 @@ export default function Tools() {
             className={`p-1 rounded-full transition-all duration-200 hover:scale-110 ${
               favoriteTools.has(tool.name)
                 ? 'text-red-400 hover:text-red-300'
-                : 'text-white/40 hover:text-red-400'
+                : 'text-gray-500 dark:text-white/40 hover:text-red-400'
             }`}
             title={favoriteTools.has(tool.name) ? 'Remove from favorites' : 'Add to favorites'}
           >
@@ -318,12 +318,12 @@ export default function Tools() {
         </div>
       </div>
       <p className={`text-sm mb-3 ${
-        tool.locked ? 'text-white/50' : 'text-white/70'
+        tool.locked ? 'text-gray-500 dark:text-white/50' : 'text-gray-600 dark:text-white/70'
       }`}>{tool.description}</p>
       <div className="flex flex-wrap gap-1">
         {tool.tags.slice(0, 3).map(tag => (
           <span key={tag} className={`text-xs px-2 py-1 rounded-full ${
-            tool.locked ? 'bg-white/5 text-white/50' : 'bg-white/10 text-white/80'
+            tool.locked ? 'bg-gray-200 dark:bg-white/5 text-gray-500 dark:text-white/50' : 'bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-white/80'
           }`}>
             {tag}
           </span>
@@ -340,23 +340,23 @@ export default function Tools() {
   );
 
   return (
-    <div className="py-12 min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="py-12 min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-white mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Financial Tools & Calculators
             </h1>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-6">
+            <p className="text-xl text-gray-600 dark:text-white/80 max-w-3xl mx-auto mb-6">
               Make informed financial decisions with our comprehensive suite of calculators and planning tools.
             </p>
             
             {/* Points Display */}
             {userPoints > 0 && (
               <div className="mb-6 flex justify-center">
-                <div className="glass-card inline-flex items-center gap-2 px-4 py-2 relative">
+                <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl inline-flex items-center gap-2 px-4 py-2 relative">
                   <span className="text-2xl">🏆</span>
-                  <span className="text-yellow-400 font-bold">{userPoints.toLocaleString()}</span>
-                  <span className="text-white/70 text-sm">Learning Points</span>
+                  <span className="text-yellow-600 dark:text-yellow-400 font-bold">{userPoints.toLocaleString()}</span>
+                  <span className="text-gray-700 dark:text-white/70 text-sm">Learning Points</span>
                   {showPointsAnimation && (
                     <span className="text-green-400 font-bold absolute -top-2 right-0 animate-bounce">
                       +10
@@ -368,28 +368,28 @@ export default function Tools() {
             
             {/* Quick Access Cards */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <div className="glass-card">
+              <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl">
                 <div className="flex items-center gap-3 mb-2">
                   <SparklesIcon className="h-5 w-5 text-blue-400" />
-                  <span className="text-white font-medium">Not sure where to begin?</span>
+                  <span className="text-gray-900 dark:text-white font-medium">Not sure where to begin?</span>
                 </div>
                 <button 
                   onClick={() => setSelectedLevel('Beginner')}
-                  className="text-blue-400 hover:text-blue-300 font-medium text-sm transition-colors"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm transition-colors"
                 >
                   → Try Beginner Tools
                 </button>
               </div>
               
               {recentToolsList.length > 0 && (
-                <div className="glass-card">
+                <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-lg">🕒</span>
-                    <span className="text-white font-medium">Recently Used ({recentToolsList.length})</span>
+                    <span className="text-gray-900 dark:text-white font-medium">Recently Used ({recentToolsList.length})</span>
                   </div>
                   <button 
                     onClick={() => setSelectedCategory('Recent')}
-                    className="text-green-400 hover:text-green-300 font-medium text-sm transition-colors"
+                    className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium text-sm transition-colors"
                   >
                     → Continue Where You Left Off
                   </button>
@@ -397,14 +397,14 @@ export default function Tools() {
               )}
               
               {favoriteToolsList.length > 0 && (
-                <div className="glass-card">
+                <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl">
                   <div className="flex items-center gap-3 mb-2">
                     <HeartIconSolid className="h-5 w-5 text-red-400" />
-                    <span className="text-white font-medium">Your Favorites ({favoriteToolsList.length})</span>
+                    <span className="text-gray-900 dark:text-white font-medium">Your Favorites ({favoriteToolsList.length})</span>
                   </div>
                   <button 
                     onClick={() => setSelectedCategory('Favorites')}
-                    className="text-red-400 hover:text-red-300 font-medium text-sm transition-colors"
+                    className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-medium text-sm transition-colors"
                   >
                     → View Favorite Tools
                   </button>
@@ -414,17 +414,17 @@ export default function Tools() {
           </div>
 
           {/* Search and Filters */}
-          <div className="glass-card mb-8">
+          <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Search Bar */}
               <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/50" />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500 dark:text-white/50" />
                 <input
                   type="text"
                   placeholder="Search tools..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2 bg-white dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               
@@ -432,10 +432,10 @@ export default function Tools() {
               <select
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
-                className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-white dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {levels.map(level => (
-                  <option key={level} value={level} className="bg-gray-800">
+                  <option key={level} value={level} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
                     {level === 'All' ? 'All Levels' : `${getLevelColor(level)} ${level}`}
                   </option>
                 ))}
@@ -445,10 +445,10 @@ export default function Tools() {
               <select
                 value={selectedTag}
                 onChange={(e) => setSelectedTag(e.target.value)}
-                className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-white dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {tags.map(tag => (
-                  <option key={tag} value={tag} className="bg-gray-800 capitalize">
+                  <option key={tag} value={tag} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white capitalize">
                     {tag === 'All' ? 'All Tags' : tag}
                   </option>
                 ))}
@@ -458,10 +458,10 @@ export default function Tools() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-white dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {categories.map(category => (
-                  <option key={category} value={category} className="bg-gray-800">
+                  <option key={category} value={category} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
                     {category}
                   </option>
                 ))}
@@ -472,12 +472,12 @@ export default function Tools() {
           {/* All Tools Grid */}
           <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {searchTerm || selectedLevel !== 'All' || selectedTag !== 'All' || selectedCategory !== 'All' 
                   ? `Filtered Tools (${filteredTools.length})` 
                   : 'All Tools'}
               </h2>
-              <div className="flex items-center gap-2 text-white/60">
+              <div className="flex items-center gap-2 text-gray-600 dark:text-white/60">
                 <FunnelIcon className="h-5 w-5" />
                 <span className="text-sm">{filteredTools.length} tools found</span>
               </div>
@@ -488,8 +488,8 @@ export default function Tools() {
                 {filteredTools.map(tool => renderToolCard(tool))}
               </div>
             ) : (
-              <div className="glass-card text-center py-12">
-                <div className="text-white/50 mb-4">
+              <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl text-center py-12">
+                <div className="text-gray-500 dark:text-white/50 mb-4">
                   <MagnifyingGlassIcon className="h-12 w-12 mx-auto mb-3" />
                   <p className="text-lg">No tools found</p>
                   <p className="text-sm">Try adjusting your search or filters</p>
@@ -501,7 +501,7 @@ export default function Tools() {
                     setSelectedTag('All');
                     setSelectedCategory('All');
                   }}
-                  className="text-blue-400 hover:text-blue-300 font-medium"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                 >
                   Clear all filters
                 </button>
@@ -512,16 +512,16 @@ export default function Tools() {
           {/* Selected Tool Modal/Panel */}
           {selectedTool && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-              <div className="bg-gray-900 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-gray-900 border-b border-white/10 p-6 flex items-center justify-between">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-white/10 p-6 flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <selectedTool.icon className="h-8 w-8 text-blue-400" />
                     <div>
-                      <h2 className="text-2xl font-bold text-white">{selectedTool.name}</h2>
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{selectedTool.name}</h2>
                       <div className="flex items-center gap-3 mt-1">
                         <span className="text-sm">{getLevelColor(selectedTool.level)} {selectedTool.level}</span>
-                        <span className="text-sm text-white/50">•</span>
-                        <span className="text-sm text-white/70">{selectedTool.category}</span>
+                        <span className="text-sm text-gray-500 dark:text-white/50">•</span>
+                        <span className="text-sm text-gray-600 dark:text-white/70">{selectedTool.category}</span>
                       </div>
                     </div>
                   </div>
@@ -536,26 +536,26 @@ export default function Tools() {
                     )}
                     <button
                       onClick={() => setSelectedTool(null)}
-                      className="text-white/70 hover:text-white text-2xl font-bold w-8 h-8 flex items-center justify-center"
+                      className="text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white text-2xl font-bold w-8 h-8 flex items-center justify-center"
                     >
                       ×
                     </button>
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-white/80 mb-6">{selectedTool.description}</p>
+                  <p className="text-gray-700 dark:text-white/80 mb-6">{selectedTool.description}</p>
                   {selectedTool.component ? (
                     <Suspense fallback={
-                      <div className="glass-card text-center py-12">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
-                        <span className="text-white/70">Loading calculator...</span>
+                      <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl text-center py-12">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-white mx-auto mb-4"></div>
+                        <span className="text-gray-600 dark:text-white/70">Loading calculator...</span>
                       </div>
                     }>
                       <selectedTool.component />
                     </Suspense>
                   ) : (
-                    <div className="glass-card text-center py-12">
-                      <span className="text-white/50 bg-white/10 px-4 py-2 rounded-full">
+                    <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl text-center py-12">
+                      <span className="text-gray-600 dark:text-white/50 bg-gray-200 dark:bg-white/10 px-4 py-2 rounded-full">
                         Coming Soon
                       </span>
                     </div>

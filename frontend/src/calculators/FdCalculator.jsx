@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { formatCurrency } from '../utils/formatCurrency';
 
 const validationSchema = Yup.object({
@@ -44,15 +45,21 @@ export default function FdCalculator() {
       principal: P,
       maturityAmount,
       interestEarned,
-      tenure: t
+      tenure: t,
+      data: [
+        { name: 'Principal', amount: P },
+        { name: 'Interest', amount: interestEarned },
+        { name: 'Maturity', amount: maturityAmount }
+      ]
     });
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">FD Calculator</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="glass-card">
-          <h3 className="text-xl font-semibold mb-6 text-white">FD Calculator</h3>
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">FD Calculator</h3>
           
           <Formik
             initialValues={{
@@ -67,12 +74,12 @@ export default function FdCalculator() {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Principal Amount (₹)
                   </label>
                   <Field
                     name="principal"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="100000"
                   />
@@ -80,26 +87,25 @@ export default function FdCalculator() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Interest Rate (% per annum)
                   </label>
                   <Field
                     name="rate"
-                    type="number"
-                    step="0.1"
-                    className="input-field"
+                    type="number" onWheel={(e) => e.target.blur()}
+                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="7.5"
                   />
                   <ErrorMessage name="rate" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Tenure (Years)
                   </label>
                   <Field
                     name="tenure"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="5"
                   />
@@ -107,13 +113,13 @@ export default function FdCalculator() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Compounding Frequency
                   </label>
                   <Field 
                     as="select" 
                     name="compounding" 
-                    className="w-full px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg focus:ring-2 focus:ring-white/30 focus:border-white/40 text-white transition-all duration-300 appearance-none cursor-pointer"
+                    className="w-full px-3 py-2 bg-white dark:bg-white/10 backdrop-blur-md border border-gray-300 dark:border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-white/30 focus:border-blue-500 dark:focus:border-white/40 text-gray-900 dark:text-white transition-all duration-300 appearance-none cursor-pointer"
                   >
                     <option value="yearly" className="bg-gray-800 text-white">Yearly</option>
                     <option value="half-yearly" className="bg-gray-800 text-white">Half-Yearly</option>
@@ -136,31 +142,69 @@ export default function FdCalculator() {
         </div>
 
         {result && (
-          <div className="glass-card">
-            <h3 className="text-xl font-semibold mb-6 text-white">Calculation Results</h3>
-            
-            <div className="space-y-4">
-              <div className="flex justify-between items-center py-2 border-b border-white/20">
-                <span className="text-white/70">Principal Amount:</span>
-                <span className="font-semibold text-blue-400">{formatCurrency(result.principal)}</span>
+          <div className="space-y-6">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Results</h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Principal Amount:</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-semibold">{formatCurrency(result.principal)}</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Interest Earned:</span>
+                  <span className="text-green-600 dark:text-green-400 font-semibold">{formatCurrency(result.interestEarned)}</span>
+                </div>
+                <div className="flex justify-between items-center py-2">
+                  <span className="text-gray-700 dark:text-white/80">Maturity Amount:</span>
+                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-lg">{formatCurrency(result.maturityAmount)}</span>
+                </div>
               </div>
               
-              <div className="flex justify-between items-center py-2 border-b border-white/20">
-                <span className="text-white/70">Interest Earned:</span>
-                <span className="font-semibold text-green-400">{formatCurrency(result.interestEarned)}</span>
-              </div>
-              
-              <div className="flex justify-between items-center py-2 border-b border-white/20">
-                <span className="text-white/70">Maturity Amount:</span>
-                <span className="font-bold text-yellow-400 text-lg">{formatCurrency(result.maturityAmount)}</span>
-              </div>
-              
-              <div className="mt-6 p-4 bg-white/10 backdrop-blur-md rounded-lg border border-white/20">
-                <p className="text-sm text-white/90">
-                  Your FD will mature to <strong className="text-yellow-400">{formatCurrency(result.maturityAmount)}</strong> after {result.tenure} years,
-                  earning you <strong className="text-green-400">{formatCurrency(result.interestEarned)}</strong> in interest.
+              <div className="mt-6 p-4 bg-blue-100 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-500/30 rounded-lg">
+                <p className="text-blue-800 dark:text-blue-900 dark:text-blue-100 text-sm">
+                  💰 <strong>FD Tip:</strong> Your FD will mature to <strong>{formatCurrency(result.maturityAmount)}</strong> after {result.tenure} years, earning <strong>{formatCurrency(result.interestEarned)}</strong> in interest.
                 </p>
               </div>
+            </div>
+
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">FD Breakdown</h3>
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
+                  <XAxis 
+                    dataKey="name" 
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
+                  />
+                  <YAxis 
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
+                    tickFormatter={(val) => `₹${(val/1000).toFixed(0)}K`}
+                  />
+                  <Tooltip 
+                    formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
+                    contentStyle={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      border: '1px solid rgba(0, 0, 0, 0.1)',
+                      borderRadius: '8px',
+                      color: '#000000'
+                    }}
+                    labelStyle={{ color: '#000000' }}
+                  />
+                  <Bar 
+                    dataKey="amount" 
+                    radius={[4, 4, 0, 0]}
+                    fill="url(#fdGradient)"
+                  />
+                  <defs>
+                    <linearGradient id="fdGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="50%" stopColor="#059669" />
+                      <stop offset="100%" stopColor="#047857" />
+                    </linearGradient>
+                  </defs>
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </div>
         )}

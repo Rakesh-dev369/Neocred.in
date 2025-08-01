@@ -77,7 +77,7 @@ const ScholarshipEligibilityTool = () => {
       <h2 className="text-2xl font-bold mb-6 text-white">Scholarship Eligibility Tool</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
           <h3 className="text-xl font-semibold mb-6 text-white">🎓 Scholarship Eligibility Tool</h3>
           
           <Formik
@@ -93,12 +93,12 @@ const ScholarshipEligibilityTool = () => {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Annual Family Income (₹)
                   </label>
                   <Field
                     name="income"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="500000"
                   />
@@ -106,12 +106,12 @@ const ScholarshipEligibilityTool = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Academic Marks (%)
                   </label>
                   <Field
                     name="marks"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="85"
                   />
@@ -119,7 +119,7 @@ const ScholarshipEligibilityTool = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Category
                   </label>
                   <Field
@@ -138,7 +138,7 @@ const ScholarshipEligibilityTool = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     State
                   </label>
                   <Field
@@ -174,27 +174,27 @@ const ScholarshipEligibilityTool = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-white mb-4">Eligibility Results</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Family Income:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Family Income:</span>
                   <span className="text-blue-400 font-semibold">₹{result.income.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Academic Marks:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Academic Marks:</span>
                   <span className="text-white font-semibold">{result.marks}%</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Category:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Category:</span>
                   <span className="text-white font-semibold">{result.category}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">State:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">State:</span>
                   <span className="text-white font-semibold">{result.state}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">Eligibility Status:</span>
+                  <span className="text-gray-700 dark:text-white/80">Eligibility Status:</span>
                   <span className={`font-bold text-lg ${result.eligible ? 'text-green-400' : 'text-red-400'}`}>
                     {result.eligible ? '✅ Eligible' : '❌ Not Eligible'}
                   </span>
@@ -202,26 +202,26 @@ const ScholarshipEligibilityTool = () => {
               </div>
               
               {result.eligible ? (
-                <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
-                  <h4 className="text-green-300 font-semibold mb-2">Available Scholarships:</h4>
-                  <ul className="text-green-100 text-sm space-y-1">
+                <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-lg">
+                  <h4 className="text-green-700 dark:text-green-300 font-semibold mb-2">Available Scholarships:</h4>
+                  <ul className="text-green-900 dark:text-green-100 text-sm space-y-1">
                     {result.scholarships.map((scholarship, index) => (
                       <li key={index}>• {scholarship}</li>
                     ))}
                   </ul>
                 </div>
               ) : (
-                <div className="mt-6 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-                  <p className="text-red-100 text-sm">
+                <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 rounded-lg">
+                  <p className="text-red-900 dark:text-red-100 text-sm">
                     <strong>Reason:</strong> {result.reason}
                   </p>
                 </div>
               )}
             </div>
 
-            <div className="glass-card">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-white mb-4">General Scholarship Guidelines</h3>
-              <div className="space-y-3 text-sm text-white/80">
+              <div className="space-y-3 text-sm text-gray-700 dark:text-white/80">
                 <div className="p-3 bg-white/5 rounded-lg">
                   <strong className="text-white">Merit-cum-Means:</strong> Income ≤ ₹8 lakhs, Marks ≥ 75%
                 </div>

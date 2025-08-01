@@ -147,9 +147,9 @@ export default function Rewards() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            🎯 NEOC₹ED Rewards Program
+            🎯 NeoCred Rewards Program
           </h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Turn your financial learning journey into exciting rewards. Every action counts!
           </p>
         </div>
@@ -160,7 +160,7 @@ export default function Rewards() {
             <div className="text-center">
               <div className="text-4xl mb-2">{currentLevel.icon}</div>
               <div className={`text-2xl font-bold ${currentLevel.color}`}>{currentLevel.name} Level</div>
-              <div className="text-gray-400 text-sm">Current Status</div>
+              <div className="text-gray-600 dark:text-gray-400 text-sm">Current Status</div>
             </div>
             
             <div className="text-center">
@@ -168,7 +168,7 @@ export default function Rewards() {
                 <Coins className="h-6 w-6 text-yellow-400" />
                 <span className="text-3xl font-bold text-yellow-400">{userPoints.toLocaleString()}</span>
               </div>
-              <div className="text-gray-400 text-sm">Total Points</div>
+              <div className="text-gray-600 dark:text-gray-400 text-sm">Total Points</div>
             </div>
             
             <div className="text-center">
@@ -176,7 +176,7 @@ export default function Rewards() {
                 <span className="text-2xl">🔥</span>
                 <span className="text-2xl font-bold text-orange-400">{dailyStreak}</span>
               </div>
-              <div className="text-gray-400 text-sm">Day Streak</div>
+              <div className="text-gray-600 dark:text-gray-400 text-sm">Day Streak</div>
             </div>
           </div>
           
@@ -202,7 +202,7 @@ export default function Rewards() {
             <button
               onClick={() => setSelectedTab('earn')}
               className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 ${
-                selectedTab === 'earn' ? 'bg-white/20 text-white' : 'text-gray-400 hover:text-white'
+                selectedTab === 'earn' ? 'bg-white/20 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
               <span>⚡</span>
@@ -211,7 +211,7 @@ export default function Rewards() {
             <button
               onClick={() => setSelectedTab('redeem')}
               className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 ${
-                selectedTab === 'redeem' ? 'bg-white/20 text-white' : 'text-gray-400 hover:text-white'
+                selectedTab === 'redeem' ? 'bg-white/20 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
               <span>🎁</span>
@@ -220,7 +220,7 @@ export default function Rewards() {
             <button
               onClick={() => setSelectedTab('achievements')}
               className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 ${
-                selectedTab === 'achievements' ? 'bg-white/20 text-white' : 'text-gray-400 hover:text-white'
+                selectedTab === 'achievements' ? 'bg-white/20 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
               <span>🏆</span>
@@ -229,7 +229,7 @@ export default function Rewards() {
             <button
               onClick={() => setSelectedTab('leaderboard')}
               className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 ${
-                selectedTab === 'leaderboard' ? 'bg-white/20 text-white' : 'text-gray-400 hover:text-white'
+                selectedTab === 'leaderboard' ? 'bg-white/20 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
               <span>👑</span>
@@ -238,7 +238,7 @@ export default function Rewards() {
             <button
               onClick={() => setSelectedTab('history')}
               className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 ${
-                selectedTab === 'history' ? 'bg-white/20 text-white' : 'text-gray-400 hover:text-white'
+                selectedTab === 'history' ? 'bg-white/20 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
               <span>📜</span>

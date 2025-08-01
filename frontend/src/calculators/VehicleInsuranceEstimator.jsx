@@ -62,7 +62,7 @@ const VehicleInsuranceEstimator = () => {
       <h2 className="text-2xl font-bold mb-6 text-white">Vehicle Insurance Estimator</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
           <h3 className="text-xl font-semibold mb-6 text-white">🚘 Vehicle Insurance Estimator</h3>
           
           <Formik
@@ -78,7 +78,7 @@ const VehicleInsuranceEstimator = () => {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Vehicle Type
                   </label>
                   <Field
@@ -94,12 +94,12 @@ const VehicleInsuranceEstimator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Vehicle Value (₹)
                   </label>
                   <Field
                     name="vehicleValue"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="800000"
                   />
@@ -107,12 +107,12 @@ const VehicleInsuranceEstimator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Vehicle Age (Years)
                   </label>
                   <Field
                     name="age"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="2"
                   />
@@ -120,7 +120,7 @@ const VehicleInsuranceEstimator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     City Type
                   </label>
                   <Field
@@ -151,43 +151,43 @@ const VehicleInsuranceEstimator = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-white mb-4">Premium Estimate</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Vehicle Type:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Vehicle Type:</span>
                   <span className="text-white font-semibold">{result.type}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Vehicle Value:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Vehicle Value:</span>
                   <span className="text-blue-400 font-semibold">₹{result.vehicleValue.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Vehicle Age:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Vehicle Age:</span>
                   <span className="text-white font-semibold">{result.age} years</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">City:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">City:</span>
                   <span className="text-white font-semibold">{result.city}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Base Premium:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Base Premium:</span>
                   <span className="text-green-400 font-bold text-xl">₹{result.basePremium.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">With Add-ons:</span>
+                  <span className="text-gray-700 dark:text-white/80">With Add-ons:</span>
                   <span className="text-yellow-400 font-bold text-lg">₹{result.totalWithAddOns.toLocaleString()}</span>
                 </div>
               </div>
               
-              <div className="mt-6 p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg">
-                <p className="text-orange-100 text-sm">
+              <div className="mt-6 p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-500/30 rounded-lg">
+                <p className="text-orange-900 dark:text-orange-100 text-sm">
                   🚘 <strong>Vehicle Tip:</strong> Add-ons include Zero Depreciation, Engine Protection, and Roadside Assistance for comprehensive coverage.
                 </p>
               </div>
             </div>
 
-            <div className="glass-card">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-white mb-4 text-center">Premium Comparison</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>

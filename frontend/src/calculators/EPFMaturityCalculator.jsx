@@ -67,12 +67,12 @@ const EPFMaturityCalculator = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">EPF Maturity Calculator</h2>
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">EPF Maturity Calculator</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
-          <h3 className="text-xl font-semibold mb-6 text-white">🏢 EPF Maturity Calculator</h3>
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">🏢 EPF Maturity Calculator</h3>
           
           <Formik
             initialValues={{
@@ -88,12 +88,12 @@ const EPFMaturityCalculator = () => {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Current Age (Years)
                   </label>
                   <Field
                     name="currentAge"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="25"
                   />
@@ -101,12 +101,12 @@ const EPFMaturityCalculator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Basic Salary (₹)
                   </label>
                   <Field
                     name="basic"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="30000"
                   />
@@ -114,27 +114,26 @@ const EPFMaturityCalculator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     EPF Contribution (%)
                   </label>
                   <Field
                     name="contribution"
-                    type="number"
-                    step="0.1"
-                    className="input-field"
+                    type="number" onWheel={(e) => e.target.blur()}
+                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="12"
                   />
                   <ErrorMessage name="contribution" component="div" className="text-red-500 text-sm mt-1" />
-                  <p className="text-xs text-gray-400 mt-1">Standard rate: 12% (employee + employer)</p>
+                  <p className="text-xs text-gray-700 dark:text-gray-300 mt-1">Standard rate: 12% (employee + employer)</p>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Service Years
                   </label>
                   <Field
                     name="years"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="20"
                   />
@@ -142,18 +141,17 @@ const EPFMaturityCalculator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     EPF Interest Rate (%)
                   </label>
                   <Field
                     name="rate"
-                    type="number"
-                    step="0.1"
-                    className="input-field"
+                    type="number" onWheel={(e) => e.target.blur()}
+                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="8.5"
                   />
                   <ErrorMessage name="rate" component="div" className="text-red-500 text-sm mt-1" />
-                  <p className="text-xs text-gray-400 mt-1">Current EPF rate: 8.5%</p>
+                  <p className="text-xs text-gray-700 dark:text-gray-300 mt-1">Current EPF rate: 8.5%</p>
                 </div>
 
                 <button
@@ -171,72 +169,73 @@ const EPFMaturityCalculator = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4">EPF Projection</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">EPF Projection</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Current Age:</span>
-                  <span className="text-white font-semibold">{result.currentAge} years</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Current Age:</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">{result.currentAge} years</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Retirement Age:</span>
-                  <span className="text-white font-semibold">{result.retirementAge} years</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Retirement Age:</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">{result.retirementAge} years</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Basic Salary:</span>
-                  <span className="text-blue-400 font-semibold">₹{result.basic.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Basic Salary:</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-semibold">₹{result.basic.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Employee Contribution:</span>
-                  <span className="text-green-400 font-semibold">₹{result.monthlyEmployeeContribution.toLocaleString()}/month</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Employee Contribution:</span>
+                  <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.monthlyEmployeeContribution.toLocaleString()}/month</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Employer Contribution:</span>
-                  <span className="text-green-400 font-semibold">₹{result.monthlyEmployerContribution.toLocaleString()}/month</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Employer Contribution:</span>
+                  <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.monthlyEmployerContribution.toLocaleString()}/month</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Total Contribution:</span>
-                  <span className="text-purple-400 font-semibold">₹{result.totalContribution.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Total Contribution:</span>
+                  <span className="text-purple-600 dark:text-purple-400 font-semibold">₹{result.totalContribution.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Interest Earned:</span>
-                  <span className="text-orange-400 font-semibold">₹{result.interestEarned.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Interest Earned:</span>
+                  <span className="text-orange-600 dark:text-orange-400 font-semibold">₹{result.interestEarned.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">EPF Maturity Amount:</span>
-                  <span className="text-yellow-400 font-bold text-xl">₹{result.maturityAmount.toLocaleString()}</span>
+                  <span className="text-gray-700 dark:text-white/80">EPF Maturity Amount:</span>
+                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-xl">₹{result.maturityAmount.toLocaleString()}</span>
                 </div>
               </div>
               
-              <div className="mt-6 p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg">
-                <p className="text-orange-100 text-sm">
+              <div className="mt-6 p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-500/30 rounded-lg">
+                <p className="text-orange-900 dark:text-orange-100 text-sm">
                   🏢 <strong>EPF Benefit:</strong> Tax-free maturity after 5 years of service. Employer contributes equally to your EPF account.
                 </p>
               </div>
             </div>
 
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4 text-center">EPF Growth</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">EPF Growth</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
                   <XAxis 
                     dataKey="name" 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                   />
                   <YAxis 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                     tickFormatter={(val) => `₹${(val/100000).toFixed(0)}L`}
                   />
                   <Tooltip 
                     formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
                     contentStyle={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      border: '1px solid rgba(0, 0, 0, 0.1)',
                       borderRadius: '8px',
-                      color: '#ffffff'
+                      color: '#000000'
                     }}
+                    labelStyle={{ color: '#000000' }}
                   />
                   <Bar 
                     dataKey="amount" 

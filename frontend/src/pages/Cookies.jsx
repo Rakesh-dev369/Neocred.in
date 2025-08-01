@@ -119,38 +119,38 @@ export default function Cookies() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-orange-900/20 to-black">
+      <section className="py-20 bg-gradient-to-b from-orange-100 to-gray-50 dark:from-orange-900/20 dark:to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="text-orange-400">Cookies</span> Policy
+            <span className="text-orange-600 dark:text-orange-400">Cookies</span> Policy
           </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Learn how we use cookies to improve your experience and protect your privacy on NEOC₹ED.
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+            Learn how we use cookies to improve your experience and protect your privacy on NeoCred.
           </p>
           
           {/* Key Points Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="glass-card hover:scale-105 transition-all duration-300">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl hover:scale-105 transition-all duration-300">
               <div className="text-3xl mb-3">🍪</div>
-              <h3 className="text-lg font-semibold mb-2 text-orange-400">Transparent Usage</h3>
-              <p className="text-gray-300 text-sm">Clear explanation of all cookies</p>
+              <h3 className="text-lg font-semibold mb-2 text-orange-600 dark:text-orange-400">Transparent Usage</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">Clear explanation of all cookies</p>
             </div>
             
-            <div className="glass-card hover:scale-105 transition-all duration-300">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl hover:scale-105 transition-all duration-300">
               <div className="text-3xl mb-3">⚙️</div>
-              <h3 className="text-lg font-semibold mb-2 text-blue-400">Full Control</h3>
-              <p className="text-gray-300 text-sm">Manage your cookie preferences</p>
+              <h3 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-400">Full Control</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">Manage your cookie preferences</p>
             </div>
             
-            <div className="glass-card hover:scale-105 transition-all duration-300">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl hover:scale-105 transition-all duration-300">
               <div className="text-3xl mb-3">🔒</div>
-              <h3 className="text-lg font-semibold mb-2 text-green-400">Privacy First</h3>
-              <p className="text-gray-300 text-sm">No sensitive data collection</p>
+              <h3 className="text-lg font-semibold mb-2 text-green-600 dark:text-green-400">Privacy First</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">No sensitive data collection</p>
             </div>
           </div>
           
-          <p className="text-gray-400 text-sm">
-            Effective Date: <span className="text-white font-medium">December 15, 2024</span>
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
+            Effective Date: <span className="text-gray-900 dark:text-white font-medium">December 15, 2024</span>
           </p>
         </div>
       </section>
@@ -159,17 +159,17 @@ export default function Cookies() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           {/* Table of Contents - Sticky Sidebar */}
           <div className="lg:col-span-1">
-            <div className="glass-card sticky top-8">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl sticky top-8">
               <h3 className="text-xl font-bold mb-6 text-center">
-                📋 <span className="text-orange-400">Contents</span>
+                📋 <span className="text-orange-600 dark:text-orange-400">Contents</span>
               </h3>
               <nav className="space-y-2">
                 {sections.map((section) => (
                   <button
                     key={section.id}
                     onClick={() => scrollToSection(section.id)}
-                    className={`w-full text-left p-3 rounded-lg transition-all duration-300 hover:bg-white/10 ${
-                      activeSection === section.id ? 'bg-orange-500/20 text-orange-300' : 'text-gray-300'
+                    className={`w-full text-left p-3 rounded-lg transition-all duration-300 hover:bg-gray-200 dark:hover:bg-white/10 ${
+                      activeSection === section.id ? 'bg-orange-100 dark:bg-orange-500/20 text-orange-700 dark:text-orange-300' : 'text-gray-700 dark:text-gray-300'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -181,18 +181,18 @@ export default function Cookies() {
               </nav>
               
               {/* Quick Actions */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <h4 className="text-sm font-semibold text-white mb-3">Cookie Settings</h4>
+              <div className="mt-8 pt-6 border-t border-gray-300 dark:border-white/10">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Cookie Settings</h4>
                 <div className="space-y-2">
                   <button 
                     onClick={acceptAllCookies}
-                    className="w-full p-2 bg-green-600/20 text-green-300 rounded-lg hover:bg-green-600/30 transition-colors text-sm"
+                    className="w-full p-2 bg-green-100 dark:bg-green-600/20 text-green-800 dark:text-green-300 rounded-lg hover:bg-green-200 dark:hover:bg-green-600/30 transition-colors text-sm"
                   >
                     ✅ Accept All Cookies
                   </button>
                   <button 
                     onClick={rejectOptionalCookies}
-                    className="w-full p-2 bg-red-600/20 text-red-300 rounded-lg hover:bg-red-600/30 transition-colors text-sm"
+                    className="w-full p-2 bg-red-100 dark:bg-red-600/20 text-red-800 dark:text-red-300 rounded-lg hover:bg-red-200 dark:hover:bg-red-600/30 transition-colors text-sm"
                   >
                     🚫 Reject Optional Cookies
                   </button>
@@ -200,18 +200,18 @@ export default function Cookies() {
               </div>
               
               {/* Related Pages */}
-              <div className="mt-6 pt-6 border-t border-white/10">
-                <h4 className="text-sm font-semibold text-white mb-3">Related Pages</h4>
+              <div className="mt-6 pt-6 border-t border-gray-300 dark:border-white/10">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Related Pages</h4>
                 <div className="space-y-2">
                   <Link 
                     to={ROUTES.PRIVACY}
-                    className="block p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors text-sm"
+                    className="block p-2 bg-gray-200 dark:bg-white/5 rounded-lg hover:bg-gray-300 dark:hover:bg-white/10 transition-colors text-sm text-gray-900 dark:text-white"
                   >
                     🔒 Privacy Policy
                   </Link>
                   <Link 
                     to={ROUTES.TERMS}
-                    className="block p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors text-sm"
+                    className="block p-2 bg-gray-200 dark:bg-white/5 rounded-lg hover:bg-gray-300 dark:hover:bg-white/10 transition-colors text-sm text-gray-900 dark:text-white"
                   >
                     📄 Terms of Service
                   </Link>
@@ -224,32 +224,32 @@ export default function Cookies() {
           <div className="lg:col-span-3">
             <div className="space-y-12">
               {/* Introduction */}
-              <div className="glass-card">
-                <p className="text-lg mb-6 leading-relaxed">
-                  NEOC₹ED uses cookies to improve your experience and deliver personalized content. 
+              <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
+                <p className="text-lg mb-6 leading-relaxed text-gray-900 dark:text-white">
+                  NeoCred uses cookies to improve your experience and deliver personalized content. 
                   This policy explains what cookies are, how we use them, and how you can control them.
                 </p>
-                <div className="bg-orange-600/20 border border-orange-500/30 rounded-lg p-4">
-                  <p className="text-orange-100 font-medium">
+                <div className="bg-orange-100 dark:bg-orange-600/20 border border-orange-300 dark:border-orange-500/30 rounded-lg p-4">
+                  <p className="text-orange-800 dark:text-orange-100 font-medium">
                     🍪 By using our website, you agree to the use of cookies as described in this policy.
                   </p>
                 </div>
               </div>
 
               {/* Section 1: What Are Cookies */}
-              <section id="what-are-cookies" className="glass-card">
+              <section id="what-are-cookies" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">🍪</span>
-                  <h2 className="text-3xl font-bold text-orange-400">1. What Are Cookies</h2>
+                  <h2 className="text-3xl font-bold text-orange-600 dark:text-orange-400">1. What Are Cookies</h2>
                 </div>
-                <div className="space-y-4 text-gray-300 leading-relaxed">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                   <p>
                     Cookies are small text files that are stored on your device when you visit a website. 
                     They help websites remember information about your visit, making your next visit easier and more useful.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white/5 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2 text-blue-300">🔧 How They Work</h4>
+                    <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-300">🔧 How They Work</h4>
                       <ul className="text-sm space-y-1">
                         <li>• Stored on your device by your browser</li>
                         <li>• Contain small amounts of data</li>
@@ -257,8 +257,8 @@ export default function Cookies() {
                         <li>• Help improve your user experience</li>
                       </ul>
                     </div>
-                    <div className="bg-white/5 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2 text-green-300">🛡️ Security</h4>
+                    <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2 text-green-600 dark:text-green-300">🛡️ Security</h4>
                       <ul className="text-sm space-y-1">
                         <li>• Cannot access your personal files</li>
                         <li>• Cannot install software on your device</li>
@@ -271,43 +271,43 @@ export default function Cookies() {
               </section>
 
               {/* Section 2: How We Use Cookies */}
-              <section id="how-we-use" className="glass-card">
+              <section id="how-we-use" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">🔧</span>
-                  <h2 className="text-3xl font-bold text-orange-400">2. How We Use Cookies</h2>
+                  <h2 className="text-3xl font-bold text-orange-600 dark:text-orange-400">2. How We Use Cookies</h2>
                 </div>
-                <p className="text-gray-300 mb-6">NEOC₹ED uses cookies to enhance your experience in several ways:</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">NeoCred uses cookies to enhance your experience in several ways:</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
-                    <h4 className="font-semibold text-blue-300 mb-3">🎯 Personalization</h4>
-                    <ul className="text-sm space-y-2 text-blue-100">
+                  <div className="bg-blue-100 dark:bg-blue-600/20 border border-blue-300 dark:border-blue-500/30 rounded-lg p-4">
+                    <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-3">🎯 Personalization</h4>
+                    <ul className="text-sm space-y-2 text-blue-700 dark:text-blue-100">
                       <li>• Remember your learning progress</li>
                       <li>• Save your favorite tools</li>
                       <li>• Customize content recommendations</li>
                       <li>• Maintain your preferences</li>
                     </ul>
                   </div>
-                  <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4">
-                    <h4 className="font-semibold text-green-300 mb-3">📊 Analytics</h4>
-                    <ul className="text-sm space-y-2 text-green-100">
+                  <div className="bg-green-100 dark:bg-green-600/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4">
+                    <h4 className="font-semibold text-green-800 dark:text-green-300 mb-3">📊 Analytics</h4>
+                    <ul className="text-sm space-y-2 text-green-700 dark:text-green-100">
                       <li>• Understand user behavior patterns</li>
                       <li>• Monitor website performance</li>
                       <li>• Identify popular content</li>
                       <li>• Improve user experience</li>
                     </ul>
                   </div>
-                  <div className="bg-purple-600/20 border border-purple-500/30 rounded-lg p-4">
-                    <h4 className="font-semibold text-purple-300 mb-3">🔒 Security</h4>
-                    <ul className="text-sm space-y-2 text-purple-100">
+                  <div className="bg-purple-100 dark:bg-purple-600/20 border border-purple-300 dark:border-purple-500/30 rounded-lg p-4">
+                    <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-3">🔒 Security</h4>
+                    <ul className="text-sm space-y-2 text-purple-700 dark:text-purple-100">
                       <li>• Maintain secure sessions</li>
                       <li>• Prevent unauthorized access</li>
                       <li>• Detect suspicious activity</li>
                       <li>• Protect against fraud</li>
                     </ul>
                   </div>
-                  <div className="bg-yellow-600/20 border border-yellow-500/30 rounded-lg p-4">
-                    <h4 className="font-semibold text-yellow-300 mb-3">⚙️ Functionality</h4>
-                    <ul className="text-sm space-y-2 text-yellow-100">
+                  <div className="bg-yellow-100 dark:bg-yellow-600/20 border border-yellow-300 dark:border-yellow-500/30 rounded-lg p-4">
+                    <h4 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-3">⚙️ Functionality</h4>
+                    <ul className="text-sm space-y-2 text-yellow-700 dark:text-yellow-100">
                       <li>• Remember login status</li>
                       <li>• Save form data temporarily</li>
                       <li>• Enable interactive features</li>
@@ -318,10 +318,10 @@ export default function Cookies() {
               </section>
 
               {/* Section 3: Types of Cookies */}
-              <section id="types-of-cookies" className="glass-card">
+              <section id="types-of-cookies" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">📊</span>
-                  <h2 className="text-3xl font-bold text-orange-400">3. Types of Cookies We Use</h2>
+                  <h2 className="text-3xl font-bold text-orange-600 dark:text-orange-400">3. Types of Cookies We Use</h2>
                 </div>
                 <div className="space-y-6">
                   {cookieTypes.map((cookie, index) => {
@@ -329,16 +329,16 @@ export default function Cookies() {
                     const isEnabled = cookiePreferences[cookieKey];
                     
                     return (
-                      <div key={index} className={`bg-${cookie.color}-600/20 border border-${cookie.color}-500/30 rounded-lg p-6 relative`}>
+                      <div key={index} className={`bg-${cookie.color}-100 dark:bg-${cookie.color}-600/20 border border-${cookie.color}-300 dark:border-${cookie.color}-500/30 rounded-lg p-6 relative`}>
                         {/* Status Indicator */}
                         <div className="absolute top-4 right-4">
                           <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${
                             isEnabled 
-                              ? 'bg-green-600/30 text-green-300 border border-green-500/50' 
-                              : 'bg-gray-600/30 text-gray-300 border border-gray-500/50'
+                              ? 'bg-green-100 dark:bg-green-600/30 text-green-800 dark:text-green-300 border border-green-300 dark:border-green-500/50' 
+                              : 'bg-gray-100 dark:bg-gray-600/30 text-gray-800 dark:text-gray-300 border border-gray-300 dark:border-gray-500/50'
                           }`}>
                             <div className={`w-2 h-2 rounded-full ${
-                              isEnabled ? 'bg-green-400' : 'bg-gray-400'
+                              isEnabled ? 'bg-green-600 dark:bg-green-400' : 'bg-gray-600 dark:bg-gray-400'
                             }`} />
                             {isEnabled ? 'Active' : 'Disabled'}
                           </div>
@@ -348,19 +348,19 @@ export default function Cookies() {
                           <span className="text-3xl">{cookie.icon}</span>
                           <div className="flex-1 pr-20">
                             <div className="flex items-center justify-between mb-3">
-                              <h4 className={`text-xl font-semibold text-${cookie.color}-300`}>{cookie.name}</h4>
+                              <h4 className={`text-xl font-semibold text-${cookie.color}-800 dark:text-${cookie.color}-300`}>{cookie.name}</h4>
                               <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                                 cookie.canDisable 
-                                  ? 'bg-blue-600/20 text-blue-300' 
-                                  : 'bg-red-600/20 text-red-300'
+                                  ? 'bg-blue-100 dark:bg-blue-600/20 text-blue-800 dark:text-blue-300' 
+                                  : 'bg-red-100 dark:bg-red-600/20 text-red-800 dark:text-red-300'
                               }`}>
                                 {cookie.canDisable ? '⚙️ Optional' : '🔒 Required'}
                               </span>
                             </div>
-                            <p className={`text-${cookie.color}-100 mb-3`}>{cookie.description}</p>
+                            <p className={`text-${cookie.color}-700 dark:text-${cookie.color}-100 mb-3`}>{cookie.description}</p>
                             <div className="mb-4">
-                              <h5 className="font-medium text-white mb-2">Examples:</h5>
-                              <ul className={`text-sm space-y-1 text-${cookie.color}-100`}>
+                              <h5 className="font-medium text-gray-900 dark:text-white mb-2">Examples:</h5>
+                              <ul className={`text-sm space-y-1 text-${cookie.color}-700 dark:text-${cookie.color}-100`}>
                                 {cookie.examples.map((example, idx) => (
                                   <li key={idx}>• {example}</li>
                                 ))}
@@ -369,8 +369,8 @@ export default function Cookies() {
                             
                             {/* Toggle Control */}
                             {cookie.canDisable && (
-                              <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                                <span className="text-sm font-medium text-white">
+                              <div className="flex items-center justify-between p-3 bg-gray-200 dark:bg-white/5 rounded-lg">
+                                <span className="text-sm font-medium text-gray-900 dark:text-white">
                                   {isEnabled ? 'Currently enabled' : 'Currently disabled'}
                                 </span>
                                 <button
@@ -394,19 +394,19 @@ export default function Cookies() {
               </section>
 
               {/* Section 4: Third-Party Cookies */}
-              <section id="third-party-cookies" className="glass-card">
+              <section id="third-party-cookies" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">🔗</span>
-                  <h2 className="text-3xl font-bold text-orange-400">4. Third-Party Cookies</h2>
+                  <h2 className="text-3xl font-bold text-orange-600 dark:text-orange-400">4. Third-Party Cookies</h2>
                 </div>
-                <div className="space-y-4 text-gray-300">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
                   <p>We may use third-party services that set their own cookies:</p>
-                  <div className="bg-purple-600/20 border border-purple-500/30 rounded-lg p-4">
+                  <div className="bg-purple-100 dark:bg-purple-600/20 border border-purple-300 dark:border-purple-500/30 rounded-lg p-4">
                     <div className="flex items-start justify-center gap-3">
                       <span className="text-xl">🔗</span>
                       <div className="text-center">
-                        <h4 className="font-semibold text-purple-300 mb-2">Third-Party Services</h4>
-                        <ul className="text-purple-100 text-sm space-y-1 text-left inline-block">
+                        <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-2">Third-Party Services</h4>
+                        <ul className="text-purple-700 dark:text-purple-100 text-sm space-y-1 text-left inline-block">
                           <li>• Google Analytics for website analytics</li>
                           <li>• Social media integration cookies</li>
                           <li>• Content delivery network cookies</li>
@@ -423,20 +423,20 @@ export default function Cookies() {
               </section>
 
               {/* Section 5: Cookie Usage & Data */}
-              <section id="cookie-usage" className="glass-card">
+              <section id="cookie-usage" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">📈</span>
-                  <h2 className="text-3xl font-bold text-orange-400">5. Cookie Usage & Data Retention</h2>
+                  <h2 className="text-3xl font-bold text-orange-600 dark:text-orange-400">5. Cookie Usage & Data Retention</h2>
                 </div>
-                <p className="text-gray-300 mb-6">Here's what data our cookies collect and how long we keep it:</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">Here's what data our cookies collect and how long we keep it:</p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
+                  <div className="bg-blue-100 dark:bg-blue-600/20 border border-blue-300 dark:border-blue-500/30 rounded-lg p-4">
                     <div className="flex items-start justify-center gap-3">
                       <span className="text-xl">📈</span>
                       <div className="text-center">
-                        <h4 className="font-semibold text-blue-300 mb-2">Data We Collect</h4>
-                        <ul className="text-blue-100 text-sm space-y-1 text-left inline-block">
+                        <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">Data We Collect</h4>
+                        <ul className="text-blue-700 dark:text-blue-100 text-sm space-y-1 text-left inline-block">
                           <li>• Page views and navigation patterns</li>
                           <li>• Time spent on different sections</li>
                           <li>• Device and browser information</li>
@@ -447,12 +447,12 @@ export default function Cookies() {
                     </div>
                   </div>
                   
-                  <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4">
+                  <div className="bg-green-100 dark:bg-green-600/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4">
                     <div className="flex items-start justify-center gap-3">
                       <span className="text-xl">🕒</span>
                       <div className="text-center">
-                        <h4 className="font-semibold text-green-300 mb-2">Data Retention</h4>
-                        <ul className="text-green-100 text-sm space-y-1 text-left inline-block">
+                        <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2">Data Retention</h4>
+                        <ul className="text-green-700 dark:text-green-100 text-sm space-y-1 text-left inline-block">
                           <li>• Session cookies: Until browser closes</li>
                           <li>• Preference cookies: 1 year</li>
                           <li>• Analytics cookies: 2 years</li>
@@ -465,21 +465,21 @@ export default function Cookies() {
                 </div>
                 
                 {/* Current Cookie Status */}
-                <div className="bg-purple-600/20 border border-purple-500/30 rounded-lg p-4">
-                  <h4 className="font-semibold text-purple-300 mb-3 text-center">📊 Your Current Cookie Settings</h4>
+                <div className="bg-purple-100 dark:bg-purple-600/20 border border-purple-300 dark:border-purple-500/30 rounded-lg p-4">
+                  <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-3 text-center">📊 Your Current Cookie Settings</h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {cookieTypes.map((cookie, idx) => {
                       const cookieKey = cookie.name.toLowerCase().split(' ')[0];
                       const isEnabled = cookiePreferences[cookieKey];
                       
                       return (
-                        <div key={idx} className="text-center p-3 bg-white/5 rounded-lg">
+                        <div key={idx} className="text-center p-3 bg-gray-200 dark:bg-white/5 rounded-lg">
                           <div className="text-2xl mb-2">{cookie.icon}</div>
-                          <div className="text-xs font-medium text-white mb-1">{cookie.name}</div>
+                          <div className="text-xs font-medium text-gray-900 dark:text-white mb-1">{cookie.name}</div>
                           <div className={`text-xs px-2 py-1 rounded-full ${
                             isEnabled 
-                              ? 'bg-green-500/20 text-green-300' 
-                              : 'bg-gray-500/20 text-gray-300'
+                              ? 'bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300' 
+                              : 'bg-gray-100 dark:bg-gray-500/20 text-gray-800 dark:text-gray-300'
                           }`}>
                             {isEnabled ? '✅ Active' : '🚫 Disabled'}
                           </div>
@@ -491,35 +491,35 @@ export default function Cookies() {
               </section>
 
               {/* Section 6: Manage Cookies */}
-              <section id="manage-cookies" className="glass-card">
+              <section id="manage-cookies" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">⚙️</span>
-                  <h2 className="text-3xl font-bold text-orange-400">6. How to Manage Cookies</h2>
+                  <h2 className="text-3xl font-bold text-orange-600 dark:text-orange-400">6. How to Manage Cookies</h2>
                 </div>
-                <p className="text-gray-300 mb-6">You have full control over cookies. Here's how to manage them:</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">You have full control over cookies. Here's how to manage them:</p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-white/5 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-3 text-blue-300">🌐 Browser Settings</h4>
-                    <ul className="text-sm space-y-2 text-gray-300">
+                  <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-3 text-blue-600 dark:text-blue-300">🌐 Browser Settings</h4>
+                    <ul className="text-sm space-y-2 text-gray-700 dark:text-gray-300">
                       <li>• Chrome: Settings → Privacy → Cookies</li>
                       <li>• Firefox: Options → Privacy → Cookies</li>
                       <li>• Safari: Preferences → Privacy → Cookies</li>
                       <li>• Edge: Settings → Privacy → Cookies</li>
                     </ul>
                   </div>
-                  <div className="bg-white/5 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-3 text-green-300">🎛️ Cookie Preferences</h4>
+                  <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-3 text-green-600 dark:text-green-300">🎛️ Cookie Preferences</h4>
                     <div className="space-y-3">
                       {cookieTypes.map((cookie, idx) => {
                         const isEnabled = cookiePreferences[cookie.name.toLowerCase().split(' ')[0]];
                         const canToggle = cookie.canDisable;
                         
                         return (
-                          <div key={idx} className="flex items-center justify-between p-2 bg-white/5 rounded">
+                          <div key={idx} className="flex items-center justify-between p-2 bg-gray-300 dark:bg-white/5 rounded">
                             <div className="flex items-center gap-2">
                               <span className="text-sm">{cookie.icon}</span>
-                              <span className="text-xs font-medium">{cookie.name}</span>
+                              <span className="text-xs font-medium text-gray-900 dark:text-white">{cookie.name}</span>
                             </div>
                             <button
                               onClick={() => toggleCookieType(cookie.name.toLowerCase().split(' ')[0])}
@@ -539,13 +539,13 @@ export default function Cookies() {
                     <div className="mt-3 space-y-1">
                       <button 
                         onClick={acceptAllCookies}
-                        className="w-full p-2 bg-green-600/20 text-green-300 rounded text-xs hover:bg-green-600/30 transition-colors"
+                        className="w-full p-2 bg-green-100 dark:bg-green-600/20 text-green-800 dark:text-green-300 rounded text-xs hover:bg-green-200 dark:hover:bg-green-600/30 transition-colors"
                       >
                         ✅ Accept All
                       </button>
                       <button 
                         onClick={rejectOptionalCookies}
-                        className="w-full p-2 bg-red-600/20 text-red-300 rounded text-xs hover:bg-red-600/30 transition-colors"
+                        className="w-full p-2 bg-red-100 dark:bg-red-600/20 text-red-800 dark:text-red-300 rounded text-xs hover:bg-red-200 dark:hover:bg-red-600/30 transition-colors"
                       >
                         🚫 Essential Only
                       </button>
@@ -553,27 +553,27 @@ export default function Cookies() {
                   </div>
                 </div>
 
-                <div className="bg-yellow-600/20 border border-yellow-500/30 rounded-lg p-4">
-                  <p className="text-yellow-100 text-sm">
+                <div className="bg-yellow-100 dark:bg-yellow-600/20 border border-yellow-300 dark:border-yellow-500/30 rounded-lg p-4">
+                  <p className="text-yellow-800 dark:text-yellow-100 text-sm">
                     ⚠️ <strong>Note:</strong> Disabling certain cookies may affect website functionality and your user experience.
                   </p>
                 </div>
               </section>
 
               {/* Section 7: Cookie Consent */}
-              <section id="cookie-consent" className="glass-card">
+              <section id="cookie-consent" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">✅</span>
-                  <h2 className="text-3xl font-bold text-orange-400">7. Cookie Consent</h2>
+                  <h2 className="text-3xl font-bold text-orange-600 dark:text-orange-400">7. Cookie Consent</h2>
                 </div>
-                <div className="space-y-4 text-gray-300">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
                   <p>Your consent helps us provide a better experience:</p>
-                  <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4">
+                  <div className="bg-green-100 dark:bg-green-600/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4">
                     <div className="flex items-start justify-center gap-3">
                       <span className="text-xl">✅</span>
                       <div className="text-center">
-                        <h4 className="font-semibold text-green-300 mb-2">Consent Management</h4>
-                        <ul className="text-green-100 text-sm space-y-1 text-left inline-block">
+                        <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2">Consent Management</h4>
+                        <ul className="text-green-700 dark:text-green-100 text-sm space-y-1 text-left inline-block">
                           <li>• Consent is requested on first visit</li>
                           <li>• You can change preferences anytime</li>
                           <li>• Essential cookies don't require consent</li>
@@ -590,21 +590,21 @@ export default function Cookies() {
               </section>
 
               {/* Important Notice */}
-              <div className="glass-card bg-gradient-to-r from-blue-900/20 to-purple-900/20 border-blue-500/30">
+              <div className="bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-300 dark:border-blue-500/30 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-3xl">🔒</span>
-                  <h3 className="text-2xl font-bold text-blue-400">Privacy Commitment</h3>
+                  <h3 className="text-2xl font-bold text-blue-800 dark:text-blue-400">Privacy Commitment</h3>
                 </div>
-                <p className="text-blue-100 leading-relaxed mb-4">
+                <p className="text-blue-800 dark:text-blue-100 leading-relaxed mb-4">
                   We do not use cookies to collect sensitive personal or financial data. 
                   Your privacy and security are our top priorities.
                 </p>
-                <p className="text-blue-200 text-sm">
+                <p className="text-blue-700 dark:text-blue-200 text-sm">
                   For more details about our data practices, please refer to our 
-                  <Link to={ROUTES.PRIVACY} className="text-blue-400 hover:text-blue-300 underline ml-1">
+                  <Link to={ROUTES.PRIVACY} className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 underline ml-1">
                     Privacy Policy
                   </Link> and 
-                  <Link to={ROUTES.TERMS} className="text-blue-400 hover:text-blue-300 underline ml-1">
+                  <Link to={ROUTES.TERMS} className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 underline ml-1">
                     Terms of Service
                   </Link>.
                 </p>
@@ -616,7 +616,7 @@ export default function Cookies() {
       
       {/* Toast Notification */}
       {showToast && (
-        <div className="fixed top-6 right-6 z-50 bg-green-600 text-white p-4 rounded-lg shadow-xl max-w-sm transition-all duration-300">
+        <div className="fixed top-6 right-6 z-50 bg-green-600 dark:bg-green-600 text-white p-4 rounded-lg shadow-xl max-w-sm transition-all duration-300">
           <div className="flex items-center gap-3">
             <span className="text-xl">✓</span>
             <p className="font-medium">{showToast}</p>
@@ -626,16 +626,16 @@ export default function Cookies() {
       
       {/* Cookie Consent Banner (shows if no preferences saved) */}
       {!localStorage.getItem('cookiePreferences') && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-t border-white/20 p-4">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-t border-gray-300 dark:border-white/20 p-4">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">🍪</span>
                 <div>
-                  <p className="text-white font-medium mb-1">We use cookies to improve your experience</p>
-                  <p className="text-gray-300 text-sm">
+                  <p className="text-gray-900 dark:text-white font-medium mb-1">We use cookies to improve your experience</p>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm">
                     By continuing to use our site, you accept our use of cookies. 
-                    <Link to={ROUTES.COOKIES} className="text-blue-400 hover:text-blue-300 underline ml-1">
+                    <Link to={ROUTES.COOKIES} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline ml-1">
                       Learn more
                     </Link>
                   </p>
@@ -653,7 +653,7 @@ export default function Cookies() {
                     localStorage.setItem('cookiePreferences', JSON.stringify(essentialOnly));
                     window.location.reload();
                   }}
-                  className="px-4 py-2 text-gray-300 hover:text-white transition-colors text-sm"
+                  className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors text-sm"
                 >
                   Essential Only
                 </button>

@@ -49,7 +49,7 @@ const TermLifeInsuranceEstimator = () => {
       <h2 className="text-2xl font-bold mb-6 text-white">Term Life Insurance Estimator</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
           <h3 className="text-xl font-semibold mb-6 text-white">🧬 Term Life Insurance Estimator</h3>
           
           <Formik
@@ -64,12 +64,12 @@ const TermLifeInsuranceEstimator = () => {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Age (Years)
                   </label>
                   <Field
                     name="age"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="30"
                   />
@@ -77,12 +77,12 @@ const TermLifeInsuranceEstimator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Coverage Amount (₹)
                   </label>
                   <Field
                     name="coverage"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="5000000"
                   />
@@ -90,12 +90,12 @@ const TermLifeInsuranceEstimator = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Policy Term (Years)
                   </label>
                   <Field
                     name="term"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="30"
                   />
@@ -117,39 +117,39 @@ const TermLifeInsuranceEstimator = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-white mb-4">Premium Estimate</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Age:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Age:</span>
                   <span className="text-white font-semibold">{result.age} years</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Coverage Amount:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Coverage Amount:</span>
                   <span className="text-blue-400 font-semibold">₹{result.coverage.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Policy Term:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Policy Term:</span>
                   <span className="text-white font-semibold">{result.term} years</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Annual Premium:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Annual Premium:</span>
                   <span className="text-green-400 font-bold text-xl">₹{result.annualPremium.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">Total Premiums:</span>
+                  <span className="text-gray-700 dark:text-white/80">Total Premiums:</span>
                   <span className="text-yellow-400 font-bold text-lg">₹{result.totalPremiums.toLocaleString()}</span>
                 </div>
               </div>
               
-              <div className="mt-6 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-                <p className="text-blue-100 text-sm">
+              <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30 rounded-lg">
+                <p className="text-blue-900 dark:text-blue-100 text-sm">
                   🧬 <strong>Life Insurance Tip:</strong> Ideal coverage is 10-15 times your annual income. Consider tax benefits under Section 80C.
                 </p>
               </div>
             </div>
 
-            <div className="glass-card">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-white mb-4 text-center">Insurance Breakdown</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>

@@ -113,7 +113,7 @@ SECRET_KEY=your_secret_key_here
 ### Frontend Environment Variables
 ```env
 VITE_API_BASE_URL=http://localhost:8001
-VITE_APP_NAME=NEOC₹ED
+VITE_APP_NAME=NeoCred
 VITE_APP_VERSION=2.0.0
 ```
 

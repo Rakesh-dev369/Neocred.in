@@ -27,7 +27,7 @@ const tips = [
 
 const WeeklyTips = () => {
   return (
-    <section className="bg-black text-white py-14 px-4 md:px-12">
+    <section className="bg-gray-100 dark:bg-black text-gray-900 dark:text-white py-14 px-4 md:px-12">
       <div className="max-w-6xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -45,19 +45,19 @@ const WeeklyTips = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
-              className="border border-gray-700 bg-gray-900 p-6 rounded-2xl hover:shadow-xl transition duration-300"
+              className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 rounded-2xl hover:shadow-xl transition duration-300"
             >
               <Tooltip.Provider delayDuration={200}>
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
                     <div className="cursor-help">
-                      <p className="text-sm uppercase text-gray-400 mb-2">{item.week}</p>
-                      <h3 className="text-xl font-semibold text-white mb-1">{item.topic}</h3>
-                      <p className="text-gray-300">{item.tip}</p>
+                      <p className="text-sm uppercase text-gray-600 dark:text-gray-400 mb-2">{item.week}</p>
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{item.topic}</h3>
+                      <p className="text-gray-700 dark:text-gray-300">{item.tip}</p>
                     </div>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
-                    <Tooltip.Content className="bg-white text-black px-3 py-2 rounded shadow-lg text-sm max-w-xs z-50">
+                    <Tooltip.Content className="bg-gray-900 dark:bg-white text-white dark:text-black px-3 py-2 rounded shadow-lg text-sm max-w-xs z-50">
                       {item.details}
                       <Tooltip.Arrow className="fill-white" />
                     </Tooltip.Content>

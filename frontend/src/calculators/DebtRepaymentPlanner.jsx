@@ -94,8 +94,8 @@ const DebtRepaymentPlanner = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">Debt Repayment Planner</h2>
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Debt Repayment Planner</h2>
       
       <Formik
         initialValues={{
@@ -108,8 +108,8 @@ const DebtRepaymentPlanner = () => {
       >
         {({ values, isSubmitting }) => (
           <Form className="space-y-6">
-            <div className="glass-card">
-              <h3 className="text-xl font-semibold mb-6 text-white">💳 Debt Repayment Planner</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">💳 Debt Repayment Planner</h3>
               
               <FieldArray name="debts">
                 {({ push, remove }) => (
@@ -117,7 +117,7 @@ const DebtRepaymentPlanner = () => {
                     {values.debts.map((debt, index) => (
                       <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-white/5 rounded-lg">
                         <div>
-                          <label className="block text-sm font-medium text-white/80 mb-1">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                             Debt Name
                           </label>
                           <Field
@@ -130,12 +130,12 @@ const DebtRepaymentPlanner = () => {
                         </div>
                         
                         <div>
-                          <label className="block text-sm font-medium text-white/80 mb-1">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                             Balance (₹)
                           </label>
                           <Field
                             name={`debts.${index}.balance`}
-                            type="number"
+                            type="number" onWheel={(e) => e.target.blur()}
                             className="input-field"
                             placeholder="50000"
                           />
@@ -143,27 +143,26 @@ const DebtRepaymentPlanner = () => {
                         </div>
                         
                         <div>
-                          <label className="block text-sm font-medium text-white/80 mb-1">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                             Interest Rate (%)
                           </label>
                           <Field
                             name={`debts.${index}.rate`}
-                            type="number"
-                            step="0.1"
-                            className="input-field"
+                            type="number" onWheel={(e) => e.target.blur()}
+                            step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             placeholder="18"
                           />
                           <ErrorMessage name={`debts.${index}.rate`} component="div" className="text-red-500 text-xs mt-1" />
                         </div>
                         
                         <div>
-                          <label className="block text-sm font-medium text-white/80 mb-1">
+                          <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                             Min Payment (₹)
                           </label>
                           <div className="flex gap-2">
                             <Field
                               name={`debts.${index}.minPayment`}
-                              type="number"
+                              type="number" onWheel={(e) => e.target.blur()}
                               className="input-field flex-1"
                               placeholder="2000"
                             />
@@ -195,7 +194,7 @@ const DebtRepaymentPlanner = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Repayment Strategy
                   </label>
                   <Field
@@ -210,12 +209,12 @@ const DebtRepaymentPlanner = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Monthly Budget (₹)
                   </label>
                   <Field
                     name="monthlyBudget"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="10000"
                   />
@@ -238,20 +237,20 @@ const DebtRepaymentPlanner = () => {
       {/* Results Section */}
       {result && (
         <div className="space-y-6 mt-8">
-          <div className="glass-card">
-            <h3 className="text-lg font-semibold text-white mb-4">📈 Repayment Strategy: {result.strategy}</h3>
+          <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">📈 Repayment Strategy: {result.strategy}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-400">₹{result.totalBalance.toLocaleString()}</div>
-                <div className="text-sm text-white/70">Total Debt</div>
+                <div className="text-sm text-gray-700 dark:text-white/80">Total Debt</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-400">₹{result.monthlyBudget.toLocaleString()}</div>
-                <div className="text-sm text-white/70">Monthly Budget</div>
+                <div className="text-sm text-gray-700 dark:text-white/80">Monthly Budget</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-yellow-400">₹{result.totalInterestSavings.toLocaleString()}</div>
-                <div className="text-sm text-white/70">Interest Savings</div>
+                <div className="text-sm text-gray-700 dark:text-white/80">Interest Savings</div>
               </div>
             </div>
             
@@ -259,24 +258,24 @@ const DebtRepaymentPlanner = () => {
               {result.planDetails.map((debt, index) => (
                 <div key={index} className="bg-white/5 p-4 rounded-lg">
                   <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-semibold text-white">#{debt.order} {debt.name}</h4>
-                    <span className="text-sm text-white/70">₹{debt.balance.toLocaleString()} @ {debt.rate}%</span>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">#{debt.order} {debt.name}</h4>
+                    <span className="text-sm text-gray-700 dark:text-white/80">₹{debt.balance.toLocaleString()} @ {debt.rate}%</span>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <span className="text-white/70">Payment:</span>
+                      <span className="text-gray-700 dark:text-white/80">Payment:</span>
                       <div className="text-blue-400 font-semibold">₹{debt.totalPayment.toLocaleString()}/month</div>
                     </div>
                     <div>
-                      <span className="text-white/70">Time to Pay:</span>
+                      <span className="text-gray-700 dark:text-white/80">Time to Pay:</span>
                       <div className="text-green-400 font-semibold">{debt.monthsWithExtra} months</div>
                     </div>
                     <div>
-                      <span className="text-white/70">Total Interest:</span>
+                      <span className="text-gray-700 dark:text-white/80">Total Interest:</span>
                       <div className="text-red-400 font-semibold">₹{debt.totalInterestWithExtra.toLocaleString()}</div>
                     </div>
                     <div>
-                      <span className="text-white/70">Interest Saved:</span>
+                      <span className="text-gray-700 dark:text-white/80">Interest Saved:</span>
                       <div className="text-yellow-400 font-semibold">₹{debt.savings.toLocaleString()}</div>
                     </div>
                   </div>
@@ -284,8 +283,8 @@ const DebtRepaymentPlanner = () => {
               ))}
             </div>
             
-            <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
-              <p className="text-green-100 text-sm">
+            <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-lg">
+              <p className="text-green-900 dark:text-green-100 text-sm">
                 💳 <strong>Debt Strategy:</strong> {result.strategy === 'Snowball (Lowest Balance First)' ? 
                 'Pay minimums on all debts, focus extra payments on smallest balance for psychological wins.' :
                 'Pay minimums on all debts, focus extra payments on highest interest rate to save most money.'}
@@ -293,28 +292,29 @@ const DebtRepaymentPlanner = () => {
             </div>
           </div>
 
-          <div className="glass-card">
-            <h3 className="text-lg font-semibold text-white mb-4 text-center">Debt vs Interest Breakdown</h3>
+          <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Debt vs Interest Breakdown</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
                 <XAxis 
                   dataKey="name" 
-                  tick={{ fill: '#ffffff', fontSize: 10 }}
-                  axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                  tick={{ fill: 'currentColor', fontSize: 10 }}
+                  axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                 />
                 <YAxis 
-                  tick={{ fill: '#ffffff', fontSize: 10 }}
-                  axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                  tick={{ fill: 'currentColor', fontSize: 10 }}
+                  axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                   tickFormatter={(val) => `₹${(val/1000).toFixed(0)}K`}
                 />
                 <Tooltip 
                   formatter={(val, name) => [`₹${Number(val).toLocaleString()}`, name === 'balance' ? 'Balance' : 'Interest']}
                   contentStyle={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    border: '1px solid rgba(0, 0, 0, 0.1)',
                     borderRadius: '8px',
-                    color: '#ffffff'
+                    color: '#000000'
                   }}
+                  labelStyle={{ color: '#000000' }}
                 />
                 <Bar dataKey="balance" fill="#3b82f6" name="balance" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="interest" fill="#ef4444" name="interest" radius={[4, 4, 0, 0]} />

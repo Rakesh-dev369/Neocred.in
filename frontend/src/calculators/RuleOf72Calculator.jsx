@@ -71,12 +71,12 @@ const RuleOf72Calculator = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">Rule of 72 Calculator</h2>
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Rule of 72 Calculator</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
-          <h3 className="text-xl font-semibold mb-6 text-white">📊 Rule of 72 Calculator</h3>
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">📊 Rule of 72 Calculator</h3>
           
           <Formik
             initialValues={{
@@ -90,7 +90,7 @@ const RuleOf72Calculator = () => {
             {({ values, isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Choose Calculation Type
                   </label>
                   <Field
@@ -106,12 +106,12 @@ const RuleOf72Calculator = () => {
                 
                 {values.calcType === 'time' && (
                   <div>
-                    <label className="block text-sm font-medium text-white/80 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                       Annual Interest Rate (%)
                     </label>
                     <Field
                       name="interestRate"
-                      type="number"
+                      type="number" onWheel={(e) => e.target.blur()}
                       step="0.01"
                       className="input-field"
                       placeholder="8.5"
@@ -122,12 +122,12 @@ const RuleOf72Calculator = () => {
                 
                 {values.calcType === 'rate' && (
                   <div>
-                    <label className="block text-sm font-medium text-white/80 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                       Years to Double
                     </label>
                     <Field
                       name="years"
-                      type="number"
+                      type="number" onWheel={(e) => e.target.blur()}
                       className="input-field"
                       placeholder="10"
                     />
@@ -147,12 +147,12 @@ const RuleOf72Calculator = () => {
           </Formik>
 
           {/* Rule of 72 Explanation */}
-          <div className="mt-6 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-            <h4 className="text-blue-300 font-semibold mb-2">📊 What is Rule of 72?</h4>
-            <p className="text-blue-100 text-sm mb-2">
+          <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30 rounded-lg">
+            <h4 className="text-blue-700 dark:text-blue-300 font-semibold mb-2">📊 What is Rule of 72?</h4>
+            <p className="text-blue-900 dark:text-blue-100 text-sm mb-2">
               The Rule of 72 is a quick way to estimate how long it takes for an investment to double.
             </p>
-            <p className="text-blue-100 text-sm">
+            <p className="text-blue-900 dark:text-blue-100 text-sm">
               <strong>Formula:</strong> Time to Double = 72 ÷ Interest Rate
             </p>
           </div>
@@ -161,62 +161,62 @@ const RuleOf72Calculator = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4">Calculation Results</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Calculation Results</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Calculation Type:</span>
-                  <span className="text-white font-semibold capitalize">
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Calculation Type:</span>
+                  <span className="text-gray-900 dark:text-white font-semibold capitalize">
                     {result.calcType === 'time' ? 'Time to Double' : 'Required Rate'}
                   </span>
                 </div>
                 
                 {result.calcType === 'time' ? (
                   <>
-                    <div className="flex justify-between items-center py-2 border-b border-white/20">
-                      <span className="text-white/80">Interest Rate:</span>
-                      <span className="text-blue-400 font-semibold">{result.interestRate}%</span>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                      <span className="text-gray-700 dark:text-white/80">Interest Rate:</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-semibold">{result.interestRate}%</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <span className="text-white/80">Time to Double:</span>
-                      <span className="text-green-400 font-bold text-xl">{result.calculatedValue} years</span>
+                      <span className="text-gray-700 dark:text-white/80">Time to Double:</span>
+                      <span className="text-green-600 dark:text-green-400 font-bold text-xl">{result.calculatedValue} years</span>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="flex justify-between items-center py-2 border-b border-white/20">
-                      <span className="text-white/80">Target Years:</span>
-                      <span className="text-blue-400 font-semibold">{result.years} years</span>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                      <span className="text-gray-700 dark:text-white/80">Target Years:</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-semibold">{result.years} years</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
-                      <span className="text-white/80">Required Rate:</span>
-                      <span className="text-green-400 font-bold text-xl">{result.calculatedValue}%</span>
+                      <span className="text-gray-700 dark:text-white/80">Required Rate:</span>
+                      <span className="text-green-600 dark:text-green-400 font-bold text-xl">{result.calculatedValue}%</span>
                     </div>
                   </>
                 )}
               </div>
               
-              <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
-                <p className="text-green-100 text-sm font-medium">
+              <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-lg">
+                <p className="text-green-900 dark:text-green-100 text-sm font-medium">
                   {result.resultText}
                 </p>
               </div>
             </div>
 
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4 text-center">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">
                 {result.calcType === 'time' ? 'Doubling Progression' : 'Rate Comparison'}
               </h3>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={result.chartData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
                   <XAxis 
                     dataKey="name" 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                   />
                   <YAxis 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                     tickFormatter={(val) => `${val}${result.calcType === 'time' ? 'x' : 'y'}`}
                   />
                   <Tooltip 
@@ -227,11 +227,12 @@ const RuleOf72Calculator = () => {
                       name
                     ]}
                     contentStyle={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      border: '1px solid rgba(0, 0, 0, 0.1)',
                       borderRadius: '8px',
-                      color: '#ffffff'
+                      color: '#000000'
                     }}
+                    labelStyle={{ color: '#000000' }}
                   />
                   <Bar 
                     dataKey={result.calcType === 'time' ? 'years' : 'years'}

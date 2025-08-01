@@ -11,16 +11,16 @@ const steps = [
 const LiteracyJourney = () => {
   return (
     <div className="mt-20" data-section="journey">
-      <h2 className="text-3xl font-bold text-white mb-6">Your Financial Literacy Journey</h2>
+      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Your Financial Literacy Journey</h2>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {steps.map(({ step, title, description }) => (
           <div
             key={step}
-            className="bg-[#111] p-5 rounded-xl border border-gray-800 hover:border-white transition-all text-white"
+            className="bg-gray-100 dark:bg-[#111] p-5 rounded-xl border border-gray-300 dark:border-gray-800 hover:border-gray-600 dark:hover:border-white transition-all text-gray-900 dark:text-white"
           >
-            <div className="text-4xl font-bold text-white mb-2">{step}</div>
+            <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">{step}</div>
             <h3 className="text-xl font-semibold mb-1">{title}</h3>
-            <p className="text-gray-400 text-sm">{description}</p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">{description}</p>
           </div>
         ))}
       </div>

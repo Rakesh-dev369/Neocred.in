@@ -65,7 +65,7 @@ const NetWorthTracker = () => {
                     onChange={(e) => updateAsset(index, 'label', e.target.value)}
                   />
                   <input
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     placeholder="Amount"
                     className="input-field w-32"
                     value={asset.amount || ''}
@@ -83,7 +83,7 @@ const NetWorthTracker = () => {
               ))}
               <button
                 onClick={addAsset}
-                className="text-blue-400 hover:text-blue-300 text-sm font-medium"
+                className="text-blue-400 hover:text-blue-700 dark:text-blue-300 text-sm font-medium"
               >
                 + Add Asset
               </button>
@@ -104,7 +104,7 @@ const NetWorthTracker = () => {
                     onChange={(e) => updateLiability(index, 'label', e.target.value)}
                   />
                   <input
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     placeholder="Amount"
                     className="input-field w-32"
                     value={liability.amount || ''}
@@ -122,7 +122,7 @@ const NetWorthTracker = () => {
               ))}
               <button
                 onClick={addLiability}
-                className="text-blue-400 hover:text-blue-300 text-sm font-medium"
+                className="text-blue-400 hover:text-blue-700 dark:text-blue-300 text-sm font-medium"
               >
                 + Add Liability
               </button>
@@ -151,8 +151,8 @@ const NetWorthTracker = () => {
               </div>
             </div>
             
-            <div className="mt-6 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-              <p className="text-blue-100 text-sm">
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30 rounded-lg">
+              <p className="text-blue-900 dark:text-blue-100 text-sm">
                 💼 <strong>Net Worth Tip:</strong> Track your net worth monthly. Aim to increase assets and reduce liabilities over time.
               </p>
             </div>
@@ -171,7 +171,7 @@ const NetWorthTracker = () => {
                     cy="50%"
                     outerRadius={80}
                     innerRadius={30}
-                    stroke="#ffffff"
+                    stroke="currentColor"
                     strokeWidth={2}
                   >
                     {data.filter(item => item.value > 0).map((entry, index) => (

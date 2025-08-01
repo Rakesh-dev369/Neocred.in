@@ -49,7 +49,7 @@ const Logo = ({ size = 'md', showText = true, className = '' }) => {
       {/* Brand name */}
       {showText && (
         <h1 className={`${textSizeClasses[size]} font-bold text-white`}>
-          NEOC₹ED
+          NeoCred
         </h1>
       )}
     </div>

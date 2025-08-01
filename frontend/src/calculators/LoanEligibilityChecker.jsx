@@ -50,7 +50,7 @@ const LoanEligibilityChecker = () => {
       <h2 className="text-2xl font-bold mb-6 text-white">Loan Eligibility Checker</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
           <h3 className="text-xl font-semibold mb-6 text-white">📊 Loan Eligibility Checker</h3>
           
           <Formik
@@ -64,12 +64,12 @@ const LoanEligibilityChecker = () => {
             {({ isSubmitting, values }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Monthly Income (₹)
                   </label>
                   <Field
                     name="income"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="50000"
                   />
@@ -77,12 +77,12 @@ const LoanEligibilityChecker = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Monthly Expenses (₹)
                   </label>
                   <Field
                     name="expenses"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="20000"
                   />
@@ -107,39 +107,39 @@ const LoanEligibilityChecker = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-white mb-4">Eligibility Analysis</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Monthly Income:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Monthly Income:</span>
                   <span className="text-blue-400 font-semibold">₹{result.income.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Monthly Expenses:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Monthly Expenses:</span>
                   <span className="text-red-400 font-semibold">₹{result.expenses.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Disposable Income:</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Disposable Income:</span>
                   <span className="text-green-400 font-semibold">₹{result.disposableIncome.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Max EMI (50% of disposable):</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Max EMI (50% of disposable):</span>
                   <span className="text-purple-400 font-semibold">₹{result.maxEMI.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">Eligible Loan Amount:</span>
+                  <span className="text-gray-700 dark:text-white/80">Eligible Loan Amount:</span>
                   <span className="text-yellow-400 font-bold text-lg">₹{result.eligibleLoanAmount.toLocaleString()}</span>
                 </div>
               </div>
               
-              <div className="mt-6 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-                <p className="text-blue-100 text-sm">
+              <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30 rounded-lg">
+                <p className="text-blue-900 dark:text-blue-100 text-sm">
                   📊 <strong>Eligibility Note:</strong> Based on 8% interest rate for 5 years. Actual eligibility may vary by lender and credit score.
                 </p>
               </div>
             </div>
 
-            <div className="glass-card">
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-white mb-4 text-center">Income Distribution</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>

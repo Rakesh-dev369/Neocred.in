@@ -55,12 +55,12 @@ const RetirementGoalPlanner = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">Retirement Goal Planner</h2>
+    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Retirement Goal Planner</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="glass-card">
-          <h3 className="text-xl font-semibold mb-6 text-white">🎯 Retirement Goal Planner</h3>
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">🎯 Retirement Goal Planner</h3>
           
           <Formik
             initialValues={{
@@ -75,12 +75,12 @@ const RetirementGoalPlanner = () => {
             {({ isSubmitting }) => (
               <Form className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Current Age (Years)
                   </label>
                   <Field
                     name="currentAge"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="30"
                   />
@@ -88,12 +88,12 @@ const RetirementGoalPlanner = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Retirement Corpus Needed (₹)
                   </label>
                   <Field
                     name="goal"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="5000000"
                   />
@@ -101,12 +101,12 @@ const RetirementGoalPlanner = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Years to Retirement
                   </label>
                   <Field
                     name="years"
-                    type="number"
+                    type="number" onWheel={(e) => e.target.blur()}
                     className="input-field"
                     placeholder="25"
                   />
@@ -114,14 +114,13 @@ const RetirementGoalPlanner = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
                     Expected Annual Return (%)
                   </label>
                   <Field
                     name="rate"
-                    type="number"
-                    step="0.1"
-                    className="input-field"
+                    type="number" onWheel={(e) => e.target.blur()}
+                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="10"
                   />
                   <ErrorMessage name="rate" component="div" className="text-red-500 text-sm mt-1" />
@@ -142,68 +141,69 @@ const RetirementGoalPlanner = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4">Retirement Plan</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Retirement Plan</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Current Age:</span>
-                  <span className="text-white font-semibold">{result.currentAge} years</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Current Age:</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">{result.currentAge} years</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Retirement Age:</span>
-                  <span className="text-white font-semibold">{result.retirementAge} years</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Retirement Age:</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">{result.retirementAge} years</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Years to Invest:</span>
-                  <span className="text-white font-semibold">{result.years} years</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Years to Invest:</span>
+                  <span className="text-gray-900 dark:text-white font-semibold">{result.years} years</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Monthly Investment Needed:</span>
-                  <span className="text-blue-400 font-bold text-xl">₹{result.monthlyInvestment.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Monthly Investment Needed:</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-bold text-xl">₹{result.monthlyInvestment.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Total Investment:</span>
-                  <span className="text-green-400 font-semibold">₹{result.totalInvestment.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Total Investment:</span>
+                  <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.totalInvestment.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/20">
-                  <span className="text-white/80">Retirement Corpus:</span>
-                  <span className="text-yellow-400 font-bold text-lg">₹{result.goal.toLocaleString()}</span>
+                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
+                  <span className="text-gray-700 dark:text-white/80">Retirement Corpus:</span>
+                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-lg">₹{result.goal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">Monthly Income Post-Retirement:</span>
-                  <span className="text-purple-400 font-bold text-lg">₹{result.monthlyIncomePostRetirement.toLocaleString()}</span>
+                  <span className="text-gray-700 dark:text-white/80">Monthly Income Post-Retirement:</span>
+                  <span className="text-purple-600 dark:text-purple-400 font-bold text-lg">₹{result.monthlyIncomePostRetirement.toLocaleString()}</span>
                 </div>
               </div>
               
-              <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
-                <p className="text-green-100 text-sm">
+              <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-lg">
+                <p className="text-green-900 dark:text-green-100 text-sm">
                   🎯 <strong>Retirement Tip:</strong> Start early to benefit from compounding. Consider inflation while planning your corpus.
                 </p>
               </div>
             </div>
 
-            <div className="glass-card">
-              <h3 className="text-lg font-semibold text-white mb-4 text-center">Investment vs Goal</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Investment vs Goal</h3>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
                   <XAxis 
                     dataKey="name" 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                   />
                   <YAxis 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
+                    tick={{ fill: 'currentColor', fontSize: 10 }}
+                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                     tickFormatter={(val) => `₹${(val/100000).toFixed(0)}L`}
                   />
                   <Tooltip 
                     formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
                     contentStyle={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      border: '1px solid rgba(0, 0, 0, 0.1)',
                       borderRadius: '8px',
-                      color: '#ffffff'
+                      color: '#000000'
                     }}
+                    labelStyle={{ color: '#000000' }}
                   />
                   <Bar 
                     dataKey="amount" 

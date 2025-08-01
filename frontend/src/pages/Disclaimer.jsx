@@ -28,38 +28,38 @@ export default function Disclaimer() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-red-900/20 to-black">
+      <section className="py-20 bg-gradient-to-b from-red-100 to-gray-50 dark:from-red-900/20 dark:to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="text-red-400">Disclaimer</span>
+            <span className="text-red-600 dark:text-red-400">Disclaimer</span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
             Important information about the educational nature of our platform and your responsibilities as a user.
           </p>
           
           {/* Key Points Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="glass-card hover:scale-105 transition-all duration-300">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl hover:scale-105 transition-all duration-300">
               <div className="text-3xl mb-3">📚</div>
-              <h3 className="text-lg font-semibold mb-2 text-blue-400">Educational Only</h3>
-              <p className="text-gray-300 text-sm">All content is for learning purposes</p>
+              <h3 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-400">Educational Only</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">All content is for learning purposes</p>
             </div>
             
-            <div className="glass-card hover:scale-105 transition-all duration-300">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl hover:scale-105 transition-all duration-300">
               <div className="text-3xl mb-3">⚠️</div>
-              <h3 className="text-lg font-semibold mb-2 text-yellow-400">Not Financial Advice</h3>
-              <p className="text-gray-300 text-sm">We are not certified advisors</p>
+              <h3 className="text-lg font-semibold mb-2 text-yellow-600 dark:text-yellow-400">Not Financial Advice</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">We are not certified advisors</p>
             </div>
             
-            <div className="glass-card hover:scale-105 transition-all duration-300">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl hover:scale-105 transition-all duration-300">
               <div className="text-3xl mb-3">👤</div>
-              <h3 className="text-lg font-semibold mb-2 text-green-400">Your Responsibility</h3>
-              <p className="text-gray-300 text-sm">Consult professionals for decisions</p>
+              <h3 className="text-lg font-semibold mb-2 text-green-600 dark:text-green-400">Your Responsibility</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">Consult professionals for decisions</p>
             </div>
           </div>
           
-          <p className="text-gray-400 text-sm">
-            Effective Date: <span className="text-white font-medium">December 15, 2024</span>
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
+            Effective Date: <span className="text-gray-900 dark:text-white font-medium">December 15, 2024</span>
           </p>
         </div>
       </section>
@@ -68,17 +68,17 @@ export default function Disclaimer() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           {/* Table of Contents - Sticky Sidebar */}
           <div className="lg:col-span-1">
-            <div className="glass-card sticky top-8">
+            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl sticky top-8">
               <h3 className="text-xl font-bold mb-6 text-center">
-                📋 <span className="text-red-400">Contents</span>
+                📋 <span className="text-red-600 dark:text-red-400">Contents</span>
               </h3>
               <nav className="space-y-2">
                 {sections.map((section) => (
                   <button
                     key={section.id}
                     onClick={() => scrollToSection(section.id)}
-                    className={`w-full text-left p-3 rounded-lg transition-all duration-300 hover:bg-white/10 ${
-                      activeSection === section.id ? 'bg-red-500/20 text-red-300' : 'text-gray-300'
+                    className={`w-full text-left p-3 rounded-lg transition-all duration-300 hover:bg-gray-200 dark:hover:bg-white/10 ${
+                      activeSection === section.id ? 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300' : 'text-gray-700 dark:text-gray-300'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -90,18 +90,18 @@ export default function Disclaimer() {
               </nav>
               
               {/* Quick Actions */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <h4 className="text-sm font-semibold text-white mb-3">Related Pages</h4>
+              <div className="mt-8 pt-6 border-t border-gray-300 dark:border-white/10">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Related Pages</h4>
                 <div className="space-y-2">
                   <Link 
                     to={ROUTES.TERMS}
-                    className="block p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors text-sm"
+                    className="block p-2 bg-gray-200 dark:bg-white/5 rounded-lg hover:bg-gray-300 dark:hover:bg-white/10 transition-colors text-sm text-gray-900 dark:text-white"
                   >
                     📄 Terms of Service
                   </Link>
                   <Link 
                     to={ROUTES.PRIVACY}
-                    className="block p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-colors text-sm"
+                    className="block p-2 bg-gray-200 dark:bg-white/5 rounded-lg hover:bg-gray-300 dark:hover:bg-white/10 transition-colors text-sm text-gray-900 dark:text-white"
                   >
                     🔒 Privacy Policy
                   </Link>
@@ -114,40 +114,40 @@ export default function Disclaimer() {
           <div className="lg:col-span-3">
             <div className="space-y-12">
               {/* Introduction */}
-              <div className="glass-card">
-                <p className="text-lg mb-6 leading-relaxed">
-                  NEOC₹ED is an educational platform designed to spread financial literacy and awareness. 
+              <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
+                <p className="text-lg mb-6 leading-relaxed text-gray-900 dark:text-white">
+                  NeoCred is an educational platform designed to spread financial literacy and awareness. 
                   The content provided on our website, including articles, tools, calculators, tips, and AI responses, 
                   is for informational and educational purposes only.
                 </p>
-                <div className="bg-red-600/20 border border-red-500/30 rounded-lg p-4">
-                  <p className="text-red-100 font-medium">
+                <div className="bg-red-100 dark:bg-red-600/20 border border-red-300 dark:border-red-500/30 rounded-lg p-4">
+                  <p className="text-red-800 dark:text-red-100 font-medium">
                     ⚠️ We are not SEBI-registered advisors or certified financial planners.
                   </p>
                 </div>
               </div>
 
               {/* Section 1: Educational Purpose */}
-              <section id="educational-purpose" className="glass-card">
+              <section id="educational-purpose" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">📚</span>
-                  <h2 className="text-3xl font-bold text-red-400">1. Educational Purpose</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">1. Educational Purpose</h2>
                 </div>
-                <div className="space-y-4 text-gray-300 leading-relaxed">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                   <p>
-                    All content on NEOC₹ED, including but not limited to:
+                    All content on NeoCred, including but not limited to:
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white/5 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2 text-blue-300">📖 Learning Materials</h4>
+                    <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-300">📖 Learning Materials</h4>
                       <ul className="text-sm space-y-1">
                         <li>• Financial literacy lessons</li>
                         <li>• Investment guides</li>
                         <li>• Educational articles</li>
                       </ul>
                     </div>
-                    <div className="bg-white/5 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2 text-green-300">🛠️ Tools & Features</h4>
+                    <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2 text-green-600 dark:text-green-300">🛠️ Tools & Features</h4>
                       <ul className="text-sm space-y-1">
                         <li>• Financial calculators</li>
                         <li>• Planning tools</li>
@@ -162,38 +162,38 @@ export default function Disclaimer() {
               </section>
 
               {/* Section 2: Not Financial Advice */}
-              <section id="not-financial-advice" className="glass-card">
+              <section id="not-financial-advice" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">⚠️</span>
-                  <h2 className="text-3xl font-bold text-red-400">2. Not Financial Advice</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">2. Not Financial Advice</h2>
                 </div>
-                <div className="bg-yellow-600/20 border border-yellow-500/30 rounded-lg p-6 mb-6">
+                <div className="bg-yellow-100 dark:bg-yellow-600/20 border border-yellow-300 dark:border-yellow-500/30 rounded-lg p-6 mb-6">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">⚠️</span>
                     <div>
-                      <h4 className="font-semibold text-yellow-300 mb-2">Important Notice</h4>
-                      <p className="text-yellow-100 leading-relaxed">
+                      <h4 className="font-semibold text-yellow-800 dark:text-yellow-300 mb-2">Important Notice</h4>
+                      <p className="text-yellow-800 dark:text-yellow-100 leading-relaxed">
                         Nothing on this platform constitutes professional financial, investment, legal, or tax advice. 
                         We do not provide personalized recommendations for your specific financial situation.
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="space-y-4 text-gray-300">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
                   <p>We are NOT:</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-red-600/20 border border-red-500/30 rounded-lg p-4">
-                      <h4 className="font-semibold text-red-300 mb-2">🚫 What We're NOT</h4>
-                      <ul className="text-sm space-y-1">
+                    <div className="bg-red-100 dark:bg-red-600/20 border border-red-300 dark:border-red-500/30 rounded-lg p-4">
+                      <h4 className="font-semibold text-red-800 dark:text-red-300 mb-2">🚫 What We're NOT</h4>
+                      <ul className="text-sm space-y-1 text-red-700 dark:text-red-200">
                         <li>• SEBI registered advisors</li>
                         <li>• Certified financial planners</li>
                         <li>• Investment consultants</li>
                         <li>• Tax professionals</li>
                       </ul>
                     </div>
-                    <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4">
-                      <h4 className="font-semibold text-green-300 mb-2">✅ What We ARE</h4>
-                      <ul className="text-sm space-y-1">
+                    <div className="bg-green-100 dark:bg-green-600/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4">
+                      <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2">✅ What We ARE</h4>
+                      <ul className="text-sm space-y-1 text-green-700 dark:text-green-200">
                         <li>• Educational platform</li>
                         <li>• Information providers</li>
                         <li>• Learning facilitators</li>
@@ -205,16 +205,16 @@ export default function Disclaimer() {
               </section>
 
               {/* Section 3: Calculator Accuracy */}
-              <section id="calculator-accuracy" className="glass-card">
+              <section id="calculator-accuracy" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">🧮</span>
-                  <h2 className="text-3xl font-bold text-red-400">3. Calculator Accuracy</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">3. Calculator Accuracy</h2>
                 </div>
-                <div className="space-y-4 text-gray-300">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
                   <p>Our financial calculators and tools:</p>
-                  <div className="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
-                    <h4 className="font-semibold text-blue-300 mb-2">📊 Calculator Limitations</h4>
-                    <ul className="text-sm space-y-2">
+                  <div className="bg-blue-100 dark:bg-blue-600/20 border border-blue-300 dark:border-blue-500/30 rounded-lg p-4">
+                    <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">📊 Calculator Limitations</h4>
+                    <ul className="text-sm space-y-2 text-blue-700 dark:text-blue-200">
                       <li>• Provide estimates based on standard formulas</li>
                       <li>• May not reflect actual market conditions</li>
                       <li>• Results can vary from real-world outcomes</li>
@@ -229,19 +229,19 @@ export default function Disclaimer() {
               </section>
 
               {/* Section 4: Market Risks */}
-              <section id="market-risks" className="glass-card">
+              <section id="market-risks" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">📈</span>
-                  <h2 className="text-3xl font-bold text-red-400">4. Market Risks</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">4. Market Risks</h2>
                 </div>
-                <div className="space-y-4 text-gray-300">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
                   <p>Financial markets are subject to various risks and uncertainties:</p>
-                  <div className="bg-orange-600/20 border border-orange-500/30 rounded-lg p-4">
+                  <div className="bg-orange-100 dark:bg-orange-600/20 border border-orange-300 dark:border-orange-500/30 rounded-lg p-4">
                     <div className="flex items-start justify-center gap-3">
                       <span className="text-xl">⚠️</span>
                       <div className="text-center">
-                        <h4 className="font-semibold text-orange-300 mb-2">Market Risk Factors</h4>
-                        <ul className="text-orange-100 text-sm space-y-1 text-left inline-block">
+                        <h4 className="font-semibold text-orange-800 dark:text-orange-300 mb-2">Market Risk Factors</h4>
+                        <ul className="text-orange-700 dark:text-orange-100 text-sm space-y-1 text-left inline-block">
                           <li>• Market volatility and price fluctuations</li>
                           <li>• Economic and political changes</li>
                           <li>• Interest rate and inflation variations</li>
@@ -258,19 +258,19 @@ export default function Disclaimer() {
               </section>
 
               {/* Section 5: Regulatory Compliance */}
-              <section id="regulatory-compliance" className="glass-card">
+              <section id="regulatory-compliance" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">🇮🇳</span>
-                  <h2 className="text-3xl font-bold text-red-400">5. Regulatory Compliance</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">5. Regulatory Compliance</h2>
                 </div>
-                <div className="space-y-4 text-gray-300">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
                   <p>Our platform operates within the framework of Indian financial regulations:</p>
-                  <div className="bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
+                  <div className="bg-blue-100 dark:bg-blue-600/20 border border-blue-300 dark:border-blue-500/30 rounded-lg p-4">
                     <div className="flex items-start justify-center gap-3">
                       <span className="text-xl">🇮🇳</span>
                       <div className="text-center">
-                        <h4 className="font-semibold text-blue-300 mb-2">Indian Financial Regulations</h4>
-                        <ul className="text-blue-100 text-sm space-y-1 text-left inline-block">
+                        <h4 className="font-semibold text-blue-800 dark:text-blue-300 mb-2">Indian Financial Regulations</h4>
+                        <ul className="text-blue-700 dark:text-blue-100 text-sm space-y-1 text-left inline-block">
                           <li>• SEBI (Securities and Exchange Board of India) guidelines</li>
                           <li>• RBI (Reserve Bank of India) regulations</li>
                           <li>• IRDAI (Insurance Regulatory Authority) norms</li>
@@ -281,32 +281,32 @@ export default function Disclaimer() {
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white/5 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2 text-green-300">✅ Our Compliance</h4>
-                      <p className="text-gray-300 text-sm">We follow all applicable regulations for educational platforms</p>
+                    <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2 text-green-600 dark:text-green-300">✅ Our Compliance</h4>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">We follow all applicable regulations for educational platforms</p>
                     </div>
-                    <div className="bg-white/5 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2 text-yellow-300">⚠️ Important Note</h4>
-                      <p className="text-gray-300 text-sm">Regulations may change; always verify current requirements</p>
+                    <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2 text-yellow-600 dark:text-yellow-300">⚠️ Important Note</h4>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">Regulations may change; always verify current requirements</p>
                     </div>
                   </div>
                 </div>
               </section>
 
               {/* Section 6: Content Review Policy */}
-              <section id="content-review" className="glass-card">
+              <section id="content-review" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">🔄</span>
-                  <h2 className="text-3xl font-bold text-red-400">6. Content Review Policy</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">6. Content Review Policy</h2>
                 </div>
-                <div className="space-y-4 text-gray-300">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
                   <p>We maintain content accuracy through regular review processes:</p>
-                  <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4">
+                  <div className="bg-green-100 dark:bg-green-600/20 border border-green-300 dark:border-green-500/30 rounded-lg p-4">
                     <div className="flex items-start justify-center gap-3">
                       <span className="text-xl">🔄</span>
                       <div className="text-center">
-                        <h4 className="font-semibold text-green-300 mb-2">Review Schedule</h4>
-                        <ul className="text-green-100 text-sm space-y-1 text-left inline-block">
+                        <h4 className="font-semibold text-green-800 dark:text-green-300 mb-2">Review Schedule</h4>
+                        <ul className="text-green-700 dark:text-green-100 text-sm space-y-1 text-left inline-block">
                           <li>• Monthly review of financial calculators</li>
                           <li>• Quarterly update of educational content</li>
                           <li>• Immediate updates for regulatory changes</li>
@@ -316,10 +316,10 @@ export default function Disclaimer() {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-yellow-600/20 border border-yellow-500/30 rounded-lg p-4">
-                    <p className="text-yellow-100 text-sm">
+                  <div className="bg-yellow-100 dark:bg-yellow-600/20 border border-yellow-300 dark:border-yellow-500/30 rounded-lg p-4">
+                    <p className="text-yellow-800 dark:text-yellow-100 text-sm">
                       📧 <strong>Report Errors:</strong> Found outdated information? Email us at 
-                      <a href="mailto:content@neocred.in" className="text-yellow-300 hover:text-yellow-200 underline">
+                      <a href="mailto:content@neocred.in" className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 underline">
                         content@neocred.in
                       </a> for immediate review.
                     </p>
@@ -328,19 +328,19 @@ export default function Disclaimer() {
               </section>
 
               {/* Section 7: External Links */}
-              <section id="external-links" className="glass-card">
+              <section id="external-links" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">🔗</span>
-                  <h2 className="text-3xl font-bold text-red-400">7. External Links</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">7. External Links</h2>
                 </div>
-                <div className="space-y-4 text-gray-300">
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
                   <p>Our platform may contain links to external websites and resources:</p>
-                  <div className="bg-orange-600/20 border border-orange-500/30 rounded-lg p-4">
+                  <div className="bg-orange-100 dark:bg-orange-600/20 border border-orange-300 dark:border-orange-500/30 rounded-lg p-4">
                     <div className="flex items-start justify-center gap-3">
                       <span className="text-xl">🔗</span>
                       <div className="text-center">
-                        <h4 className="font-semibold text-orange-300 mb-2">Third-Party Content</h4>
-                        <ul className="text-orange-100 text-sm space-y-1 text-left inline-block">
+                        <h4 className="font-semibold text-orange-800 dark:text-orange-300 mb-2">Third-Party Content</h4>
+                        <ul className="text-orange-700 dark:text-orange-100 text-sm space-y-1 text-left inline-block">
                           <li>• We don't control external website content</li>
                           <li>• Third-party sites have their own terms and policies</li>
                           <li>• External content accuracy is not guaranteed</li>
@@ -351,30 +351,30 @@ export default function Disclaimer() {
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white/5 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2 text-blue-300">🔍 Verification</h4>
-                      <p className="text-gray-300 text-sm">Always verify information from external sources independently</p>
+                    <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-300">🔍 Verification</h4>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">Always verify information from external sources independently</p>
                     </div>
-                    <div className="bg-white/5 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2 text-red-300">⚠️ Caution</h4>
-                      <p className="text-gray-300 text-sm">Be cautious of financial advice from unverified sources</p>
+                    <div className="bg-gray-200 dark:bg-white/5 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-2 text-red-600 dark:text-red-300">⚠️ Caution</h4>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">Be cautious of financial advice from unverified sources</p>
                     </div>
                   </div>
                 </div>
               </section>
 
               {/* Section 8: User Responsibility */}
-              <section id="user-responsibility" className="glass-card">
+              <section id="user-responsibility" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">👤</span>
-                  <h2 className="text-3xl font-bold text-red-400">8. User Responsibility</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">8. User Responsibility</h2>
                 </div>
-                <div className="bg-purple-600/20 border border-purple-500/30 rounded-lg p-6">
-                  <h4 className="font-semibold text-purple-300 mb-4">🎯 Your Responsibilities</h4>
+                <div className="bg-purple-100 dark:bg-purple-600/20 border border-purple-300 dark:border-purple-500/30 rounded-lg p-6">
+                  <h4 className="font-semibold text-purple-800 dark:text-purple-300 mb-4">🎯 Your Responsibilities</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <h5 className="font-medium text-white mb-2">Before Making Decisions:</h5>
-                      <ul className="space-y-1 text-purple-100">
+                      <h5 className="font-medium text-gray-900 dark:text-white mb-2">Before Making Decisions:</h5>
+                      <ul className="space-y-1 text-purple-700 dark:text-purple-100">
                         <li>• Consult certified financial advisors</li>
                         <li>• Verify all information independently</li>
                         <li>• Consider your personal financial situation</li>
@@ -382,8 +382,8 @@ export default function Disclaimer() {
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-white mb-2">While Using Our Platform:</h5>
-                      <ul className="space-y-1 text-purple-100">
+                      <h5 className="font-medium text-gray-900 dark:text-white mb-2">While Using Our Platform:</h5>
+                      <ul className="space-y-1 text-purple-700 dark:text-purple-100">
                         <li>• Use information responsibly</li>
                         <li>• Don't rely solely on our content</li>
                         <li>• Stay updated with current regulations</li>
@@ -395,21 +395,21 @@ export default function Disclaimer() {
               </section>
 
               {/* Section 9: Liability Limitation */}
-              <section id="liability-limitation" className="glass-card">
+              <section id="liability-limitation" className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl">🛡️</span>
-                  <h2 className="text-3xl font-bold text-red-400">9. Liability Limitation</h2>
+                  <h2 className="text-3xl font-bold text-red-600 dark:text-red-400">9. Liability Limitation</h2>
                 </div>
-                <div className="bg-red-600/20 border border-red-500/30 rounded-lg p-6">
+                <div className="bg-red-100 dark:bg-red-600/20 border border-red-300 dark:border-red-500/30 rounded-lg p-6">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">🛡️</span>
                     <div>
-                      <h4 className="font-semibold text-red-300 mb-2">Limitation of Liability</h4>
-                      <p className="text-red-100 leading-relaxed mb-4">
-                        NEOC₹ED, its creators, and contributors shall not be held liable for any financial losses, 
+                      <h4 className="font-semibold text-red-800 dark:text-red-300 mb-2">Limitation of Liability</h4>
+                      <p className="text-red-800 dark:text-red-100 leading-relaxed mb-4">
+                        NeoCred, its creators, and contributors shall not be held liable for any financial losses, 
                         investment decisions, or consequences arising from the use of our platform, tools, or content.
                       </p>
-                      <p className="text-red-100 leading-relaxed">
+                      <p className="text-red-800 dark:text-red-100 leading-relaxed">
                         Any decisions or actions taken based on our content are entirely at your own discretion and risk.
                       </p>
                     </div>
@@ -418,15 +418,15 @@ export default function Disclaimer() {
               </section>
 
               {/* Final Message */}
-              <div className="glass-card bg-gradient-to-r from-yellow-900/20 to-orange-900/20 border-yellow-500/30 text-center">
+              <div className="bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-300 dark:border-yellow-500/30 p-6 rounded-xl text-center">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <span className="text-3xl">🎯</span>
-                  <h3 className="text-2xl font-bold text-yellow-400">Remember</h3>
+                  <h3 className="text-2xl font-bold text-yellow-800 dark:text-yellow-400">Remember</h3>
                 </div>
-                <p className="text-yellow-100 text-lg leading-relaxed mb-4">
-                  "Use NEOC₹ED responsibly. The path is guided, but the choice is yours."
+                <p className="text-yellow-800 dark:text-yellow-100 text-lg leading-relaxed mb-4">
+                  "Use NeoCred responsibly. The path is guided, but the choice is yours."
                 </p>
-                <p className="text-yellow-200 text-sm">
+                <p className="text-yellow-700 dark:text-yellow-200 text-sm">
                   Always consult with certified professionals before making financial decisions.
                 </p>
               </div>
