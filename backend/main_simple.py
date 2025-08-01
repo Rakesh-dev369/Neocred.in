@@ -11,10 +11,10 @@ from news_routes import router as news_router
 load_dotenv()
 
 app = FastAPI(
-    title="NEOC₹ED FinBot API",
+    title="NeoCred FinBot API",
     version="2.0.0",
     description="🤖 AI-Powered Financial Assistant API with 40+ tools integration",
-    contact={"name": "NEOC₹ED", "url": "https://neocred.in"}
+    contact={"name": "NeoCred", "url": "https://neocred.in"}
 )
 
 app.add_middleware(
@@ -251,7 +251,7 @@ async def chat_endpoint(request: ChatRequest):
 )
 async def root():
     return {
-        "message": "NEOC₹ED FinBot API is running!",
+        "message": "NeoCred FinBot API is running!",
         "version": "2.0.0",
         "docs": "/docs",
         "features": ["AI Chat", "Tool Integration", "Smart Suggestions"]

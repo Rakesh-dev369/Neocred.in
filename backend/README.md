@@ -1,6 +1,6 @@
-# NEOC₹ED FinBot Backend v2.0
+# NeoCred FinBot Backend v2.0
 
-🚀 **Enhanced FastAPI backend** for the NEOC₹ED FinBot AI assistant with advanced features including caching, monitoring, authentication, and comprehensive analytics.
+🚀 **Enhanced FastAPI backend** for the NeoCred FinBot AI assistant with advanced features including caching, monitoring, authentication, and comprehensive analytics.
 
 ## ✨ Features
 
@@ -263,4 +263,4 @@ MIT License - see LICENSE file for details.
 
 **Version:** 2.0.0  
 **Last Updated:** 2024  
-**Maintainer:** NEOC₹ED Team
+**Maintainer:** NeoCred Team
