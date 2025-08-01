@@ -19,10 +19,10 @@ export default function MainLayout({ children, title, description }) {
   return (
     <>
       <Helmet>
-        <title>{title ? `${title} | NEOC₹ED` : 'NEOC₹ED - Master Your Financial Future'}</title>
+        <title>{title ? `${title} | NeoCred` : 'NeoCred - Master Your Financial Future'}</title>
         <meta name="description" content={description || 'Learn, plan, and grow your wealth with comprehensive financial tools, AI-powered guidance, and expert insights.'} />
         <meta name="keywords" content="financial planning, investment calculator, budget planner, financial literacy, money management" />
-        <meta property="og:title" content={title ? `${title} | NEOC₹ED` : 'NEOC₹ED - Master Your Financial Future'} />
+        <meta property="og:title" content={title ? `${title} | NeoCred` : 'NeoCred - Master Your Financial Future'} />
         <meta property="og:description" content={description || 'Learn, plan, and grow your wealth with comprehensive financial tools, AI-powered guidance, and expert insights.'} />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
