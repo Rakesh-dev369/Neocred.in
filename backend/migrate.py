@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Database migration script for Savely FinBot
+Database migration script for NeoCred FinBot
 """
 import os
 import sys

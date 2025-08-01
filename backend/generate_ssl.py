@@ -21,7 +21,7 @@ def generate_ssl_certificates():
         x509.NameAttribute(NameOID.COUNTRY_NAME, "US"),
         x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "Local"),
         x509.NameAttribute(NameOID.LOCALITY_NAME, "Development"),
-        x509.NameAttribute(NameOID.ORGANIZATION_NAME, "Savely FinBot"),
+        x509.NameAttribute(NameOID.ORGANIZATION_NAME, "NeoCred FinBot"),
         x509.NameAttribute(NameOID.COMMON_NAME, "localhost"),
     ])
 
