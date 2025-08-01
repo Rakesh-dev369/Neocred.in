@@ -1,4 +1,4 @@
-# 🤖 Savely FinBot Frontend
+# 🤖 NeoCred FinBot Frontend
 
 Modern React + TypeScript frontend for the AI-powered financial assistant.
 

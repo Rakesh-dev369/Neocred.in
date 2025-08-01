@@ -12,7 +12,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}']
       },
       manifest: {
-        name: 'Savely FinBot',
+        name: 'NeoCred FinBot',
         short_name: 'FinBot',
         description: 'AI-powered financial assistant',
         theme_color: '#3b82f6',
