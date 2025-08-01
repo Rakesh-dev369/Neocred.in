@@ -1,4 +1,4 @@
-import { FINBOT_SYSTEM_PROMPT, SAVELY_TOOLS_CONTEXT } from './constants';
+import { FINBOT_SYSTEM_PROMPT, NEOCRED_TOOLS_CONTEXT } from './constants';
 
 // OpenAI GPT-4-turbo integration
 export const sendChatMessage = async (message, conversationHistory = []) => {
@@ -20,7 +20,7 @@ export const sendChatMessage = async (message, conversationHistory = []) => {
         message,
         conversationHistory,
         systemPrompt: FINBOT_SYSTEM_PROMPT,
-        toolsContext: SAVELY_TOOLS_CONTEXT
+        toolsContext: NEOCRED_TOOLS_CONTEXT
       }),
     });
     
@@ -54,5 +54,5 @@ export const sendChatMessage = async (message, conversationHistory = []) => {
 // {
 //   "message": "user message",
 //   "systemPrompt": "FinBot system prompt",
-//   "toolsContext": "Savely tools and features context"
+//   "toolsContext": "NeoCred tools and features context"
 // }

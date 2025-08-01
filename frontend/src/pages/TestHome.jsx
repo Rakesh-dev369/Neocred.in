@@ -1,7 +1,7 @@
 export default function TestHome() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
-      <h1 className="text-4xl font-bold mb-4">🎉 Savely.in is Working!</h1>
+      <h1 className="text-4xl font-bold mb-4">🎉 NeoCred is Working!</h1>
       <p className="text-xl mb-6">Frontend is successfully running</p>
       <div className="space-y-4">
         <div className="bg-white/10 p-4 rounded-lg">

@@ -102,7 +102,7 @@ export const CONVERSATION_STARTERS = {
   ]
 };
 
-export const SAVELY_TOOLS_CONTEXT = `Available NeoCred Tools & Features:
+export const NEOCRED_TOOLS_CONTEXT = `Available NeoCred Tools & Features:
 
 🔧 **40+ Financial Calculators & Tools** (Always provide direct links):
 

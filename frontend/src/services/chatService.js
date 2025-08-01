@@ -5,7 +5,7 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true
 });
 
-const SYSTEM_PROMPT = `You are Savely AI, a helpful financial advisor assistant. You provide accurate, practical financial advice for Indian users. Focus on:
+const SYSTEM_PROMPT = `You are NeoCred AI, a helpful financial advisor assistant. You provide accurate, practical financial advice for Indian users. Focus on:
 - Personal finance basics
 - Investment strategies (SIP, FD, mutual funds, stocks)
 - Tax planning and savings
@@ -13,7 +13,7 @@ const SYSTEM_PROMPT = `You are Savely AI, a helpful financial advisor assistant.
 - Budget planning
 - Retirement planning
 
-Always provide actionable advice and suggest using Savely's calculators when relevant. Keep responses concise and easy to understand.`;
+Always provide actionable advice and suggest using NeoCred's calculators when relevant. Keep responses concise and easy to understand.`;
 
 export const chatbotAPI = {
   sendMessage: async (message, conversationHistory = []) => {
