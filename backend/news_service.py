@@ -83,13 +83,24 @@ class NewsService:
                     except:
                         pub_date = datetime.now()
                 
+                # Extract thumbnail if available
+                thumbnail = None
+                if hasattr(entry, 'media_thumbnail'):
+                    thumbnail = entry.media_thumbnail[0]['url'] if entry.media_thumbnail else None
+                elif hasattr(entry, 'enclosures') and entry.enclosures:
+                    for enclosure in entry.enclosures:
+                        if enclosure.type and 'image' in enclosure.type:
+                            thumbnail = enclosure.href
+                            break
+                
                 news_item = {
                     'title': title,
                     'link': entry.get('link', ''),
                     'summary': summary,
                     'published': pub_date.isoformat(),
                     'source': source,
-                    'tags': self.extract_tags(f"{title} {summary}")
+                    'tags': self.extract_tags(f"{title} {summary}"),
+                    'thumbnail': thumbnail
                 }
                 
                 news_items.append(news_item)

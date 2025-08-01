@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Clock, ExternalLink, Sparkles, Tag } from 'lucide-react';
+import { Clock, ExternalLink, Sparkles, Tag, Image } from 'lucide-react';
 
 const NewsCard = ({ article, onSummaryClick }) => {
   const [showSummary, setShowSummary] = useState(false);
@@ -70,19 +70,65 @@ const NewsCard = ({ article, onSummaryClick }) => {
     }
   };
 
+  const getThumbnailUrl = (article) => {
+    // Use real thumbnail if available, otherwise generate placeholder
+    if (article.thumbnail) {
+      return article.thumbnail;
+    }
+    
+    const sourceColors = {
+      'RBI': '3B82F6',
+      'PIB': '10B981', 
+      'MoneyControl': '8B5CF6',
+      'Business Standard': 'F59E0B',
+      'Google News': '6B7280'
+    };
+    
+    const color = sourceColors[article.source] || '6B7280';
+    const text = encodeURIComponent(article.source);
+    
+    return `https://via.placeholder.com/300x200/${color}/FFFFFF?text=${text}`;
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg transition-all duration-300 overflow-hidden">
-      {/* Header */}
-      <div className="p-6 pb-4">
-        <div className="flex items-start justify-between mb-3">
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getSourceColor(article.source)}`}>
+      {/* Thumbnail */}
+      <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
+        <img
+          src={getThumbnailUrl(article)}
+          alt={article.title}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          onError={(e) => {
+            e.target.style.display = 'none';
+            e.target.nextSibling.style.display = 'flex';
+          }}
+        />
+        <div className="hidden absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 items-center justify-center">
+          <div className="text-center text-white">
+            <Image className="w-12 h-12 mx-auto mb-2 opacity-60" />
+            <p className="text-sm font-medium">{article.source}</p>
+          </div>
+        </div>
+        
+        {/* Source Badge */}
+        <div className="absolute top-3 left-3">
+          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getSourceColor(article.source)} backdrop-blur-sm`}>
             {article.source}
           </span>
-          <div className="flex items-center text-gray-500 text-sm">
-            <Clock className="w-4 h-4 mr-1" />
+        </div>
+        
+        {/* Time Badge */}
+        <div className="absolute top-3 right-3">
+          <div className="flex items-center bg-black/50 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs">
+            <Clock className="w-3 h-3 mr-1" />
             {formatDate(article.published)}
           </div>
         </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-6 pb-4">
+
 
         {/* Title */}
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 line-clamp-2 leading-tight">
