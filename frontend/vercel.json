@@ -1,7 +1,7 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "chmod +x build.sh && ./build.sh",
   "outputDirectory": "dist",
-  "installCommand": "npm install --legacy-peer-deps --force",
+  "installCommand": "echo 'Using custom build script'",
   "framework": "vite",
   "functions": {},
   "rewrites": [
