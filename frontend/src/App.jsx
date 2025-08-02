@@ -9,6 +9,12 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import News from './pages/News';
 import Explore from './pages/Explore';
+import CreditCards from './pages/CreditCards';
+import InsurancePlatforms from './pages/InsurancePlatforms';
+import PersonalLoans from './pages/PersonalLoans';
+import GovernmentSchemes from './pages/GovernmentSchemes';
+import FinanceJobs from './pages/FinanceJobs';
+import BusinessTools from './pages/BusinessTools';
 import Rewards from './pages/Rewards';
 import PanCheck from './pages/PanCheck';
 import LoanCheck from './pages/LoanCheck';
@@ -34,6 +40,12 @@ function App() {
           <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
           <Route path="/news" element={<MainLayout><News /></MainLayout>} />
           <Route path="/explore" element={<MainLayout><Explore /></MainLayout>} />
+          <Route path="/credit-cards" element={<MainLayout><CreditCards /></MainLayout>} />
+          <Route path="/insurance-platforms" element={<MainLayout><InsurancePlatforms /></MainLayout>} />
+          <Route path="/personal-loans" element={<MainLayout><PersonalLoans /></MainLayout>} />
+          <Route path="/government-schemes" element={<MainLayout><GovernmentSchemes /></MainLayout>} />
+          <Route path="/finance-jobs" element={<MainLayout><FinanceJobs /></MainLayout>} />
+          <Route path="/business-tools" element={<MainLayout><BusinessTools /></MainLayout>} />
           <Route path="/rewards" element={<MainLayout><Rewards /></MainLayout>} />
           <Route path="/pan-check" element={<MainLayout><PanCheck /></MainLayout>} />
           <Route path="/loan-check" element={<MainLayout><LoanCheck /></MainLayout>} />
