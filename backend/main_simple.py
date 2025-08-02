@@ -17,9 +17,18 @@ app = FastAPI(
     contact={"name": "NeoCred", "url": "https://neocred.in"}
 )
 
+# CORS configuration for production and development
+allowed_origins = [
+    "http://localhost:3001", "http://127.0.0.1:3001", 
+    "http://localhost:5173", "http://127.0.0.1:5173", 
+    "http://localhost:3000", "http://127.0.0.1:3000",
+    "https://neocred.vercel.app",  # Add your Vercel domain
+    "https://*.vercel.app"  # Allow all Vercel preview deployments
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001", "http://127.0.0.1:3001", "http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -316,4 +325,6 @@ async def get_stats():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8003)
+    port = int(os.getenv("PORT", 8080))
+    host = os.getenv("HOST", "0.0.0.0")
+    uvicorn.run(app, host=host, port=port)

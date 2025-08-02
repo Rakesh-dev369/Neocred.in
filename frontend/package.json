@@ -62,7 +62,7 @@
     "vite": "^7.0.4",
     "vite-plugin-pwa": "^0.17.0",
     "vitest": "^0.34.0",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^16.0.0",
     "@testing-library/jest-dom": "^6.0.0"
   }
 }
