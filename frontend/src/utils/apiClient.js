@@ -42,8 +42,11 @@ export const sendChatMessage = async (message, conversationHistory = []) => {
       isApiResponse: true
     };
   } catch (error) {
-    console.error('API Error:', error);
-    throw error;
+    console.error('FinBot API Error:', error);
+    console.error('API URL attempted:', `${import.meta.env?.VITE_API_BASE_URL || 'http://localhost:8001'}/api/chat`);
+    
+    // Re-throw the error to be handled by the calling component
+    throw new Error(`Backend API Error: ${error.message}`);
   }
 };
 

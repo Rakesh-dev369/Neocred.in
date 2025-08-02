@@ -139,15 +139,15 @@ export default function Chatbot() {
   
   // Enhanced error handling
   const handleChatError = (error) => {
-    let errorText = "Sorry, I'm having trouble right now. Please try again! 😔";
+    let errorText = "❌ **Backend Connection Failed**\n\nI'm unable to connect to the NeoCred AI service. This could be because:\n\n• The backend server is starting up (takes 10-30 seconds)\n• Network connectivity issues\n• Server maintenance\n\nPlease wait a moment and try again! 🔄";
     
     if (error.message?.includes('429')) {
-      errorText = "You're sending messages too quickly. Please wait a moment before trying again. ⏱️";
+      errorText = "⏱️ **Rate Limited**\n\nYou're sending messages too quickly. Please wait a moment before trying again.";
       setRateLimitWarning(true);
     } else if (error.message?.includes('network') || !isOnline) {
-      errorText = "Network connection issue. Please check your internet and try again. 🌐";
+      errorText = "🌐 **Network Issue**\n\nPlease check your internet connection and try again.";
     } else if (error.message?.includes('500')) {
-      errorText = "Our AI service is temporarily unavailable. Please try again in a few moments. 🔧";
+      errorText = "🔧 **Server Error**\n\nOur AI service is temporarily unavailable. Please try again in a few moments.";
     }
     
     const errorMessage = {
@@ -155,7 +155,8 @@ export default function Chatbot() {
       text: errorText,
       sender: 'bot',
       timestamp: new Date().toISOString(),
-      isError: true
+      isError: true,
+      isApiResponse: false
     };
     setMessages(prev => [...prev, errorMessage]);
     setError(errorText);
