@@ -180,6 +180,7 @@
         "sections": [
           {
             "title": "Key Insurance Terms",
+            "content": "| **Term** | **Meaning** |\n|----------|-------------|\n| **Premium** | The amount you pay for insurance |\n| **Sum Assured** | Maximum payout you can claim |\n| **Claim** | Request for compensation |\n| **Deductible** | The part of the claim you bear before insurer pays |\n| **Co-Payment** | A % of bill you must pay (common in senior citizen plans) |\n| **Exclusions** | Conditions not covered by your policy |\n| **Rider** | Add-on cover like accidental death, critical illness, etc. |",
             "table": {
               "headers": ["Term", "Meaning"],
               "rows": [

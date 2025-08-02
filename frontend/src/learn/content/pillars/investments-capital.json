@@ -63,6 +63,7 @@
         "sections": [
           {
             "title": "Asset Class Overview Table",
+            "content": "| **Asset Class** | **Description** | **Risk** | **Return Potential** |\n|-----------------|-----------------|----------|---------------------|\n| **Equity** | Shares of companies | High | High |\n| **Debt** | Bonds, FDs, PPF, G-Secs | Low–Medium | Low–Moderate |\n| **Gold** | Physical, Digital, Gold ETFs | Medium | Moderate |\n| **Real Estate** | Land, House, Commercial property | Medium | Medium–High |\n| **Mutual Funds** | Pooled investments in equity/debt managed by experts | Varies | Varies |\n| **Crypto** | Digital assets like Bitcoin, Ethereum (risky) | Very High | Unpredictable |",
             "table": {
               "headers": ["Asset Class", "Description", "Risk", "Return Potential"],
               "rows": [
@@ -165,6 +166,7 @@
         "sections": [
           {
             "title": "Investment Taxation Table",
+            "content": "| **Investment** | **Type of Tax** | **Tax Rate** |\n|----------------|-----------------|--------------|\n| **Equity (Shares, MF)** | LTCG after 1 yr (₹1L+) | 10% (above ₹1L) |\n| **Short-Term Equity** | STCG (<1 yr) | 15% |\n| **Debt MF** | Based on slab | Added to income (post 2023 rule) |\n| **FD/PPF/NSC** | Interest | Added to income (except PPF: tax-free) |\n| **Gold (Physical/Digital)** | LTCG (>3 yrs) | 20% with indexation |",
             "table": {
               "headers": ["Investment", "Type of Tax", "Tax Rate"],
               "rows": [
@@ -266,6 +268,7 @@
         "sections": [
           {
             "title": "Investment Strategy Overview",
+            "content": "| **Strategy** | **Description** | **Ideal For** |\n|--------------|-----------------|---------------|\n| **SIP (Systematic Investment Plan)** | Invest fixed amount monthly in MF | Beginners |\n| **Value Investing** | Buying undervalued stocks/funds | Long-term |\n| **Growth Investing** | Focus on companies with high growth potential | Aggressive |\n| **Asset Allocation** | Diversify across asset classes | Everyone |\n| **Goal-Based Investing** | Match investments to life goals | Families |",
             "table": {
               "headers": ["Strategy", "Description", "Ideal For"],
               "rows": [
@@ -321,6 +324,7 @@
         "sections": [
           {
             "title": "Risk Factors Analysis",
+            "content": "| **Factor** | **Risk Impact** | **Return Possibility** |\n|------------|-----------------|------------------------|\n| **Volatility** | High in equity/crypto | High returns |\n| **Liquidity** | Ease of converting to cash | FD: high, Real estate: low |\n| **Credit Risk** | Corporate bonds | Moderate |\n| **Inflation Risk** | FD may underperform | Equity usually beats it |\n| **Time Horizon** | Short = risky | Long = stable & compounding |",
             "table": {
               "headers": ["Factor", "Risk Impact", "Return Possibility"],
               "rows": [

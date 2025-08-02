@@ -49,6 +49,7 @@
         "sections": [
           {
             "title": "📌 Platform Examples",
+            "content": "**Platform Examples | Role**\n\nFaircent, Lendbox | Facilitate P2P loans\nRBI-regulated NBFC-P2P | License category in India",
             "table": {
               "headers": ["Platform Examples", "Role"],
               "rows": [
@@ -91,6 +92,7 @@
         "sections": [
           {
             "title": "💰 Types",
+            "content": "**Types | Examples**\n\nDonation-based | Milaap, Ketto (for social causes)\nEquity-based | SeedInvest, LetsVenture\nReward-based | Kickstarter, FuelADream",
             "table": {
               "headers": ["Types", "Examples"],
               "rows": [
@@ -134,6 +136,7 @@
         "sections": [
           {
             "title": "💳 Providers",
+            "content": "**Providers | Features**\n\nLazyPay, ZestMoney | Credit scoring & instant approval\nAmazon Pay Later | One-click EMIs",
             "table": {
               "headers": ["Providers", "Features"],
               "rows": [
@@ -176,6 +179,7 @@
         "sections": [
           {
             "title": "🏦 Examples (India)",
+            "content": "**Examples (India) | Services Offered**\n\nJupiter, Fi, Niyo | Saving, UPI, cards, budgeting",
             "table": {
               "headers": ["Examples (India)", "Services Offered"],
               "rows": [
@@ -217,6 +221,7 @@
         "sections": [
           {
             "title": "🔗 Key Features",
+            "content": "**Key Features | Examples (Platforms)**\n\nSmart contracts | Uniswap, Aave, Compound\nYield farming | Staking rewards, liquidity mining\nProtocol-based | Open, transparent, global",
             "table": {
               "headers": ["Key Features", "Examples (Platforms)"],
               "rows": [
@@ -260,6 +265,7 @@
         "sections": [
           {
             "title": "🪙 Types",
+            "content": "**Type | Example**\n\nCoins | Bitcoin, Ethereum\nStablecoins | USDT, USDC\nTokens | Utility, governance, NFTs",
             "table": {
               "headers": ["Type", "Example"],
               "rows": [
@@ -303,6 +309,7 @@
         "sections": [
           {
             "title": "🎨 Use Cases",
+            "content": "**Use Case | Example**\n\nDigital Art | OpenSea, WazirX NFT\nReal Estate | Fractional ownership",
             "table": {
               "headers": ["Use Case", "Example"],
               "rows": [
@@ -345,6 +352,7 @@
         "sections": [
           {
             "title": "🤖 Examples",
+            "content": "**Examples | Features**\n\nZerodha's Coin | Direct mutual funds\nScripbox, INDwealth | Automated rebalancing, tax loss harvesting",
             "table": {
               "headers": ["Examples", "Features"],
               "rows": [
@@ -387,6 +395,7 @@
         "sections": [
           {
             "title": "📦 Example Use Cases",
+            "content": "**Example Use Cases | Description**\n\nBuy insurance at checkout | Travel or mobile insurance via Paytm\nLoans in ride apps | Ola Money, Uber Cash\nCredit via marketplaces | Amazon Pay, Flipkart Pay Later",
             "table": {
               "headers": ["Example Use Cases", "Description"],
               "rows": [
@@ -466,6 +475,7 @@
         "sections": [
           {
             "title": "🛡️ Applications",
+            "content": "**Segment | Use Case**\n\nRegTech | Compliance automation, KYC/AML\nInsurTech | AI-based underwriting, usage-based insurance",
             "table": {
               "headers": ["Segment", "Use Case"],
               "rows": [
@@ -508,6 +518,7 @@
         "sections": [
           {
             "title": "🌱 Instruments",
+            "content": "**Instruments | Example**\n\nGreen Bonds | Fund renewable energy\nImpact Investing | Invest for social outcomes",
             "table": {
               "headers": ["Instruments", "Example"],
               "rows": [
@@ -550,6 +561,7 @@
         "sections": [
           {
             "title": "📁 Framework",
+            "content": "**Entities | Example**\n\nNBFC-AA | CAMS Finserv, OneMoney\nRegulated by | RBI & FIU\nPurpose | Loans, insurance, credit analysis",
             "table": {
               "headers": ["Entities", "Example"],
               "rows": [
@@ -625,6 +637,7 @@
         "sections": [
           {
             "title": "🧠 Category Overview",
+            "content": "**Category | Description**\n\nLending | P2P, BNPL, Embedded Credit\nInvesting | Robo-advisors, DeFi, AI investing\nBanking | Neobanks, Wallets, AAs\nEmerging Tech | NFTs, Tokenization, AI/ML, RegTech\nSocial + Green | Crowdfunding, Impact Finance",
             "table": {
               "headers": ["Category", "Description"],
               "rows": [

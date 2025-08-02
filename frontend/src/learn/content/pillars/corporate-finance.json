@@ -52,6 +52,7 @@
         "sections": [
           {
             "title": "🏢 Core Areas Overview",
+            "content": "**Function | Purpose**\n\nCapital Structure | Debt vs equity mix\nCapital Budgeting | Long-term investment decisions\nWorking Capital Mgmt | Manage short-term operations\nDividend Policy | Decide profit distribution vs reinvestment\nFinancial Risk Mgmt | Hedging currency, interest rate risks",
             "table": {
               "headers": ["Function", "Purpose"],
               "rows": [
@@ -449,6 +450,7 @@
         "sections": [
           {
             "title": "📱 Technology Categories",
+            "content": "**Category | Tools/Platforms**\n\nAccounting | Tally, Zoho Books, SAP\nBudgeting & FP&A | Oracle, Anaplan, Excel\nReporting | Power BI, Tableau, Qlik\nCap Table | Carta, trica, Eqvista\nPayroll & HR | RazorpayX, Keka, Zoho Payroll",
             "table": {
               "headers": ["Category", "Tools/Platforms"],
               "rows": [
@@ -520,6 +522,7 @@
         "sections": [
           {
             "title": "🧠 Functional Mapping",
+            "content": "**Function | Purpose**\n\nCapital Structure | Balance risk & return in funding decisions\nFP&A | Plan, budget, and forecast performance\nWorking Capital Mgmt | Manage day-to-day liquidity needs\nCapital Budgeting | Make smart long-term investment choices\nGovernance & Compliance | Ensure ethical and legal operations",
             "table": {
               "headers": ["Function", "Purpose"],
               "rows": [
