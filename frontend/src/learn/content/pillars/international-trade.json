@@ -1,110 +1,505 @@
 {
-  "title": "🌍 International Finance & Trade",
-  "description": "How money moves, is managed, and is regulated across countries — involving governments, businesses, banks, and investors worldwide",
+  "title": "🌍 International Trade",
+  "description": "Understand how countries, businesses, and people interact through money, trade, and investment across borders",
   "icon": "🌍",
   "lessons": [
     {
       "id": 1,
       "title": "🌍 Why It Matters",
       "duration": "8 min",
-      "topics": ["Global trade and investments", "Exchange rates and remittances", "Government borrowing and diplomacy", "Business expansions, FDI, and exports"]
+      "topics": ["Economic growth", "Currency stability", "Capital access", "Global connections"],
+      "content": {
+        "introduction": "International Finance & Trade drive economic growth, currency stability, and access to global markets.",
+        "sections": [
+          {
+            "title": "🌍 Key Drivers",
+            "content": "• Economic growth and job creation\n• Currency stability and reserves\n• Access to capital, goods, and services"
+          },
+          {
+            "title": "🌐 Global Connection",
+            "content": "In today's globalized world, every financial decision connects across borders, from exports to remittances to forex."
+          }
+        ],
+        "keyTakeaways": [
+          "International trade drives economic growth and job creation",
+          "Currency stability depends on global financial flows",
+          "Every financial decision has cross-border implications"
+        ],
+        "actionSteps": [
+          "Understand how global events affect local economy",
+          "Track major currency movements and their impact",
+          "Learn about India's trade relationships"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Currency Converter",
+            "description": "Convert between different currencies",
+            "url": "/tools?tool=Currency Converter"
+          }
+        ]
+      }
     },
     {
       "id": 2,
-      "title": "📌 Core Segments: Foreign Exchange (Forex/FX)",
+      "title": "📌 Foreign Exchange (Forex/FX)",
       "duration": "15 min",
-      "topics": ["Global currency market ($7.5+ trillion/day)", "Fixed exchange rates (pegged to USD)", "Floating rates (INR, EUR, USD)", "Managed float (RBI interventions)", "Affects import/export prices to travel costs"]
+      "topics": ["Currency trading", "Exchange rates", "RBI regulation", "Forex reserves"],
+      "content": {
+        "introduction": "Foreign exchange is the global market where currencies are traded.",
+        "sections": [
+          {
+            "title": "📌 Key Aspects",
+            "content": "**Key Aspects | Details**\n\nCurrency Pairs | USD/INR, EUR/USD, etc.\nTraded by | Banks, traders, corporates\nIndia Regulator | RBI via FEMA rules\nForex Reserve Role | Maintains currency stability"
+          },
+          {
+            "title": "📌 Market Size",
+            "content": "India's forex market is worth billions daily, influenced by trade, capital flows, and policy."
+          }
+        ],
+        "keyTakeaways": [
+          "Forex is the world's largest financial market",
+          "RBI regulates forex through FEMA rules",
+          "Forex reserves help maintain currency stability"
+        ],
+        "actionSteps": [
+          "Understand major currency pairs affecting India",
+          "Track RBI's forex reserve levels",
+          "Learn about FEMA regulations for individuals"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Forex Calculator",
+            "description": "Calculate forex conversion and costs",
+            "url": "/tools?tool=Forex Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 3,
       "title": "⚖️ Balance of Payments (BoP)",
       "duration": "12 min",
-      "topics": ["Current Account: Trade in goods/services, remittances", "Capital Account: FDI, FII, Loans, Investments", "India's trade deficit & capital inflows balance", "BoP shows if country is net spender or earner globally"]
+      "topics": ["Current account", "Capital account", "BoP surplus/deficit", "Economic transactions"],
+      "content": {
+        "introduction": "BoP records all economic transactions between a country and the rest of the world.",
+        "sections": [
+          {
+            "title": "⚖️ Components",
+            "content": "**Components | Description**\n\nCurrent Account | Exports, imports, remittances\nCapital Account | FDI, FII, external borrowings\nBoP Surplus/Deficit | Influences INR value & policy"
+          },
+          {
+            "title": "✅ Policy Goal",
+            "content": "India aims to maintain a balanced BoP to manage inflation and growth."
+          }
+        ],
+        "keyTakeaways": [
+          "BoP tracks all international economic transactions",
+          "Current account covers trade and remittances",
+          "Capital account covers investments and borrowings"
+        ],
+        "actionSteps": [
+          "Monitor India's quarterly BoP data",
+          "Understand impact of trade deficit on INR",
+          "Track FDI and FII flows"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "BoP Analyzer",
+            "description": "Analyze balance of payments components",
+            "url": "/tools?tool=BoP Analyzer"
+          }
+        ]
+      }
     },
     {
       "id": 4,
       "title": "🌐 International Trade & Globalization",
       "duration": "14 min",
-      "topics": ["Trade Agreements: WTO, FTA", "Exports & Imports: Goods, Services (IT, BPO)", "Tariffs: Duties, taxes, quotas", "Make in India, Atmanirbhar Bharat, PLI Scheme", "Boosting exports = jobs + forex + growth"]
+      "topics": ["Global trade ecosystem", "Trade agreements", "Export-import", "Trade institutions"],
+      "content": {
+        "introduction": "India is part of the global trade ecosystem — exporting IT, pharma, textiles, and importing oil, electronics, gold.",
+        "sections": [
+          {
+            "title": "🌐 Key Institutions",
+            "content": "**Key Institutions | Description**\n\nWTO | Oversees global trade rules\nFree Trade Agreements | India-UAE CEPA, ASEAN-FTA\nExport Bodies | FIEO, DGFT, EXIM Bank"
+          },
+          {
+            "title": "🌏 Benefits",
+            "content": "Trade enables access to new markets, technology, and capital."
+          }
+        ],
+        "keyTakeaways": [
+          "India exports IT services, pharma, and textiles globally",
+          "Trade agreements reduce barriers and boost commerce",
+          "Global trade provides access to markets and technology"
+        ],
+        "actionSteps": [
+          "Learn about India's major export and import partners",
+          "Understand benefits of trade agreements",
+          "Track India's trade balance trends"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Trade Impact Calculator",
+            "description": "Calculate impact of trade on economy",
+            "url": "/tools?tool=Trade Impact Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 5,
       "title": "🏢 Foreign Direct Investment (FDI)",
       "duration": "13 min",
-      "topics": ["Long-term investment by foreign companies", "Apple → India manufacturing", "Amazon → Warehousing & delivery", "Automatic vs Government route approval", "FDI = capital + jobs + technology transfer"]
+      "topics": ["Physical asset investment", "Ownership in companies", "Automatic routes", "Technology transfer"],
+      "content": {
+        "introduction": "FDI involves investment in physical assets or ownership in another country.",
+        "sections": [
+          {
+            "title": "🏢 Examples in India",
+            "content": "**Example in India | Sector**\n\nApple factories | Electronics\nWalmart in Flipkart | E-commerce"
+          },
+          {
+            "title": "📌 Policy",
+            "content": "India offers automatic FDI routes in multiple sectors."
+          }
+        ],
+        "keyTakeaways": [
+          "FDI brings capital, jobs, and technology transfer",
+          "India has liberalized FDI policies in most sectors",
+          "Major global companies are investing in India"
+        ],
+        "actionSteps": [
+          "Track FDI inflows into different sectors",
+          "Understand FDI policy changes and their impact",
+          "Monitor job creation through FDI"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "FDI Impact Calculator",
+            "description": "Calculate economic impact of FDI",
+            "url": "/tools?tool=FDI Impact Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 6,
       "title": "📈 Foreign Institutional Investment (FII/FPI)",
       "duration": "11 min",
-      "topics": ["Short-term portfolio investments in stocks, bonds", "Sensitive to interest rates (US Fed, RBI)", "Affected by inflation, policies, elections", "FII inflow = market boost; outflow = rupee fall"]
+      "topics": ["Portfolio investments", "SEBI regulation", "Market impact", "Capital gains taxation"],
+      "content": {
+        "introduction": "FII/FPI refers to foreign portfolio investors investing in Indian stocks, bonds, and mutual funds.",
+        "sections": [
+          {
+            "title": "📈 Regulation",
+            "content": "**Regulation | Managed by**\n\nSEBI | Monitors FPIs\nTaxation | Short/long-term capital gains"
+          },
+          {
+            "title": "📊 Market Impact",
+            "content": "Sudden inflows/outflows can affect stock markets and INR."
+          }
+        ],
+        "keyTakeaways": [
+          "FII/FPI brings foreign capital to Indian markets",
+          "SEBI regulates foreign portfolio investments",
+          "FII flows significantly impact stock markets and INR"
+        ],
+        "actionSteps": [
+          "Track monthly FII/FPI flow data",
+          "Understand correlation between FII flows and market movements",
+          "Monitor global factors affecting FII sentiment"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "FII Flow Tracker",
+            "description": "Track foreign institutional investment flows",
+            "url": "/tools?tool=FII Flow Tracker"
+          }
+        ]
+      }
     },
     {
       "id": 7,
       "title": "💱 Exchange Rate & INR",
       "duration": "12 min",
-      "topics": ["USD-INR is India's primary forex benchmark", "Affects import cost (oil, gold)", "Export competitiveness impact", "NRIs, students, travelers affected", "RBI uses forex reserves for volatility management"]
+      "topics": ["INR exchange rates", "Trade impact", "RBI intervention", "Import-export effects"],
+      "content": {
+        "introduction": "The INR exchange rate against major currencies affects trade, travel, imports, inflation, etc.",
+        "sections": [
+          {
+            "title": "💱 Types of Exchange Rates",
+            "content": "**Types of Exchange Rates | Description**\n\nFloating | Based on market demand-supply\nManaged Float (India) | RBI intervenes to stabilize"
+          },
+          {
+            "title": "📉 Impact",
+            "content": "INR depreciation = costlier imports, better exports"
+          }
+        ],
+        "keyTakeaways": [
+          "INR follows managed float system with RBI intervention",
+          "Exchange rate affects import costs and export competitiveness",
+          "Currency movements impact inflation and economic growth"
+        ],
+        "actionSteps": [
+          "Monitor USD-INR exchange rate trends",
+          "Understand factors affecting INR value",
+          "Track RBI's forex market interventions"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Exchange Rate Impact Calculator",
+            "description": "Calculate impact of exchange rate changes",
+            "url": "/tools?tool=Exchange Rate Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 8,
       "title": "🏦 International Monetary Institutions",
       "duration": "16 min",
-      "topics": ["IMF: Debt/financial crisis help, policy advice", "World Bank: Development, poverty projects funding", "ADB, AIIB: Asia-focused development finance", "Backbone of global economic stability and aid"]
+      "topics": ["IMF", "World Bank", "Regional development banks", "Global cooperation"],
+      "content": {
+        "introduction": "International monetary institutions provide financial stability and development support globally.",
+        "sections": [
+          {
+            "title": "🏦 Key Institutions",
+            "content": "**Institution | Role**\n\nIMF | Loans for crisis support, SDRs\nWorld Bank | Development funding\nADB, AIIB | Regional funding (Asia focus)\nBIS | Central bank cooperation"
+          },
+          {
+            "title": "🇮🇳 India's Role",
+            "content": "India is an active member of all global finance institutions."
+          }
+        ],
+        "keyTakeaways": [
+          "IMF provides crisis support and policy guidance",
+          "World Bank focuses on development and poverty reduction",
+          "Regional banks like ADB and AIIB support Asian development"
+        ],
+        "actionSteps": [
+          "Understand India's role in international institutions",
+          "Track IMF and World Bank programs in India",
+          "Learn about regional development bank initiatives"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Development Finance Tracker",
+            "description": "Track international development finance flows",
+            "url": "/tools?tool=Development Finance Tracker"
+          }
+        ]
+      }
     },
     {
       "id": 9,
       "title": "💰 Sovereign Debt & Global Borrowing",
       "duration": "14 min",
-      "topics": ["Countries borrow via bonds (US Treasury, Indian Sovereign)", "Used for infrastructure, defense, budget support", "Measured via Debt-to-GDP ratio", "Credit rating (Moody's, S&P, Fitch)", "High debt = inflation + low investor confidence"]
+      "topics": ["Bilateral aid", "Multilateral loans", "Sovereign bonds", "Debt management"],
+      "content": {
+        "introduction": "Countries borrow through various channels to fund development and manage finances.",
+        "sections": [
+          {
+            "title": "💰 Borrowing Types",
+            "content": "• **Bilateral aid** (e.g., India–Japan metro projects)\n• **Multilateral loans** (e.g., from World Bank/IMF)\n• **Sovereign bonds** in global markets"
+          },
+          {
+            "title": "📌 Risk Management",
+            "content": "Sovereign debt must be managed to avoid defaults (e.g., Sri Lanka)."
+          }
+        ],
+        "keyTakeaways": [
+          "Countries use multiple channels for international borrowing",
+          "Sovereign debt must be managed carefully to avoid crisis",
+          "Credit ratings affect borrowing costs for countries"
+        ],
+        "actionSteps": [
+          "Monitor India's external debt levels",
+          "Understand sovereign credit rating factors",
+          "Track major bilateral and multilateral loan agreements"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Sovereign Debt Calculator",
+            "description": "Analyze sovereign debt sustainability",
+            "url": "/tools?tool=Sovereign Debt Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 10,
       "title": "💸 Cross-Border Remittances",
       "duration": "10 min",
-      "topics": ["India = world's top remittance receiver", "NRI income via banks, apps (Wise, Remitly, Western Union)", "Key to rural incomes, balance of payments", "Remittances are stable, non-debt inflows"]
+      "topics": ["NRI remittances", "Global ranking", "Family support", "Economic impact"],
+      "content": {
+        "introduction": "Money sent by Indians abroad (NRIs) to India.",
+        "sections": [
+          {
+            "title": "💸 Key Data",
+            "content": "**Data | 2024 Estimate**\n\nTop Source Countries | UAE, USA, Saudi Arabia\nIndia's Global Rank | #1 in remittances received\nUse | Family support, savings"
+          },
+          {
+            "title": "💰 Economic Impact",
+            "content": "Remittances help stabilize current account and boost household income."
+          }
+        ],
+        "keyTakeaways": [
+          "India is the world's largest recipient of remittances",
+          "Remittances provide stable source of foreign exchange",
+          "Support millions of families and rural economies"
+        ],
+        "actionSteps": [
+          "Track quarterly remittance data",
+          "Understand remittance channels and costs",
+          "Monitor impact on current account balance"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Remittance Cost Calculator",
+            "description": "Compare costs of different remittance channels",
+            "url": "/tools?tool=Remittance Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 11,
       "title": "💼 Trade Finance",
       "duration": "13 min",
-      "topics": ["Bank support to exporters/importers", "Letter of Credit, Bank Guarantees", "Export Credit Agencies (ECGC in India)", "Digital Trade Finance rising (Blockchain + SWIFT gpi)"]
+      "topics": ["Import-export support", "Letters of credit", "Export insurance", "Supply chain finance"],
+      "content": {
+        "introduction": "Financial services that support importers/exporters.",
+        "sections": [
+          {
+            "title": "💼 Tools",
+            "content": "**Tools | Description**\n\nLetters of Credit (LC) | Payment guarantee via banks\nBill discounting | Early payment on invoices\nExport Credit Insurance | Protects against non-payment"
+          },
+          {
+            "title": "📌 Importance",
+            "content": "Trade finance powers global supply chains."
+          }
+        ],
+        "keyTakeaways": [
+          "Trade finance reduces risks in international trade",
+          "Letters of credit provide payment security",
+          "Export credit insurance protects against defaults"
+        ],
+        "actionSteps": [
+          "Understand trade finance instruments",
+          "Learn about export credit insurance benefits",
+          "Explore digital trade finance solutions"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Trade Finance Cost Calculator",
+            "description": "Calculate costs of trade finance instruments",
+            "url": "/tools?tool=Trade Finance Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 12,
       "title": "📊 International Taxation & Treaties",
       "duration": "15 min",
-      "topics": ["DTAA: Double Tax Avoidance Agreements", "OECD's BEPS rules (Base Erosion, Profit Shifting)", "Transfer Pricing: Common in MNCs", "Tax diplomacy impacts MNCs and global freelancers"]
+      "topics": ["Double taxation avoidance", "OECD-G20 BEPS", "Transfer pricing", "Tax treaties"],
+      "content": {
+        "introduction": "Cross-border income is taxed through international frameworks and treaties.",
+        "sections": [
+          {
+            "title": "📊 Key Terms",
+            "content": "**Key Terms | Explanation**\n\nDTAA | Avoids double taxation\nOECD-G20 BEPS | Limits base erosion\nTransfer Pricing | Pricing between related firms"
+          },
+          {
+            "title": "📌 Benefits",
+            "content": "Tax treaties help prevent disputes and attract investment."
+          }
+        ],
+        "keyTakeaways": [
+          "DTAA prevents double taxation on cross-border income",
+          "BEPS rules prevent tax avoidance by multinationals",
+          "Transfer pricing ensures fair taxation of related party transactions"
+        ],
+        "actionSteps": [
+          "Understand DTAA benefits for your situation",
+          "Learn about transfer pricing compliance",
+          "Stay updated on international tax developments"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "International Tax Calculator",
+            "description": "Calculate tax on international income",
+            "url": "/tools?tool=International Tax Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 13,
       "title": "🌐 Global Trends in Trade & Finance",
       "duration": "17 min",
-      "topics": ["Global trade transformation trends", "Digital currency adoption", "Regional trade focus"],
-      "table": {
-        "headers": ["Trend", "Impact"],
-        "rows": [
-          ["De-dollarization", "Countries trading in local currencies (e.g., INR-Ruble)"],
-          ["Digital Currencies", "e-Yuan, e-₹ for fast cross-border payments"],
-          ["ESG-linked Trade", "Climate standards tied to trade deals"],
-          ["Blockchain Trade", "Secure, fast trade documents and payments"],
-          ["Regionalism", "Focus on India-EU, BRICS+, Indo-Pacific ties"]
+      "topics": ["Digital trade", "Currency diversification", "Green finance", "Geopolitical risks"],
+      "content": {
+        "introduction": "Emerging shifts in global trade and finance are reshaping international commerce.",
+        "sections": [
+          {
+            "title": "🌐 Key Trends",
+            "content": "• Digital trade & e-commerce treaties\n• Currency diversification (USD → Yuan, Euro)\n• Green finance & ESG-linked trade\n• Geopolitical risks (tariffs, sanctions)"
+          },
+          {
+            "title": "🌍 Global Order",
+            "content": "Nations adapting to a multipolar, tech-driven global order"
+          }
+        ],
+        "keyTakeaways": [
+          "Digital trade is becoming increasingly important",
+          "Currency diversification is reducing USD dominance",
+          "ESG factors are influencing trade decisions"
+        ],
+        "actionSteps": [
+          "Monitor digital trade policy developments",
+          "Understand impact of currency diversification",
+          "Track ESG integration in trade agreements"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Trade Trend Analyzer",
+            "description": "Analyze impact of global trade trends",
+            "url": "/tools?tool=Trade Trend Analyzer"
+          }
         ]
       }
     },
     {
       "id": 14,
-      "title": "🧠 Summary Table",
+      "title": "🧠 Summary",
       "duration": "10 min",
-      "topics": ["International finance overview", "Key areas and examples", "Comprehensive understanding"],
-      "table": {
-        "headers": ["Area", "Examples"],
-        "rows": [
-          ["Forex", "USD-INR, EUR-USD"],
-          ["Trade", "IT exports, oil imports"],
-          ["FDI", "Apple, Samsung, Google in India"],
-          ["FPI", "Stock market investments"],
-          ["IMF", "Lending to Sri Lanka, Pakistan"],
-          ["Remittances", "UAE, USA → India"]
+      "topics": ["International finance overview", "Key areas", "Comprehensive understanding"],
+      "content": {
+        "introduction": "International trade and finance encompass multiple interconnected areas that shape global economic relationships.",
+        "sections": [
+          {
+            "title": "🧠 Key Areas",
+            "content": "**Area | Key Insight**\n\nForex | INR exchange, reserves, BoP\nTrade | FTAs, globalization, exports\nInvestments | FDI, FII/FPI\nInstitutions | IMF, World Bank, ADB, AIIB\nGlobal Finance | Sovereign borrowing, remittances, treaties"
+          }
+        ],
+        "keyTakeaways": [
+          "International finance connects all aspects of global economy",
+          "Multiple institutions and frameworks govern global finance",
+          "India plays an increasingly important role in global finance"
+        ],
+        "actionSteps": [
+          "Stay informed about global economic developments",
+          "Understand India's position in international finance",
+          "Monitor key indicators like forex reserves and trade balance"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "International Finance Dashboard",
+            "description": "Comprehensive view of international finance metrics",
+            "url": "/tools?tool=International Finance Dashboard"
+          }
         ]
       }
     },
@@ -112,7 +507,37 @@
       "id": 15,
       "title": "✅ India's International Finance Goals",
       "duration": "12 min",
-      "topics": ["Make INR more globally accepted", "Boost FDI/Exports via 'Make in India'", "Use digital tech (AA, UPI Global) for fintech diplomacy", "Balance forex reserves for oil and gold imports"]
+      "topics": ["FDI attraction", "Digital trade leadership", "INR internationalization", "South-South cooperation"],
+      "content": {
+        "introduction": "India has ambitious goals to strengthen its position in international finance and trade.",
+        "sections": [
+          {
+            "title": "🇮🇳 Key Goals",
+            "content": "• Boost FDI through stable policies\n• Expand digital trade leadership\n• Increase INR internationalization\n• Lead South-South financial cooperation\n• Attract sustainable & impact capital"
+          },
+          {
+            "title": "🌐 Vision",
+            "content": "Make India a trusted hub for international finance, with GIFT City as its fintech capital."
+          }
+        ],
+        "keyTakeaways": [
+          "India aims to be a global financial hub",
+          "Digital innovation is key to India's finance diplomacy",
+          "GIFT City is positioned as India's fintech capital"
+        ],
+        "actionSteps": [
+          "Track progress on India's international finance goals",
+          "Understand GIFT City's role in global finance",
+          "Monitor INR internationalization efforts"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "India Finance Goals Tracker",
+            "description": "Track India's progress on international finance goals",
+            "url": "/tools?tool=India Finance Goals Tracker"
+          }
+        ]
+      }
     }
   ],
   "summary": "🌐 International finance isn't just about numbers — it's how India builds global partnerships, manages crises, and shapes its economic destiny."

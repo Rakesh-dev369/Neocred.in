@@ -5,39 +5,253 @@
   "lessons": [
     {
       "id": 1,
-      "title": "🔐 Why Insurance Matters",
-      "duration": "8 min",
-      "topics": ["Protects family, income, health, assets", "Reduces financial burden from accidents", "Encourages risk planning", "Builds financial stability"]
+      "title": "🔐 Insurance Fundamentals",
+      "topics": ["Protects family, income, health, assets", "Reduces financial burden from accidents", "Encourages risk planning", "Builds financial stability"],
+      "content": {
+        "introduction": "Understand the what, why, and how of insurance. Insurance is a legal contract that protects you from financial losses due to unexpected events.",
+        "sections": [
+          {
+            "title": "What is Insurance?",
+            "content": "**A legal contract between the insurer (company) and the insured (you) where the insurer promises compensation for a specified loss in exchange for a premium.**\n\n**Key Elements:**\n• **Premium:** Regular payment you make\n• **Sum Assured:** Maximum amount insurer will pay\n• **Policy Terms:** Conditions and coverage details\n• **Exclusions:** What's not covered\n\n**📌 Example:** A ₹5 lakh Mediclaim policy will cover hospitalization expenses if you're admitted due to illness/injury."
+          },
+          {
+            "title": "Why it Matters",
+            "content": "**Insurance protects you and your family from financial risk due to unexpected events (death, illness, accidents, fire, theft, etc.)**\n\n**Financial Protection:**\n• One medical emergency can cost ₹5-10 lakh\n• Without insurance, you'd use savings or take loans\n• Insurance transfers this risk to the company\n\n**Income Replacement:**\n• If breadwinner dies, family loses income\n• Term life insurance replaces lost income\n• Ensures family's financial security and goals\n\n**Legal Compliance:**\n• Motor insurance mandatory by law\n• Penalties for driving without insurance"
+          },
+          {
+            "title": "How it Works",
+            "content": "**You pay a premium regularly**\n• Monthly, quarterly, or annual payments\n• Amount based on age, health, coverage needed\n• Younger age = lower premium\n\n**In case of a claimable event, the insurer pays compensation**\n• Submit claim with required documents\n• Insurer investigates and processes claim\n• Payment made as per policy terms\n\n**Subject to terms, sum assured, exclusions**\n• **Terms:** Policy conditions must be met\n• **Sum Assured:** Maximum payout limit\n• **Exclusions:** Pre-existing conditions, suicide (first year), etc."
+          }
+        ],
+        "keyTakeaways": [
+          "Insurance is a contract that transfers financial risk from you to the insurer",
+          "Regular premium payments ensure coverage remains active",
+          "Claims are paid subject to policy terms and exclusions",
+          "Insurance protects against catastrophic financial losses"
+        ],
+        "actionSteps": [
+          "Identify your major financial risks (health, life, property)",
+          "Calculate potential financial impact of these risks",
+          "Research appropriate insurance products for each risk",
+          "Compare insurers and buy adequate coverage"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Insurance Needs Calculator",
+            "description": "Calculate your total insurance requirements",
+            "url": "/tools?tool=Insurance Needs Calculator"
+          },
+          {
+            "name": "Premium Calculator",
+            "description": "Estimate insurance premiums for different coverage amounts",
+            "url": "/tools?tool=Premium Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 2,
-      "title": "🏢 IRDAI – Insurance Regulator",
-      "duration": "10 min",
-      "topics": ["Governs all insurance companies in India", "Monitors claim ratios, premium limits", "Fraud protection", "IGMS: Integrated Grievance Redressal System"]
+      "title": "🏢 IRDAI & Regulation",
+      "topics": ["Governs all insurance companies in India", "Monitors claim ratios, premium limits", "Fraud protection", "IGMS: Integrated Grievance Redressal System"],
+      "content": {
+        "introduction": "Know your regulator and rights. IRDAI ensures fair practices and protects consumer interests in the insurance sector.",
+        "sections": [
+          {
+            "title": "IRDAI Overview",
+            "content": "**IRDAI: Insurance Regulatory and Development Authority of India**\n\n**Key Functions:**\n• **Regulates life, health, and general insurance companies in India**\n• **Approves products, sets rules for claim settlement and solvency**\n• Issues licenses to insurance companies and agents\n• Monitors financial health of insurers\n• Protects policyholders' interests"
+          },
+          {
+            "title": "Key IRDAI Guidelines",
+            "content": "**Free-look period: 15 days to cancel a policy**\n• Review policy documents after purchase\n• Cancel within 15 days if not satisfied\n• Get full premium refund (minus stamp duty)\n\n**Claim settlement timelines: 30 days for documentation**\n• Insurer must settle or reject claim within 30 days\n• If delayed, interest payable to policyholder\n• Clear communication required for rejections\n\n**Agent licensing & conduct**\n• All agents must be IRDAI licensed\n• Proper disclosure of policy features mandatory\n• Mis-selling penalties for agents and companies\n\n**Transparency in product features**\n• Standardized policy wordings\n• Clear benefit illustrations\n• Prominent display of exclusions"
+          },
+          {
+            "title": "Consumer Protection",
+            "content": "**🔍 Visit: irdai.gov.in for latest circulars and insurer ratings**\n\n**IGMS (Integrated Grievance Management System):**\n• Online complaint portal for policyholders\n• Track complaint status in real-time\n• Escalation to ombudsman if unresolved\n\n**Insurance Ombudsman:**\n• Free grievance redressal mechanism\n• Covers complaints up to ₹30 lakh\n• Binding decisions on insurance companies\n\n**Your Rights:**\n• Right to policy documents in local language\n• Right to surrender policy (with charges)\n• Right to nominee change anytime\n• Right to grievance redressal"
+          }
+        ],
+        "keyTakeaways": [
+          "IRDAI regulates all insurance companies and protects consumer rights",
+          "You have 15 days free-look period to cancel any policy",
+          "Claims must be settled within 30 days of documentation",
+          "Use IGMS portal for complaints and grievance redressal"
+        ],
+        "actionSteps": [
+          "Check IRDAI website for insurer ratings before buying",
+          "Understand your rights as a policyholder",
+          "Use free-look period to review policy documents",
+          "File complaints through IGMS if needed"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Insurer Comparison Tool",
+            "description": "Compare IRDAI ratings and claim settlement ratios",
+            "url": "/tools?tool=Insurer Comparison"
+          }
+        ]
+      }
     },
     {
       "id": 3,
-      "title": "🛡️ Types of Insurance",
-      "duration": "20 min",
-      "topics": ["Life Insurance: Term, Whole Life, Endowment, ULIP", "Health Insurance: Individual, Family Floater, Critical Illness", "General Insurance: Motor, Travel, Home, Mobile", "Crop Insurance (PMFBY) for farmers", "Fire/Shop Insurance for businesses"]
+      "title": "🛡️ Insurance Product Types",
+      "topics": ["Life Insurance: Term, Whole Life, Endowment, ULIP", "Health Insurance: Individual, Family Floater, Critical Illness", "General Insurance: Motor, Travel, Home, Mobile", "Crop Insurance (PMFBY) for farmers", "Fire/Shop Insurance for businesses"],
+      "content": {
+        "introduction": "Choose the right product for your life stage and needs. Different insurance products serve different purposes and risk profiles.",
+        "sections": [
+          {
+            "title": "🧬 Life Insurance",
+            "content": "**Term Insurance – Pure protection, high sum assured, low premium (e.g., ₹1 Cr cover at ₹800/month)**\n• **Best Option:** Highest coverage at lowest cost\n• **Coverage:** 10-15x annual income recommended\n• **Tenure:** Till age 60-65 or specific term\n• **No Maturity Benefit:** Pure risk cover only\n\n**Endowment Plans – Insurance + savings; guaranteed returns**\n• **Avoid Generally:** Low returns (4-6%), high premium\n• **Better Alternative:** Term insurance + separate investment\n• **Use Case:** Forced savings for undisciplined investors\n\n**ULIPs – Insurance + market-linked investment**\n• **High Charges:** Premium allocation, fund management fees\n• **Complex:** Difficult to understand returns\n• **Better Option:** Term insurance + mutual funds"
+          },
+          {
+            "title": "🏥 Health Insurance",
+            "content": "**Individual Health Plans – Covers hospitalization, surgery, COVID, etc.**\n• **Coverage:** ₹5-10 lakh minimum in metro cities\n• **Benefits:** Dedicated sum insured per person\n• **Suitable For:** Families with elderly members\n\n**Family Floater – One sum insured shared by family members**\n• **Cost-Effective:** Lower premium than individual policies\n• **Shared Limit:** Total family claims can't exceed sum insured\n• **Best For:** Young families with healthy members\n\n**Critical Illness / Top-Up Plans**\n• **Critical Illness:** Lump sum for cancer, heart attack, stroke\n• **Top-Up:** Additional coverage above base policy\n• **Super Top-Up:** Covers multiple claims in a year"
+          },
+          {
+            "title": "🚗 General Insurance",
+            "content": "**Motor Insurance – Mandatory in India; third-party + own-damage**\n• **Third-Party:** Covers damage to others (mandatory)\n• **Comprehensive:** Own damage + third-party coverage\n• **Add-ons:** Zero depreciation, engine protection, roadside assistance\n\n**Home Insurance – Covers fire, theft, earthquake**\n• **Structure:** Building and fixtures coverage\n• **Contents:** Household items and valuables\n• **Liability:** Damage to neighbors' property\n\n**Travel Insurance – For trip cancellations, medical emergencies abroad**\n• **Medical Cover:** Emergency treatment overseas\n• **Trip Benefits:** Cancellation, delay, baggage loss\n• **Mandatory:** Required for Schengen visa\n\n**📌 New Age Add-ons:** Maternity cover, OPD, daily hospital cash, No-Claim Bonus (NCB)\n• **Maternity:** Pregnancy and childbirth expenses\n• **OPD:** Outpatient department consultations\n• **Daily Cash:** Fixed amount per day of hospitalization\n• **NCB:** Discount for claim-free years"
+          }
+        ],
+        "keyTakeaways": [
+          "Term insurance offers maximum life coverage at lowest cost",
+          "Health insurance is essential - minimum ₹5-10 lakh coverage",
+          "Motor insurance is legally mandatory in India",
+          "Choose products based on specific needs, not returns"
+        ],
+        "actionSteps": [
+          "Buy term life insurance for 10-15x your annual income",
+          "Get comprehensive health insurance for entire family",
+          "Ensure motor insurance includes own-damage cover",
+          "Consider home and travel insurance based on assets and lifestyle"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Life Insurance Calculator",
+            "description": "Calculate optimal life insurance coverage",
+            "url": "/tools?tool=Life Insurance Calculator"
+          },
+          {
+            "name": "Health Insurance Calculator",
+            "description": "Determine adequate health insurance coverage",
+            "url": "/tools?tool=Health Insurance Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 4,
-      "title": "🧮 Risk Management Principles",
-      "duration": "12 min",
-      "topics": ["Risk Identification: What could go wrong?", "Risk Assessment: Likelihood and severity", "Risk Transfer: Buy insurance", "Risk Avoidance: Prevent risks", "Risk Mitigation: Reduce impact"]
+      "title": "🧮 Risk Management Framework",
+      "topics": ["Risk Identification: What could go wrong?", "Risk Assessment: Likelihood and severity", "Risk Transfer: Buy insurance", "Risk Avoidance: Prevent risks", "Risk Mitigation: Reduce impact"],
+      "content": {
+        "introduction": "A proactive plan to protect yourself, family, or business. Systematic risk management helps you prepare for uncertainties and minimize their impact.",
+        "sections": [
+          {
+            "title": "Risk Management Process",
+            "content": "**Identify Risks:** Health, death, income loss, property damage, legal liabilities\n• **Personal Risks:** Death, disability, critical illness\n• **Property Risks:** Fire, theft, natural disasters\n• **Liability Risks:** Accidents causing damage to others\n• **Financial Risks:** Job loss, business failure\n\n**Assess Risks:** Impact vs. probability (e.g., heart disease if family history)\n• **High Impact, High Probability:** Immediate attention needed\n• **High Impact, Low Probability:** Insurance recommended\n• **Low Impact, High Probability:** Self-insure or prevent\n• **Low Impact, Low Probability:** Accept the risk"
+          },
+          {
+            "title": "Risk Mitigation Strategies",
+            "content": "**Mitigate Risks:**\n\n**Buy suitable insurance**\n• Transfer high-impact risks to insurance companies\n• Term life, health, motor, home insurance\n• Choose adequate coverage amounts\n\n**Create emergency fund**\n• 3-6 months of expenses in liquid funds\n• For smaller, frequent expenses\n• Avoid insurance claims for minor issues\n\n**Diversify income sources**\n• Multiple income streams reduce dependency\n• Side businesses, investments, passive income\n• Protects against job loss or business failure"
+          },
+          {
+            "title": "Review and Optimization",
+            "content": "**Review Annually:** As income, health, dependents change\n• **Life Changes:** Marriage, children, job change\n• **Income Changes:** Salary hikes, business growth\n• **Health Changes:** New medical conditions\n• **Asset Changes:** New property, vehicles\n\n**💡 Tip: Combine term insurance + health insurance + emergency fund for optimal risk cover**"
+          }
+        ],
+        "keyTakeaways": [
+          "Systematic risk identification helps prepare for uncertainties",
+          "Insurance should cover high-impact, low-probability risks",
+          "Emergency fund handles smaller, frequent expenses",
+          "Regular review ensures coverage remains adequate"
+        ],
+        "actionSteps": [
+          "List all potential risks you and your family face",
+          "Assess financial impact of each identified risk",
+          "Create insurance plan covering major risks",
+          "Build emergency fund for minor risks and deductibles"
+        ],
+        "calculatorLinks": []
+      }
     },
     {
       "id": 5,
-      "title": "💬 Common Terms You Should Know",
-      "duration": "11 min",
-      "topics": ["Sum Assured: Amount insurer pays", "Premium: Amount you pay", "Claim Settlement Ratio (CSR)", "Waiting Period for health claims", "No Claim Bonus (NCB)", "Exclusions: What's NOT covered"]
+      "title": "💬 Insurance Terminology",
+      "topics": ["Sum Assured: Amount insurer pays", "Premium: Amount you pay", "Claim Settlement Ratio (CSR)", "Waiting Period for health claims", "No Claim Bonus (NCB)", "Exclusions: What's NOT covered"],
+      "content": {
+        "introduction": "Decode the key terms used in policies. Understanding insurance terminology helps you make informed decisions and avoid confusion during claims.",
+        "sections": [
+          {
+            "title": "Key Insurance Terms",
+            "content": "| **Term** | **Meaning** |\n|----------|-------------|\n| **Premium** | The amount you pay for insurance |\n| **Sum Assured** | Maximum payout you can claim |\n| **Claim** | Request for compensation |\n| **Deductible** | The part of the claim you bear before insurer pays |\n| **Co-Payment** | A % of bill you must pay (common in senior citizen plans) |\n| **Exclusions** | Conditions not covered by your policy |\n| **Rider** | Add-on cover like accidental death, critical illness, etc. |"
+          },
+          {
+            "title": "Important Policy Terms",
+            "content": "**Waiting Period:**\n• Time before you can claim for specific conditions\n• **Initial Waiting:** 30 days for most illnesses\n• **Pre-existing:** 2-4 years for known conditions\n• **Specific Diseases:** 1-2 years for certain treatments\n\n**Claim Settlement Ratio (CSR):**\n• Percentage of claims settled by insurer\n• Higher CSR indicates better claim experience\n• Check IRDAI annual reports for CSR data\n\n**No Claim Bonus (NCB):**\n• Discount for claim-free years\n• **Motor Insurance:** Up to 50% discount\n• **Health Insurance:** Sum insured increase or premium discount"
+          },
+          {
+            "title": "Policy Understanding Tips",
+            "content": "**🧠 Pro Tip: Always read the Policy Wordings and Benefit Illustration document before buying**\n\n**What to Look For:**\n• **Coverage Details:** What's included and excluded\n• **Claim Process:** Required documents and procedures\n• **Waiting Periods:** When coverage becomes effective\n• **Renewal Terms:** Conditions for policy continuation\n\n**Red Flags:**\n• Very low premiums (may have high exclusions)\n• Unclear policy wordings\n• High co-payment requirements\n• Limited network hospitals (for health insurance)"
+          }
+        ],
+        "keyTakeaways": [
+          "Understanding terminology prevents confusion during claims",
+          "Always read policy wordings before purchasing",
+          "Check claim settlement ratio of insurers",
+          "Be aware of waiting periods and exclusions"
+        ],
+        "actionSteps": [
+          "Create a glossary of insurance terms for reference",
+          "Read policy documents thoroughly before signing",
+          "Compare CSR of different insurers before buying",
+          "Understand waiting periods for your health policy"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Policy Comparison Tool",
+            "description": "Compare policy features and terms across insurers",
+            "url": "/tools?tool=Policy Comparison"
+          }
+        ]
+      }
     },
     {
       "id": 6,
-      "title": "🔮 Future-Proofing Insurance in India",
-      "duration": "14 min",
-      "topics": ["Instant Digital Claims via apps", "AI-based Risk Pricing", "Weather-Based Crop Insurance", "Bima Sugam: Digital marketplace", "Microinsurance for Gig Workers", "Usage-Based Motor Insurance", "Embedded Insurance"]
+      "title": "🔮 Future of Insurance",
+      "topics": ["Instant Digital Claims via apps", "AI-based Risk Pricing", "Weather-Based Crop Insurance", "Bima Sugam: Digital marketplace", "Microinsurance for Gig Workers", "Usage-Based Motor Insurance", "Embedded Insurance"],
+      "content": {
+        "introduction": "Discover where insurance is headed in India and globally. Technology is transforming how insurance products are designed, sold, and claimed.",
+        "sections": [
+          {
+            "title": "Digital Innovation in Insurance",
+            "content": "**Instant Claims via AI (insurtechs like ACKO, Digit, Go Digit)**\n• **AI-powered Claims:** Photo-based claim processing\n• **Instant Settlements:** Small claims settled in minutes\n• **Fraud Detection:** AI identifies suspicious patterns\n• **Chatbot Support:** 24/7 customer service\n\n**Usage-based Insurance for vehicles (based on driving habits)**\n• **Telematics:** Monitor driving behavior via app\n• **Pay-as-you-drive:** Premium based on actual usage\n• **Safe Driving Rewards:** Discounts for good drivers\n• **Real-time Feedback:** Improve driving habits"
+          },
+          {
+            "title": "Personalized & Embedded Insurance",
+            "content": "**Wearables-linked Health Plans (e.g., discounts based on your fitness tracker)**\n• **Fitness Tracking:** Steps, heart rate, sleep patterns\n• **Premium Discounts:** Rewards for healthy lifestyle\n• **Preventive Care:** Early health issue detection\n• **Gamification:** Health challenges and rewards\n\n**Microinsurance for rural India and gig workers**\n• **Low Premium Products:** ₹50-500 annual premium\n• **Simple Coverage:** Basic life and accident cover\n• **Digital Distribution:** Mobile-based sales\n• **Flexible Payments:** Daily/weekly premium options\n\n**Embedded Insurance in digital products (e.g., Ola/Uber trip cover)**\n• **Seamless Integration:** Insurance built into services\n• **Automatic Coverage:** No separate purchase needed\n• **Contextual Protection:** Coverage when you need it"
+          },
+          {
+            "title": "Future Trends & Infrastructure",
+            "content": "**Blockchain for Claim Verification (pilot by LIC & IRDAI in works)**\n• **Immutable Records:** Tamper-proof claim history\n• **Smart Contracts:** Automatic claim settlements\n• **Fraud Reduction:** Transparent verification process\n\n**Bima Sugam: Digital marketplace**\n• **One-stop Platform:** Compare and buy all insurance\n• **Standardized Products:** Easy comparison across insurers\n• **Digital KYC:** Paperless onboarding\n• **Unified Claims:** Single platform for all claims\n\n**🚀 By 2030, insurance will be predictive, personalized, and paperless**\n• **Predictive Analytics:** Identify risks before they occur\n• **Personalized Pricing:** Individual risk-based premiums\n• **Paperless Operations:** Fully digital processes"
+          }
+        ],
+        "keyTakeaways": [
+          "AI and technology are making claims faster and more accurate",
+          "Usage-based and wearable-linked insurance offer personalized pricing",
+          "Embedded insurance provides seamless protection",
+          "Future insurance will be predictive and fully digital"
+        ],
+        "actionSteps": [
+          "Try digital-first insurers for faster claim experience",
+          "Consider usage-based motor insurance if you drive less",
+          "Explore fitness-linked health insurance for discounts",
+          "Stay updated on Bima Sugam platform launch"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Future Insurance Planner",
+            "description": "Plan for next-generation insurance products",
+            "url": "/tools?tool=Future Insurance Planner"
+          }
+        ]
+      }
     }
   ],
   "summary": "✅ Insurance is not an investment — it's protection. First protect, then grow."

@@ -6,7 +6,6 @@
     {
       "id": 1,
       "title": "🏛️ What Is Public Finance?",
-      "duration": "8 min",
       "topics": ["Government revenue", "Public expenditure", "Fiscal policy", "Economic impact"],
       "content": {
         "introduction": "Public finance is the study of government revenue, expenditure, and debt, and how it impacts the economy and citizens.",
@@ -42,7 +41,6 @@
     {
       "id": 2,
       "title": "📌 Sources of Government Revenue",
-      "duration": "15 min",
       "topics": ["Direct taxes", "Indirect taxes", "Non-tax revenue", "Capital receipts"],
       "content": {
         "introduction": "Government revenue comes from various sources to fund public expenditure and development programs.",
@@ -78,7 +76,6 @@
     {
       "id": 3,
       "title": "💰 Government Expenditure",
-      "duration": "14 min",
       "topics": ["Capital expenditure", "Revenue expenditure", "Development spending", "Committed expenditure"],
       "content": {
         "introduction": "Government spending is categorized into different types based on purpose and nature of expenditure.",
@@ -114,7 +111,6 @@
     {
       "id": 4,
       "title": "📈 Budgets & Fiscal Policy",
-      "duration": "16 min",
       "topics": ["Union Budget", "Fiscal deficit", "Revenue deficit", "FRBM Act"],
       "content": {
         "introduction": "Government budget is the annual financial statement that outlines revenue and expenditure plans.",
@@ -150,7 +146,6 @@
     {
       "id": 5,
       "title": "💳 Public Debt & Borrowing",
-      "duration": "13 min",
       "topics": ["Internal debt", "External debt", "Government securities", "Debt management"],
       "content": {
         "introduction": "To bridge deficits, governments borrow through various instruments and sources.",
@@ -190,7 +185,6 @@
     {
       "id": 6,
       "title": "🏛️ Central vs. State Finance",
-      "duration": "12 min",
       "topics": ["Revenue distribution", "Finance Commission", "Federal structure", "Tax sharing"],
       "content": {
         "introduction": "India's federal structure divides financial responsibilities between central and state governments.",
@@ -226,7 +220,6 @@
     {
       "id": 7,
       "title": "🏢 Public Sector Enterprises (PSEs)",
-      "duration": "11 min",
       "topics": ["Maharatna", "Navratna", "Miniratna", "Disinvestment"],
       "content": {
         "introduction": "These are government-owned companies, categorized based on their performance and autonomy.",
@@ -262,7 +255,6 @@
     {
       "id": 8,
       "title": "🏥 Welfare & Social Spending",
-      "duration": "17 min",
       "topics": ["Healthcare", "Education", "Employment", "Subsidies"],
       "content": {
         "introduction": "Government spending on social welfare aims to improve citizen well-being and reduce inequality.",
@@ -302,7 +294,6 @@
     {
       "id": 9,
       "title": "🎁 Government Schemes & Transfers",
-      "duration": "18 min",
       "topics": ["Centrally sponsored schemes", "Central sector schemes", "Direct benefit transfer", "Subsidies"],
       "content": {
         "introduction": "Government implements various schemes to deliver benefits directly to citizens and promote development.",
@@ -338,7 +329,6 @@
     {
       "id": 10,
       "title": "🔍 Transparency & Accountability",
-      "duration": "14 min",
       "topics": ["CAG audit", "RTI Act", "Parliamentary oversight", "Digital dashboards"],
       "content": {
         "introduction": "How public money is tracked and government is held accountable for its financial decisions.",
@@ -374,7 +364,6 @@
     {
       "id": 11,
       "title": "🔮 Future of Public Finance",
-      "duration": "16 min",
       "topics": ["AI in budgeting", "Green bonds", "Open data", "Blockchain", "Participatory budgeting"],
       "content": {
         "introduction": "Emerging reforms and technologies are transforming how governments manage public finances.",
@@ -410,7 +399,6 @@
     {
       "id": 12,
       "title": "📌 Key Institutions",
-      "duration": "12 min",
       "topics": ["Ministry of Finance", "RBI", "NITI Aayog", "Finance Commission", "CAG", "GST Council"],
       "content": {
         "introduction": "Various institutions play crucial roles in managing India's public finances and economic policy.",
@@ -442,7 +430,6 @@
     {
       "id": 13,
       "title": "🧠 Summary",
-      "duration": "10 min",
       "topics": ["Revenue management", "Expenditure planning", "Deficit management", "Federal finance", "Transparency"],
       "content": {
         "introduction": "Public finance encompasses all aspects of government financial management from revenue collection to expenditure and accountability.",
@@ -472,5 +459,5 @@
       }
     }
   ],
-  "summary": "✅ Strong public finance builds roads, schools, health, defense, and future opportunities — it's the financial backbone of national progress."
+  "summary": "🏛️ Understanding public finance helps citizens make informed decisions and hold government accountable for financial management."
 }

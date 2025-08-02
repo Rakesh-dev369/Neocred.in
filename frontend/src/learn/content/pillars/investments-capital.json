@@ -5,55 +5,318 @@
   "lessons": [
     {
       "id": 1,
-      "title": "📈 Why Investments Matter",
-      "duration": "10 min",
-      "topics": ["Beat inflation over time", "Build wealth, achieve goals", "Earn passive income", "Contribute to economic development"]
+      "title": "📈 Investment Fundamentals",
+      "topics": ["Beat inflation over time", "Build wealth, achieve goals", "Earn passive income", "Contribute to economic development"],
+      "content": {
+        "introduction": "Build the foundation of wealth creation. Investing is about allocating money to assets that grow over time to meet future financial goals.",
+        "sections": [
+          {
+            "title": "What is Investment?",
+            "content": "**Allocating money to assets that grow over time to meet future financial goals.**\n\n**Investment vs Speculation:**\n• **Investment:** Research-based, long-term wealth building\n• **Speculation:** Short-term betting on price movements\n• **Gambling:** Pure luck, no analysis involved\n\n**Key Characteristics:**\n• **Time Horizon:** Usually 3+ years\n• **Research-Based:** Fundamental or technical analysis\n• **Goal-Oriented:** Specific financial objectives"
+          },
+          {
+            "title": "Why Invest?",
+            "content": "**Beat inflation (₹100 today ≠ ₹100 tomorrow)**\n• **Inflation Impact:** ₹100 today = ₹50 purchasing power in 15 years (5% inflation)\n• **Investment Solution:** 12% returns turn ₹100 into ₹674 in 15 years\n• **Real Returns:** Investment returns minus inflation rate\n\n**Grow wealth passively**\n• **Compounding Magic:** Earning returns on returns\n• **Time Advantage:** Earlier you start, more wealth you build\n• **Passive Income:** Money works while you sleep\n\n**Build corpus for retirement, education, home, etc.**\n• **Retirement:** Need 25-30x annual expenses\n• **Education:** Child's higher education costs ₹20-50 lakh\n• **Home:** Down payment and EMI planning"
+          },
+          {
+            "title": "How to Begin?",
+            "content": "**Define goals (short, medium, long-term)**\n• **Short-term (1-3 years):** Emergency fund, vacation\n• **Medium-term (3-7 years):** Car, home down payment\n• **Long-term (7+ years):** Retirement, child's education\n\n**Know your risk profile (conservative, moderate, aggressive)**\n• **Conservative:** 20% equity, 80% debt/FD\n• **Moderate:** 50% equity, 50% debt\n• **Aggressive:** 80% equity, 20% debt\n\n**Start early (power of compounding)**\n• **Age 25:** ₹5,000 SIP = ₹4.2 crore at 60\n• **Age 35:** ₹10,000 SIP = ₹4.2 crore at 60\n• **Lesson:** Starting early requires less monthly investment\n\n**📌 Example: Investing ₹5,000/month at 12% for 20 years = ₹50+ lakhs**"
+          }
+        ],
+        "keyTakeaways": [
+          "Investment is allocating money to grow wealth over time",
+          "Inflation erodes money value - investing beats inflation",
+          "Start early to benefit from compounding power",
+          "Define clear goals and match investments accordingly"
+        ],
+        "actionSteps": [
+          "List your financial goals with timelines and amounts needed",
+          "Assess your risk tolerance through questionnaires",
+          "Start with ₹500-1000 monthly SIP in diversified funds",
+          "Increase investment amount by 10% annually"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "SIP Calculator",
+            "description": "Calculate SIP returns and plan investments",
+            "url": "/tools?tool=SIP Calculator"
+          },
+          {
+            "name": "Goal Planning Calculator",
+            "description": "Plan investments for specific financial goals",
+            "url": "/tools?tool=Goal Planning Calculator"
+          },
+          {
+            "name": "Risk Profile Assessment",
+            "description": "Determine your investment risk tolerance",
+            "url": "/tools?tool=Risk Assessment"
+          }
+        ]
+      }
     },
     {
       "id": 2,
-      "title": "💹 Types of Investments",
-      "duration": "25 min",
-      "topics": ["Equity: Direct stocks, dividends, blue chip vs penny", "Mutual Funds: Equity, Debt, Hybrid, Index, SIP", "ETFs: Exchange-traded funds", "Bonds: Government, Corporate, Tax-free", "Gold: SGB, Digital Gold, ETFs", "Real Estate: Property, REITs", "Alternative: Crypto, Startups, Art"]
+      "title": "💹 Investment Asset Classes",
+      "topics": ["Equity: Direct stocks, dividends, blue chip vs penny", "Mutual Funds: Equity, Debt, Hybrid, Index, SIP", "ETFs: Exchange-traded funds", "Bonds: Government, Corporate, Tax-free", "Gold: SGB, Digital Gold, ETFs", "Real Estate: Property, REITs", "Alternative: Crypto, Startups, Art"],
+      "content": {
+        "introduction": "Understand where you can invest. Different asset classes offer varying risk-return profiles to build a diversified investment portfolio.",
+        "sections": [
+          {
+            "title": "Asset Class Overview Table",
+            "content": "| **Asset Class** | **Description** | **Risk** | **Return Potential** |\n|-----------------|-----------------|----------|---------------------|\n| **Equity** | Shares of companies | High | High |\n| **Debt** | Bonds, FDs, PPF, G-Secs | Low–Medium | Low–Moderate |\n| **Gold** | Physical, Digital, Gold ETFs | Medium | Moderate |\n| **Real Estate** | Land, House, Commercial property | Medium | Medium–High |\n| **Mutual Funds** | Pooled investments in equity/debt managed by experts | Varies | Varies |\n| **Crypto** | Digital assets like Bitcoin, Ethereum (risky) | Very High | Unpredictable |"
+          },
+          {
+            "title": "Detailed Asset Classes",
+            "content": "**Equity (Shares of Companies)**\n• **Direct Stocks:** Individual company shares\n• **Blue Chip:** Large, stable companies (TCS, Reliance)\n• **Mid Cap:** Growing companies with potential\n• **Small Cap:** High growth, higher risk\n• **Dividends:** Regular income from profits\n\n**Debt (Bonds, FDs, PPF, G-Secs)**\n• **Government Securities:** Safest, RBI-issued\n• **Corporate Bonds:** Company-issued, higher returns\n• **Fixed Deposits:** Bank deposits, guaranteed returns\n• **PPF:** 15-year tax-free government scheme\n\n**Mutual Funds (Pooled investments managed by experts)**\n• **Equity Funds:** Invest in stocks\n• **Debt Funds:** Invest in bonds\n• **Hybrid Funds:** Mix of equity and debt\n• **Index Funds:** Track market indices, low cost"
+          },
+          {
+            "title": "New Age Investment Options",
+            "content": "**💡 New Age Assets: REITs, InvITs, NPS, Sovereign Gold Bonds (SGB)**\n\n**REITs (Real Estate Investment Trusts):**\n• Invest in commercial real estate\n• Regular dividend income\n• Listed: Embassy REIT, Mindspace REIT\n\n**InvITs (Infrastructure Investment Trusts):**\n• Invest in infrastructure projects\n• Roads, power transmission, telecom towers\n\n**NPS (National Pension System):**\n• Retirement-focused investment\n• Tax benefits under 80CCD\n• Market-linked returns\n\n**Sovereign Gold Bonds (SGB):**\n• Government-issued gold bonds\n• 2.5% annual interest + gold price appreciation\n• 8-year maturity, tradeable on exchanges"
+          }
+        ],
+        "keyTakeaways": [
+          "Each asset class has different risk-return characteristics",
+          "Diversification across asset classes reduces overall risk",
+          "Mutual funds offer professional management for beginners",
+          "New age assets like REITs provide innovative investment options"
+        ],
+        "actionSteps": [
+          "Study the risk-return table to understand each asset class",
+          "Start with mutual funds for diversified exposure",
+          "Allocate investments across multiple asset classes",
+          "Consider new age assets like REITs for portfolio diversification"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Asset Allocation Calculator",
+            "description": "Determine optimal asset mix based on your profile",
+            "url": "/tools?tool=Asset Allocation Calculator"
+          },
+          {
+            "name": "REIT Calculator",
+            "description": "Calculate REIT returns and dividend yield",
+            "url": "/tools?tool=REIT Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 3,
-      "title": "🏦 Capital Markets (Stock Market Backbone)",
-      "duration": "12 min",
-      "topics": ["Primary Market: IPOs", "Secondary Market: Daily trading", "SEBI: Market regulator", "Depositories: CDSL, NSDL", "Brokers: Zerodha, Angel One"]
+      "title": "🏦 Capital Markets Infrastructure",
+      "topics": ["Primary Market: IPOs", "Secondary Market: Daily trading", "SEBI: Market regulator", "Depositories: CDSL, NSDL", "Brokers: Zerodha, Angel One"],
+      "content": {
+        "introduction": "Learn how money flows in India's financial markets. Understanding market infrastructure helps you navigate the investment ecosystem effectively.",
+        "sections": [
+          {
+            "title": "Market Structure",
+            "content": "**Primary Market:** Where companies issue IPOs to raise funds\n• **IPO (Initial Public Offering):** Company goes public for first time\n• **FPO (Follow-on Public Offering):** Additional shares by listed company\n• **Rights Issue:** Existing shareholders get first preference\n• **QIP (Qualified Institutional Placement):** For institutional investors\n\n**Secondary Market:** Where shares trade daily (NSE, BSE)\n• **NSE (National Stock Exchange):** Largest exchange in India\n• **BSE (Bombay Stock Exchange):** Oldest exchange in Asia\n• **Daily Trading:** Buying/selling of existing shares\n• **Price Discovery:** Market determines fair value"
+          },
+          {
+            "title": "Key Market Players",
+            "content": "**SEBI:** Regulator ensuring investor protection\n• **Securities & Exchange Board of India**\n• Protects investor interests\n• Regulates stock exchanges, brokers, mutual funds\n• Sets disclosure norms for companies\n\n**Stock Exchanges:** NSE, BSE\n• **NSE:** Electronic trading platform\n• **BSE:** Traditional exchange with modern systems\n• Provide trading infrastructure\n\n**Depositories:** NSDL, CDSL (store demat shares)\n• **NSDL:** National Securities Depository Limited\n• **CDSL:** Central Depository Services Limited\n• Hold shares in electronic form\n\n**Brokers:** Zerodha, Groww, Upstox, etc.\n• **Discount Brokers:** Low cost, basic services\n• **Full-Service Brokers:** Research, advisory services\n• Your gateway to stock markets"
+          },
+          {
+            "title": "Regulatory Framework",
+            "content": "**📜 Regulatory Bodies:**\n\n**SEBI (Securities & Exchange Board of India)**\n• Primary market regulator\n• Investor protection and market development\n• Sets rules for all market participants\n\n**AMFI (Association of Mutual Funds in India)**\n• Self-regulatory organization for mutual funds\n• Sets standards for fund houses\n• Investor education and awareness\n\n**AMC/MF Houses:** SBI MF, HDFC MF, etc.\n• **Asset Management Companies**\n• Manage mutual fund schemes\n• Professional fund management"
+          }
+        ],
+        "keyTakeaways": [
+          "Primary market raises fresh capital, secondary market trades existing shares",
+          "SEBI ensures fair practices and protects investor interests",
+          "Depositories hold your shares safely in electronic form",
+          "Choose brokers based on your needs and trading frequency"
+        ],
+        "actionSteps": [
+          "Understand the role of each market participant",
+          "Open Demat account with SEBI-registered broker",
+          "Learn about SEBI investor protection measures",
+          "Start with small investments to understand market mechanics"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Brokerage Comparison Tool",
+            "description": "Compare charges across different brokers",
+            "url": "/tools?tool=Brokerage Calculator"
+          },
+          {
+            "name": "Market Infrastructure Guide",
+            "description": "Interactive guide to market participants",
+            "url": "/tools?tool=Market Guide"
+          }
+        ]
+      }
     },
     {
       "id": 4,
-      "title": "📜 Tax on Investments",
-      "duration": "14 min",
-      "topics": ["STCG: Short Term Capital Gains (15%)", "LTCG: Long Term Capital Gains (10% above ₹1L)", "Indexation benefit for debt", "Dividends: Taxed at slab rate"]
+      "title": "📜 Investment Taxation",
+      "topics": ["STCG: Short Term Capital Gains (15%)", "LTCG: Long Term Capital Gains (10% above ₹1L)", "Indexation benefit for debt", "Dividends: Taxed at slab rate"],
+      "content": {
+        "introduction": "Learn how your returns are taxed. Understanding investment taxation helps you make tax-efficient investment decisions and maximize post-tax returns.",
+        "sections": [
+          {
+            "title": "Investment Taxation Table",
+            "content": "| **Investment** | **Type of Tax** | **Tax Rate** |\n|----------------|-----------------|--------------|\n| **Equity (Shares, MF)** | LTCG after 1 yr (₹1L+) | 10% (above ₹1L) |\n| **Short-Term Equity** | STCG (<1 yr) | 15% |\n| **Debt MF** | Based on slab | Added to income (post 2023 rule) |\n| **FD/PPF/NSC** | Interest | Added to income (except PPF: tax-free) |\n| **Gold (Physical/Digital)** | LTCG (>3 yrs) | 20% with indexation |"
+          },
+          {
+            "title": "Equity Taxation Details",
+            "content": "**Long Term Capital Gains (LTCG) - Equity**\n• **Holding Period:** More than 1 year\n• **Tax Rate:** 10% on gains above ₹1 lakh per year\n• **Exemption:** First ₹1 lakh gains are tax-free\n• **No Indexation:** Unlike debt, no inflation adjustment\n\n**Short Term Capital Gains (STCG) - Equity**\n• **Holding Period:** Less than 1 year\n• **Tax Rate:** 15% flat rate\n• **No Exemption:** All gains are taxable\n• **Securities Transaction Tax (STT):** Additional 0.1% on sale"
+          },
+          {
+            "title": "Tax-Saving Investment Options",
+            "content": "**📌 Tip: Use ELSS Mutual Funds or NPS for tax savings under 80C**\n\n**ELSS (Equity Linked Savings Scheme)**\n• **Tax Deduction:** Up to ₹1.5 lakh under Section 80C\n• **Lock-in Period:** 3 years (shortest among 80C options)\n• **Returns:** Market-linked, potential for high returns\n• **LTCG:** 10% above ₹1 lakh (after 3 years)\n\n**NPS (National Pension System)**\n• **80CCD(1):** Up to ₹1.5 lakh (within 80C limit)\n• **80CCD(1B):** Additional ₹50,000 deduction\n• **Total Benefit:** Up to ₹2 lakh tax deduction\n• **Withdrawal:** 60% lump sum + 40% annuity at retirement"
+          }
+        ],
+        "keyTakeaways": [
+          "Equity investments held >1 year get favorable LTCG tax treatment",
+          "First ₹1 lakh of equity LTCG is tax-free annually",
+          "Debt mutual funds are now taxed as per income slab",
+          "ELSS and NPS offer tax deductions under Section 80C"
+        ],
+        "actionSteps": [
+          "Plan to hold equity investments for more than 1 year",
+          "Use ELSS funds for tax saving under Section 80C",
+          "Consider NPS for additional ₹50,000 tax deduction",
+          "Keep track of capital gains to optimize tax liability"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Capital Gains Tax Calculator",
+            "description": "Calculate tax on your investment gains",
+            "url": "/tools?tool=Capital Gains Calculator"
+          },
+          {
+            "name": "Tax Saving Investment Planner",
+            "description": "Plan tax-efficient investments under 80C",
+            "url": "/tools?tool=Tax Saving Planner"
+          }
+        ]
+      }
     },
     {
       "id": 5,
       "title": "🔮 Future of Investing",
-      "duration": "13 min",
-      "topics": ["Zero-commission investing apps", "Robo-advisors: AI portfolio management", "Smart Portfolios: Rule-based investing", "ESG Investing: Ethical companies", "Fractional Real Estate & Global Investing", "Tokenization: Buy pieces of assets"]
+      "topics": ["Zero-commission investing apps", "Robo-advisors: AI portfolio management", "Smart Portfolios: Rule-based investing", "ESG Investing: Ethical companies", "Fractional Real Estate & Global Investing", "Tokenization: Buy pieces of assets"],
+      "content": {
+        "introduction": "Where are we heading? Technology and innovation are transforming how Indians invest, making it more accessible and intelligent.",
+        "sections": [
+          {
+            "title": "Technology-Driven Investing",
+            "content": "**Fractional Investing (buying partial shares/assets)**\n• **Fractional Shares:** Buy ₹100 worth of expensive stocks\n• **Fractional Real Estate:** Invest ₹10,000 in commercial property\n• **Fractional Gold:** Buy gold worth ₹1 through apps\n• **Benefits:** Lower entry barriers, better diversification\n\n**AI-Driven Portfolio Management**\n• **Algorithm-based Decisions:** Data-driven investment choices\n• **Risk Assessment:** AI analyzes your risk profile\n• **Automatic Rebalancing:** Maintains optimal asset allocation\n• **Cost Effective:** Lower fees than human advisors\n\n**Robo-Advisors (Groww, Scripbox, INDWealth)**\n• **Groww:** Simple interface, goal-based investing\n• **Scripbox:** Long-term wealth creation focus\n• **INDWealth:** High-net-worth individual focus\n• **Features:** Automated investing, tax optimization"
+          },
+          {
+            "title": "Sustainable & Innovative Investing",
+            "content": "**Green & ESG Funds (environment-focused investing)**\n• **ESG:** Environmental, Social, Governance criteria\n• **Sustainable Companies:** Clean energy, responsible practices\n• **Growing Trend:** Millennials prefer ethical investing\n• **Performance:** ESG funds showing competitive returns\n\n**Decentralized Finance (DeFi) & Tokenization**\n• **DeFi:** Blockchain-based financial services\n• **Tokenization:** Convert real assets into digital tokens\n• **Smart Contracts:** Automated investment execution\n• **Caution:** High risk, regulatory uncertainty in India\n\n**Sachet Investment Products (₹100 SIPs, Gold for ₹1)**\n• **Micro-SIPs:** Start with ₹100 monthly\n• **Digital Gold:** Buy gold worth ₹1\n• **Micro-Insurance:** ₹50 annual premium\n• **Financial Inclusion:** Brings investing to masses"
+          },
+          {
+            "title": "Market Trends & Adoption",
+            "content": "**🚀 Trend: Indian millennials are shifting to SIPs, ETFs, and DIY investing apps**\n\n**Key Trends:**\n• **SIP Growth:** 50+ million SIP accounts in India\n• **ETF Adoption:** Low-cost index investing gaining popularity\n• **DIY Investing:** Self-directed investment platforms\n• **Mobile-First:** 80% investments happen via mobile apps\n\n**Future Predictions:**\n• **Voice-Based Investing:** \"Alexa, invest ₹5000 in equity\"\n• **Predictive Analytics:** AI predicts market movements\n• **Social Investing:** Follow successful investors' strategies\n• **Gamification:** Investment apps with rewards and challenges"
+          }
+        ],
+        "keyTakeaways": [
+          "Technology is making investing more accessible with lower minimums",
+          "AI and robo-advisors provide professional management at low cost",
+          "ESG investing aligns returns with values",
+          "Indian millennials are driving digital investment adoption"
+        ],
+        "actionSteps": [
+          "Try fractional investing to diversify with small amounts",
+          "Explore robo-advisor platforms for automated investing",
+          "Consider ESG funds for sustainable investing",
+          "Start with micro-SIPs if you're a beginner"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Fractional Investment Calculator",
+            "description": "Calculate returns on fractional investments",
+            "url": "/tools?tool=Fractional Calculator"
+          },
+          {
+            "name": "ESG Fund Screener",
+            "description": "Find ESG-compliant investment options",
+            "url": "/tools?tool=ESG Screener"
+          }
+        ]
+      }
     },
     {
       "id": 6,
-      "title": "💬 Popular Investment Strategies",
-      "duration": "16 min",
-      "topics": ["Value Investing: Warren Buffett style", "Growth Investing: Fast-growing companies", "Momentum Investing: Price trends", "Asset Allocation: Distribute across instruments", "Goal-Based Investing: Retirement, education"]
+      "title": "💬 Investment Strategies",
+      "topics": ["Value Investing: Warren Buffett style", "Growth Investing: Fast-growing companies", "Momentum Investing: Price trends", "Asset Allocation: Distribute across instruments", "Goal-Based Investing: Retirement, education"],
+      "content": {
+        "introduction": "Methods to grow your money smartly. Different investment strategies suit different investor profiles and market conditions.",
+        "sections": [
+          {
+            "title": "Investment Strategy Overview",
+            "content": "| **Strategy** | **Description** | **Ideal For** |\n|--------------|-----------------|---------------|\n| **SIP (Systematic Investment Plan)** | Invest fixed amount monthly in MF | Beginners |\n| **Value Investing** | Buying undervalued stocks/funds | Long-term |\n| **Growth Investing** | Focus on companies with high growth potential | Aggressive |\n| **Asset Allocation** | Diversify across asset classes | Everyone |\n| **Goal-Based Investing** | Match investments to life goals | Families |"
+          },
+          {
+            "title": "Popular Investment Strategies",
+            "content": "**SIP (Systematic Investment Plan)**\n• **Method:** Invest fixed amount monthly regardless of market conditions\n• **Benefits:** Rupee cost averaging, disciplined investing\n• **Best For:** Beginners, salaried individuals\n• **Example:** ₹5,000 monthly SIP in diversified equity fund\n\n**Value Investing (Warren Buffett style)**\n• **Method:** Buy undervalued companies with strong fundamentals\n• **Focus:** Low P/E ratio, strong balance sheet, competitive moat\n• **Timeline:** Long-term (5+ years)\n• **Risk:** Lower volatility, steady returns\n\n**Growth Investing**\n• **Method:** Invest in fast-growing companies\n• **Focus:** High revenue growth, expanding market share\n• **Examples:** Technology, healthcare, consumer sectors\n• **Risk:** Higher volatility, potential for high returns"
+          },
+          {
+            "title": "Portfolio Construction Strategies",
+            "content": "**Asset Allocation (Distribute across instruments)**\n• **Age-Based:** 100 minus age in equity (30-year-old: 70% equity)\n• **Risk-Based:** Conservative (30% equity), Aggressive (80% equity)\n• **Goal-Based:** Short-term goals in debt, long-term in equity\n\n**Goal-Based Investing (Retirement, education)**\n• **Retirement:** Long-term equity focus, gradual shift to debt\n• **Child's Education:** 15-year horizon, balanced approach\n• **Home Purchase:** 5-7 year horizon, debt-heavy allocation\n• **Emergency Fund:** Liquid funds, instant access\n\n**💡 Golden Rule: Don't put all eggs in one basket. Balance equity-debt-liquid**\n• **Diversification Benefits:** Reduces overall portfolio risk\n• **Rebalancing:** Review and adjust allocation annually\n• **Flexibility:** Adapt strategy based on life changes"
+          }
+        ],
+        "keyTakeaways": [
+          "SIP is the best strategy for beginners to start investing",
+          "Value investing requires patience but offers steady returns",
+          "Asset allocation should match your age and risk tolerance",
+          "Goal-based investing ensures you meet specific financial objectives"
+        ],
+        "actionSteps": [
+          "Start with SIP in diversified equity mutual funds",
+          "Define your investment goals with specific timelines",
+          "Create age-appropriate asset allocation",
+          "Review and rebalance portfolio annually"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "SIP Strategy Calculator",
+            "description": "Plan SIP investments for different goals",
+            "url": "/tools?tool=SIP Strategy Calculator"
+          },
+          {
+            "name": "Asset Allocation Optimizer",
+            "description": "Find optimal asset mix for your profile",
+            "url": "/tools?tool=Asset Allocation Optimizer"
+          }
+        ]
+      }
     },
     {
       "id": 7,
-      "title": "🧮 Risk vs. Return",
-      "duration": "11 min",
+      "title": "🧮 Risk vs Return Analysis",
       "topics": ["Investment comparison table", "Risk assessment by asset class", "Return potential analysis", "Liquidity considerations"],
-      "table": {
-        "headers": ["Investment Type", "Risk", "Return Potential", "Liquidity"],
-        "rows": [
-          ["Stocks", "High", "High", "High"],
-          ["Mutual Funds", "Medium", "Medium to High", "Medium to High"],
-          ["Bonds", "Low", "Low to Medium", "Medium"],
-          ["Real Estate", "Medium", "Medium", "Low"],
-          ["Gold", "Medium", "Medium", "Medium"],
-          ["Crypto", "Very High", "Very High", "High"]
-        ]
+      "content": {
+        "introduction": "Always assess what you risk for what you gain. Understanding risk-return relationship helps you make informed investment decisions.",
+        "sections": [
+          {
+            "title": "Risk Factors Analysis",
+            "content": "| **Factor** | **Risk Impact** | **Return Possibility** |\n|------------|-----------------|------------------------|\n| **Volatility** | High in equity/crypto | High returns |\n| **Liquidity** | Ease of converting to cash | FD: high, Real estate: low |\n| **Credit Risk** | Corporate bonds | Moderate |\n| **Inflation Risk** | FD may underperform | Equity usually beats it |\n| **Time Horizon** | Short = risky | Long = stable & compounding |"
+          },
+          {
+            "title": "Asset Class Risk-Return Profile",
+            "content": "**High Risk, High Return:**\n• **Equity/Stocks:** 12-15% long-term, high volatility\n• **Cryptocurrency:** Unpredictable, very high volatility\n• **Small Cap Funds:** 15-20% potential, high risk\n\n**Medium Risk, Medium Return:**\n• **Balanced/Hybrid Funds:** 8-12% returns, moderate volatility\n• **Gold:** 8-10% long-term, hedge against inflation\n• **Real Estate:** 10-12% including rental yield\n\n**Low Risk, Low Return:**\n• **Fixed Deposits:** 5-7% guaranteed, no volatility\n• **Government Bonds:** 6-8% safe, predictable\n• **Liquid Funds:** 4-6% returns, high liquidity"
+          },
+          {
+            "title": "Risk Management Framework",
+            "content": "**🔍 Use risk calculators and asset allocation tools before investing**\n\n**Risk Assessment Tools:**\n• **Risk Profiling:** Assess your risk tolerance\n• **Portfolio Analysis:** Measure overall portfolio risk\n• **Volatility Metrics:** Understand price fluctuations\n\n**Risk Mitigation:**\n• **Diversification:** Spread across asset classes\n• **SIP Investing:** Reduces timing risk\n• **Long-term Horizon:** Time reduces volatility\n• **Emergency Fund:** Avoid premature withdrawals"
+          }
+        ],
+        "keyTakeaways": [
+          "Higher returns always come with higher risk",
+          "Diversification across asset classes reduces overall risk",
+          "Time horizon is crucial - longer periods reduce risk",
+          "Use risk assessment tools before investing"
+        ],
+        "actionSteps": [
+          "Complete risk profiling questionnaire",
+          "Understand volatility of chosen investments",
+          "Diversify across different asset classes",
+          "Match investment risk with time horizon"
+        ],
+        "calculatorLinks": []
       }
     }
   ],

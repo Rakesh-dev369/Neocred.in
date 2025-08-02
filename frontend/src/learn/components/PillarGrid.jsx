@@ -287,7 +287,7 @@ const PillarGrid = () => {
               <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{pillar.description}</p>
               
               <div className="flex justify-between items-center mt-3">
-                <p className="text-gray-600 dark:text-gray-500 text-xs">{pillar.lessons} lessons</p>
+                <p className="text-gray-600 dark:text-gray-500 text-xs">{pillar.lessons} modules</p>
                 {progress > 0 && (
                   <div className="flex items-center gap-1">
                     <span className="text-green-400 text-xs font-medium">{progress}%</span>
@@ -315,22 +315,22 @@ const PillarGrid = () => {
             transition={{ duration: 0.3 }}
           >
             {/* Modal Header */}
-            <div className="flex-shrink-0 border-b border-gray-200 dark:border-white/10 p-4 md:p-6">
-              <div className="flex justify-between items-center mb-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl md:text-3xl">{selectedPillar.emoji}</span>
+            <div className="flex-shrink-0 border-b border-gray-200 dark:border-white/10 p-2 md:p-3">
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg md:text-xl">{selectedPillar.emoji}</span>
                   <div>
-                    <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">{selectedPillar.title}</h2>
+                    <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-white">{selectedPillar.title}</h2>
                     {viewMode === 'lesson' && selectedPillar.data && (
-                      <p className="text-sm text-gray-600 dark:text-white/60">
-                        Lesson {currentLessonIndex + 1} of {selectedPillar.data.lessons.length}
+                      <p className="text-xs text-gray-600 dark:text-white/60">
+                        Module {currentLessonIndex + 1} of {selectedPillar.data.lessons.length}
                       </p>
                     )}
                   </div>
                 </div>
                 <button 
                   onClick={closePillar}
-                  className="text-gray-600 dark:text-white/60 hover:text-gray-900 dark:hover:text-white text-2xl md:text-3xl font-light"
+                  className="text-gray-600 dark:text-white/60 hover:text-gray-900 dark:hover:text-white text-xl font-light"
                 >
                   ×
                 </button>
@@ -340,7 +340,7 @@ const PillarGrid = () => {
               <div className="flex gap-1 bg-white/5 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('overview')}
-                  className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`flex-1 px-2 py-1 rounded-md text-xs font-medium transition-colors ${
                     viewMode === 'overview' ? 'bg-gray-200 dark:bg-white/20 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-white/60 hover:text-gray-900 dark:hover:text-white'
                   }`}
                 >
@@ -349,16 +349,16 @@ const PillarGrid = () => {
                 {selectedPillar.data && selectedPillar.data.lessons && (
                   <button
                     onClick={() => setViewMode('lesson')}
-                    className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    className={`flex-1 px-2 py-1 rounded-md text-xs font-medium transition-colors ${
                       viewMode === 'lesson' ? 'bg-gray-200 dark:bg-white/20 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-white/60 hover:text-gray-900 dark:hover:text-white'
                     }`}
                   >
-                    📚 Lessons
+                    📚 Modules
                   </button>
                 )}
                 <button
                   onClick={() => setViewMode('progress')}
-                  className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`flex-1 px-2 py-1 rounded-md text-xs font-medium transition-colors ${
                     viewMode === 'progress' ? 'bg-gray-200 dark:bg-white/20 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-white/60 hover:text-gray-900 dark:hover:text-white'
                   }`}
                 >
@@ -368,16 +368,16 @@ const PillarGrid = () => {
             </div>
             
             {/* Modal Content */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6">
+            <div className="flex-1 overflow-y-auto p-2 md:p-3">
             
             {/* Overview Tab */}
             {viewMode === 'overview' && selectedPillar.data && (
               <div>
-                <p className="text-gray-700 dark:text-white/80 mb-6 text-sm md:text-base">{selectedPillar.data.description}</p>
+                <p className="text-gray-700 dark:text-white/80 mb-3 text-sm">{selectedPillar.data.description}</p>
                 
                 {/* Lesson Index */}
                 <div className="grid gap-3">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">📚 Lessons ({selectedPillar.data.lessons.length})</h3>
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">📚 Modules ({selectedPillar.data.lessons.length})</h3>
                   {selectedPillar.data.lessons.map((lesson, idx) => {
                     const lessonKey = `${selectedPillar.id}-${idx}`;
                     const isCompleted = completedLessons[lessonKey];
@@ -386,17 +386,16 @@ const PillarGrid = () => {
                     return (
                       <div 
                         key={idx} 
-                        className={`p-3 rounded-lg border cursor-pointer transition-all duration-300 hover:bg-gray-50 dark:hover:bg-white/10 ${
+                        className={`p-2 rounded border cursor-pointer transition-all duration-300 hover:bg-gray-50 dark:hover:bg-white/10 ${
                           isCompleted ? 'border-green-300 dark:border-green-500/30 bg-green-50 dark:bg-green-500/5' : 'border-gray-300 dark:border-white/10'
                         }`}
                         onClick={() => goToLesson(idx)}
                       >
                         <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-3">
-                            <span className="text-gray-600 dark:text-white/60 text-sm font-mono">{String(idx + 1).padStart(2, '0')}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-gray-600 dark:text-white/60 text-xs font-mono">{String(idx + 1).padStart(2, '0')}</span>
                             <div>
-                              <h4 className="text-gray-900 dark:text-white font-medium text-sm md:text-base">{lesson.title}</h4>
-                              <p className="text-gray-600 dark:text-white/60 text-xs">{lesson.duration}</p>
+                              <h4 className="text-gray-900 dark:text-white font-medium text-sm">{lesson.title}</h4>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
@@ -424,32 +423,29 @@ const PillarGrid = () => {
             {viewMode === 'lesson' && selectedPillar.data && selectedPillar.data.lessons && (
               <div>
                 {/* Lesson Navigation */}
-                <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-300 dark:border-white/10">
+                <div className="flex justify-between items-center mb-3 pb-2 border-b border-gray-300 dark:border-white/10">
                   <button
                     onClick={prevLesson}
                     disabled={currentLessonIndex === 0}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                    className={`flex items-center gap-1 px-2 py-1 rounded text-sm transition-colors ${
                       currentLessonIndex === 0 
                         ? 'text-gray-400 dark:text-white/30 cursor-not-allowed' 
                         : 'text-gray-700 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10'
                     }`}
                   >
-                    ← Previous
+                    ← Prev
                   </button>
                   
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                       {selectedPillar.data.lessons[currentLessonIndex].title}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-white/60">
-                      Lesson {currentLessonIndex + 1} of {selectedPillar.data.lessons.length}
-                    </p>
                   </div>
                   
                   <button
                     onClick={nextLesson}
                     disabled={currentLessonIndex === selectedPillar.data.lessons.length - 1}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                    className={`flex items-center gap-1 px-2 py-1 rounded text-sm transition-colors ${
                       currentLessonIndex === selectedPillar.data.lessons.length - 1
                         ? 'text-gray-400 dark:text-white/30 cursor-not-allowed' 
                         : 'text-gray-700 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10'
@@ -472,7 +468,6 @@ const PillarGrid = () => {
                     }`}>
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex items-center gap-2">
-                          <span className="text-gray-600 dark:text-white/60 text-sm">{lesson.duration}</span>
                           {isCompleted && <span className="text-green-400">✓</span>}
                         </div>
                         <button
@@ -489,6 +484,83 @@ const PillarGrid = () => {
                       </div>
                       
 
+                      
+                      {/* Content Section */}
+                      {lesson.content && (
+                        <div className="mb-6">
+                          {/* Introduction */}
+                          <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                            <h4 className="font-heading text-lg font-semibold text-blue-900 dark:text-blue-300 mb-2">📖 Introduction</h4>
+                            <p className="font-sans text-gray-700 dark:text-blue-100">{lesson.content.introduction}</p>
+                          </div>
+                          
+                          {/* Content Sections */}
+                          <div className="space-y-6">
+                            {lesson.content.sections.map((section, idx) => (
+                              <div key={idx} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-5">
+                                <h4 className="font-heading text-lg font-semibold text-gray-900 dark:text-white mb-3">{section.title}</h4>
+                                <div className="font-sans text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+                                  {section.content.split('**').map((part, partIdx) => {
+                                    if (partIdx % 2 === 1) {
+                                      return <strong key={partIdx} className="font-display font-semibold text-gray-900 dark:text-white">{part}</strong>;
+                                    }
+                                    return part;
+                                  })}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          
+                          {/* Key Takeaways */}
+                          <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                            <h4 className="font-heading text-lg font-semibold text-green-900 dark:text-green-300 mb-3">🎯 Key Takeaways</h4>
+                            <ul className="font-sans space-y-2">
+                              {lesson.content.keyTakeaways.map((takeaway, idx) => (
+                                <li key={idx} className="flex items-start gap-2 text-green-800 dark:text-green-200">
+                                  <span className="text-green-500 mt-1">✓</span>
+                                  <span>{takeaway}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          
+                          {/* Action Steps */}
+                          <div className="mt-6 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                            <h4 className="font-heading text-lg font-semibold text-purple-900 dark:text-purple-300 mb-3">🚀 Action Steps</h4>
+                            <ol className="font-sans space-y-2">
+                              {lesson.content.actionSteps.map((step, idx) => (
+                                <li key={idx} className="flex items-start gap-3 text-purple-800 dark:text-purple-200">
+                                  <span className="font-display font-bold text-purple-500 bg-purple-200 dark:bg-purple-800 rounded-full w-6 h-6 flex items-center justify-center text-sm">{idx + 1}</span>
+                                  <span>{step}</span>
+                                </li>
+                              ))}
+                            </ol>
+                          </div>
+                          
+                          {/* Calculator Links */}
+                          {lesson.content.calculatorLinks && lesson.content.calculatorLinks.length > 0 && (
+                            <div className="mt-6 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                              <h4 className="font-heading text-lg font-semibold text-orange-900 dark:text-orange-300 mb-3">🧮 Related Calculators</h4>
+                              <div className="grid gap-3 md:grid-cols-2">
+                                {lesson.content.calculatorLinks.map((calc, idx) => (
+                                  <a
+                                    key={idx}
+                                    href={calc.url}
+                                    className="font-display block p-3 bg-white dark:bg-gray-800 rounded-lg border border-orange-200 dark:border-orange-700 hover:border-orange-400 dark:hover:border-orange-500 transition-colors group"
+                                  >
+                                    <div className="font-semibold text-orange-900 dark:text-orange-300 group-hover:text-orange-600 dark:group-hover:text-orange-200">
+                                      {calc.name}
+                                    </div>
+                                    <div className="text-sm text-orange-700 dark:text-orange-400 mt-1">
+                                      {calc.description}
+                                    </div>
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                       
                       {lesson.video && (
                         <div className="mb-6">
@@ -548,8 +620,8 @@ const PillarGrid = () => {
                                   <p className="text-gray-700 dark:text-white/80 text-sm mb-3">{lesson.video.description}</p>
                                   <div className="space-y-2">
                                     <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-white/60">
-                                      <span>⏱️</span>
-                                      <span>{lesson.duration}</span>
+                                      <span>🎯</span>
+                                      <span>Key concepts covered</span>
                                     </div>
                                     <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-white/60">
                                       <span>🎯</span>
@@ -642,7 +714,7 @@ const PillarGrid = () => {
                             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
                           >
                             <Coins className="h-4 w-4" />
-                            Complete Lesson (+25 points)
+                            Complete Module (+25 points)
                           </button>
                         </div>
                       )}
@@ -688,7 +760,7 @@ const PillarGrid = () => {
                 {/* Detailed Progress */}
                 {selectedPillar.data && (
                   <div className="space-y-3">
-                    <h4 className="text-gray-900 dark:text-white font-medium mb-4">📈 Lesson Progress</h4>
+                    <h4 className="text-gray-900 dark:text-white font-medium mb-4">📈 Module Progress</h4>
                     {selectedPillar.data.lessons.map((lesson, idx) => {
                       const lessonKey = `${selectedPillar.id}-${idx}`;
                       const isCompleted = completedLessons[lessonKey];
@@ -700,7 +772,6 @@ const PillarGrid = () => {
                             <span className="text-gray-600 dark:text-white/60 text-sm font-mono w-8">{String(idx + 1).padStart(2, '0')}</span>
                             <div>
                               <p className="text-gray-900 dark:text-white text-sm font-medium">{lesson.title}</p>
-                              <p className="text-gray-600 dark:text-white/60 text-xs">{lesson.duration}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
@@ -724,7 +795,7 @@ const PillarGrid = () => {
 
               <div className="text-center py-8">
                 <p className="text-gray-600 dark:text-white/60">Content coming soon...</p>
-                <p className="text-sm text-gray-500 dark:text-white/40 mt-2">{selectedPillar.lessons} lessons available</p>
+                <p className="text-sm text-gray-500 dark:text-white/40 mt-2">{selectedPillar.lessons} modules available</p>
               </div>
             )}
             
@@ -753,7 +824,7 @@ const PillarGrid = () => {
                 <span className="text-xl">{selectedPillar.emoji}</span>
                 <div>
                   <h3 className="text-white font-medium">{selectedPillar.data.lessons[currentLessonIndex].title}</h3>
-                  <p className="text-white/60 text-sm">Lesson {currentLessonIndex + 1} of {selectedPillar.data.lessons.length}</p>
+                  <p className="text-white/60 text-sm">Module {currentLessonIndex + 1} of {selectedPillar.data.lessons.length}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -799,8 +870,6 @@ const PillarGrid = () => {
                   {selectedPillar.data.lessons[currentLessonIndex].video.description}
                 </p>
                 <div className="flex items-center justify-center gap-4 text-sm text-white/60">
-                  <span>⏱️ {selectedPillar.data.lessons[currentLessonIndex].duration}</span>
-                  <span>•</span>
                   <span>📚 {selectedPillar.title}</span>
                 </div>
               </div>

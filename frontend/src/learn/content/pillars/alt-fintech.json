@@ -1,126 +1,573 @@
 {
-  "title": "⚡ Alternative Finance & Emerging Technologies",
-  "description": "Disruptive, non-traditional ways of borrowing, investing, transacting, and managing money — often tech-driven and decentralized",
-  "icon": "⚡",
+  "title": "💡 Alternative & Fintech",
+  "description": "Explore how technology and innovation are reshaping finance beyond traditional banking",
+  "icon": "💡",
   "lessons": [
     {
       "id": 1,
       "title": "🔍 What Is Alternative Finance?",
       "duration": "8 min",
-      "topics": ["Financial services outside traditional banking", "Technology-leveraged solutions", "Crowd-based finance", "Data-driven platforms"]
+      "topics": ["Non-traditional financial channels", "P2P lending", "Crypto & DeFi", "Digital-only banks"],
+      "content": {
+        "introduction": "Alternative Finance refers to non-traditional financial channels that operate outside of traditional banks and capital markets.",
+        "sections": [
+          {
+            "title": "📌 Examples",
+            "content": "• Peer-to-peer lending\n• Crypto & DeFi\n• Buy Now Pay Later (BNPL)\n• Digital-only banks (Neobanks)\n• Crowdfunding platforms"
+          },
+          {
+            "title": "💡 Goal",
+            "content": "Increase accessibility, speed, personalization, and innovation in finance."
+          }
+        ],
+        "keyTakeaways": [
+          "Alternative finance operates outside traditional banking systems",
+          "Technology enables faster and more accessible financial services",
+          "Focus on personalization and innovation in finance"
+        ],
+        "actionSteps": [
+          "Explore P2P lending platforms for investment opportunities",
+          "Research neobanks for better digital banking experience",
+          "Understand risks and benefits of alternative finance options"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "P2P Investment Calculator",
+            "description": "Calculate returns from P2P lending investments",
+            "url": "/tools?tool=P2P Investment Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 2,
-      "title": "📌 Key Segments: P2P Lending",
+      "title": "📌 P2P Lending",
       "duration": "12 min",
-      "topics": ["Direct lending between individuals", "Platforms: Faircent, LenDenClub", "RBI regulation (P2P NBFC License)", "Higher interest for lenders, easier access for borrowers"]
+      "topics": ["Direct lending platforms", "RBI regulation", "Risk-based pricing", "Algorithm-driven credit checks"],
+      "content": {
+        "introduction": "P2P Lending connects individual borrowers directly with lenders using digital platforms.",
+        "sections": [
+          {
+            "title": "📌 Platform Examples",
+            "content": "**Platform Examples | Role**\n\nFaircent, Lendbox | Facilitate P2P loans\nRBI-regulated NBFC-P2P | License category in India"
+          },
+          {
+            "title": "📌 Key Features",
+            "content": "Risk-based pricing, credit checks, and interest rates are algorithm-driven."
+          }
+        ],
+        "keyTakeaways": [
+          "P2P platforms connect borrowers and lenders directly",
+          "RBI regulates P2P lending through NBFC-P2P licenses",
+          "Algorithm-driven credit assessment and pricing"
+        ],
+        "actionSteps": [
+          "Research RBI-regulated P2P platforms",
+          "Understand risk assessment methods used",
+          "Start with small investments to test platform reliability"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "P2P Lending Calculator",
+            "description": "Calculate potential returns from P2P lending",
+            "url": "/tools?tool=P2P Lending Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 3,
       "title": "💰 Crowdfunding",
       "duration": "14 min",
-      "topics": ["Donation-based: Ketto, Milaap", "Reward-based: Kickstarter model", "Equity-based: SEBI regulated", "Debt-based: Business loans", "Popular among startups, artists, NGOs"]
+      "topics": ["Donation-based crowdfunding", "Equity-based crowdfunding", "Reward-based crowdfunding", "Startup funding"],
+      "content": {
+        "introduction": "Funding raised from the public in small amounts via online platforms.",
+        "sections": [
+          {
+            "title": "💰 Types",
+            "content": "**Types | Examples**\n\nDonation-based | Milaap, Ketto (for social causes)\nEquity-based | SeedInvest, LetsVenture\nReward-based | Kickstarter, FuelADream"
+          },
+          {
+            "title": "💡 Use Cases",
+            "content": "Ideal for startups, causes, artists, and innovation."
+          }
+        ],
+        "keyTakeaways": [
+          "Crowdfunding democratizes access to funding",
+          "Different types serve different purposes and audiences",
+          "Popular among startups and social causes"
+        ],
+        "actionSteps": [
+          "Identify the right crowdfunding type for your needs",
+          "Study successful crowdfunding campaigns",
+          "Prepare compelling campaign materials"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Crowdfunding Goal Calculator",
+            "description": "Calculate funding goals and campaign targets",
+            "url": "/tools?tool=Crowdfunding Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 4,
       "title": "💳 Buy Now Pay Later (BNPL)",
       "duration": "10 min",
-      "topics": ["E-commerce credit model", "ZestMoney, LazyPay platforms", "Instant checkout, EMI repayment", "Appeals to young consumers", "Convenience vs overspending risk"]
+      "topics": ["Short-term financing", "EMI repayment", "Credit scoring", "Gen Z adoption"],
+      "content": {
+        "introduction": "A short-term financing solution where consumers buy now and repay in EMIs with low or zero interest.",
+        "sections": [
+          {
+            "title": "💳 Providers",
+            "content": "**Providers | Features**\n\nLazyPay, ZestMoney | Credit scoring & instant approval\nAmazon Pay Later | One-click EMIs"
+          },
+          {
+            "title": "📌 Trend",
+            "content": "Rising trend among Gen Z and millennials."
+          }
+        ],
+        "keyTakeaways": [
+          "BNPL offers instant credit for purchases",
+          "Popular among younger demographics",
+          "Requires responsible usage to avoid debt traps"
+        ],
+        "actionSteps": [
+          "Understand BNPL terms and conditions",
+          "Use BNPL responsibly within budget limits",
+          "Track all BNPL commitments to avoid overspending"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "BNPL EMI Calculator",
+            "description": "Calculate BNPL EMI amounts and total cost",
+            "url": "/tools?tool=BNPL Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 5,
       "title": "🏦 Neobanks (Digital-only Banks)",
       "duration": "13 min",
-      "topics": ["No physical branches, fully digital", "Jupiter, Fi, Niyo examples", "Partner with RBI-licensed banks", "Focus on UX, budgeting tools, faster KYC"]
+      "topics": ["Fully digital banks", "No physical branches", "RBI-licensed backend", "Enhanced user experience"],
+      "content": {
+        "introduction": "Fully digital banks that operate without physical branches.",
+        "sections": [
+          {
+            "title": "🏦 Examples (India)",
+            "content": "**Examples (India) | Services Offered**\n\nJupiter, Fi, Niyo | Saving, UPI, cards, budgeting"
+          },
+          {
+            "title": "🔒 Backend Support",
+            "content": "Backend is supported by RBI-licensed banks (e.g., SBM, ICICI)."
+          }
+        ],
+        "keyTakeaways": [
+          "Neobanks offer fully digital banking experience",
+          "Partner with traditional banks for regulatory compliance",
+          "Focus on user experience and innovative features"
+        ],
+        "actionSteps": [
+          "Compare neobank features with traditional banks",
+          "Understand the partnership model with licensed banks",
+          "Try neobank services for specific use cases"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Banking Cost Comparison",
+            "description": "Compare costs between neobanks and traditional banks",
+            "url": "/tools?tool=Banking Cost Comparison"
+          }
+        ]
+      }
     },
     {
       "id": 6,
       "title": "🔗 Decentralized Finance (DeFi)",
       "duration": "16 min",
-      "topics": ["Blockchain-based lending/borrowing", "Smart contracts automation", "Uniswap, Aave, Compound examples", "No intermediaries", "High volatility, regulatory uncertainty"]
+      "topics": ["Blockchain networks", "Smart contracts", "No intermediaries", "Yield farming"],
+      "content": {
+        "introduction": "Finance applications built on blockchain networks that operate without intermediaries.",
+        "sections": [
+          {
+            "title": "🔗 Key Features",
+            "content": "**Key Features | Examples (Platforms)**\n\nSmart contracts | Uniswap, Aave, Compound\nYield farming | Staking rewards, liquidity mining\nProtocol-based | Open, transparent, global"
+          },
+          {
+            "title": "📌 Risks",
+            "content": "Smart contract bugs, volatility"
+          }
+        ],
+        "keyTakeaways": [
+          "DeFi operates without traditional financial intermediaries",
+          "Built on blockchain technology with smart contracts",
+          "High potential returns but significant risks"
+        ],
+        "actionSteps": [
+          "Learn about blockchain and smart contract basics",
+          "Start with small amounts to understand DeFi protocols",
+          "Stay updated on regulatory developments"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "DeFi Yield Calculator",
+            "description": "Calculate potential yields from DeFi protocols",
+            "url": "/tools?tool=DeFi Yield Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 7,
       "title": "🪙 Cryptocurrencies & Tokens",
       "duration": "15 min",
-      "topics": ["Digital assets: Bitcoin, Ethereum, Solana", "Trading, investment, remittances", "CBDC: RBI's Digital Rupee (e₹)", "Global asset class, cautious Indian regulation"]
+      "topics": ["Digital assets", "Blockchain technology", "Coins vs tokens", "Indian taxation"],
+      "content": {
+        "introduction": "Digital assets based on blockchain technology.",
+        "sections": [
+          {
+            "title": "🪙 Types",
+            "content": "**Type | Example**\n\nCoins | Bitcoin, Ethereum\nStablecoins | USDT, USDC\nTokens | Utility, governance, NFTs"
+          },
+          {
+            "title": "📌 Indian Context",
+            "content": "Still unregulated in India. Gains taxed under 30% flat rate as per Budget 2022."
+          }
+        ],
+        "keyTakeaways": [
+          "Cryptocurrencies are digital assets on blockchain",
+          "Different types serve different purposes",
+          "High tax rate in India with regulatory uncertainty"
+        ],
+        "actionSteps": [
+          "Understand different types of cryptocurrencies",
+          "Learn about tax implications in India",
+          "Stay updated on regulatory developments"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Crypto Tax Calculator",
+            "description": "Calculate tax on cryptocurrency transactions",
+            "url": "/tools?tool=Crypto Tax Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 8,
       "title": "🎨 Tokenization & NFTs",
       "duration": "12 min",
-      "topics": ["Real-world asset tokenization", "NFTs: Digital collectibles, identity assets", "Gaming, IP, digital art applications", "Future in fractional investing"]
+      "topics": ["Asset tokenization", "Non-fungible tokens", "Digital ownership", "Fractional ownership"],
+      "content": {
+        "introduction": "Tokenization turns real-world assets (like property or art) into digital tokens. NFTs (Non-Fungible Tokens) represent unique digital items.",
+        "sections": [
+          {
+            "title": "🎨 Use Cases",
+            "content": "**Use Case | Example**\n\nDigital Art | OpenSea, WazirX NFT\nReal Estate | Fractional ownership"
+          },
+          {
+            "title": "💡 Fintech Applications",
+            "content": "Fintech is exploring NFT-based identity, contracts, insurance."
+          }
+        ],
+        "keyTakeaways": [
+          "Tokenization enables fractional ownership of assets",
+          "NFTs represent unique digital ownership",
+          "Growing applications in fintech and identity"
+        ],
+        "actionSteps": [
+          "Understand the concept of digital ownership",
+          "Explore NFT marketplaces to understand the ecosystem",
+          "Consider tokenization for asset investment"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Fractional Investment Calculator",
+            "description": "Calculate returns from fractional asset ownership",
+            "url": "/tools?tool=Fractional Investment Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 9,
       "title": "🤖 Robo-Advisors & AI Finance",
       "duration": "14 min",
-      "topics": ["Automated investment platforms", "Scripbox, INDmoney examples", "Age, income, risk-based portfolios", "Auto-rebalancing, tax harvesting", "Lower cost, unbiased, efficient"]
+      "topics": ["AI-powered investment advice", "Risk profiling", "Portfolio management", "Automated rebalancing"],
+      "content": {
+        "introduction": "AI-powered platforms that offer personalized investment advice, risk profiling, and portfolio management.",
+        "sections": [
+          {
+            "title": "🤖 Examples",
+            "content": "**Examples | Features**\n\nZerodha's Coin | Direct mutual funds\nScripbox, INDwealth | Automated rebalancing, tax loss harvesting"
+          },
+          {
+            "title": "📌 Benefits",
+            "content": "Low-cost, beginner-friendly, data-driven."
+          }
+        ],
+        "keyTakeaways": [
+          "AI provides personalized investment recommendations",
+          "Lower costs compared to traditional advisors",
+          "Data-driven approach removes human bias"
+        ],
+        "actionSteps": [
+          "Try robo-advisor platforms with small investments",
+          "Compare costs with traditional advisory services",
+          "Understand the algorithms behind recommendations"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Robo-Advisor Cost Comparison",
+            "description": "Compare costs of robo-advisors vs traditional advisors",
+            "url": "/tools?tool=Robo-Advisor Comparison"
+          }
+        ]
+      }
     },
     {
       "id": 10,
       "title": "📦 Embedded Finance",
       "duration": "11 min",
-      "topics": ["Non-finance apps offering financial services", "Ola Money, Flipkart EMI, Swiggy Credit", "APIs and Banking-as-a-Service (BaaS)", "Invisible finance in daily apps"]
+      "topics": ["Finance in non-finance platforms", "Banking-as-a-Service", "API integration", "Seamless user experience"],
+      "content": {
+        "introduction": "Finance services embedded into non-finance platforms.",
+        "sections": [
+          {
+            "title": "📦 Example Use Cases",
+            "content": "**Example Use Cases | Description**\n\nBuy insurance at checkout | Travel or mobile insurance via Paytm\nLoans in ride apps | Ola Money, Uber Cash\nCredit via marketplaces | Amazon Pay, Flipkart Pay Later"
+          },
+          {
+            "title": "🔗 Integration",
+            "content": "Blends fintech + eCommerce + services"
+          }
+        ],
+        "keyTakeaways": [
+          "Financial services integrated into everyday apps",
+          "Seamless user experience without separate financial apps",
+          "Growing trend across e-commerce and service platforms"
+        ],
+        "actionSteps": [
+          "Identify embedded finance options in apps you use",
+          "Compare embedded finance offers with standalone services",
+          "Understand the convenience vs cost trade-offs"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Embedded Finance Cost Calculator",
+            "description": "Compare costs of embedded vs standalone financial services",
+            "url": "/tools?tool=Embedded Finance Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 11,
       "title": "🧠 AI & ML in Finance",
       "duration": "13 min",
-      "topics": ["Fraud detection systems", "Loan underwriting automation", "Predictive investment tools", "Financial advice chatbots", "Real-time personalization"]
+      "topics": ["Credit scoring", "Fraud detection", "Personalized offers", "Financial assistants"],
+      "content": {
+        "introduction": "AI and Machine Learning are transforming various aspects of finance.",
+        "sections": [
+          {
+            "title": "🧠 Applications",
+            "content": "• Credit scoring\n• Fraud detection\n• Personalized offers\n• Chatbots & finance assistants"
+          },
+          {
+            "title": "💡 Impact",
+            "content": "AI makes finance faster, safer, and more intuitive."
+          }
+        ],
+        "keyTakeaways": [
+          "AI improves accuracy in credit assessment and fraud detection",
+          "Enables personalized financial products and services",
+          "Makes financial services more accessible and user-friendly"
+        ],
+        "actionSteps": [
+          "Understand how AI affects your credit score",
+          "Use AI-powered financial apps for better insights",
+          "Stay informed about AI developments in finance"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "AI Credit Score Predictor",
+            "description": "Understand factors affecting your credit score",
+            "url": "/tools?tool=Credit Score Predictor"
+          }
+        ]
+      }
     },
     {
       "id": 12,
       "title": "🛡️ RegTech & InsurTech",
       "duration": "12 min",
-      "topics": ["RegTech: Compliance automation (AML, KYC)", "InsurTech: Smart pricing, instant claims", "Micro-insurance solutions", "Efficiency improvement, fraud reduction"]
+      "topics": ["Compliance automation", "KYC/AML processes", "AI-based underwriting", "Usage-based insurance"],
+      "content": {
+        "introduction": "Technology solutions for regulatory compliance and insurance innovation.",
+        "sections": [
+          {
+            "title": "🛡️ Applications",
+            "content": "**Segment | Use Case**\n\nRegTech | Compliance automation, KYC/AML\nInsurTech | AI-based underwriting, usage-based insurance"
+          },
+          {
+            "title": "📌 Benefits",
+            "content": "Helps reduce fraud, cost, and improve regulation."
+          }
+        ],
+        "keyTakeaways": [
+          "RegTech automates compliance processes",
+          "InsurTech makes insurance more personalized and efficient",
+          "Both reduce costs and improve user experience"
+        ],
+        "actionSteps": [
+          "Understand how RegTech affects your financial interactions",
+          "Explore InsurTech options for better insurance deals",
+          "Stay updated on regulatory technology developments"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Insurance Premium Calculator",
+            "description": "Compare traditional vs InsurTech insurance options",
+            "url": "/tools?tool=Insurance Premium Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 13,
       "title": "🌱 Green & Impact Finance",
       "duration": "15 min",
-      "topics": ["Climate + Social good + Profit focus", "Green Bonds, ESG Funds", "Carbon Credit Markets", "SEBI & World Bank programs", "Sustainability-driven finance"]
+      "topics": ["Sustainable projects", "Social impact", "Environmental goals", "Green bonds"],
+      "content": {
+        "introduction": "Finance for sustainable projects with social or environmental goals.",
+        "sections": [
+          {
+            "title": "🌱 Instruments",
+            "content": "**Instruments | Example**\n\nGreen Bonds | Fund renewable energy\nImpact Investing | Invest for social outcomes"
+          },
+          {
+            "title": "💡 Indian Development",
+            "content": "RBI launched India's first Sovereign Green Bond in 2023."
+          }
+        ],
+        "keyTakeaways": [
+          "Green finance supports environmental and social goals",
+          "Growing market with government support",
+          "Combines financial returns with positive impact"
+        ],
+        "actionSteps": [
+          "Research green bond investment opportunities",
+          "Consider ESG factors in investment decisions",
+          "Track impact metrics alongside financial returns"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Green Bond Calculator",
+            "description": "Calculate returns from green bond investments",
+            "url": "/tools?tool=Green Bond Calculator"
+          }
+        ]
+      }
     },
     {
       "id": 14,
       "title": "📁 Account Aggregators (AA)",
       "duration": "11 min",
-      "topics": ["RBI-regulated data-sharing framework", "Secure bank, investment, insurance data sharing", "Open Credit Enablement Network (OCEN)", "Consent-driven digital finance revolution"]
+      "topics": ["Financial data sharing", "RBI regulation", "User consent", "Encrypted data"],
+      "content": {
+        "introduction": "AA framework in India allows secure sharing of financial data between user, banks, and apps.",
+        "sections": [
+          {
+            "title": "📁 Framework",
+            "content": "**Entities | Example**\n\nNBFC-AA | CAMS Finserv, OneMoney\nRegulated by | RBI & FIU\nPurpose | Loans, insurance, credit analysis"
+          },
+          {
+            "title": "🔐 Security",
+            "content": "User gives consent. Data is encrypted."
+          }
+        ],
+        "keyTakeaways": [
+          "Enables secure sharing of financial data",
+          "User consent and data encryption ensure privacy",
+          "Facilitates better financial services through data insights"
+        ],
+        "actionSteps": [
+          "Understand your rights in the AA framework",
+          "Learn about consent management",
+          "Explore AA-enabled financial services"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Credit Assessment Tool",
+            "description": "Understand how AA data improves credit assessment",
+            "url": "/tools?tool=Credit Assessment Tool"
+          }
+        ]
+      }
     },
     {
       "id": 15,
       "title": "🔮 Future of Alternative Finance",
       "duration": "17 min",
-      "topics": ["Innovation impact overview", "Digital transformation trends", "Regulatory evolution"],
-      "table": {
-        "headers": ["Innovation", "Impact"],
-        "rows": [
-          ["**CBDC (Digital Rupee)**", "Faster, transparent digital currency under RBI"],
-          ["**AI+Finance**", "Hyper-personalized money management"],
-          ["**Open Banking**", "Bank APIs powering innovative services"],
-          ["**Tokenized Assets**", "Own/sell fractions of land, gold, or art"],
-          ["**DeFi 2.0**", "Safer, regulated decentralized finance"],
-          ["**Voice/Chat Finance**", "Conversational banking and investing via bots"]
+      "topics": ["CBDC", "AI co-pilot", "Web3 wallets", "Voice-based services"],
+      "content": {
+        "introduction": "Emerging trends that will shape the future of alternative finance.",
+        "sections": [
+          {
+            "title": "🔮 Trends to Watch",
+            "content": "• Central Bank Digital Currency (CBDC)\n• AI co-pilot for personal finance\n• Web3 wallets\n• Voice-based financial services\n• Fintech + ESG + DeFi convergence"
+          }
+        ],
+        "keyTakeaways": [
+          "CBDC will revolutionize digital payments",
+          "AI will become personal finance co-pilot",
+          "Web3 and voice interfaces will enhance accessibility"
+        ],
+        "actionSteps": [
+          "Stay updated on CBDC developments",
+          "Experiment with AI-powered financial tools",
+          "Prepare for Web3 and voice-based finance"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Future Finance Readiness Check",
+            "description": "Assess your readiness for future finance trends",
+            "url": "/tools?tool=Future Finance Readiness"
+          }
         ]
       }
     },
     {
       "id": 16,
-      "title": "🧠 Summary Table",
+      "title": "🧠 Summary",
       "duration": "10 min",
-      "topics": ["Alternative finance overview", "Key platforms and examples", "Comprehensive category mapping"],
-      "table": {
-        "headers": ["Category", "Examples"],
-        "rows": [
-          ["P2P Lending", "Faircent, LenDenClub"],
-          ["Crowdfunding", "Ketto, Kickstarter"],
-          ["DeFi", "Uniswap, Aave"],
-          ["Robo Advisors", "Scripbox, INDmoney"],
-          ["Embedded Finance", "Ola, Flipkart, Swiggy"],
-          ["AI/ML Tools", "Credit scoring, fraud detection"],
-          ["CBDC", "RBI's Digital Rupee"],
-          ["Neobanks", "Jupiter, Fi, Niyo"],
-          ["Account Aggregators", "CAMS Finserv, Onemoney"]
+      "topics": ["Alternative finance categories", "Key platforms", "Technology integration"],
+      "content": {
+        "introduction": "Alternative finance encompasses various technology-driven financial innovations that complement traditional banking.",
+        "sections": [
+          {
+            "title": "🧠 Category Overview",
+            "content": "**Category | Description**\n\nLending | P2P, BNPL, Embedded Credit\nInvesting | Robo-advisors, DeFi, AI investing\nBanking | Neobanks, Wallets, AAs\nEmerging Tech | NFTs, Tokenization, AI/ML, RegTech\nSocial + Green | Crowdfunding, Impact Finance"
+          }
+        ],
+        "keyTakeaways": [
+          "Alternative finance increases accessibility and innovation",
+          "Technology enables personalized and efficient financial services",
+          "Growing integration with traditional financial systems"
+        ],
+        "actionSteps": [
+          "Identify alternative finance options relevant to your needs",
+          "Start with small investments to understand new platforms",
+          "Stay informed about regulatory developments"
+        ],
+        "calculatorLinks": [
+          {
+            "name": "Alternative Finance Portfolio",
+            "description": "Plan your alternative finance investment portfolio",
+            "url": "/tools?tool=Alternative Finance Portfolio"
+          }
         ]
       }
     }
