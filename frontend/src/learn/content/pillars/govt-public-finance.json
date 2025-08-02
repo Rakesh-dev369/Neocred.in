@@ -49,7 +49,16 @@
         "sections": [
           {
             "title": "📌 Key Segments",
-            "content": "**Source | Examples**\n\nDirect Taxes | Income Tax, Corporate Tax\nIndirect Taxes | GST, Customs Duties\nNon-Tax Revenue | Dividends from PSUs, RBI surplus\nCapital Receipts | Disinvestment, Loan recoveries\nBorrowings | Market loans, bonds"
+            "table": {
+              "headers": ["Source", "Examples"],
+              "rows": [
+                ["Direct Taxes", "Income Tax, Corporate Tax"],
+                ["Indirect Taxes", "GST, Customs Duties"],
+                ["Non-Tax Revenue", "Dividends from PSUs, RBI surplus"],
+                ["Capital Receipts", "Disinvestment, Loan recoveries"],
+                ["Borrowings", "Market loans, bonds"]
+              ]
+            }
           },
           {
             "title": "📌 Tool",
@@ -121,7 +130,16 @@
         "sections": [
           {
             "title": "📈 Key Terms",
-            "content": "**Term | Meaning**\n\nUnion Budget | Annual financial statement (Feb 1)\nFiscal Deficit | Gap between income & expenditure\nRevenue Deficit | Revenue income minus revenue expenditure\nFRBM Act | Law to ensure fiscal discipline\nFiscal Policy | Government's spending/tax strategy"
+            "table": {
+              "headers": ["Term", "Meaning"],
+              "rows": [
+                ["Union Budget", "Annual financial statement (Feb 1)"],
+                ["Fiscal Deficit", "Gap between income & expenditure"],
+                ["Revenue Deficit", "Revenue income minus revenue expenditure"],
+                ["FRBM Act", "Law to ensure fiscal discipline"],
+                ["Fiscal Policy", "Government's spending/tax strategy"]
+              ]
+            }
           },
           {
             "title": "📌 Tools",
@@ -197,7 +215,14 @@
         "sections": [
           {
             "title": "🏛️ Comparison",
-            "content": "**Parameter | Central Govt | State Govt**\n\nRevenue Sources | Income Tax, Excise | VAT, State GST, Property Tax\nBudget Type | Union Budget | State Budget\nKey Role | National schemes, defense | Health, education, local needs"
+            "table": {
+              "headers": ["Parameter", "Central Govt", "State Govt"],
+              "rows": [
+                ["Revenue Sources", "Income Tax, Excise", "VAT, State GST, Property Tax"],
+                ["Budget Type", "Union Budget", "State Budget"],
+                ["Key Role", "National schemes, defense", "Health, education, local needs"]
+              ]
+            }
           },
           {
             "title": "🔄 Revenue Sharing",
@@ -345,7 +370,15 @@
         "sections": [
           {
             "title": "🔍 Accountability Mechanisms",
-            "content": "**Mechanism | Role**\n\nCAG Audit | Audits govt accounts\nRTI Act | Right to access public info\nPublic Accounts Committee | Parliamentary oversight\nDigital Dashboards | Real-time scheme dashboards"
+            "table": {
+              "headers": ["Mechanism", "Role"],
+              "rows": [
+                ["CAG Audit", "Audits govt accounts"],
+                ["RTI Act", "Right to access public info"],
+                ["Public Accounts Committee", "Parliamentary oversight"],
+                ["Digital Dashboards", "Real-time scheme dashboards"]
+              ]
+            }
           },
           {
             "title": "📌 Platforms",
@@ -417,7 +450,17 @@
         "sections": [
           {
             "title": "📌 Institution Roles",
-            "content": "**Institution | Role**\n\nMinistry of Finance | National fiscal policy\nRBI | Debt management, inflation control\nNITI Aayog | Planning, policy think tank\nFinance Commission | Revenue-sharing formula\nCAG of India | Independent financial audits\nGST Council | GST-related decisions"
+            "table": {
+              "headers": ["Institution", "Role"],
+              "rows": [
+                ["Ministry of Finance", "National fiscal policy"],
+                ["RBI", "Debt management, inflation control"],
+                ["NITI Aayog", "Planning, policy think tank"],
+                ["Finance Commission", "Revenue-sharing formula"],
+                ["CAG of India", "Independent financial audits"],
+                ["GST Council", "GST-related decisions"]
+              ]
+            }
           }
         ],
         "keyTakeaways": [
@@ -449,7 +492,16 @@
         "sections": [
           {
             "title": "🧠 Summary Table",
-            "content": "**Area | Focus Area**\n\nRevenue | Taxes, dividends, disinvestment\nExpenditure | Infrastructure, subsidies, salaries\nDeficit Management | Borrowings, bonds, fiscal policy\nFederal Finance | Centre–state sharing and transfers\nTransparency & Reforms | CAG, RTI, dashboards, participatory"
+            "table": {
+              "headers": ["Area", "Focus Area"],
+              "rows": [
+                ["Revenue", "Taxes, dividends, disinvestment"],
+                ["Expenditure", "Infrastructure, subsidies, salaries"],
+                ["Deficit Management", "Borrowings, bonds, fiscal policy"],
+                ["Federal Finance", "Centre–state sharing and transfers"],
+                ["Transparency & Reforms", "CAG, RTI, dashboards, participatory"]
+              ]
+            }
           }
         ],
         "keyTakeaways": [

@@ -49,7 +49,15 @@
         "sections": [
           {
             "title": "📌 Key Aspects",
-            "content": "**Key Aspects | Details**\n\nCurrency Pairs | USD/INR, EUR/USD, etc.\nTraded by | Banks, traders, corporates\nIndia Regulator | RBI via FEMA rules\nForex Reserve Role | Maintains currency stability"
+            "table": {
+              "headers": ["Key Aspects", "Details"],
+              "rows": [
+                ["Currency Pairs", "USD/INR, EUR/USD, etc."],
+                ["Traded by", "Banks, traders, corporates"],
+                ["India Regulator", "RBI via FEMA rules"],
+                ["Forex Reserve Role", "Maintains currency stability"]
+              ]
+            }
           },
           {
             "title": "📌 Market Size",
@@ -85,7 +93,14 @@
         "sections": [
           {
             "title": "⚖️ Components",
-            "content": "**Components | Description**\n\nCurrent Account | Exports, imports, remittances\nCapital Account | FDI, FII, external borrowings\nBoP Surplus/Deficit | Influences INR value & policy"
+            "table": {
+              "headers": ["Components", "Description"],
+              "rows": [
+                ["Current Account", "Exports, imports, remittances"],
+                ["Capital Account", "FDI, FII, external borrowings"],
+                ["BoP Surplus/Deficit", "Influences INR value & policy"]
+              ]
+            }
           },
           {
             "title": "✅ Policy Goal",
@@ -121,7 +136,14 @@
         "sections": [
           {
             "title": "🌐 Key Institutions",
-            "content": "**Key Institutions | Description**\n\nWTO | Oversees global trade rules\nFree Trade Agreements | India-UAE CEPA, ASEAN-FTA\nExport Bodies | FIEO, DGFT, EXIM Bank"
+            "table": {
+              "headers": ["Key Institutions", "Description"],
+              "rows": [
+                ["WTO", "Oversees global trade rules"],
+                ["Free Trade Agreements", "India-UAE CEPA, ASEAN-FTA"],
+                ["Export Bodies", "FIEO, DGFT, EXIM Bank"]
+              ]
+            }
           },
           {
             "title": "🌏 Benefits",
@@ -157,7 +179,13 @@
         "sections": [
           {
             "title": "🏢 Examples in India",
-            "content": "**Example in India | Sector**\n\nApple factories | Electronics\nWalmart in Flipkart | E-commerce"
+            "table": {
+              "headers": ["Example in India", "Sector"],
+              "rows": [
+                ["Apple factories", "Electronics"],
+                ["Walmart in Flipkart", "E-commerce"]
+              ]
+            }
           },
           {
             "title": "📌 Policy",
@@ -193,7 +221,13 @@
         "sections": [
           {
             "title": "📈 Regulation",
-            "content": "**Regulation | Managed by**\n\nSEBI | Monitors FPIs\nTaxation | Short/long-term capital gains"
+            "table": {
+              "headers": ["Regulation", "Managed by"],
+              "rows": [
+                ["SEBI", "Monitors FPIs"],
+                ["Taxation", "Short/long-term capital gains"]
+              ]
+            }
           },
           {
             "title": "📊 Market Impact",
@@ -229,7 +263,13 @@
         "sections": [
           {
             "title": "💱 Types of Exchange Rates",
-            "content": "**Types of Exchange Rates | Description**\n\nFloating | Based on market demand-supply\nManaged Float (India) | RBI intervenes to stabilize"
+            "table": {
+              "headers": ["Types of Exchange Rates", "Description"],
+              "rows": [
+                ["Floating", "Based on market demand-supply"],
+                ["Managed Float (India)", "RBI intervenes to stabilize"]
+              ]
+            }
           },
           {
             "title": "📉 Impact",
@@ -265,7 +305,15 @@
         "sections": [
           {
             "title": "🏦 Key Institutions",
-            "content": "**Institution | Role**\n\nIMF | Loans for crisis support, SDRs\nWorld Bank | Development funding\nADB, AIIB | Regional funding (Asia focus)\nBIS | Central bank cooperation"
+            "table": {
+              "headers": ["Institution", "Role"],
+              "rows": [
+                ["IMF", "Loans for crisis support, SDRs"],
+                ["World Bank", "Development funding"],
+                ["ADB, AIIB", "Regional funding (Asia focus)"],
+                ["BIS", "Central bank cooperation"]
+              ]
+            }
           },
           {
             "title": "🇮🇳 India's Role",
@@ -337,7 +385,14 @@
         "sections": [
           {
             "title": "💸 Key Data",
-            "content": "**Data | 2024 Estimate**\n\nTop Source Countries | UAE, USA, Saudi Arabia\nIndia's Global Rank | #1 in remittances received\nUse | Family support, savings"
+            "table": {
+              "headers": ["Data", "2024 Estimate"],
+              "rows": [
+                ["Top Source Countries", "UAE, USA, Saudi Arabia"],
+                ["India's Global Rank", "#1 in remittances received"],
+                ["Use", "Family support, savings"]
+              ]
+            }
           },
           {
             "title": "💰 Economic Impact",
@@ -373,7 +428,14 @@
         "sections": [
           {
             "title": "💼 Tools",
-            "content": "**Tools | Description**\n\nLetters of Credit (LC) | Payment guarantee via banks\nBill discounting | Early payment on invoices\nExport Credit Insurance | Protects against non-payment"
+            "table": {
+              "headers": ["Tools", "Description"],
+              "rows": [
+                ["Letters of Credit (LC)", "Payment guarantee via banks"],
+                ["Bill discounting", "Early payment on invoices"],
+                ["Export Credit Insurance", "Protects against non-payment"]
+              ]
+            }
           },
           {
             "title": "📌 Importance",
@@ -409,7 +471,14 @@
         "sections": [
           {
             "title": "📊 Key Terms",
-            "content": "**Key Terms | Explanation**\n\nDTAA | Avoids double taxation\nOECD-G20 BEPS | Limits base erosion\nTransfer Pricing | Pricing between related firms"
+            "table": {
+              "headers": ["Key Terms", "Explanation"],
+              "rows": [
+                ["DTAA", "Avoids double taxation"],
+                ["OECD-G20 BEPS", "Limits base erosion"],
+                ["Transfer Pricing", "Pricing between related firms"]
+              ]
+            }
           },
           {
             "title": "📌 Benefits",
@@ -481,7 +550,16 @@
         "sections": [
           {
             "title": "🧠 Key Areas",
-            "content": "**Area | Key Insight**\n\nForex | INR exchange, reserves, BoP\nTrade | FTAs, globalization, exports\nInvestments | FDI, FII/FPI\nInstitutions | IMF, World Bank, ADB, AIIB\nGlobal Finance | Sovereign borrowing, remittances, treaties"
+            "table": {
+              "headers": ["Area", "Key Insight"],
+              "rows": [
+                ["Forex", "INR exchange, reserves, BoP"],
+                ["Trade", "FTAs, globalization, exports"],
+                ["Investments", "FDI, FII/FPI"],
+                ["Institutions", "IMF, World Bank, ADB, AIIB"],
+                ["Global Finance", "Sovereign borrowing, remittances, treaties"]
+              ]
+            }
           }
         ],
         "keyTakeaways": [
