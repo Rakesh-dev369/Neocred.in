@@ -8,6 +8,7 @@ import Chatbot from './pages/Chatbot';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import News from './pages/News';
+import Explore from './pages/Explore';
 import Rewards from './pages/Rewards';
 import PanCheck from './pages/PanCheck';
 import LoanCheck from './pages/LoanCheck';
@@ -32,6 +33,7 @@ function App() {
           <Route path="/about" element={<MainLayout><About /></MainLayout>} />
           <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
           <Route path="/news" element={<MainLayout><News /></MainLayout>} />
+          <Route path="/explore" element={<MainLayout><Explore /></MainLayout>} />
           <Route path="/rewards" element={<MainLayout><Rewards /></MainLayout>} />
           <Route path="/pan-check" element={<MainLayout><PanCheck /></MainLayout>} />
           <Route path="/loan-check" element={<MainLayout><LoanCheck /></MainLayout>} />

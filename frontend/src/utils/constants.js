@@ -185,6 +185,7 @@ export const ROUTES = {
   LEARN: '/learn',
   TOOLS: '/tools',
   NEWS: '/news',
+  EXPLORE: '/explore',
   REWARDS: '/rewards',
   ABOUT: '/about',
   CONTACT: '/contact',
