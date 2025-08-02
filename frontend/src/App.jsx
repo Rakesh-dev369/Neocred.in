@@ -17,6 +17,7 @@ import Disclaimer from './pages/Disclaimer';
 import Cookies from './pages/Cookies';
 import NotFound from './pages/NotFound';
 import ErrorBoundary from './components/ErrorBoundary';
+import FontDemo from './components/FontDemo';
 import './App.css';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
           <Route path="/disclaimer" element={<MainLayout><Disclaimer /></MainLayout>} />
           <Route path="/cookies" element={<MainLayout><Cookies /></MainLayout>} />
+          <Route path="/fonts" element={<MainLayout><FontDemo /></MainLayout>} />
           <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
         </Routes>
       </ErrorBoundary>
