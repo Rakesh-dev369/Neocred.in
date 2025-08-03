@@ -22,9 +22,9 @@ primary_region = "nrt"
   method = "GET"
   path = "/health"
   protocol = "http"
-  timeout = "2s"
+  timeout = "5s"
 
 [machine]
-  memory = "256mb"
+  memory = "512mb"
   cpu_kind = "shared"
   cpus = 1
