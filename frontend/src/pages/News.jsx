@@ -79,7 +79,7 @@ export default function News() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-purple-700 dark:from-blue-800 dark:to-purple-900 text-white py-16">
+      <section className="bg-gradient-to-br from-blue-600 to-purple-700 dark:from-blue-800 dark:to-purple-900 text-white py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex items-center justify-center mb-6">
             <Newspaper className="w-12 h-12 mr-4" />
@@ -87,7 +87,7 @@ export default function News() {
               Finance News
             </h1>
           </div>
-          <p className="text-xl text-blue-100 dark:text-blue-200 mb-8 max-w-3xl mx-auto">
+          <p className="text-lg text-blue-100 dark:text-blue-200 mb-6 max-w-3xl mx-auto">
             Stay updated with the latest financial news, RBI updates, and market insights from trusted sources across India.
           </p>
           <div className="flex items-center justify-center space-x-6 text-sm">
