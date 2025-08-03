@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../utils/constants';
 import HorizontalLogo from './HorizontalLogo';
 import ThemeToggle from './ThemeToggle';
+import GlobalSearch from './GlobalSearch';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +52,7 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
+            <GlobalSearch />
             <ThemeToggle />
             <Link to={ROUTES.CONTACT} className="btn-primary">
               Contact

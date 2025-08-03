@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import FloatingAssistantCTA from '../components/FloatingAssistantCTA';
+import Breadcrumbs from '../components/Breadcrumbs';
 
 export default function MainLayout({ children, title, description }) {
   const location = useLocation();
@@ -29,7 +30,14 @@ export default function MainLayout({ children, title, description }) {
       </Helmet>
       <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
         {!isChatbot && <Navbar />}
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow">
+          {!isChatbot && (
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+              <Breadcrumbs />
+            </div>
+          )}
+          {children}
+        </main>
         {!isChatbot && <Footer />}
         {!isChatbot && <FloatingAssistantCTA />}
       </div>
