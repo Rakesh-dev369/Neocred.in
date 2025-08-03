@@ -19,15 +19,15 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="glass-nav shadow-lg">
+    <nav className="glass-nav shadow-lg sticky top-0 z-50" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to={ROUTES.HOME} className="flex-shrink-0">
+            <Link to={ROUTES.HOME} className="flex-shrink-0 p-2 sm:p-3">
               <img 
                 src="/logo.png" 
                 alt="NeoCred" 
-                className="h-12 w-auto max-w-[200px] sm:h-14 sm:max-w-[240px] md:h-16 md:max-w-[280px] hover:scale-105 transition-all duration-200 drop-shadow-sm" 
+                className="h-10 w-auto max-w-[160px] sm:h-12 sm:max-w-[200px] md:h-14 md:max-w-[240px] hover:scale-105 transition-all duration-200 drop-shadow-sm" 
                 style={{ 
                   imageRendering: 'crisp-edges',
                   filter: 'contrast(1.2) brightness(1.1) saturate(1.1)',
