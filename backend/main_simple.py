@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import openai
@@ -520,10 +520,14 @@ async def get_digest():
     description="Generate AI summary for news article",
     tags=["News"]
 )
-async def generate_news_summary(request: dict):
+async def generate_news_summary(request: Request):
     try:
-        title = request.get('title', '')
-        content = request.get('summary', '')
+        data = await request.json()
+    except Exception as e:
+        return {"success": False, "error": "Invalid JSON format"}
+    try:
+        title = data.get('title', '')
+        content = data.get('summary', '')
         
         if not title or not content:
             return {"success": False, "error": "Title and content required"}
