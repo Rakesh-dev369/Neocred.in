@@ -9,6 +9,12 @@ const initialState = {
   sessionId: null
 };
 
+// Clear any existing localStorage on app start
+if (typeof window !== 'undefined') {
+  localStorage.removeItem('chatMessages');
+  localStorage.removeItem('chatHistory');
+}
+
 function chatReducer(state, action) {
   switch (action.type) {
     case 'ADD_MESSAGE':

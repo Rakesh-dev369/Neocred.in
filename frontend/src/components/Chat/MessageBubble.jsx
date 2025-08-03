@@ -218,13 +218,7 @@ export default function MessageBubble({
                   ({message.responseTime}s)
                 </span>
               )}
-              {message.sender === 'bot' && (
-                <span className={`text-xs px-1 py-0.5 rounded text-white ${
-                  message.isApiResponse ? 'bg-green-500' : 'bg-orange-500'
-                }`}>
-                  {message.isApiResponse ? 'API' : 'Mock'}
-                </span>
-              )}
+
             </div>
 
             {/* Reaction buttons */}

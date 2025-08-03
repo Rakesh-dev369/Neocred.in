@@ -32,7 +32,8 @@ export default function News() {
         params.append('q', searchQuery);
       }
       
-      const url = `http://localhost:8003/api/news?${params}`;
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://neocred-backend.fly.dev';
+      const url = `${API_BASE_URL}/api/news?${params}`;
       const response = await fetch(url);
       const data = await response.json();
       
