@@ -17,7 +17,7 @@ export default function FloatingAssistantCTA() {
     <div className="fixed bottom-6 right-6 z-50">
       <button
         onClick={handleClick}
-        className="bg-white/10 backdrop-blur-md border border-white/20 text-white p-4 rounded-full shadow-2xl hover:bg-white/20 hover:scale-105 transition-all duration-300 flex items-center gap-2"
+        className="bg-gradient-to-r from-blue-600/90 to-purple-600/90 backdrop-blur-sm border border-white/30 text-white p-4 rounded-full shadow-2xl hover:from-blue-700 hover:to-purple-700 hover:scale-105 transition-all duration-300 flex items-center gap-2"
         aria-label="Open FinBot AI Assistant"
       >
         <Bot className="h-5 w-5" />

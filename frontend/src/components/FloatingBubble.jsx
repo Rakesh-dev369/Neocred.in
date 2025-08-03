@@ -9,7 +9,7 @@ const FloatingBubble = () => {
       {/* Floating Chat Button */}
       <button
         onClick={() => setIsChatOpen(!isChatOpen)}
-        className={`fixed bottom-4 right-4 w-14 h-14 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white rounded-full shadow-2xl flex items-center justify-center text-xl transition-all duration-300 hover:scale-110 z-40 ${
+        className={`fixed bottom-4 right-4 w-14 h-14 bg-blue-600/90 hover:bg-blue-700 backdrop-blur-sm border border-white/30 text-white rounded-full shadow-2xl flex items-center justify-center text-xl transition-all duration-300 hover:scale-110 z-40 ${
           isChatOpen ? 'rotate-45' : 'rotate-0'
         }`}
         title={isChatOpen ? 'Close FinBot' : 'Chat with FinBot'}
