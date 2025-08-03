@@ -6,7 +6,7 @@ export const sendChatMessage = async (message, conversationHistory = []) => {
   await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 400));
   
   try {
-    const apiUrl = import.meta.env?.VITE_API_BASE_URL || 'https://neocred.in';
+    const apiUrl = import.meta.env?.VITE_API_BASE_URL || 'https://neocred-backend.fly.dev';
     console.log('Attempting API call to:', `${apiUrl}/api/chat`);
     console.log('Sending message:', message);
     console.log('Conversation history length:', conversationHistory.length);
@@ -43,7 +43,7 @@ export const sendChatMessage = async (message, conversationHistory = []) => {
     };
   } catch (error) {
     console.error('FinBot API Error:', error);
-    console.error('API URL attempted:', `${import.meta.env?.VITE_API_BASE_URL || 'https://neocred.in'}/api/chat`);
+    console.error('API URL attempted:', `${import.meta.env?.VITE_API_BASE_URL || 'https://neocred-backend.fly.dev'}/api/chat`);
     
     // Re-throw the error to be handled by the calling component
     throw new Error(`Backend API Error: ${error.message}`);
