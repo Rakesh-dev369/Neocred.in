@@ -1,12 +1,11 @@
-FROM python:3.11-alpine
+FROM python:3.11-slim
 
 WORKDIR /app
 
+# Install dependencies in one layer
 COPY requirements.txt .
-RUN pip install --no-cache-dir --timeout=300 -r requirements.txt
+RUN pip install --no-cache-dir fastapi uvicorn openai python-dotenv
 
 COPY . .
 
-EXPOSE 8080
-
-CMD ["python", "main_simple.py"]
+CMD ["uvicorn", "main_simple:app", "--host", "0.0.0.0", "--port", "8080"]
