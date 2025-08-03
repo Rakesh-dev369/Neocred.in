@@ -525,6 +525,7 @@ async def generate_news_summary(request: Request):
         data = await request.json()
     except Exception as e:
         return {"success": False, "error": "Invalid JSON format"}
+    
     try:
         title = data.get('title', '')
         content = data.get('summary', '')
