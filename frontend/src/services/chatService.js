@@ -46,11 +46,7 @@ export const chatbotAPI = {
       };
     } catch (error) {
       console.error('FinBot API error:', error);
-      return {
-        response: 'I\'m sorry, I\'m having trouble connecting to the server right now. Please try again in a moment.',
-        success: false,
-        error: error.message
-      };
+      throw error;
     }
   },
 
@@ -79,10 +75,7 @@ export const chatbotAPI = {
         success: true
       };
     } catch (error) {
-      return {
-        tip: 'Start investing early, even small amounts can grow significantly over time due to compound interest.',
-        success: false
-      };
+      throw error;
     }
   }
 };

@@ -26,20 +26,7 @@ class NewsService {
       console.error('Error fetching news:', error);
       console.error('API URL attempted:', API_BASE_URL);
       
-      // Return fallback data instead of throwing error
-      return {
-        success: false,
-        data: [],
-        error: `Unable to connect to news service. Backend may be starting up. Error: ${error.message}`,
-        pagination: {
-          page: 1,
-          limit: 20,
-          total_items: 0,
-          total_pages: 0,
-          has_next: false,
-          has_prev: false
-        }
-      };
+      throw error;
     }
   }
 
