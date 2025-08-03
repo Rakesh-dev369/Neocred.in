@@ -1,5 +1,6 @@
 import React from 'react';
 import SafeNewsCard from './SafeNewsCard';
+import SwipeableCard from '../SwipeableCard';
 import { NewsCardSkeleton } from '../SkeletonLoader';
 import { Newspaper, AlertCircle } from 'lucide-react';
 
@@ -64,10 +65,19 @@ const NewsList = ({ articles, loading, error, query, pagination, onLoadMore, loa
       {/* News Grid */}
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {articles.map((article, index) => (
-          <SafeNewsCard
-            key={`${article.link}-${index}`}
-            article={article}
-          />
+          <div key={`${article.link}-${index}`} className="md:contents">
+            <div className="block md:hidden">
+              <SwipeableCard
+                onSwipeLeft={() => window.open(article.link, '_blank')}
+                onSwipeRight={() => console.log('Bookmark feature coming soon')}
+              >
+                <SafeNewsCard article={article} />
+              </SwipeableCard>
+            </div>
+            <div className="hidden md:block">
+              <SafeNewsCard article={article} />
+            </div>
+          </div>
         ))}
       </div>
 
@@ -77,7 +87,7 @@ const NewsList = ({ articles, loading, error, query, pagination, onLoadMore, loa
           <button
             onClick={onLoadMore}
             disabled={loadingMore}
-            className="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center px-8 py-4 min-h-[48px] bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl touch-manipulation"
           >
             {loadingMore ? (
               <>

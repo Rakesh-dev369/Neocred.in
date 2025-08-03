@@ -159,7 +159,7 @@ const SafeNewsCard = ({ article }) => {
           <button
             onClick={handleAISummary}
             disabled={loadingSummary}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors disabled:opacity-50"
+            className="inline-flex items-center px-4 py-3 min-h-[44px] text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors disabled:opacity-50 touch-manipulation"
           >
             <Sparkles className="w-4 h-4 mr-1" />
             {loadingSummary ? 'Generating...' : showSummary ? 'Hide Summary' : 'AI Summary'}
@@ -168,7 +168,7 @@ const SafeNewsCard = ({ article }) => {
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            className="inline-flex items-center px-4 py-3 min-h-[44px] text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors touch-manipulation"
           >
             Read More
             <ExternalLink className="w-4 h-4 ml-2" />

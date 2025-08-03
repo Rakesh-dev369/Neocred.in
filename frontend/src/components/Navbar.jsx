@@ -61,7 +61,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+              className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors touch-manipulation"
             >
               {isOpen ? (
                 <XMarkIcon className="h-6 w-6" />
@@ -75,12 +75,12 @@ export default function Navbar() {
 
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+          <div className="px-4 pt-4 pb-4 space-y-2 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                className="block px-4 py-3 min-h-[44px] text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors touch-manipulation"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
@@ -88,7 +88,7 @@ export default function Navbar() {
             ))}
             <Link
               to={ROUTES.CONTACT}
-              className="block px-3 py-2 text-base font-medium text-gray-900 dark:text-white"
+              className="block px-4 py-3 min-h-[44px] text-base font-medium text-gray-900 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors touch-manipulation"
               onClick={() => setIsOpen(false)}
             >
               Contact
