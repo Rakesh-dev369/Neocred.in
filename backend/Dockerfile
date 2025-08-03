@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install dependencies in one layer
 COPY requirements.txt .
-RUN pip install --no-cache-dir fastapi uvicorn openai python-dotenv
+RUN pip install --no-cache-dir fastapi uvicorn openai python-dotenv feedparser requests
 
 COPY . .
 

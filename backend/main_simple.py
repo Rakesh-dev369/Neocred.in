@@ -6,6 +6,9 @@ import os
 import time
 from dotenv import load_dotenv
 from typing import List, Optional
+import feedparser
+import requests
+from datetime import datetime, timedelta
 # from news_routes import router as news_router
 
 load_dotenv()
@@ -41,6 +44,52 @@ app.add_middleware(
 
 # OpenAI client
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# RSS Feed URLs for Indian Financial News
+RSS_FEEDS = [
+    {'name': 'Economic Times', 'url': 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms'},
+    {'name': 'Business Standard', 'url': 'https://www.business-standard.com/rss/markets-106.rss'},
+    {'name': 'Moneycontrol', 'url': 'https://www.moneycontrol.com/rss/business.xml'},
+    {'name': 'LiveMint', 'url': 'https://www.livemint.com/rss/money'},
+    {'name': 'Financial Express', 'url': 'https://www.financialexpress.com/market/rss'},
+    {'name': 'NDTV Profit', 'url': 'https://www.ndtv.com/business/rss'},
+    {'name': 'Times of India Business', 'url': 'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'}
+]
+
+def fetch_rss_news():
+    """Fetch news from all RSS feeds"""
+    all_articles = []
+    
+    for feed_info in RSS_FEEDS:
+        try:
+            feed = feedparser.parse(feed_info['url'])
+            
+            for entry in feed.entries[:10]:  # Get top 10 from each feed
+                # Parse published date
+                published = datetime.now().isoformat()
+                if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                    try:
+                        published = datetime(*entry.published_parsed[:6]).isoformat()
+                    except:
+                        pass
+                
+                article = {
+                    'title': entry.title if hasattr(entry, 'title') else 'No Title',
+                    'summary': entry.summary if hasattr(entry, 'summary') else entry.description if hasattr(entry, 'description') else 'No summary available',
+                    'link': entry.link if hasattr(entry, 'link') else '#',
+                    'published': published,
+                    'source': feed_info['name'],
+                    'tags': ['Finance', 'Markets', 'Business']
+                }
+                all_articles.append(article)
+                
+        except Exception as e:
+            print(f"Error fetching from {feed_info['name']}: {e}")
+            continue
+    
+    # Sort by published date (newest first)
+    all_articles.sort(key=lambda x: x['published'], reverse=True)
+    return all_articles
 
 class ChatRequest(BaseModel):
     message: str = Field(..., description="User's financial question", example="How to start SIP investment?")
@@ -328,87 +377,51 @@ async def get_stats():
 @app.get(
     "/api/news",
     summary="📰 Financial News",
-    description="Get latest financial news",
+    description="Get latest financial news from RSS feeds",
     tags=["News"]
 )
-async def get_news():
-    return {
-        "success": True,
-        "data": [
-            {
-                "title": "RBI Monetary Policy: Repo Rate Held at 6.5%",
-                "summary": "Reserve Bank of India maintains status quo on key policy rates, focusing on inflation control and economic growth balance.",
-                "link": "https://rbi.org.in",
-                "published": "2025-01-03T10:00:00Z",
-                "source": "RBI",
-                "tags": ["RBI", "Monetary Policy", "Interest Rate"]
-            },
-            {
-                "title": "Nifty 50 Crosses 25,000 Mark Amid Strong FII Inflows",
-                "summary": "Indian equity markets surge to record highs as foreign institutional investors pump ₹15,000 crores in December.",
-                "link": "https://economictimes.com",
-                "published": "2025-01-03T09:30:00Z",
-                "source": "Economic Times",
-                "tags": ["Stock Market", "Nifty", "FII"]
-            },
-            {
-                "title": "New Tax Regime: 87% Taxpayers Opt for Simplified Structure",
-                "summary": "Income Tax Department reports majority of taxpayers choosing new tax regime for FY 2024-25 returns.",
-                "link": "https://incometax.gov.in",
-                "published": "2025-01-03T08:45:00Z",
-                "source": "Income Tax Department",
-                "tags": ["Tax", "Income Tax", "Policy"]
-            },
-            {
-                "title": "SBI Cuts Home Loan Rates by 10 Basis Points",
-                "summary": "State Bank of India reduces home loan interest rates to 8.40% for loans above ₹75 lakhs, effective immediately.",
-                "link": "https://sbi.co.in",
-                "published": "2025-01-03T08:00:00Z",
-                "source": "SBI",
-                "tags": ["Banking", "Home Loan", "Interest Rate"]
-            },
-            {
-                "title": "Mutual Fund AUM Crosses ₹50 Lakh Crores Milestone",
-                "summary": "Indian mutual fund industry achieves historic milestone with assets under management reaching ₹50.78 lakh crores.",
-                "link": "https://amfiindia.com",
-                "published": "2025-01-03T07:30:00Z",
-                "source": "AMFI",
-                "tags": ["Mutual Funds", "AUM", "Investment"]
-            },
-            {
-                "title": "Digital Rupee Pilot Expands to 13 Cities",
-                "summary": "RBI extends Central Bank Digital Currency (CBDC) pilot program to include tier-2 cities across India.",
-                "link": "https://rbi.org.in",
-                "published": "2025-01-03T07:00:00Z",
-                "source": "RBI",
-                "tags": ["CBDC", "Digital Currency", "RBI"]
-            },
-            {
-                "title": "Gold Prices Touch ₹72,000 Per 10 Grams",
-                "summary": "Precious metal prices surge amid global uncertainty and strong domestic demand during wedding season.",
-                "link": "https://mcx.com",
-                "published": "2025-01-03T06:30:00Z",
-                "source": "MCX",
-                "tags": ["Gold", "Commodity", "Investment"]
-            },
-            {
-                "title": "SEBI Introduces New Rules for F&O Trading",
-                "summary": "Market regulator implements stricter norms for futures and options trading to protect retail investors.",
-                "link": "https://sebi.gov.in",
-                "published": "2025-01-03T06:00:00Z",
-                "source": "SEBI",
-                "tags": ["SEBI", "F&O", "Trading"]
+async def get_news(page: int = 1, limit: int = 20, q: str = None):
+    try:
+        # Fetch live RSS news
+        articles = fetch_rss_news()
+        
+        # Filter by search query if provided
+        if q:
+            articles = [article for article in articles if q.lower() in article['title'].lower() or q.lower() in article['summary'].lower()]
+        
+        # Pagination
+        total_items = len(articles)
+        start_idx = (page - 1) * limit
+        end_idx = start_idx + limit
+        paginated_articles = articles[start_idx:end_idx]
+        
+        return {
+            "success": True,
+            "data": paginated_articles,
+            "pagination": {
+                "page": page,
+                "limit": limit,
+                "total_items": total_items,
+                "total_pages": (total_items + limit - 1) // limit,
+                "has_next": end_idx < total_items,
+                "has_prev": page > 1
             }
-        ],
-        "pagination": {
-            "page": 1,
-            "limit": 20,
-            "total_items": 8,
-            "total_pages": 1,
-            "has_next": False,
-            "has_prev": False
         }
-    }
+    except Exception as e:
+        print(f"Error fetching news: {e}")
+        return {
+            "success": False,
+            "error": "Failed to fetch news",
+            "data": [],
+            "pagination": {
+                "page": 1,
+                "limit": 20,
+                "total_items": 0,
+                "total_pages": 0,
+                "has_next": False,
+                "has_prev": False
+            }
+        }
 
 @app.get(
     "/api/digest",
