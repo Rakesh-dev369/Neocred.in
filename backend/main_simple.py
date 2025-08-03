@@ -430,23 +430,82 @@ async def get_news(page: int = 1, limit: int = 20, q: str = None):
     tags=["News"]
 )
 async def get_digest():
-    return {
-        "success": True,
-        "date": "2025-01-03",
-        "summary": "Markets hit record highs as RBI maintains policy stance. Key developments in banking and digital currency space.",
-        "highlights": [
-            "Nifty 50 crosses 25,000 mark with strong FII inflows",
-            "RBI keeps repo rate unchanged at 6.5%",
-            "SBI reduces home loan rates by 10 basis points",
-            "Mutual fund AUM reaches ₹50 lakh crores milestone"
-        ],
-        "market_summary": {
-            "nifty": "+1.2%",
-            "sensex": "+1.1%",
-            "bank_nifty": "+0.8%",
-            "gold": "+0.5%"
+    try:
+        # Get latest news from RSS feeds
+        articles = fetch_rss_news()
+        top_articles = articles[:10]  # Get top 10 articles
+        
+        # Create AI summary using OpenAI
+        if os.getenv("OPENAI_API_KEY") and top_articles:
+            try:
+                # Prepare news content for AI summary
+                news_content = "\n".join([f"- {article['title']}: {article['summary'][:100]}..." for article in top_articles])
+                
+                response = client.chat.completions.create(
+                    model="gpt-4-turbo-preview",
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "You are a financial news analyst. Create a concise daily digest summary from the provided news headlines. Focus on key market trends, policy changes, and important financial developments. Keep it under 150 words."
+                        },
+                        {
+                            "role": "user",
+                            "content": f"Create a daily financial digest from these news headlines:\n{news_content}"
+                        }
+                    ],
+                    max_tokens=200,
+                    temperature=0.7
+                )
+                
+                ai_summary = response.choices[0].message.content
+                
+                # Extract key highlights from top articles
+                highlights = [article['title'][:80] + "..." if len(article['title']) > 80 else article['title'] for article in top_articles[:4]]
+                
+                return {
+                    "success": True,
+                    "date": datetime.now().strftime("%Y-%m-%d"),
+                    "summary": ai_summary,
+                    "highlights": highlights,
+                    "market_summary": {
+                        "articles_analyzed": len(top_articles),
+                        "sources": len(set([article['source'] for article in top_articles])),
+                        "last_updated": datetime.now().strftime("%H:%M"),
+                        "status": "Live"
+                    }
+                }
+                
+            except Exception as e:
+                print(f"OpenAI API error: {e}")
+                # Fallback to manual summary
+                pass
+        
+        # Fallback summary when OpenAI is not available
+        highlights = [article['title'][:80] + "..." if len(article['title']) > 80 else article['title'] for article in top_articles[:4]]
+        
+        return {
+            "success": True,
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "summary": f"Today's financial news covers {len(articles)} articles from major Indian financial publications. Key developments include market movements, policy updates, and sector-specific news from sources like Economic Times, Moneycontrol, and Business Standard.",
+            "highlights": highlights,
+            "market_summary": {
+                "articles_analyzed": len(top_articles),
+                "sources": len(set([article['source'] for article in top_articles])),
+                "last_updated": datetime.now().strftime("%H:%M"),
+                "status": "Live"
+            }
         }
-    }
+        
+    except Exception as e:
+        print(f"Error generating digest: {e}")
+        return {
+            "success": False,
+            "error": "Unable to generate digest at the moment",
+            "date": datetime.now().strftime("%Y-%m-%d"),
+            "summary": "Unable to generate summary at the moment. Please try again later.",
+            "highlights": [],
+            "market_summary": {}
+        }
 
 if __name__ == "__main__":
     import uvicorn
