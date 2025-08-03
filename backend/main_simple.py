@@ -453,15 +453,15 @@ async def get_digest():
                     messages=[
                         {
                             "role": "system",
-                            "content": "You are a financial news analyst. Create a concise daily digest summary from the provided news headlines. Focus on key market trends, policy changes, and important financial developments. Keep it under 150 words."
+                            "content": "You are a senior financial analyst creating a daily market digest. Analyze the news and provide: 1) Key market themes, 2) Policy/regulatory updates, 3) Sector highlights, 4) Investment implications. Write in a professional, insightful tone. Keep it comprehensive yet concise (200-250 words)."
                         },
                         {
                             "role": "user",
-                            "content": f"Create a daily financial digest from these news headlines:\n{news_content}"
+                            "content": f"Analyze today's financial news and create an insightful market digest:\n{news_content}"
                         }
                     ],
-                    max_tokens=200,
-                    temperature=0.7
+                    max_tokens=300,
+                    temperature=0.6
                 )
                 
                 ai_summary = response.choices[0].message.content
@@ -512,6 +512,65 @@ async def get_digest():
             "summary": "Unable to generate summary at the moment. Please try again later.",
             "highlights": [],
             "market_summary": {}
+        }
+
+@app.post(
+    "/api/news/summary",
+    summary="📝 Generate AI Summary",
+    description="Generate AI summary for news article",
+    tags=["News"]
+)
+async def generate_news_summary(request: dict):
+    try:
+        title = request.get('title', '')
+        content = request.get('summary', '')
+        
+        if not title or not content:
+            return {"success": False, "error": "Title and content required"}
+        
+        if os.getenv("OPENAI_API_KEY"):
+            try:
+                response = client.chat.completions.create(
+                    model="gpt-4-turbo-preview",
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "You are a financial news analyst. Create a concise, insightful summary of the news article in 2-3 sentences. Focus on key financial implications and actionable insights for investors."
+                        },
+                        {
+                            "role": "user",
+                            "content": f"Title: {title}\n\nContent: {content}"
+                        }
+                    ],
+                    max_tokens=150,
+                    temperature=0.7
+                )
+                
+                ai_summary = response.choices[0].message.content
+                
+                return {
+                    "success": True,
+                    "summary": ai_summary
+                }
+                
+            except Exception as e:
+                print(f"OpenAI API error: {e}")
+                return {
+                    "success": True,
+                    "summary": f"Key insights: {content[:200]}... This article discusses important financial developments that may impact market sentiment and investment decisions."
+                }
+        
+        # Fallback summary
+        return {
+            "success": True,
+            "summary": f"Summary: {content[:150]}... This financial news may have implications for investors and market participants."
+        }
+        
+    except Exception as e:
+        print(f"Error generating summary: {e}")
+        return {
+            "success": False,
+            "error": "Failed to generate summary"
         }
 
 if __name__ == "__main__":

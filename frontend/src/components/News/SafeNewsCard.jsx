@@ -1,7 +1,11 @@
-import React from 'react';
-import { Clock, ExternalLink, Tag, Image } from 'lucide-react';
+import React, { useState } from 'react';
+import { Clock, ExternalLink, Tag, Image, Sparkles } from 'lucide-react';
 
 const SafeNewsCard = ({ article }) => {
+  const [aiSummary, setAiSummary] = useState('');
+  const [loadingSummary, setLoadingSummary] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  
   if (!article) return null;
 
   // Safely extract and convert all data to strings
@@ -24,6 +28,41 @@ const SafeNewsCard = ({ article }) => {
       });
     } catch {
       return 'Recently';
+    }
+  };
+
+  const handleAISummary = async () => {
+    if (showSummary) {
+      setShowSummary(false);
+      return;
+    }
+    
+    if (aiSummary) {
+      setShowSummary(true);
+      return;
+    }
+    
+    setLoadingSummary(true);
+    try {
+      const response = await fetch('https://neocred-backend.fly.dev/api/news/summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, summary })
+      });
+      const data = await response.json();
+      
+      if (data.success) {
+        setAiSummary(data.summary);
+        setShowSummary(true);
+      } else {
+        setAiSummary('Unable to generate summary at the moment.');
+        setShowSummary(true);
+      }
+    } catch (error) {
+      setAiSummary('Failed to generate AI summary. Please try again.');
+      setShowSummary(true);
+    } finally {
+      setLoadingSummary(false);
     }
   };
 
@@ -97,8 +136,34 @@ const SafeNewsCard = ({ article }) => {
           </div>
         )}
 
+        {/* AI Summary */}
+        {showSummary && (
+          <div className="mb-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-4 border border-blue-100 dark:border-blue-800">
+            <div className="flex items-center mb-2">
+              <Sparkles className="w-4 h-4 text-blue-600 mr-2" />
+              <span className="text-sm font-medium text-blue-800 dark:text-blue-300">AI Summary</span>
+            </div>
+            {loadingSummary ? (
+              <div className="flex items-center space-x-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                <span className="text-sm text-gray-600 dark:text-gray-400">Generating summary...</span>
+              </div>
+            ) : (
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{aiSummary}</p>
+            )}
+          </div>
+        )}
+
         {/* Actions */}
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={handleAISummary}
+            disabled={loadingSummary}
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors disabled:opacity-50"
+          >
+            <Sparkles className="w-4 h-4 mr-1" />
+            {loadingSummary ? 'Generating...' : showSummary ? 'Hide Summary' : 'AI Summary'}
+          </button>
           <a
             href={link}
             target="_blank"
