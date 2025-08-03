@@ -39,7 +39,7 @@ function App() {
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/about" element={<MainLayout><About /></MainLayout>} />
           <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
-          <Route path="/news" element={<MainLayout><NewsMinimal /></MainLayout>} />
+          <Route path="/news" element={<MainLayout><News /></MainLayout>} />
           <Route path="/explore" element={<MainLayout><Explore /></MainLayout>} />
           <Route path="/credit-cards" element={<MainLayout><CreditCards /></MainLayout>} />
           <Route path="/insurance-platforms" element={<MainLayout><InsurancePlatforms /></MainLayout>} />
