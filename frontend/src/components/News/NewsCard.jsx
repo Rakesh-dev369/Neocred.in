@@ -2,6 +2,20 @@ import React, { useState } from 'react';
 import { Clock, ExternalLink, Sparkles, Tag, Image } from 'lucide-react';
 
 const NewsCard = ({ article, onSummaryClick }) => {
+  // Safety check for article data
+  if (!article || typeof article !== 'object') {
+    return null;
+  }
+  
+  // Ensure all required fields are strings
+  const safeArticle = {
+    title: String(article.title || 'No Title'),
+    summary: String(article.summary || 'No summary available'),
+    source: String(article.source || 'Unknown Source'),
+    published: String(article.published || new Date().toISOString()),
+    link: String(article.link || '#'),
+    tags: Array.isArray(article.tags) ? article.tags.map(tag => String(tag)) : ['News']
+  };
   const [showSummary, setShowSummary] = useState(false);
   const [summary, setSummary] = useState('');
   const [loadingSummary, setLoadingSummary] = useState(false);
@@ -22,6 +36,7 @@ const NewsCard = ({ article, onSummaryClick }) => {
   };
 
   const getSourceColor = (source) => {
+    const safeSource = String(source || 'Unknown');
     const colors = {
       'RBI': 'bg-blue-100 text-blue-800',
       'PIB': 'bg-green-100 text-green-800',
@@ -29,7 +44,7 @@ const NewsCard = ({ article, onSummaryClick }) => {
       'Business Standard': 'bg-orange-100 text-orange-800',
       'Google News': 'bg-gray-100 text-gray-800'
     };
-    return colors[source] || 'bg-gray-100 text-gray-800';
+    return colors[safeSource] || 'bg-gray-100 text-gray-800';
   };
 
   const handleSummaryClick = async () => {
@@ -79,47 +94,26 @@ const NewsCard = ({ article, onSummaryClick }) => {
       return article.thumbnail;
     }
     
-    // Generate placeholder only when no real image
-    const sourceColors = {
-      'RBI': '3B82F6',
-      'PIB': '10B981', 
-      'MoneyControl': '8B5CF6',
-      'Business Standard': 'F59E0B',
-      'Google News': '6B7280',
-      'Google News - RBI': '1976D2',
-      'Google News - Markets': '388E3C', 
-      'Google News - MF': '7B1FA2',
-      'Google News - Banking': 'F57C00',
-      'NDTV Profit': 'D32F2F',
-      'Economic Times': 'E65100'
-    };
-    
-    const color = sourceColors[article.source] || '6B7280';
-    const text = encodeURIComponent(article.source.replace(' ', '+'));
-    
-    return `https://via.placeholder.com/400x250/${color}/FFFFFF?text=${text}`;
+    // Return a simple gradient background instead of placeholder
+    return null;
   };
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg transition-all duration-300 overflow-hidden">
       {/* Thumbnail */}
-      <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
-        <img
-          src={getThumbnailUrl(article)}
-          alt={article.title}
-          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-          onError={(e) => {
-            // If image fails to load, show fallback
-            const fallbackUrl = `https://via.placeholder.com/400x250/6B7280/FFFFFF?text=${encodeURIComponent(article.source.replace(' ', '+'))}`;
-            if (e.target.src !== fallbackUrl) {
-              e.target.src = fallbackUrl;
-            } else {
+      <div className="relative h-48 bg-gradient-to-br from-blue-500 to-purple-600">
+        {getThumbnailUrl(article) ? (
+          <img
+            src={getThumbnailUrl(article)}
+            alt={article.title}
+            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            onError={(e) => {
               e.target.style.display = 'none';
               e.target.nextSibling.style.display = 'flex';
-            }
-          }}
-        />
-        <div className="hidden absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 items-center justify-center">
+            }}
+          />
+        ) : null}
+        <div className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 ${getThumbnailUrl(article) ? 'hidden' : 'flex'} items-center justify-center`}>
           <div className="text-center text-white">
             <Image className="w-12 h-12 mx-auto mb-2 opacity-60" />
             <p className="text-sm font-medium">{article.source}</p>
@@ -148,32 +142,28 @@ const NewsCard = ({ article, onSummaryClick }) => {
 
         {/* Title */}
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 line-clamp-2 leading-tight">
-          {article.title}
+          {safeArticle.title}
         </h3>
 
         {/* Summary */}
         <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
-          {article.summary}
+          {safeArticle.summary}
         </p>
 
         {/* Tags */}
-        {article.tags && Array.isArray(article.tags) && article.tags.length > 0 && (
+        {safeArticle.tags && safeArticle.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">
-            {article.tags.slice(0, 3).map((tag, index) => {
-              // Ensure tag is a string
-              const tagString = typeof tag === 'string' ? tag : String(tag);
-              return (
-                <span
-                  key={index}
-                  className="inline-flex items-center px-2 py-1 rounded-md bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium"
-                >
-                  <Tag className="w-3 h-3 mr-1" />
-                  {tagString}
-                </span>
-              );
-            })}
-            {article.tags.length > 3 && (
-              <span className="text-xs text-gray-500 dark:text-gray-400">+{article.tags.length - 3} more</span>
+            {safeArticle.tags.slice(0, 3).map((tag, index) => (
+              <span
+                key={index}
+                className="inline-flex items-center px-2 py-1 rounded-md bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium"
+              >
+                <Tag className="w-3 h-3 mr-1" />
+                {tag}
+              </span>
+            ))}
+            {safeArticle.tags.length > 3 && (
+              <span className="text-xs text-gray-500 dark:text-gray-400">+{safeArticle.tags.length - 3} more</span>
             )}
           </div>
         )}
