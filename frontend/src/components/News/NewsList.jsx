@@ -1,5 +1,5 @@
 import React from 'react';
-import NewsCard from './NewsCard';
+import SimpleNewsCard from './SimpleNewsCard';
 import { Newspaper, AlertCircle } from 'lucide-react';
 
 const NewsList = ({ articles, loading, error, query, pagination, onLoadMore, loadingMore }) => {
@@ -80,7 +80,7 @@ const NewsList = ({ articles, loading, error, query, pagination, onLoadMore, loa
       {/* News Grid */}
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {articles.map((article, index) => (
-          <NewsCard
+          <SimpleNewsCard
             key={`${article.link}-${index}`}
             article={article}
           />
