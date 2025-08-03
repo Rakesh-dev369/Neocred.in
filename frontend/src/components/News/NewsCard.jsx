@@ -157,17 +157,21 @@ const NewsCard = ({ article, onSummaryClick }) => {
         </p>
 
         {/* Tags */}
-        {article.tags && article.tags.length > 0 && (
+        {article.tags && Array.isArray(article.tags) && article.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">
-            {article.tags.slice(0, 3).map((tag, index) => (
-              <span
-                key={index}
-                className="inline-flex items-center px-2 py-1 rounded-md bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium"
-              >
-                <Tag className="w-3 h-3 mr-1" />
-                {tag}
-              </span>
-            ))}
+            {article.tags.slice(0, 3).map((tag, index) => {
+              // Ensure tag is a string
+              const tagString = typeof tag === 'string' ? tag : String(tag);
+              return (
+                <span
+                  key={index}
+                  className="inline-flex items-center px-2 py-1 rounded-md bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium"
+                >
+                  <Tag className="w-3 h-3 mr-1" />
+                  {tagString}
+                </span>
+              );
+            })}
             {article.tags.length > 3 && (
               <span className="text-xs text-gray-500 dark:text-gray-400">+{article.tags.length - 3} more</span>
             )}
