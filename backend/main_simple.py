@@ -73,13 +73,20 @@ def fetch_rss_news():
                     except:
                         pass
                 
+                # Clean HTML from summary
+                summary = entry.summary if hasattr(entry, 'summary') else entry.description if hasattr(entry, 'description') else 'No summary available'
+                if summary:
+                    import re
+                    summary = re.sub(r'<[^>]+>', '', summary)  # Remove HTML tags
+                    summary = summary.strip()[:300] + '...' if len(summary) > 300 else summary
+                
                 article = {
-                    'title': entry.title if hasattr(entry, 'title') else 'No Title',
-                    'summary': entry.summary if hasattr(entry, 'summary') else entry.description if hasattr(entry, 'description') else 'No summary available',
-                    'link': entry.link if hasattr(entry, 'link') else '#',
-                    'published': published,
-                    'source': feed_info['name'],
-                    'tags': ['Finance', 'Markets', 'Business']
+                    'title': str(entry.title if hasattr(entry, 'title') else 'No Title'),
+                    'summary': str(summary),
+                    'link': str(entry.link if hasattr(entry, 'link') else '#'),
+                    'published': str(published),
+                    'source': str(feed_info['name']),
+                    'tags': ['Finance', 'Markets', 'Business']  # Always strings
                 }
                 all_articles.append(article)
                 
