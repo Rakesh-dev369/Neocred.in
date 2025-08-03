@@ -1,38 +1,45 @@
 import { Routes, Route } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './layouts/MainLayout';
-import Home from './pages/Home';
-import Learn from './pages/Learn';
-import Tools from './pages/Tools';
-import Chatbot from './pages/Chatbot';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import News from './pages/News';
-import NewsMinimal from './pages/NewsMinimal';
-import Explore from './pages/Explore';
-import CreditCards from './pages/CreditCards';
-import InsurancePlatforms from './pages/InsurancePlatforms';
-import PersonalLoans from './pages/PersonalLoans';
-import GovernmentSchemes from './pages/GovernmentSchemes';
-import FinanceJobs from './pages/FinanceJobs';
-import BusinessTools from './pages/BusinessTools';
-import Rewards from './pages/Rewards';
-import PanCheck from './pages/PanCheck';
-import LoanCheck from './pages/LoanCheck';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-import Disclaimer from './pages/Disclaimer';
-import Cookies from './pages/Cookies';
-import NotFound from './pages/NotFound';
+import LoadingSpinner from './components/LoadingSpinner';
 import ErrorBoundary from './components/ErrorBoundary';
-import FontDemo from './components/FontDemo';
+import { usePerformanceMonitoring } from './hooks/usePerformance';
+
+// Lazy load pages for better performance
+const Home = lazy(() => import('./pages/Home'));
+const Learn = lazy(() => import('./pages/Learn'));
+const Tools = lazy(() => import('./pages/Tools'));
+const Chatbot = lazy(() => import('./pages/Chatbot'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const News = lazy(() => import('./pages/News'));
+const Explore = lazy(() => import('./pages/Explore'));
+const CreditCards = lazy(() => import('./pages/CreditCards'));
+const InsurancePlatforms = lazy(() => import('./pages/InsurancePlatforms'));
+const PersonalLoans = lazy(() => import('./pages/PersonalLoans'));
+const GovernmentSchemes = lazy(() => import('./pages/GovernmentSchemes'));
+const FinanceJobs = lazy(() => import('./pages/FinanceJobs'));
+const BusinessTools = lazy(() => import('./pages/BusinessTools'));
+const Rewards = lazy(() => import('./pages/Rewards'));
+const PanCheck = lazy(() => import('./pages/PanCheck'));
+const LoanCheck = lazy(() => import('./pages/LoanCheck'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Disclaimer = lazy(() => import('./pages/Disclaimer'));
+const Cookies = lazy(() => import('./pages/Cookies'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const FontDemo = lazy(() => import('./components/FontDemo'));
 import './App.css';
 
 function App() {
+  usePerformanceMonitoring();
+  
   return (
     <ThemeProvider>
       <ErrorBoundary>
-        <Routes>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><LoadingSpinner size="lg" text="Loading page..." /></div>}>
+          <Routes>
           <Route path="/" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/learn" element={<MainLayout><Learn /></MainLayout>} />
           <Route path="/tools" element={<MainLayout><Tools /></MainLayout>} />
@@ -56,7 +63,8 @@ function App() {
           <Route path="/cookies" element={<MainLayout><Cookies /></MainLayout>} />
           <Route path="/fonts" element={<MainLayout><FontDemo /></MainLayout>} />
           <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
-        </Routes>
+          </Routes>
+        </Suspense>
       </ErrorBoundary>
     </ThemeProvider>
   );
