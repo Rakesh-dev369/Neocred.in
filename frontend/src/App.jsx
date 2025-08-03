@@ -70,7 +70,7 @@ function App() {
           </Routes>
         </Suspense>
         <InstallPrompt />
-        <AccessibilityFixes />
+
       </ErrorBoundary>
     </ThemeProvider>
   );

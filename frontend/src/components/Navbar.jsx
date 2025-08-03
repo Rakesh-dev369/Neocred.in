@@ -52,7 +52,6 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <GlobalSearch />
             <ThemeToggle />
             <Link to={ROUTES.CONTACT} className="btn-primary">
               Contact
