@@ -3,10 +3,16 @@
   "outputDirectory": "frontend/dist",
   "installCommand": "cd frontend && npm install",
   "framework": "vite",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/((?!assets/).*)",
-      "destination": "/index.html"
+      "src": "/assets/(.*)",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
