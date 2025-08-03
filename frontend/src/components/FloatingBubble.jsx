@@ -32,6 +32,5 @@ const FloatingBubble = () => {
     </>
   );
 };
-};
 
 export default FloatingBubble;
