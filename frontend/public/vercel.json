@@ -1,13 +1,8 @@
 {
-  "headers": [
+  "rewrites": [
     {
-      "source": "/assets/(.*).js",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript"
-        }
-      ]
+      "source": "/((?!api|assets|favicon.ico|logo.png|manifest.json|sw.js|_next).*)",
+      "destination": "/index.html"
     }
   ]
 }
