@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8003';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://neocred-backend.fly.dev';
 
 class NewsService {
   async fetchNews(query = '') {
@@ -7,17 +7,39 @@ class NewsService {
         ? `${API_BASE_URL}/api/news?q=${encodeURIComponent(query)}`
         : `${API_BASE_URL}/api/news`;
       
-      const response = await fetch(url);
+      console.log('Fetching news from:', url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
+      console.log('News data received:', data);
       return data;
     } catch (error) {
       console.error('Error fetching news:', error);
-      throw error;
+      console.error('API URL attempted:', API_BASE_URL);
+      
+      // Return fallback data instead of throwing error
+      return {
+        success: false,
+        data: [],
+        error: `Unable to connect to news service. Backend may be starting up. Error: ${error.message}`,
+        pagination: {
+          page: 1,
+          limit: 20,
+          total_items: 0,
+          total_pages: 0,
+          has_next: false,
+          has_prev: false
+        }
+      };
     }
   }
 
