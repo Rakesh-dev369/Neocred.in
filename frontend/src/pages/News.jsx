@@ -37,6 +37,7 @@ export default function News() {
       const response = await fetch(url);
       const data = await response.json();
       
+      console.log('News API response:', data);
       if (data.success) {
         if (append) {
           setArticles(prev => [...prev, ...data.data]);
@@ -46,10 +47,11 @@ export default function News() {
         setPagination(data.pagination);
         setCurrentPage(page);
       } else {
-        setError('Failed to fetch news');
+        setError(data.error || 'Failed to fetch news');
       }
     } catch (err) {
-      setError('Network error occurred');
+      console.error('News fetch error:', err);
+      setError(`Network error: ${err.message}`);
     } finally {
       setLoading(false);
       setLoadingMore(false);
