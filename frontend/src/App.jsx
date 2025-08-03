@@ -7,7 +7,6 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { usePerformanceMonitoring } from './hooks/usePerformance';
 import { useAnalytics } from './hooks/useAnalytics';
 import InstallPrompt from './components/InstallPrompt';
-import AccessibilityFixes from './components/AccessibilityFixes';
 
 // Lazy load pages for better performance
 const Home = lazy(() => import('./pages/Home'));
