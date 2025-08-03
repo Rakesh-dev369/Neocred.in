@@ -27,8 +27,12 @@ export default function Navbar() {
               <img 
                 src="/logo.png" 
                 alt="NeoCred" 
-                className="h-12 w-auto sm:h-14 md:h-16 hover:opacity-80 transition-opacity duration-200 object-contain" 
-                style={{ imageRendering: 'crisp-edges' }}
+                className="h-10 w-auto max-w-[180px] sm:h-12 sm:max-w-[200px] md:h-14 md:max-w-[220px] hover:opacity-80 transition-opacity duration-200 object-contain" 
+                style={{ 
+                  imageRendering: '-webkit-optimize-contrast',
+                  imageRendering: 'crisp-edges',
+                  imageRendering: 'pixelated'
+                }}
               />
             </Link>
           </div>
