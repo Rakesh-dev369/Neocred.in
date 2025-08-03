@@ -5,6 +5,8 @@ import MainLayout from './layouts/MainLayout';
 import LoadingSpinner from './components/LoadingSpinner';
 import ErrorBoundary from './components/ErrorBoundary';
 import { usePerformanceMonitoring } from './hooks/usePerformance';
+import { useAnalytics } from './hooks/useAnalytics';
+import InstallPrompt from './components/InstallPrompt';
 
 // Lazy load pages for better performance
 const Home = lazy(() => import('./pages/Home'));
@@ -34,6 +36,7 @@ import './App.css';
 
 function App() {
   usePerformanceMonitoring();
+  useAnalytics();
   
   return (
     <ThemeProvider>
@@ -65,6 +68,7 @@ function App() {
           <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
           </Routes>
         </Suspense>
+        <InstallPrompt />
       </ErrorBoundary>
     </ThemeProvider>
   );

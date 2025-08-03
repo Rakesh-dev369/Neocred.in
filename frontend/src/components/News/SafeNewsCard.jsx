@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Clock, ExternalLink, Tag, Image, Sparkles } from 'lucide-react';
+import { trackNewsClick } from '../../hooks/useAnalytics';
 
 const SafeNewsCard = ({ article }) => {
   const [aiSummary, setAiSummary] = useState('');
@@ -168,6 +169,7 @@ const SafeNewsCard = ({ article }) => {
             href={link}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackNewsClick(title)}
             className="inline-flex items-center px-4 py-3 min-h-[44px] text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors touch-manipulation"
           >
             Read More
