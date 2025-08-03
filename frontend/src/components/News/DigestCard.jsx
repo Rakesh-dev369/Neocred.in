@@ -120,7 +120,7 @@ const DigestCard = () => {
             {digest.highlights?.map((highlight, index) => (
               <div key={index} className="flex items-start">
                 <span className="text-blue-600 mr-2">•</span>
-                <span>{highlight}</span>
+                <span>{String(highlight)}</span>
               </div>
             ))}
           </div>
@@ -138,9 +138,9 @@ const DigestCard = () => {
                   {key.replace('_', ' ')}
                 </div>
                 <div className={`text-sm font-semibold ${
-                  value.startsWith('+') ? 'text-green-600' : value.startsWith('-') ? 'text-red-600' : 'text-gray-900 dark:text-white'
+                  String(value).startsWith('+') ? 'text-green-600' : String(value).startsWith('-') ? 'text-red-600' : 'text-gray-900 dark:text-white'
                 }`}>
-                  {value}
+                  {String(value)}
                 </div>
               </div>
             ))}
