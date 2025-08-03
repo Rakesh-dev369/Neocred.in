@@ -24,7 +24,11 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to={ROUTES.HOME} className="flex-shrink-0">
-              <HorizontalLogo className="scale-75" />
+              <img 
+                src="/logo.png" 
+                alt="NeoCred" 
+                className="h-8 w-auto sm:h-10 hover:opacity-80 transition-opacity duration-200" 
+              />
             </Link>
           </div>
 
