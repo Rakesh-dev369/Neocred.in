@@ -336,29 +336,102 @@ async def get_news():
         "success": True,
         "data": [
             {
-                "title": "RBI Monetary Policy Update",
-                "summary": "Reserve Bank of India announces key policy decisions affecting interest rates and banking sector.",
-                "link": "#",
+                "title": "RBI Monetary Policy: Repo Rate Held at 6.5%",
+                "summary": "Reserve Bank of India maintains status quo on key policy rates, focusing on inflation control and economic growth balance.",
+                "link": "https://rbi.org.in",
                 "published": "2025-01-03T10:00:00Z",
                 "source": "RBI",
-                "tags": ["RBI", "Banking", "Interest Rate"]
+                "tags": ["RBI", "Monetary Policy", "Interest Rate"]
             },
             {
-                "title": "Stock Market Reaches New Highs",
-                "summary": "Indian equity markets continue their upward trajectory with strong investor sentiment.",
-                "link": "#",
+                "title": "Nifty 50 Crosses 25,000 Mark Amid Strong FII Inflows",
+                "summary": "Indian equity markets surge to record highs as foreign institutional investors pump ₹15,000 crores in December.",
+                "link": "https://economictimes.com",
                 "published": "2025-01-03T09:30:00Z",
                 "source": "Economic Times",
-                "tags": ["Stock Market", "Nifty", "Investment"]
+                "tags": ["Stock Market", "Nifty", "FII"]
+            },
+            {
+                "title": "New Tax Regime: 87% Taxpayers Opt for Simplified Structure",
+                "summary": "Income Tax Department reports majority of taxpayers choosing new tax regime for FY 2024-25 returns.",
+                "link": "https://incometax.gov.in",
+                "published": "2025-01-03T08:45:00Z",
+                "source": "Income Tax Department",
+                "tags": ["Tax", "Income Tax", "Policy"]
+            },
+            {
+                "title": "SBI Cuts Home Loan Rates by 10 Basis Points",
+                "summary": "State Bank of India reduces home loan interest rates to 8.40% for loans above ₹75 lakhs, effective immediately.",
+                "link": "https://sbi.co.in",
+                "published": "2025-01-03T08:00:00Z",
+                "source": "SBI",
+                "tags": ["Banking", "Home Loan", "Interest Rate"]
+            },
+            {
+                "title": "Mutual Fund AUM Crosses ₹50 Lakh Crores Milestone",
+                "summary": "Indian mutual fund industry achieves historic milestone with assets under management reaching ₹50.78 lakh crores.",
+                "link": "https://amfiindia.com",
+                "published": "2025-01-03T07:30:00Z",
+                "source": "AMFI",
+                "tags": ["Mutual Funds", "AUM", "Investment"]
+            },
+            {
+                "title": "Digital Rupee Pilot Expands to 13 Cities",
+                "summary": "RBI extends Central Bank Digital Currency (CBDC) pilot program to include tier-2 cities across India.",
+                "link": "https://rbi.org.in",
+                "published": "2025-01-03T07:00:00Z",
+                "source": "RBI",
+                "tags": ["CBDC", "Digital Currency", "RBI"]
+            },
+            {
+                "title": "Gold Prices Touch ₹72,000 Per 10 Grams",
+                "summary": "Precious metal prices surge amid global uncertainty and strong domestic demand during wedding season.",
+                "link": "https://mcx.com",
+                "published": "2025-01-03T06:30:00Z",
+                "source": "MCX",
+                "tags": ["Gold", "Commodity", "Investment"]
+            },
+            {
+                "title": "SEBI Introduces New Rules for F&O Trading",
+                "summary": "Market regulator implements stricter norms for futures and options trading to protect retail investors.",
+                "link": "https://sebi.gov.in",
+                "published": "2025-01-03T06:00:00Z",
+                "source": "SEBI",
+                "tags": ["SEBI", "F&O", "Trading"]
             }
         ],
         "pagination": {
             "page": 1,
             "limit": 20,
-            "total_items": 2,
+            "total_items": 8,
             "total_pages": 1,
             "has_next": False,
             "has_prev": False
+        }
+    }
+
+@app.get(
+    "/api/digest",
+    summary="📊 Daily Financial Digest",
+    description="Get today's financial digest and market summary",
+    tags=["News"]
+)
+async def get_digest():
+    return {
+        "success": True,
+        "date": "2025-01-03",
+        "summary": "Markets hit record highs as RBI maintains policy stance. Key developments in banking and digital currency space.",
+        "highlights": [
+            "Nifty 50 crosses 25,000 mark with strong FII inflows",
+            "RBI keeps repo rate unchanged at 6.5%",
+            "SBI reduces home loan rates by 10 basis points",
+            "Mutual fund AUM reaches ₹50 lakh crores milestone"
+        ],
+        "market_summary": {
+            "nifty": "+1.2%",
+            "sensex": "+1.1%",
+            "bank_nifty": "+0.8%",
+            "gold": "+0.5%"
         }
     }
 

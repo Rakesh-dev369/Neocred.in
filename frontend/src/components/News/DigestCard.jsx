@@ -10,12 +10,12 @@ const DigestCard = () => {
     setLoading(true);
     setError(null);
     try {
-      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8003';
-      const response = await fetch(`${API_BASE}/api/news/daily-digest`);
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://neocred-backend.fly.dev';
+      const response = await fetch(`${API_BASE}/api/digest`);
       const data = await response.json();
       
       if (data.success) {
-        setDigest(data.digest);
+        setDigest(data);
       } else {
         setError('Failed to load digest');
       }
@@ -115,41 +115,32 @@ const DigestCard = () => {
           <span className="text-base font-semibold text-blue-800 dark:text-blue-300">AI Overview</span>
         </div>
         <div className="prose prose-sm max-w-none text-gray-700 dark:text-gray-300 leading-relaxed">
-          <div 
-            className="whitespace-pre-line"
-            dangerouslySetInnerHTML={{
-              __html: digest.overview
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/### (.*?)\n/g, '<h3 class="text-lg font-semibold text-blue-900 dark:text-blue-300 mb-2 mt-4">$1</h3>')
-                .replace(/- \*\*(.*?)\*\*/g, '• <strong>$1</strong>')
-                .replace(/^- (.*?)$/gm, '• $1')
-            }}
-          />
+          <p className="mb-4">{digest.summary}</p>
+          <div className="space-y-2">
+            {digest.highlights?.map((highlight, index) => (
+              <div key={index} className="flex items-start">
+                <span className="text-blue-600 mr-2">•</span>
+                <span>{highlight}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Top Headlines */}
-      {digest.top_news && digest.top_news.length > 0 && (
-        <div>
-          <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-3">Top Headlines ({digest.total_count})</h4>
-          <div className="space-y-2">
-            {digest.top_news.slice(0, 6).map((news, index) => (
-              <div key={index} className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-3 border border-blue-100 dark:border-blue-700">
-                <h5 className="text-sm font-medium text-gray-900 dark:text-white mb-1 line-clamp-2">
-                  {news.title}
-                </h5>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded-full">
-                    {news.source}
-                  </span>
-                  <a
-                    href={news.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
-                  >
-                    Read →
-                  </a>
+      {/* Market Summary */}
+      {digest.market_summary && (
+        <div className="mt-4">
+          <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-3">Market Summary</h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {Object.entries(digest.market_summary).map(([key, value]) => (
+              <div key={key} className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-3 border border-blue-100 dark:border-blue-700 text-center">
+                <div className="text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wide">
+                  {key.replace('_', ' ')}
+                </div>
+                <div className={`text-sm font-semibold ${
+                  value.startsWith('+') ? 'text-green-600' : value.startsWith('-') ? 'text-red-600' : 'text-gray-900 dark:text-white'
+                }`}>
+                  {value}
                 </div>
               </div>
             ))}
