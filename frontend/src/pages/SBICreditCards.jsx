@@ -8,6 +8,7 @@ export default function SBICreditCards() {
     {
       name: 'SBI Card Unnati',
       type: 'Secured Card',
+      category: 'Student',
       annualFee: 'Free for 4 years, then ₹499',
       features: [
         'Zero Fee Card - Free for first 4 years',
@@ -46,9 +47,14 @@ export default function SBICreditCards() {
             <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{card.name}</h2>
-                <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">
-                  {card.type}
-                </span>
+                <div className="flex gap-2">
+                  <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">
+                    {card.type}
+                  </span>
+                  <span className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
+                    {card.category}
+                  </span>
+                </div>
               </div>
 
               <div className="mb-6">
