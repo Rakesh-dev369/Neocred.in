@@ -23,34 +23,19 @@ export default function SBICreditCards() {
       applyLink: 'https://www.sbicard.com/en/personal/credit-cards/shopping/sbi-card-unnati.page'
     },
     {
-      name: 'SBI SimplyCLICK',
-      type: 'Rewards Card',
-      category: 'Salaried',
-      annualFee: '₹499',
+      name: 'IRCTC SBI Card (RuPay)',
+      type: 'Travel Card',
+      category: 'Student',
+      annualFee: '₹500 + GST',
       features: [
-        '10x reward points on online spends',
-        '5x reward points on dining & movies',
-        '1x reward point on other spends',
-        'Fuel surcharge waiver',
-        'Complimentary movie tickets',
-        'Annual fee waiver on spends above ₹1 lakh'
+        '350 activation bonus Reward Points on Rs 500+ spend',
+        'Up to 10% Value Back on IRCTC railway bookings',
+        '1 Reward point per Rs 125 on non-fuel purchases',
+        'Save 1% transaction charges on railway bookings',
+        '1% fuel surcharge waiver (Rs 500-3000)',
+        '4 complimentary railway lounge access per year'
       ],
-      applyLink: 'https://www.sbicard.com/en/personal/credit-cards/shopping/sbi-card-simplyclick.page'
-    },
-    {
-      name: 'SBI Business Card',
-      type: 'Business Card',
-      category: 'Business',
-      annualFee: '₹1,999',
-      features: [
-        'Business expense tracking',
-        'Higher credit limits',
-        'Fuel surcharge waiver',
-        'Travel insurance coverage',
-        'Airport lounge access',
-        'GST invoice management'
-      ],
-      applyLink: 'https://www.sbicard.com/en/business/credit-cards.page'
+      applyLink: 'https://www.sbicard.com/sprint/irctcRuPay'
     }
   ];
 
