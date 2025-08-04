@@ -6,6 +6,7 @@ const COLORS = ['#10b981', '#ef4444'];
 const NetWorthTracker = () => {
   const [assets, setAssets] = useState([{ label: '', amount: 0 }]);
   const [liabilities, setLiabilities] = useState([{ label: '', amount: 0 }]);
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const total = (items) => items.reduce((sum, item) => sum + Number(item.amount || 0), 0);
   const totalAssets = total(assets);
@@ -13,15 +14,19 @@ const NetWorthTracker = () => {
   const netWorth = totalAssets - totalLiabilities;
 
   const updateAsset = (index, field, value) => {
+    setIsCalculating(true);
     const updated = [...assets];
     updated[index][field] = field === 'amount' ? Number(value) : value;
     setAssets(updated);
+    setTimeout(() => setIsCalculating(false), 100);
   };
 
   const updateLiability = (index, field, value) => {
+    setIsCalculating(true);
     const updated = [...liabilities];
     updated[index][field] = field === 'amount' ? Number(value) : value;
     setLiabilities(updated);
+    setTimeout(() => setIsCalculating(false), 100);
   };
 
   const addAsset = () => setAssets([...assets, { label: '', amount: 0 }]);

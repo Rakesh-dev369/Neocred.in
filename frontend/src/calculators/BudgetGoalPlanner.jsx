@@ -6,6 +6,7 @@ export default function BudgetGoalPlanner() {
     { id: 1, name: "", amount: "", months: "", saved: "", type: "short", monthly: 0, adjusted: 0, progress: 0 },
   ]);
   const [inflationRate, setInflationRate] = useState(6); // default 6% annual
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const handleChange = (id, field, value) => {
     setGoals(prev =>
@@ -27,6 +28,7 @@ export default function BudgetGoalPlanner() {
   };
 
   const calculateSavings = () => {
+    setIsCalculating(true);
     const updatedGoals = goals.map(goal => {
       const amount = parseFloat(goal.amount);
       const months = parseInt(goal.months);
@@ -53,6 +55,7 @@ export default function BudgetGoalPlanner() {
     });
 
     setGoals(updatedGoals);
+    setIsCalculating(false);
   };
 
   const totalMonthly = goals.reduce((sum, goal) => sum + parseFloat(goal.monthly || 0), 0);
@@ -220,9 +223,10 @@ export default function BudgetGoalPlanner() {
 
           <button
             onClick={calculateSavings}
-            className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+            disabled={isCalculating}
+            className="px-6 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 text-white rounded-lg transition-colors"
           >
-            📊 Calculate Savings Plan
+            {isCalculating ? '⏳ Calculating...' : '📊 Calculate Savings Plan'}
           </button>
         </div>
 
