@@ -51,37 +51,39 @@ export default function CanaraBankCreditCards() {
             <button onClick={() => setSelectedCategory('Business')} className={`px-4 py-2 rounded-md transition-colors ${selectedCategory === 'Business' ? 'bg-blue-500 text-white' : 'text-gray-600 dark:text-gray-300 hover:text-blue-500'}`}>🏢 Business</button>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-6">
           {getFilteredCards().map((card, index) => (
-            <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{card.name}</h2>
-                <div className="flex gap-2">
-                  <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">{card.type}</span>
-                  <span className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">{card.category}</span>
+            <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <div className="lg:col-span-1">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{card.name}</h2>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">{card.type}</span>
+                    <span className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">{card.category}</span>
+                  </div>
+                  <div className="mb-4">
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Annual Fee</h3>
+                    <p className="text-green-600 dark:text-green-400 font-medium">{card.annualFee}</p>
+                  </div>
+                </div>
+                <div className="lg:col-span-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Key Features</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {card.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start">
+                        <span className="text-green-500 mr-2 mt-1 text-sm">✓</span>
+                        <span className="text-gray-700 dark:text-gray-300 text-sm">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="lg:col-span-1 flex flex-col justify-center space-y-3">
+                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">Apply Now</button>
+                  <button className="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 py-2 px-4 rounded-lg font-medium transition-colors">Compare Cards</button>
                 </div>
               </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Annual Fee</h3>
-                <p className="text-green-600 dark:text-green-400 font-medium">{card.annualFee}</p>
-              </div>
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Key Features</h3>
-                <ul className="space-y-3">
-                  {card.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <span className="text-green-500 mr-3 mt-1">✓</span>
-                      <span className="text-gray-700 dark:text-gray-300">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="space-y-3">
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors">Apply Now</button>
-                <button className="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 py-3 px-6 rounded-lg font-medium transition-colors">Compare Cards</button>
-              </div>
             </div>
-          ))}
+          ))
         </div>
       </div>
     </div>
