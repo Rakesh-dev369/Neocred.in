@@ -80,7 +80,10 @@ const EducationCostEstimator = () => {
               educationType: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateEducationCost}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateEducationCost(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting, setFieldValue }) => (
               <Form className="space-y-4">

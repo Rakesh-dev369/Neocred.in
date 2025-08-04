@@ -73,7 +73,10 @@ const RealReturnsCalculator = () => {
               years: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateRealReturns}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateRealReturns(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

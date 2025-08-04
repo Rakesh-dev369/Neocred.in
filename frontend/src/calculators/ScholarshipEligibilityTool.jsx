@@ -88,7 +88,10 @@ const ScholarshipEligibilityTool = () => {
               state: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={checkEligibility}
+            onSubmit={(values, { setSubmitting }) => {
+              checkEligibility(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

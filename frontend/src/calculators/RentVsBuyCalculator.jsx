@@ -98,7 +98,10 @@ const RentVsBuyCalculator = () => {
               appreciationRate: 6
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateComparison}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateComparison(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
