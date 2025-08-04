@@ -26,6 +26,7 @@ export default function SBICreditCards() {
       name: 'IRCTC SBI Card (RuPay)',
       type: 'Travel Card',
       category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
       annualFee: '₹500 + GST',
       features: [
         '350 activation bonus Reward Points on Rs 500+ spend',
@@ -41,7 +42,10 @@ export default function SBICreditCards() {
 
   const getFilteredCards = () => {
     if (selectedCategory === 'all') return sbiCards;
-    return sbiCards.filter(card => card.category === selectedCategory);
+    return sbiCards.filter(card => 
+      card.category === selectedCategory || 
+      (card.categories && card.categories.includes(selectedCategory))
+    );
   };
 
   return (
