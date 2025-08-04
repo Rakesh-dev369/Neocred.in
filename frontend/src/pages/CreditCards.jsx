@@ -125,9 +125,19 @@ export default function CreditCards() {
           </div>
         </div>
 
+        {/* Debug Info */}
+        <div className="text-center mb-4 text-gray-600 dark:text-gray-400">
+          Showing {getCards().length} cards {categoryFilter !== 'all' && `for ${categoryFilter}`}
+        </div>
+
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {getCards().map((card, index) => (
+          {getCards().length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 dark:text-gray-400">No cards found for the selected criteria.</p>
+            </div>
+          ) : (
+            getCards().map((card, index) => (
             <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{card.name}</h3>
@@ -162,7 +172,8 @@ export default function CreditCards() {
                 </button>
               </div>
             </div>
-          ))}
+          ))
+          )}
         </div>
       </div>
     </div>
