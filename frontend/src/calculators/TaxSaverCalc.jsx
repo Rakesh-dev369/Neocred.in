@@ -84,7 +84,10 @@ const TaxSaverCalculator = () => {
               regime: "old"
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateTax}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateTax(values);
+              setSubmitting(false);
+            }}
           >
             {({ values, isSubmitting }) => (
               <Form className="space-y-4">

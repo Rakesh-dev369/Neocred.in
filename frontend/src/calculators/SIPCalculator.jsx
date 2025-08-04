@@ -60,7 +60,10 @@ const SIPCalculator = () => {
               duration: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateSIP}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateSIP(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

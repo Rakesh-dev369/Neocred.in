@@ -62,7 +62,10 @@ const RDCalculator = () => {
               tenureMonths: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateRDResult}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateRDResult(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

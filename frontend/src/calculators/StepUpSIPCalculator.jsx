@@ -72,7 +72,10 @@ const StepUpSIPCalculator = () => {
               investmentYears: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateStepUpSIP}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateStepUpSIP(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

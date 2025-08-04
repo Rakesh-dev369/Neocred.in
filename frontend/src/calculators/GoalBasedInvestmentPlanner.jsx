@@ -55,7 +55,10 @@ const GoalBasedInvestmentPlanner = () => {
               returnRate: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateGoalInvestment}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateGoalInvestment(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

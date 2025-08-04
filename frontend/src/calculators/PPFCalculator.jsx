@@ -59,7 +59,10 @@ const PPFCalculator = () => {
               tenureYears: 15
             }}
             validationSchema={validationSchema}
-            onSubmit={calculatePPFResult}
+            onSubmit={(values, { setSubmitting }) => {
+              calculatePPFResult(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

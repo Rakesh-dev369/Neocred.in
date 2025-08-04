@@ -27,10 +27,11 @@ const BudgetPlanner = () => {
     { category: "Transport", amount: 3000 },
   ]);
 
-  const handleAddExpense = (values, { resetForm }) => {
+  const handleAddExpense = (values, { resetForm, setSubmitting }) => {
     const updated = [...expenses, { category: values.category, amount: parseFloat(values.amount) }];
     setExpenses(updated);
     resetForm();
+    setSubmitting(false);
   };
 
   const handleRemoveExpense = (index) => {
@@ -63,7 +64,10 @@ const BudgetPlanner = () => {
                   .min(1000, 'Minimum income is ₹1,000')
                   .max(10000000, 'Maximum income is ₹1 crore')
               })}
-              onSubmit={(values) => setIncome(values.income)}
+              onSubmit={(values, { setSubmitting }) => {
+                setIncome(values.income);
+                setSubmitting(false);
+              }}
               enableReinitialize
             >
               {({ isSubmitting }) => (

@@ -63,7 +63,10 @@ const PostOfficeFDCalculator = () => {
               tenureYears: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateFDResult}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateFDResult(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

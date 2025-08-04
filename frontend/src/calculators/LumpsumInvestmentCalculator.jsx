@@ -58,7 +58,10 @@ const LumpsumInvestmentCalculator = () => {
               years: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateLumpsum}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateLumpsum(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

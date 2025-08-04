@@ -69,7 +69,10 @@ export default function FdCalculator() {
               compounding: 'quarterly'
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateFD}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateFD(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
