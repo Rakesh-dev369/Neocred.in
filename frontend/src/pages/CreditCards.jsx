@@ -9,17 +9,18 @@ export default function CreditCards() {
   const navigate = useNavigate();
 
   const publicSectorCards = [
-    { name: 'State Bank of India', bank: 'SBI', slug: 'sbi', fee: 'Various', cashback: 'Credit Cards', rating: 4.2, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Bank of Baroda', bank: 'Bank of Baroda', slug: 'bob', fee: 'Various', cashback: 'Credit Cards', rating: 4.0, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Punjab National Bank', bank: 'PNB', slug: 'pnb', fee: 'Various', cashback: 'Credit Cards', rating: 3.8, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Union Bank of India', bank: 'Union Bank', slug: 'union', fee: 'Various', cashback: 'Credit Cards', rating: 3.9, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Canara Bank', bank: 'Canara Bank', slug: 'canara', fee: 'Various', cashback: 'Credit Cards', rating: 3.9, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Indian Bank', bank: 'Indian Bank', slug: 'indian', fee: 'Various', cashback: 'Credit Cards', rating: 3.7, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Bank of India', bank: 'Bank of India', slug: 'boi', fee: 'Various', cashback: 'Credit Cards', rating: 3.8, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Central Bank of India', bank: 'Central Bank', slug: 'central', fee: 'Various', cashback: 'Credit Cards', rating: 3.6, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'UCO Bank', bank: 'UCO Bank', slug: 'uco', fee: 'Various', cashback: 'Credit Cards', rating: 3.5, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Indian Overseas Bank', bank: 'IOB', slug: 'iob', fee: 'Various', cashback: 'Credit Cards', rating: 3.6, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Bank of Maharashtra', bank: 'Bank of Maharashtra', slug: 'bom', fee: 'Various', cashback: 'Credit Cards', rating: 3.7, categories: ['Student', 'Salaried', 'Business'] }
+    // Student Cards
+    { name: 'SBI Card Unnati', bank: 'SBI', slug: 'sbi', fee: 'Free for 4 years', cashback: '1 RP per ₹100', rating: 4.2, categories: ['Student'], applyLink: 'https://www.sbicard.com/en/personal/credit-cards/shopping/sbi-card-unnati.page' },
+    
+    // Salaried Cards
+    { name: 'SBI SimplyCLICK', bank: 'SBI', slug: 'sbi', fee: '₹499', cashback: '10x on online', rating: 4.1, categories: ['Salaried'] },
+    { name: 'BOB Premier', bank: 'Bank of Baroda', slug: 'bob', fee: '₹999', cashback: '5% on dining', rating: 4.0, categories: ['Salaried'] },
+    { name: 'PNB RuPay Platinum', bank: 'PNB', slug: 'pnb', fee: '₹299', cashback: '2% on spends', rating: 3.8, categories: ['Salaried'] },
+    { name: 'Canara Platinum', bank: 'Canara Bank', slug: 'canara', fee: '₹750', cashback: '1% cashback', rating: 3.9, categories: ['Salaried'] },
+    
+    // Business Cards
+    { name: 'SBI Business Card', bank: 'SBI', slug: 'sbi', fee: '₹1,999', cashback: 'Business rewards', rating: 4.0, categories: ['Business'] },
+    { name: 'BOB Business Plus', bank: 'Bank of Baroda', slug: 'bob', fee: '₹1,500', cashback: 'Fuel & travel', rating: 3.9, categories: ['Business'] }
   ];
 
   const privateSectorCards = [];
@@ -168,12 +169,23 @@ export default function CreditCards() {
               )}
               
               <div className="space-y-2">
-                <button 
-                  onClick={() => navigate(`/credit-cards/${card.slug}`)}
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
-                >
-                  View Cards
-                </button>
+                {card.applyLink ? (
+                  <a
+                    href={card.applyLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors text-center"
+                  >
+                    Apply Now
+                  </a>
+                ) : (
+                  <button 
+                    onClick={() => navigate(`/credit-cards/${card.slug}`)}
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+                  >
+                    View Cards
+                  </button>
+                )}
                 <button className="w-full border border-blue-500 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 py-2 px-4 rounded-lg transition-colors">
                   Compare
                 </button>

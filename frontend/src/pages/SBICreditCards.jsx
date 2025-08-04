@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftIcon, CreditCardIcon } from '@heroicons/react/24/outline';
 
 export default function SBICreditCards() {
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const sbiCards = [
     {
@@ -19,8 +21,43 @@ export default function SBICreditCards() {
         '20-50 days interest free credit period'
       ],
       applyLink: 'https://www.sbicard.com/en/personal/credit-cards/shopping/sbi-card-unnati.page'
+    },
+    {
+      name: 'SBI SimplyCLICK',
+      type: 'Rewards Card',
+      category: 'Salaried',
+      annualFee: '₹499',
+      features: [
+        '10x reward points on online spends',
+        '5x reward points on dining & movies',
+        '1x reward point on other spends',
+        'Fuel surcharge waiver',
+        'Complimentary movie tickets',
+        'Annual fee waiver on spends above ₹1 lakh'
+      ],
+      applyLink: 'https://www.sbicard.com/en/personal/credit-cards/shopping/sbi-card-simplyclick.page'
+    },
+    {
+      name: 'SBI Business Card',
+      type: 'Business Card',
+      category: 'Business',
+      annualFee: '₹1,999',
+      features: [
+        'Business expense tracking',
+        'Higher credit limits',
+        'Fuel surcharge waiver',
+        'Travel insurance coverage',
+        'Airport lounge access',
+        'GST invoice management'
+      ],
+      applyLink: 'https://www.sbicard.com/en/business/credit-cards.page'
     }
   ];
+
+  const getFilteredCards = () => {
+    if (selectedCategory === 'all') return sbiCards;
+    return sbiCards.filter(card => card.category === selectedCategory);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -42,8 +79,54 @@ export default function SBICreditCards() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Category Filter */}
+        <div className="flex justify-center mb-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-1 shadow-lg">
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-4 py-2 rounded-md transition-colors ${
+                selectedCategory === 'all' 
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300 hover:text-blue-500'
+              }`}
+            >
+              All Cards
+            </button>
+            <button
+              onClick={() => setSelectedCategory('Student')}
+              className={`px-4 py-2 rounded-md transition-colors ${
+                selectedCategory === 'Student' 
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300 hover:text-blue-500'
+              }`}
+            >
+              🎓 Student
+            </button>
+            <button
+              onClick={() => setSelectedCategory('Salaried')}
+              className={`px-4 py-2 rounded-md transition-colors ${
+                selectedCategory === 'Salaried' 
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300 hover:text-blue-500'
+              }`}
+            >
+              💼 Salaried
+            </button>
+            <button
+              onClick={() => setSelectedCategory('Business')}
+              className={`px-4 py-2 rounded-md transition-colors ${
+                selectedCategory === 'Business' 
+                  ? 'bg-blue-500 text-white' 
+                  : 'text-gray-600 dark:text-gray-300 hover:text-blue-500'
+              }`}
+            >
+              🏢 Business
+            </button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {sbiCards.map((card, index) => (
+          {getFilteredCards().map((card, index) => (
             <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{card.name}</h2>
