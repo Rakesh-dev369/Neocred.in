@@ -9,17 +9,17 @@ export default function CreditCards() {
   const navigate = useNavigate();
 
   const publicSectorCards = [
-    { name: 'State Bank of India', bank: 'SBI', slug: 'sbi', fee: 'Various', cashback: 'Credit Cards', rating: 4.2, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Bank of Baroda', bank: 'Bank of Baroda', slug: 'bob', fee: 'Various', cashback: 'Credit Cards', rating: 4.0, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Punjab National Bank', bank: 'PNB', slug: 'pnb', fee: 'Various', cashback: 'Credit Cards', rating: 3.8, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Union Bank of India', bank: 'Union Bank', slug: 'union', fee: 'Various', cashback: 'Credit Cards', rating: 3.9, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Canara Bank', bank: 'Canara Bank', slug: 'canara', fee: 'Various', cashback: 'Credit Cards', rating: 3.9, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Indian Bank', bank: 'Indian Bank', slug: 'indian', fee: 'Various', cashback: 'Credit Cards', rating: 3.7, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Bank of India', bank: 'Bank of India', slug: 'boi', fee: 'Various', cashback: 'Credit Cards', rating: 3.8, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Central Bank of India', bank: 'Central Bank', slug: 'central', fee: 'Various', cashback: 'Credit Cards', rating: 3.6, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'UCO Bank', bank: 'UCO Bank', slug: 'uco', fee: 'Various', cashback: 'Credit Cards', rating: 3.5, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Indian Overseas Bank', bank: 'IOB', slug: 'iob', fee: 'Various', cashback: 'Credit Cards', rating: 3.6, categories: ['Student', 'Salaried', 'Business'] },
-    { name: 'Bank of Maharashtra', bank: 'Bank of Maharashtra', slug: 'bom', fee: 'Various', cashback: 'Credit Cards', rating: 3.7, categories: ['Student', 'Salaried', 'Business'] }
+    { name: 'State Bank of India', bank: 'SBI', slug: 'sbi', fee: 'Various', cashback: '11 Credit Cards', rating: 4.2, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Bank of Baroda', bank: 'Bank of Baroda', slug: 'bob', fee: 'Various', cashback: '1 Credit Card', rating: 4.0, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Punjab National Bank', bank: 'PNB', slug: 'pnb', fee: 'Various', cashback: '1 Credit Card', rating: 3.8, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Union Bank of India', bank: 'Union Bank', slug: 'union', fee: 'Various', cashback: '1 Credit Card', rating: 3.9, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Canara Bank', bank: 'Canara Bank', slug: 'canara', fee: 'Various', cashback: '1 Credit Card', rating: 3.9, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Indian Bank', bank: 'Indian Bank', slug: 'indian', fee: 'Various', cashback: '1 Credit Card', rating: 3.7, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Bank of India', bank: 'Bank of India', slug: 'boi', fee: 'Various', cashback: '1 Credit Card', rating: 3.8, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Central Bank of India', bank: 'Central Bank', slug: 'central', fee: 'Various', cashback: '1 Credit Card', rating: 3.6, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'UCO Bank', bank: 'UCO Bank', slug: 'uco', fee: 'Various', cashback: '1 Credit Card', rating: 3.5, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Indian Overseas Bank', bank: 'IOB', slug: 'iob', fee: 'Various', cashback: '1 Credit Card', rating: 3.6, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'Bank of Maharashtra', bank: 'Bank of Maharashtra', slug: 'bom', fee: 'Various', cashback: '1 Credit Card', rating: 3.7, categories: ['Student', 'Salaried', 'Business'] }
   ];
 
   const privateSectorCards = [];
