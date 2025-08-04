@@ -59,7 +59,10 @@ const GoldInvestmentCalculator = () => {
               currentPrice: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateGoldReturns}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateGoldReturns(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

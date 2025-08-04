@@ -67,7 +67,10 @@ const NPSReturnCalculator = () => {
               years: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateNPS}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateNPS(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

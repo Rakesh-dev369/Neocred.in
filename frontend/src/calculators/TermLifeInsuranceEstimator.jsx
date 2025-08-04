@@ -59,7 +59,10 @@ const TermLifeInsuranceEstimator = () => {
               term: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculatePremium}
+            onSubmit={(values, { setSubmitting }) => {
+              calculatePremium(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

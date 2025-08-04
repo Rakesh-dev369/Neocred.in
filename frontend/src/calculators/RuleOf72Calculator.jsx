@@ -85,7 +85,10 @@ const RuleOf72Calculator = () => {
               years: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculate72}
+            onSubmit={(values, { setSubmitting }) => {
+              calculate72(values);
+              setSubmitting(false);
+            }}
           >
             {({ values, isSubmitting }) => (
               <Form className="space-y-4">
