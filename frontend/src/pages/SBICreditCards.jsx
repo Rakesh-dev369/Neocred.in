@@ -84,6 +84,70 @@ export default function SBICreditCards() {
         'For AIRFORCE, ARMY, NAVY & PARAMILITARY'
       ],
       applyLink: 'https://www.sbicard.com/en/personal/credit-cards/defense/shaurya-select-sbi-card.page'
+    },
+    {
+      name: 'IRCTC SBI Card Premier',
+      type: 'Premium Travel Card',
+      category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
+      annualFee: '₹1,499 + GST (Waived on ₹2L spend)',
+      features: [
+        '1,500 Reward Points welcome gift',
+        'Up to 10% Value Back on IRCTC bookings',
+        '3 Reward Points per ₹125 on dining & utilities',
+        'Save 1% on railway & 1.8% on airline bookings',
+        '8 complimentary railway lounge access per year',
+        '₹1L fraud liability & ₹50L air accident cover'
+      ],
+      applyLink: 'https://www.sbicard.com/sprint/irctc-premier'
+    },
+    {
+      name: 'SBI Card MILES PRIME',
+      type: 'Premium Travel Card',
+      category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
+      annualFee: '₹2,999 + GST (Waived on ₹10L spend)',
+      features: [
+        '3,000 Travel Credits welcome gift',
+        '4 Travel Credits per ₹200 on travel spends',
+        'Priority Pass membership worth $99',
+        '4 international + 8 domestic lounge visits',
+        '2.50% foreign currency markup',
+        '₹1 Crore air accident insurance cover'
+      ],
+      applyLink: 'https://www.sbicard.com/sprint/MilesPrime'
+    },
+    {
+      name: 'SBI Card MILES',
+      type: 'Travel Card',
+      category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
+      annualFee: '₹1,499 + GST (Waived on ₹6L spend)',
+      features: [
+        '1,500 Travel Credits welcome gift',
+        '2 Travel Credits per ₹200 on travel spends',
+        'Priority Pass membership worth $99',
+        '4 complimentary domestic lounge visits',
+        '3.00% foreign currency markup',
+        '1% fuel surcharge waiver'
+      ],
+      applyLink: 'https://www.sbicard.com/sprint/Miles'
+    },
+    {
+      name: 'SBI Card Miles Elite',
+      type: 'Elite Travel Card',
+      category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
+      annualFee: '₹4,999 + GST (Waived on ₹15L spend)',
+      features: [
+        '5,000 Travel Credits welcome gift',
+        '6 Travel Credits per ₹200 on travel spends',
+        'Priority Pass membership worth $99',
+        '6 international + 8 domestic lounge visits',
+        '1.99% foreign currency markup',
+        '₹1 Crore air accident insurance cover'
+      ],
+      applyLink: 'https://www.sbicard.com/sprint/MilesElite'
     }
   ];
 
