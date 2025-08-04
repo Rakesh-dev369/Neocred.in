@@ -125,9 +125,17 @@ export default function SBICreditCards() {
                     <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">
                       {card.type}
                     </span>
-                    <span className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
-                      {card.category}
-                    </span>
+                    {card.categories ? (
+                      card.categories.map((cat, idx) => (
+                        <span key={idx} className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
+                          {cat}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
+                        {card.category}
+                      </span>
+                    )}
                   </div>
                   <div className="mb-4">
                     <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Annual Fee</h3>
