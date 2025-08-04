@@ -23,6 +23,12 @@ const BOBCreditCards = lazy(() => import('./pages/BOBCreditCards'));
 const PNBCreditCards = lazy(() => import('./pages/PNBCreditCards'));
 const UnionBankCreditCards = lazy(() => import('./pages/UnionBankCreditCards'));
 const CanaraBankCreditCards = lazy(() => import('./pages/CanaraBankCreditCards'));
+const IndianBankCreditCards = lazy(() => import('./pages/IndianBankCreditCards'));
+const BankOfIndiaCreditCards = lazy(() => import('./pages/BankOfIndiaCreditCards'));
+const CentralBankCreditCards = lazy(() => import('./pages/CentralBankCreditCards'));
+const UCOBankCreditCards = lazy(() => import('./pages/UCOBankCreditCards'));
+const IOBCreditCards = lazy(() => import('./pages/IOBCreditCards'));
+const BankOfMaharashtraCreditCards = lazy(() => import('./pages/BankOfMaharashtraCreditCards'));
 const InsurancePlatforms = lazy(() => import('./pages/InsurancePlatforms'));
 const PersonalLoans = lazy(() => import('./pages/PersonalLoans'));
 const GovernmentSchemes = lazy(() => import('./pages/GovernmentSchemes'));
@@ -62,6 +68,12 @@ function App() {
           <Route path="/credit-cards/pnb" element={<MainLayout><PNBCreditCards /></MainLayout>} />
           <Route path="/credit-cards/union" element={<MainLayout><UnionBankCreditCards /></MainLayout>} />
           <Route path="/credit-cards/canara" element={<MainLayout><CanaraBankCreditCards /></MainLayout>} />
+          <Route path="/credit-cards/indian" element={<MainLayout><IndianBankCreditCards /></MainLayout>} />
+          <Route path="/credit-cards/boi" element={<MainLayout><BankOfIndiaCreditCards /></MainLayout>} />
+          <Route path="/credit-cards/central" element={<MainLayout><CentralBankCreditCards /></MainLayout>} />
+          <Route path="/credit-cards/uco" element={<MainLayout><UCOBankCreditCards /></MainLayout>} />
+          <Route path="/credit-cards/iob" element={<MainLayout><IOBCreditCards /></MainLayout>} />
+          <Route path="/credit-cards/bom" element={<MainLayout><BankOfMaharashtraCreditCards /></MainLayout>} />
           <Route path="/insurance-platforms" element={<MainLayout><InsurancePlatforms /></MainLayout>} />
           <Route path="/personal-loans" element={<MainLayout><PersonalLoans /></MainLayout>} />
           <Route path="/government-schemes" element={<MainLayout><GovernmentSchemes /></MainLayout>} />
