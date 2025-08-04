@@ -34,13 +34,20 @@ export default function CreditCards() {
       default: cards = allCards;
     }
     
-    return cards.filter(card => {
+    console.log('Category Filter:', categoryFilter);
+    console.log('Cards before filter:', cards.length);
+    
+    const filtered = cards.filter(card => {
       const matchesSearch = card.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                            card.bank.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = categoryFilter === 'all' || 
                              (card.categories && card.categories.includes(categoryFilter));
+      console.log(`Card: ${card.name}, Categories: ${card.categories}, Matches: ${matchesCategory}`);
       return matchesSearch && matchesCategory;
     });
+    
+    console.log('Cards after filter:', filtered.length);
+    return filtered;
   };
 
   return (
