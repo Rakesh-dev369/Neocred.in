@@ -310,7 +310,21 @@ export default function Home() {
       <section className="py-8 bg-gradient-to-r from-green-100 to-blue-100 dark:from-green-900/20 dark:to-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl">
-            <div className="flex items-center justify-center gap-4 text-sm">
+            {/* Mobile Layout */}
+            <div className="block md:hidden">
+              <div className="flex items-center justify-center gap-2 text-sm mb-2">
+                <span className="text-green-400 animate-pulse">•</span>
+                <span className="text-gray-700 dark:text-white/80 font-medium">Live Activity</span>
+              </div>
+              <div className="text-center space-y-1 text-xs">
+                <div className="text-gray-900 dark:text-white">Priya earned 25 points from SIP Calculator</div>
+                <div className="text-gray-900 dark:text-white">Rahul completed Budget Planning</div>
+                <div className="text-gray-900 dark:text-white">Anita redeemed Premium Features</div>
+              </div>
+            </div>
+            
+            {/* Desktop Layout */}
+            <div className="hidden md:flex items-center justify-center gap-4 text-sm">
               <span className="text-green-400 animate-pulse">•</span>
               <span className="text-gray-700 dark:text-white/80">Live Activity:</span>
               <span className="text-gray-900 dark:text-white">Priya just earned 25 points from SIP Calculator</span>
