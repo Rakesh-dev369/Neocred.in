@@ -37,6 +37,53 @@ export default function SBICreditCards() {
         '4 complimentary railway lounge access per year'
       ],
       applyLink: 'https://www.sbicard.com/sprint/irctcRuPay'
+    },
+    {
+      name: 'SimplySAVE SBI Card',
+      type: 'Rewards Card',
+      category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
+      annualFee: '₹499 (Waived if spend ₹1L annually)',
+      features: [
+        '2,000 bonus Reward Points on ₹2K spend in 60 days',
+        '10x Reward Points on Dining, Movies, Grocery',
+        '1% fuel surcharge waiver (₹500-3000)',
+        'Annual fee reversal on ₹1L annual spend',
+        '1 Reward Point per ₹150 spent',
+        'Reward Points can pay outstanding balance'
+      ],
+      applyLink: 'https://www.sbicard.com/sprint/simplySAVERupay'
+    },
+    {
+      name: 'SimplyCLICK SBI Card',
+      type: 'Online Card',
+      category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
+      annualFee: '₹499 (Waived if spend ₹1L annually)',
+      features: [
+        'Amazon gift card worth ₹500 on fee payment',
+        '10x Reward Points on partner online spends',
+        '5x Reward Points on all other online spends',
+        'e-Vouchers worth ₹2K each at 1L & 2L spends',
+        '1% fuel surcharge waiver (₹500-3000)',
+        'Contactless payment technology'
+      ],
+      applyLink: 'https://www.sbicard.com/sprint/simplyClick'
+    },
+    {
+      name: 'Shaurya Select SBI Card',
+      type: 'Defense Card',
+      category: 'Business',
+      annualFee: 'First year free, then ₹1,499',
+      features: [
+        '10 Reward Points per ₹100 on Dining, Movies, Grocery',
+        '2 Reward Points per ₹100 on other spends',
+        'Pizza Hut voucher ₹500 on ₹50K quarterly spend',
+        '₹10L Personal Accident Insurance Cover',
+        '4 complimentary domestic airport lounge visits',
+        'For AIRFORCE, ARMY, NAVY & PARAMILITARY'
+      ],
+      applyLink: 'https://www.sbicard.com/en/personal/credit-cards/defense/shaurya-select-sbi-card.page'
     }
   ];
 
