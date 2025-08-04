@@ -8,9 +8,9 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/[name]-[hash]-v2.js',
-        chunkFileNames: 'assets/[name]-[hash]-v2.js',
-        assetFileNames: 'assets/[name]-[hash]-v2.[ext]',
+        entryFileNames: 'assets/[name]-[hash]-v3.js',
+        chunkFileNames: 'assets/[name]-[hash]-v3.js',
+        assetFileNames: 'assets/[name]-[hash]-v3.[ext]',
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom']
