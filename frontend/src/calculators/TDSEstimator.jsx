@@ -72,7 +72,10 @@ const TDSEstimator = () => {
               tdsRate: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateTDS}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateTDS(values);
+              setSubmitting(false);
+            }}
           >
             {({ values, setFieldValue, isSubmitting }) => (
               <Form className="space-y-4">

@@ -83,7 +83,10 @@ const EPFMaturityCalculator = () => {
               currentAge: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateEPF}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateEPF(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

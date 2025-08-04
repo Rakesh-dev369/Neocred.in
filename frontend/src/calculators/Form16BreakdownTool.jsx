@@ -64,7 +64,10 @@ const Form16BreakdownTool = () => {
               taxPaid: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={generateBreakdown}
+            onSubmit={(values, { setSubmitting }) => {
+              generateBreakdown(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

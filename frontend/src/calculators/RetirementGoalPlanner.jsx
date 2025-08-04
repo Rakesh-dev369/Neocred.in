@@ -70,7 +70,10 @@ const RetirementGoalPlanner = () => {
               currentAge: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateRetirementPlan}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateRetirementPlan(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

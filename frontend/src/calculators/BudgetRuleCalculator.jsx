@@ -50,7 +50,10 @@ const BudgetRuleCalculator = () => {
               income: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateBudget}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateBudget(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

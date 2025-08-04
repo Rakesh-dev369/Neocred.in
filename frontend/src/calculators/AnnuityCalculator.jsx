@@ -76,7 +76,10 @@ const AnnuityCalculator = () => {
               payoutType: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateAnnuity}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateAnnuity(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

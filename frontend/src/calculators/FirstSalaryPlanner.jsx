@@ -53,7 +53,10 @@ const FirstSalaryPlanner = () => {
               salary: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculatePlan}
+            onSubmit={(values, { setSubmitting }) => {
+              calculatePlan(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

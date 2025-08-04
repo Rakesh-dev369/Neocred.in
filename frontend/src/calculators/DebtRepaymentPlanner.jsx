@@ -104,7 +104,10 @@ const DebtRepaymentPlanner = () => {
           monthlyBudget: ''
         }}
         validationSchema={validationSchema}
-        onSubmit={calculateDebtPlan}
+        onSubmit={(values, { setSubmitting }) => {
+          calculateDebtPlan(values);
+          setSubmitting(false);
+        }}
       >
         {({ values, isSubmitting }) => (
           <Form className="space-y-6">

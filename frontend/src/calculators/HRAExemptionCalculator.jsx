@@ -66,7 +66,10 @@ const HRAExemptionCalculator = () => {
               metroCity: false
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateHRA}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateHRA(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

@@ -50,7 +50,10 @@ const EmergencyFundCalculator = () => {
               months: 6
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateEmergencyFund}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateEmergencyFund(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
