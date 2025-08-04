@@ -7,18 +7,20 @@ export default function CreditCards() {
   const navigate = useNavigate();
 
   const publicSectorCards = [
-    { name: 'SBI SimplyCLICK', bank: 'SBI', fee: '₹499', cashback: '10x on online', rating: 4.2 },
-    { name: 'BOB Premier', bank: 'Bank of Baroda', fee: '₹999', cashback: '5% on dining', rating: 4.0 },
-    { name: 'PNB RuPay Platinum', bank: 'PNB', fee: '₹299', cashback: '2% on all spends', rating: 3.8 },
-    { name: 'Canara Platinum', bank: 'Canara Bank', fee: '₹750', cashback: '1% cashback', rating: 3.9 }
+    { name: 'State Bank of India', bank: 'SBI', slug: 'sbi', fee: 'Various', cashback: 'Credit Cards', rating: 4.2 },
+    { name: 'Bank of Baroda', bank: 'Bank of Baroda', slug: 'bob', fee: 'Various', cashback: 'Credit Cards', rating: 4.0 },
+    { name: 'Punjab National Bank', bank: 'PNB', slug: 'pnb', fee: 'Various', cashback: 'Credit Cards', rating: 3.8 },
+    { name: 'Union Bank of India', bank: 'Union Bank', slug: 'union', fee: 'Various', cashback: 'Credit Cards', rating: 3.9 },
+    { name: 'Canara Bank', bank: 'Canara Bank', slug: 'canara', fee: 'Various', cashback: 'Credit Cards', rating: 3.9 },
+    { name: 'Indian Bank', bank: 'Indian Bank', slug: 'indian', fee: 'Various', cashback: 'Credit Cards', rating: 3.7 },
+    { name: 'Bank of India', bank: 'Bank of India', slug: 'boi', fee: 'Various', cashback: 'Credit Cards', rating: 3.8 },
+    { name: 'Central Bank of India', bank: 'Central Bank', slug: 'central', fee: 'Various', cashback: 'Credit Cards', rating: 3.6 },
+    { name: 'UCO Bank', bank: 'UCO Bank', slug: 'uco', fee: 'Various', cashback: 'Credit Cards', rating: 3.5 },
+    { name: 'Indian Overseas Bank', bank: 'IOB', slug: 'iob', fee: 'Various', cashback: 'Credit Cards', rating: 3.6 },
+    { name: 'Bank of Maharashtra', bank: 'Bank of Maharashtra', slug: 'bom', fee: 'Various', cashback: 'Credit Cards', rating: 3.7 }
   ];
 
-  const privateSectorCards = [
-    { name: 'HDFC Regalia', bank: 'HDFC Bank', fee: '₹2,500', cashback: '4x on dining', rating: 4.5 },
-    { name: 'ICICI Amazon Pay', bank: 'ICICI Bank', fee: '₹500', cashback: '5% on Amazon', rating: 4.3 },
-    { name: 'Axis Magnus', bank: 'Axis Bank', fee: '₹12,500', cashback: '25x on travel', rating: 4.6 },
-    { name: 'Kotak 811', bank: 'Kotak Bank', fee: '₹199', cashback: '4% on UPI', rating: 4.1 }
-  ];
+  const privateSectorCards = [];
 
   const allCards = [...publicSectorCards, ...privateSectorCards];
 
@@ -104,8 +106,11 @@ export default function CreditCards() {
               <p className="text-sm text-green-600 dark:text-green-400 mb-4">{card.cashback}</p>
               
               <div className="space-y-2">
-                <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors">
-                  Apply Now
+                <button 
+                  onClick={() => navigate(`/credit-cards/${card.slug}`)}
+                  className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+                >
+                  View Cards
                 </button>
                 <button className="w-full border border-blue-500 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 py-2 px-4 rounded-lg transition-colors">
                   Compare
