@@ -24,10 +24,18 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to={ROUTES.HOME} className="flex-shrink-0 p-2 sm:p-3">
+              {/* Mobile: Show just N */}
+              <div className="block md:hidden">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center hover:scale-105 transition-all duration-200">
+                  <span className="text-white font-bold text-xl">N</span>
+                </div>
+              </div>
+              
+              {/* Desktop: Show full logo */}
               <img 
                 src="/logo.png" 
                 alt="NeoCred" 
-                className="h-10 w-auto max-w-[160px] sm:h-12 sm:max-w-[200px] md:h-14 md:max-w-[240px] hover:scale-105 transition-all duration-200 drop-shadow-sm" 
+                className="hidden md:block h-10 w-auto max-w-[160px] sm:h-12 sm:max-w-[200px] md:h-14 md:max-w-[240px] hover:scale-105 transition-all duration-200 drop-shadow-sm" 
                 style={{ 
                   imageRendering: 'crisp-edges',
                   filter: 'contrast(1.2) brightness(1.1) saturate(1.1)',
