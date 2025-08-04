@@ -52,8 +52,8 @@ function App() {
           <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
           <Route path="/news" element={<MainLayout><News /></MainLayout>} />
           <Route path="/explore" element={<MainLayout><Explore /></MainLayout>} />
-          {/* <Route path="/credit-cards" element={<MainLayout><CreditCards /></MainLayout>} />
-          <Route path="/credit-cards/sbi" element={<MainLayout><SBICreditCards /></MainLayout>} /> */}
+          <Route path="/credit-cards" element={<MainLayout><CreditCards /></MainLayout>} />
+          <Route path="/credit-cards/sbi" element={<MainLayout><SBICreditCards /></MainLayout>} />
           <Route path="/insurance-platforms" element={<MainLayout><InsurancePlatforms /></MainLayout>} />
           <Route path="/personal-loans" element={<MainLayout><PersonalLoans /></MainLayout>} />
           <Route path="/government-schemes" element={<MainLayout><GovernmentSchemes /></MainLayout>} />
