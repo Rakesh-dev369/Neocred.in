@@ -551,7 +551,7 @@ export default function Tools() {
                         <span className="text-gray-600 dark:text-white/70">Loading calculator...</span>
                       </div>
                     }>
-                      <selectedTool.component />
+                      <selectedTool.component key={selectedTool.name + Date.now()} />
                     </Suspense>
                   ) : (
                     <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl text-center py-12">
