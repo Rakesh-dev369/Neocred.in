@@ -52,7 +52,10 @@ const MutualFundReturnTracker = () => {
               currentValue: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateReturns}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateReturns(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

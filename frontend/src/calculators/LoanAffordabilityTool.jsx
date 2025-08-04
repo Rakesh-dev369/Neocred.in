@@ -60,7 +60,10 @@ const LoanAffordabilityTool = () => {
               years: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateAffordability}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateAffordability(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">

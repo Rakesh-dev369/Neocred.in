@@ -59,7 +59,10 @@ const LoanEligibilityChecker = () => {
               expenses: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateEligibility}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateEligibility(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting, values }) => (
               <Form className="space-y-4">

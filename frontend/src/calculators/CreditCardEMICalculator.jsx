@@ -59,7 +59,10 @@ const CreditCardEMICalculator = () => {
               months: ''
             }}
             validationSchema={validationSchema}
-            onSubmit={calculateEMI}
+            onSubmit={(values, { setSubmitting }) => {
+              calculateEMI(values);
+              setSubmitting(false);
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
