@@ -19,6 +19,8 @@ const News = lazy(() => import('./pages/News'));
 const Explore = lazy(() => import('./pages/Explore'));
 const CreditCards = lazy(() => import('./pages/CreditCards'));
 const SBICreditCards = lazy(() => import('./pages/SBICreditCards'));
+const BOBCreditCards = lazy(() => import('./pages/BOBCreditCards'));
+const PNBCreditCards = lazy(() => import('./pages/PNBCreditCards'));
 const InsurancePlatforms = lazy(() => import('./pages/InsurancePlatforms'));
 const PersonalLoans = lazy(() => import('./pages/PersonalLoans'));
 const GovernmentSchemes = lazy(() => import('./pages/GovernmentSchemes'));
@@ -54,6 +56,8 @@ function App() {
           <Route path="/explore" element={<MainLayout><Explore /></MainLayout>} />
           <Route path="/credit-cards" element={<MainLayout><CreditCards /></MainLayout>} />
           <Route path="/credit-cards/sbi" element={<MainLayout><SBICreditCards /></MainLayout>} />
+          <Route path="/credit-cards/bob" element={<MainLayout><BOBCreditCards /></MainLayout>} />
+          <Route path="/credit-cards/pnb" element={<MainLayout><PNBCreditCards /></MainLayout>} />
           <Route path="/insurance-platforms" element={<MainLayout><InsurancePlatforms /></MainLayout>} />
           <Route path="/personal-loans" element={<MainLayout><PersonalLoans /></MainLayout>} />
           <Route path="/government-schemes" element={<MainLayout><GovernmentSchemes /></MainLayout>} />
