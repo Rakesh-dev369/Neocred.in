@@ -175,7 +175,7 @@ export default function SBICreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>

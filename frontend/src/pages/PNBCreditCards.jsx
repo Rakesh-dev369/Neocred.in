@@ -83,7 +83,7 @@ export default function PNBCreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>

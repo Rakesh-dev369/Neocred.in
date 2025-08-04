@@ -83,7 +83,7 @@ export default function UCOBankCreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>

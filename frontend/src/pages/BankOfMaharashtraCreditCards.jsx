@@ -83,7 +83,7 @@ export default function BankOfMaharashtraCreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>

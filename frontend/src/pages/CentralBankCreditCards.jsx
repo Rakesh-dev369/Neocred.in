@@ -83,7 +83,7 @@ export default function CentralBankCreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>

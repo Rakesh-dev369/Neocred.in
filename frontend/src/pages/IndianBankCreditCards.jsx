@@ -83,7 +83,7 @@ export default function IndianBankCreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>

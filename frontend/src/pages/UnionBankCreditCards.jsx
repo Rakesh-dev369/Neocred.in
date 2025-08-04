@@ -83,7 +83,7 @@ export default function UnionBankCreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>

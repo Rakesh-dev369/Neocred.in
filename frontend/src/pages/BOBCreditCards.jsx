@@ -89,7 +89,7 @@ export default function BOBCreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>

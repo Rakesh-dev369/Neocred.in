@@ -83,7 +83,7 @@ export default function IOBCreditCards() {
                 </div>
               </div>
             </div>
-          ))
+          ))}
         </div>
       </div>
     </div>
