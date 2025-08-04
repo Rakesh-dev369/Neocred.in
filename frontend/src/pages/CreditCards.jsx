@@ -49,11 +49,11 @@ export default function CreditCards() {
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <button 
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/explore')}
             className="flex items-center text-white/80 hover:text-white mb-4 transition-colors"
           >
             <ArrowLeftIcon className="h-5 w-5 mr-2" />
-            Back
+            Back to Explore
           </button>
           <div className="text-center">
             <CreditCardIcon className="h-12 w-12 mx-auto mb-3" />
