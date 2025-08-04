@@ -148,6 +148,38 @@ export default function SBICreditCards() {
         '₹1 Crore air accident insurance cover'
       ],
       applyLink: 'https://www.sbicard.com/sprint/MilesElite'
+    },
+    {
+      name: 'CASHBACK SBI Card',
+      type: 'Cashback Card',
+      category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
+      annualFee: '₹999 (Waived on ₹2L spend)',
+      features: [
+        '5% Cashback on online spends',
+        '1% Cashback on offline spends',
+        'Auto-credited cashback within 2 working days',
+        '1% fuel surcharge waiver',
+        'Renewal fee reversal on ₹2L annual spend',
+        'No merchant restrictions on online cashback'
+      ],
+      applyLink: 'https://www.sbicard.com/sprint/c/cashback?CS=sbic&GEMID1=cashback_hb&GEMID2=org_hp'
+    },
+    {
+      name: 'BPCL SBI Card OCTANE',
+      type: 'Fuel Card',
+      category: 'Student',
+      categories: ['Student', 'Salaried', 'Business'],
+      annualFee: '₹1,499 + GST (Waived on ₹2L spend)',
+      features: [
+        '6,000 bonus reward points welcome gift',
+        '7.25% Value back on BPCL fuel purchases',
+        '25 Reward Points per ₹100 at BPCL stations',
+        '10 Reward Points per ₹100 on dining & grocery',
+        '4 complimentary domestic lounge visits',
+        '₹1L fraud liability cover'
+      ],
+      applyLink: 'https://www.sbicard.com/sprint/bpclOctane'
     }
   ];
 
