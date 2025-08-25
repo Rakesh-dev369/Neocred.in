@@ -29,6 +29,7 @@ const CentralBankCreditCards = lazy(() => import('./pages/CentralBankCreditCards
 const UCOBankCreditCards = lazy(() => import('./pages/UCOBankCreditCards'));
 const IOBCreditCards = lazy(() => import('./pages/IOBCreditCards'));
 const BankOfMaharashtraCreditCards = lazy(() => import('./pages/BankOfMaharashtraCreditCards'));
+const ExpertConsultation = lazy(() => import('./pages/ExpertConsultation'));
 const InsurancePlatforms = lazy(() => import('./pages/InsurancePlatforms'));
 const PersonalLoans = lazy(() => import('./pages/PersonalLoans'));
 const GovernmentSchemes = lazy(() => import('./pages/GovernmentSchemes'));
@@ -80,6 +81,7 @@ function App() {
           <Route path="/finance-jobs" element={<MainLayout><FinanceJobs /></MainLayout>} />
           <Route path="/business-tools" element={<MainLayout><BusinessTools /></MainLayout>} />
           <Route path="/rewards" element={<MainLayout><Rewards /></MainLayout>} />
+          <Route path="/expert-consultation" element={<MainLayout><ExpertConsultation /></MainLayout>} />
           <Route path="/pan-check" element={<MainLayout><PanCheck /></MainLayout>} />
           <Route path="/loan-check" element={<MainLayout><LoanCheck /></MainLayout>} />
           <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />

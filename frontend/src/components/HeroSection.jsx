@@ -69,6 +69,13 @@ export default function HeroSection() {
               <PlayIcon className="h-5 w-5" />
               Try Our Tools
             </Link>
+            
+            <Link
+              to={ROUTES.EXPERT_CONSULTATION}
+              className="inline-flex items-center gap-2 text-lg px-8 py-3 border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white rounded-lg font-medium transition-all duration-300 hover:scale-105"
+            >
+              📞 Expert Consultation
+            </Link>
           </div>
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -15,7 +15,7 @@ import FeatureCard from '../components/FeatureCard';
 import TestimonialCard from '../components/TestimonialCard';
 
 
-import { ROUTES } from '../utils/constants';
+import { ROUTES, TOOL_ROUTES } from '../utils/constants';
 import { TESTIMONIALS } from '../constants/appContent';
 
 export default function Home() {
@@ -153,33 +153,37 @@ export default function Home() {
                 description: 'Plan your systematic investments',
                 popularity: '98%',
                 icon: '📈',
-                color: 'from-blue-500 to-blue-600'
+                color: 'from-blue-500 to-blue-600',
+                route: TOOL_ROUTES.SIP_CALCULATOR
               },
               {
                 title: 'FD Calculator',
                 description: 'Calculate fixed deposit returns',
                 popularity: '95%',
                 icon: '🏦',
-                color: 'from-green-500 to-green-600'
+                color: 'from-green-500 to-green-600',
+                route: TOOL_ROUTES.FD_CALCULATOR
               },
               {
                 title: 'Budget Planner',
                 description: 'Manage monthly expenses',
                 popularity: '92%',
                 icon: '💰',
-                color: 'from-purple-500 to-purple-600'
+                color: 'from-purple-500 to-purple-600',
+                route: TOOL_ROUTES.BUDGET_PLANNER
               },
               {
                 title: 'Home Loan EMI',
                 description: 'Calculate loan EMI & interest',
                 popularity: '90%',
                 icon: '🏠',
-                color: 'from-orange-500 to-orange-600'
+                color: 'from-orange-500 to-orange-600',
+                route: TOOL_ROUTES.HOME_LOAN_EMI
               }
             ].map((tool, index) => (
               <Link
                 key={index}
-                to={ROUTES.TOOLS}
+                to={tool.route}
                 className="bg-white dark:bg-white/5 p-6 rounded-xl hover:scale-105 transition-all duration-300 cursor-pointer group block"
               >
                 <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${tool.color} flex items-center justify-center mb-4`}>
@@ -229,7 +233,7 @@ export default function Home() {
                 <div className="text-3xl mb-3">📚</div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Continue Learning</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">Pick up where you left off in your financial education journey.</p>
-                <Link to={ROUTES.LEARN} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm">
+                <Link to={`${ROUTES.LEARN}#continue`} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm">
                   Resume Learning →
                 </Link>
               </div>
@@ -247,7 +251,7 @@ export default function Home() {
                 <div className="text-3xl mb-3">🚀</div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Recommended Tools</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">Based on your activity, try these advanced calculators next.</p>
-                <Link to={ROUTES.TOOLS} className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium text-sm">
+                <Link to={`${ROUTES.TOOLS}?recommended=true`} className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium text-sm">
                   Explore Tools →
                 </Link>
               </div>

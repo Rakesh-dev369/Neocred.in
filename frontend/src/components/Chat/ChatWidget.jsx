@@ -66,9 +66,9 @@ const ChatWidget = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 md:bottom-20 right-4 w-full max-w-sm md:w-80 h-96 bg-gray-900 border border-gray-700 rounded-lg shadow-2xl flex flex-col z-50 mx-4 md:mx-0">
+    <div className="fixed bottom-4 md:bottom-20 right-4 w-full max-w-sm md:w-80 h-96 bg-gray-900/80 backdrop-blur-sm border border-gray-700/30 rounded-lg shadow-lg flex flex-col z-40 mx-4 md:mx-0">
       {/* Header */}
-      <div className="bg-blue-600 text-white p-4 rounded-t-lg flex items-center justify-between">
+      <div className="bg-blue-600/70 backdrop-blur-sm text-white p-4 rounded-t-lg flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
             🤖
@@ -87,7 +87,7 @@ const ChatWidget = ({ isOpen, onClose }) => {
       </div>
       
       {/* Context Display */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 px-4 py-2 text-xs text-center border-b border-gray-700">
+      <div className="bg-blue-50/60 dark:bg-blue-900/20 backdrop-blur-sm text-blue-800 dark:text-blue-200 px-4 py-2 text-xs text-center border-b border-gray-700/30">
         💬 You're chatting with FinBot - Ask me anything about finance!
       </div>
 

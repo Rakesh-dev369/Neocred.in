@@ -154,8 +154,14 @@ export default function Tools() {
     const urlParams = new URLSearchParams(window.location.search);
     const toolName = urlParams.get('tool');
     const fromChat = urlParams.get('from') === 'chat' || document.referrer.includes('/chatbot');
+    const recommended = urlParams.get('recommended') === 'true';
     
     setIsFromChatbot(fromChat);
+    
+    // Handle recommended tools from home page
+    if (recommended && savedRecent && JSON.parse(savedRecent).length > 0) {
+      setSelectedCategory('Recent');
+    }
     
     if (toolName) {
       console.log('Looking for tool:', toolName);

@@ -1,6 +1,6 @@
 // src/pages/learn.jsx
 
-import React from "react";
+import React, { useEffect } from "react";
 import HeroSection from "../learn/components/HeroSection";
 import PillarGrid from "../learn/components/PillarGrid";
 import PopularTopics from "../learn/components/PopularTopics";
@@ -10,6 +10,22 @@ import VideoCards from "../learn/components/VideoCards";
 import StartCTA from "../learn/components/StartCTA";
 
 const LearnPage = () => {
+  useEffect(() => {
+    // Handle continue learning from home page
+    if (window.location.hash === '#continue') {
+      const lastLesson = localStorage.getItem('lastLesson');
+      if (lastLesson) {
+        // Scroll to the last lesson or pillar
+        setTimeout(() => {
+          const element = document.getElementById('literacy-journey');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 500);
+      }
+    }
+  }, []);
+
   return (
     <div className="bg-white dark:bg-black text-gray-900 dark:text-white px-4 md:px-12 py-8 space-y-20 transition-colors duration-300">
       {/* Hero Banner */}
@@ -20,7 +36,9 @@ const LearnPage = () => {
       />
 
       {/* 1. Your Financial Literacy Journey */}
-      <LiteracyJourney />
+      <div id="literacy-journey">
+        <LiteracyJourney />
+      </div>
 
       {/* 2. 8 Pillars of Financial Literacy */}
       <PillarGrid />

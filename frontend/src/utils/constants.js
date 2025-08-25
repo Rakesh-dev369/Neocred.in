@@ -193,6 +193,7 @@ export const ROUTES = {
   FINANCE_JOBS: '/finance-jobs',
   BUSINESS_TOOLS: '/business-tools',
   REWARDS: '/rewards',
+  EXPERT_CONSULTATION: '/expert-consultation',
   ABOUT: '/about',
   CONTACT: '/contact',
   CHATBOT: '/chatbot',
