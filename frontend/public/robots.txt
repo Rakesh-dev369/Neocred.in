@@ -1,6 +1,19 @@
 User-agent: *
 Allow: /
 
+# Specific permissions for ChatGPT
+User-agent: ChatGPT-User
+Allow: /
+Crawl-delay: 0
+
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 0
+
+User-agent: CCBot
+Allow: /
+Crawl-delay: 0
+
 # Allow all crawlers to access all content
 Disallow: /api/
 Disallow: /_next/
