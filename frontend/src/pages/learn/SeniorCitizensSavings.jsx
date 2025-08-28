@@ -175,7 +175,7 @@ export default function SeniorCitizensSavings() {
                   <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                     <li>• Age restriction (60+ years only)</li>
                     <li>• Interest fully taxable</li>
-                    <li>• TDS applicable if interest > ₹50,000</li>
+                    <li>• TDS applicable if interest &gt; ₹50,000</li>
                     <li>• Maximum limit of ₹30 lakh</li>
                     <li>• Penalty for early closure</li>
                     <li>• One-time investment only</li>
@@ -247,7 +247,7 @@ export default function SeniorCitizensSavings() {
                   <p className="text-red-800 dark:text-red-200"><strong>Interest:</strong> Fully taxable as income</p>
                 </div>
                 <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <p className="text-blue-800 dark:text-blue-200"><strong>TDS:</strong> 10% if interest > ₹50,000</p>
+                  <p className="text-blue-800 dark:text-blue-200"><strong>TDS:</strong> 10% if interest &gt; ₹50,000</p>
                 </div>
               </div>
             </div>

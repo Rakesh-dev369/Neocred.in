@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChartBarIcon, CalculatorIcon, ArrowRightIcon, TrendingUpIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ChartBarIcon, CalculatorIcon, ArrowRightIcon, ArrowTrendingUpIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 export default function SIP() {
   const sipBenefits = [
@@ -426,19 +426,19 @@ export default function SIP() {
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">SIP Pro Tips</h3>
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <TrendingUpIcon className="w-4 h-4 text-green-500 mr-2 mt-1" />
+                  <ArrowTrendingUpIcon className="w-4 h-4 text-green-500 mr-2 mt-1" />
                   <p className="text-sm text-gray-600 dark:text-gray-300">Start SIP on 1st or 5th of month for better averaging</p>
                 </div>
                 <div className="flex items-start">
-                  <TrendingUpIcon className="w-4 h-4 text-green-500 mr-2 mt-1" />
+                  <ArrowTrendingUpIcon className="w-4 h-4 text-green-500 mr-2 mt-1" />
                   <p className="text-sm text-gray-600 dark:text-gray-300">Increase SIP by 10-15% annually (step-up SIP)</p>
                 </div>
                 <div className="flex items-start">
-                  <TrendingUpIcon className="w-4 h-4 text-green-500 mr-2 mt-1" />
+                  <ArrowTrendingUpIcon className="w-4 h-4 text-green-500 mr-2 mt-1" />
                   <p className="text-sm text-gray-600 dark:text-gray-300">Don't stop SIP during market downturns</p>
                 </div>
                 <div className="flex items-start">
-                  <TrendingUpIcon className="w-4 h-4 text-green-500 mr-2 mt-1" />
+                  <ArrowTrendingUpIcon className="w-4 h-4 text-green-500 mr-2 mt-1" />
                   <p className="text-sm text-gray-600 dark:text-gray-300">Review and rebalance portfolio annually</p>
                 </div>
               </div>
