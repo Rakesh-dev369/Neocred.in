@@ -1,16 +1,196 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, CheckCircleIcon, PlayIcon, CalculatorIcon, TrophyIcon, ChatBubbleLeftRightIcon, BookOpenIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 
 export default function PersonalFinance() {
+  const [activeLevel, setActiveLevel] = useState('beginner');
+  const [completedTopics, setCompletedTopics] = useState([]);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [quizScore, setQuizScore] = useState(null);
+  const [currentQuiz, setCurrentQuiz] = useState(0);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const learningLevels = {
+    beginner: {
+      title: 'Beginner Level',
+      description: 'Start your financial journey with basics',
+      topics: [
+        {
+          id: 'budgeting-101',
+          title: 'Budgeting 101',
+          description: 'Learn to track income and expenses',
+          duration: '10 min read',
+          tools: ['Budget Planner', '50/30/20 Rule Calculator']
+        },
+        {
+          id: 'savings-accounts',
+          title: 'Savings Accounts 2025',
+          description: 'Best savings accounts with 7-8% interest',
+          duration: '8 min read',
+          tools: ['Savings Calculator']
+        },
+        {
+          id: 'emergency-fund',
+          title: 'Emergency Fund Basics',
+          description: 'Build 6 months expense safety net',
+          duration: '12 min read',
+          tools: ['Emergency Fund Calculator']
+        }
+      ]
+    },
+    intermediate: {
+      title: 'Intermediate Level',
+      description: 'Manage debt and build credit',
+      topics: [
+        {
+          id: 'debt-management',
+          title: 'Debt Management Strategy',
+          description: 'Snowball vs Avalanche methods',
+          duration: '15 min read',
+          tools: ['Debt Repayment Planner']
+        },
+        {
+          id: 'credit-score',
+          title: 'Credit Score Mastery',
+          description: 'Build 750+ CIBIL score in 2025',
+          duration: '12 min read',
+          tools: ['Credit Score Simulator']
+        },
+        {
+          id: 'first-investments',
+          title: 'First Investments (FD, RD, PPF)',
+          description: 'Safe investment options for beginners',
+          duration: '18 min read',
+          tools: ['FD Calculator', 'RD Calculator', 'PPF Calculator']
+        }
+      ]
+    },
+    advanced: {
+      title: 'Advanced Level',
+      description: 'Wealth building and optimization',
+      topics: [
+        {
+          id: 'retirement-planning',
+          title: 'Retirement Planning 2025',
+          description: 'NPS, EPF, and retirement corpus building',
+          duration: '20 min read',
+          tools: ['Retirement Goal Planner', 'NPS Calculator']
+        },
+        {
+          id: 'wealth-building',
+          title: 'Wealth Building Strategies',
+          description: 'SIP, asset allocation, and compounding',
+          duration: '25 min read',
+          tools: ['SIP Calculator', 'Goal Based Investment']
+        },
+        {
+          id: 'tax-optimization',
+          title: 'Tax-efficient Saving (2025)',
+          description: '80C, ELSS, and tax planning strategies',
+          duration: '22 min read',
+          tools: ['HRA Exemption', 'Form 16 Breakdown']
+        }
+      ]
+    }
+  };
+
+  const quizQuestions = [
+    {
+      question: 'What percentage of income should go to needs in the 50/30/20 rule?',
+      options: ['30%', '50%', '20%', '40%'],
+      correct: 1
+    },
+    {
+      question: 'How many months of expenses should an emergency fund cover?',
+      options: ['1-2 months', '3-6 months', '12 months', '24 months'],
+      correct: 1
+    },
+    {
+      question: 'What is a good CIBIL score in India?',
+      options: ['600+', '650+', '700+', '750+'],
+      correct: 3
+    }
+  ];
+
+  const caseStudies = [
+    {
+      name: 'Ravi - ₹30k Salary',
+      age: '25, Software Developer',
+      challenge: 'Managing expenses and starting investments',
+      solution: '50/30/20 rule + ₹2k SIP + ₹3k emergency fund',
+      result: '₹50k saved in first year, started investment journey'
+    },
+    {
+      name: 'Priya - ₹45k Salary',
+      age: '28, Marketing Manager',
+      challenge: 'Credit card debt and no savings',
+      solution: 'Debt snowball method + automated savings',
+      result: 'Cleared ₹80k debt in 18 months, built ₹1L emergency fund'
+    }
+  ];
+
+  const commonMistakes = [
+    {
+      mistake: 'Living on Credit Cards',
+      impact: 'High interest (36-48% annually)',
+      solution: 'Use debit card, pay full amount monthly'
+    },
+    {
+      mistake: 'No Emergency Fund',
+      impact: 'Forced to take loans during crisis',
+      solution: 'Build 6 months expenses in savings account'
+    },
+    {
+      mistake: 'Ignoring Insurance',
+      impact: 'Medical bills can wipe out savings',
+      solution: 'Health insurance + term life insurance'
+    }
+  ];
+
+  const starterChecklist = [
+    { item: 'Open high-interest savings account (7-8%)', done: false },
+    { item: 'Set up automated budget tracking', done: false },
+    { item: 'Build ₹10k emergency fund first', done: false },
+    { item: 'Get health insurance coverage', done: false },
+    { item: 'Start ₹1000 monthly SIP', done: false },
+    { item: 'Check and improve CIBIL score', done: false },
+    { item: 'Plan for tax saving (80C)', done: false }
+  ];
+
+  const markTopicComplete = (topicId) => {
+    if (!completedTopics.includes(topicId)) {
+      setCompletedTopics([...completedTopics, topicId]);
+    }
+  };
+
+  const calculateProgress = () => {
+    const totalTopics = Object.values(learningLevels).reduce((acc, level) => acc + level.topics.length, 0);
+    return Math.round((completedTopics.length / totalTopics) * 100);
+  };
+
+  const handleQuizAnswer = (answerIndex) => {
+    if (answerIndex === quizQuestions[currentQuiz].correct) {
+      setQuizScore((prev) => (prev || 0) + 1);
+    }
+    
+    if (currentQuiz < quizQuestions.length - 1) {
+      setCurrentQuiz(currentQuiz + 1);
+    } else {
+      const finalScore = quizScore + (answerIndex === quizQuestions[currentQuiz].correct ? 1 : 0);
+      alert(`Quiz completed! Score: ${finalScore}/${quizQuestions.length}`);
+      setShowQuiz(false);
+      setCurrentQuiz(0);
+      setQuizScore(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-b border-green-200 dark:border-green-700">
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-b border-blue-200 dark:border-blue-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center mb-4">
             <Link 
@@ -20,313 +200,255 @@ export default function PersonalFinance() {
               <ArrowLeftIcon className="h-4 w-4 mr-2" />
               Back to Learn
             </Link>
-            <Link 
-              to="/learn/banking-payments"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Next: Banking & Payments
-              <ArrowLeftIcon className="h-4 w-4 ml-2 rotate-180" />
-            </Link>
+            <div className="flex items-center space-x-4">
+              <div className="bg-white dark:bg-gray-800 rounded-lg px-3 py-1">
+                <span className="text-sm text-gray-600 dark:text-gray-300">Progress: {calculateProgress()}%</span>
+              </div>
+              {completedTopics.length >= 3 && (
+                <div className="flex items-center bg-yellow-100 dark:bg-yellow-900/20 rounded-lg px-3 py-1">
+                  <TrophyIcon className="h-4 w-4 text-yellow-600 mr-1" />
+                  <span className="text-sm text-yellow-800 dark:text-yellow-200">Budget Master</span>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-4xl">💰</span>
+            <span className="text-4xl">🏦</span>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Personal Finance</h1>
-              <p className="text-gray-600 dark:text-gray-300">Master your money management fundamentals</p>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Personal Finance Mastery</h1>
+              <p className="text-gray-600 dark:text-gray-300">Master your money management with 2025's latest strategies</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Learning Levels Navigation */}
+        <div className="flex flex-wrap gap-4 mb-8">
+          {Object.entries(learningLevels).map(([key, level]) => (
+            <button
+              key={key}
+              onClick={() => setActiveLevel(key)}
+              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                activeLevel === key
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700'
+              }`}
+            >
+              {level.title}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* What is Personal Finance */}
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">🌍 What is Personal Finance?</h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Personal Finance is the process of managing your money, savings, investments, spending, and protection (insurance) to achieve financial goals. It helps you build wealth, avoid debt traps, and secure your future.
-              </p>
-            </section>
-
-            {/* Importance */}
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">💡 Importance of Personal Finance</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-600 dark:text-gray-300">Helps you control your money instead of money controlling you</p>
+            {/* Current Level Topics */}
+            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{learningLevels[activeLevel].title}</h2>
+                  <p className="text-gray-600 dark:text-gray-300">{learningLevels[activeLevel].description}</p>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-600 dark:text-gray-300">Ensures financial security for emergencies</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-600 dark:text-gray-300">Helps achieve goals like education, marriage, travel, or buying a house</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-600 dark:text-gray-300">Protects against unexpected risks with insurance</p>
-                </div>
-                <div className="flex items-start space-x-3 md:col-span-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-600 dark:text-gray-300">Builds long-term wealth through disciplined saving & investing</p>
-                </div>
+                <button
+                  onClick={() => setShowQuiz(true)}
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  Take Quiz
+                </button>
               </div>
-            </section>
-
-            {/* 5 Pillars */}
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">🏛️ 5 Key Components of Personal Finance</h2>
-              <div className="space-y-6">
-                <div className="border-l-4 border-green-500 pl-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">🔹 (A) Income</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-2">Salary, business profits, freelance, interest, rent, dividends.</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400"><strong>Tip:</strong> Create multiple income streams (side hustle, investments).</p>
-                </div>
-                
-                <div className="border-l-4 border-blue-500 pl-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">🔹 (B) Budgeting</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-3"><strong>Rule: 50/30/20 Budget Rule</strong></p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
-                    <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
-                      <div className="text-green-600 font-semibold">50% → Needs</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">rent, food, bills</div>
-                    </div>
-                    <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg">
-                      <div className="text-yellow-600 font-semibold">30% → Wants</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">travel, shopping, entertainment</div>
-                    </div>
-                    <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
-                      <div className="text-blue-600 font-semibold">20% → Savings</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">savings & investments</div>
+              
+              <div className="space-y-4">
+                {learningLevels[activeLevel].topics.map((topic) => (
+                  <div key={topic.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{topic.title}</h3>
+                          {completedTopics.includes(topic.id) && (
+                            <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                          )}
+                        </div>
+                        <p className="text-gray-600 dark:text-gray-300 mb-3">{topic.description}</p>
+                        <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                          <span className="flex items-center gap-1">
+                            <BookOpenIcon className="h-4 w-4" />
+                            {topic.duration}
+                          </span>
+                          <span>Tools: {topic.tools.join(', ')}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-2 ml-4">
+                        <button
+                          onClick={() => markTopicComplete(topic.id)}
+                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                        >
+                          <PlayIcon className="h-4 w-4" />
+                          Start Learning
+                        </button>
+                        <Link
+                          to="/tools"
+                          className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center gap-2 text-center"
+                        >
+                          <CalculatorIcon className="h-4 w-4" />
+                          Use Tools
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400"><strong>Tools:</strong> Use budgeting apps / Neocred tools to track spending.</p>
-                </div>
-                
-                <div className="border-l-4 border-purple-500 pl-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">🔹 (C) Saving</h3>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-300">
-                    <li>• Build Emergency Fund (3–6 months of expenses)</li>
-                    <li>• Open high-interest savings account</li>
-                    <li>• Automate savings → Pay yourself first</li>
-                    <li>• Separate short-term vs long-term savings</li>
-                  </ul>
-                </div>
-                
-                <div className="border-l-4 border-orange-500 pl-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">🔹 (D) Investing</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-2"><strong>Beginner-friendly:</strong> Fixed Deposits, Recurring Deposits, Mutual Funds (SIP)</p>
-                  <p className="text-gray-600 dark:text-gray-300 mb-2"><strong>Wealth-building:</strong> Stock Market, Bonds, ETFs, Gold, Real Estate</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400"><strong>Rules:</strong> Start early → power of compounding. Diversify → don't put all money in one place.</p>
-                </div>
-                
-                <div className="border-l-4 border-red-500 pl-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">🔹 (E) Protection (Insurance & Risk Management)</h3>
-                  <ul className="space-y-1 text-gray-600 dark:text-gray-300">
-                    <li>• <strong>Health Insurance</strong> → Protects against hospital bills</li>
-                    <li>• <strong>Life Insurance</strong> → Financial support for family after you</li>
-                    <li>• <strong>General Insurance</strong> → Vehicle, property, travel protection</li>
-                    <li>• <strong>Emergency Fund</strong> → First line of defense</li>
-                  </ul>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Lifecycle */}
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">📈 Personal Finance Lifecycle</h2>
-              <div className="space-y-4">
-                <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                  <h3 className="font-semibold text-green-800 dark:text-green-400 mb-2">Early Career (20s–30s)</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">Focus on budgeting, debt repayment, building emergency fund, and starting investments.</p>
-                </div>
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                  <h3 className="font-semibold text-blue-800 dark:text-blue-400 mb-2">Mid-Career (30s–40s)</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">Increase investments, buy insurance, plan for kids' education, start retirement planning.</p>
-                </div>
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg">
-                  <h3 className="font-semibold text-yellow-800 dark:text-yellow-400 mb-2">Pre-Retirement (50s)</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">Reduce risky investments, focus on retirement corpus, clear all debts.</p>
-                </div>
-                <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                  <h3 className="font-semibold text-purple-800 dark:text-purple-400 mb-2">Retirement (60+)</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">Focus on safe investments (FD, bonds, pensions), protect capital, and manage healthcare costs.</p>
-                </div>
+            {/* Case Studies */}
+            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Real Success Stories</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {caseStudies.map((study, index) => (
+                  <div key={index} className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                    <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">{study.name}</h3>
+                    <p className="text-sm text-green-700 dark:text-green-300 mb-2">{study.age}</p>
+                    <div className="space-y-2 text-sm">
+                      <p><strong>Challenge:</strong> {study.challenge}</p>
+                      <p><strong>Solution:</strong> {study.solution}</p>
+                      <p><strong>Result:</strong> {study.result}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
 
             {/* Common Mistakes */}
-            <section className="bg-red-50 dark:bg-red-900/20 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-red-800 dark:text-red-400 mb-6">❌ Common Mistakes to Avoid</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center space-x-3">
-                  <span className="text-red-500">❌</span>
-                  <p className="text-gray-700 dark:text-gray-300">Living without a budget</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-red-500">❌</span>
-                  <p className="text-gray-700 dark:text-gray-300">Spending more than you earn</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-red-500">❌</span>
-                  <p className="text-gray-700 dark:text-gray-300">No emergency fund</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-red-500">❌</span>
-                  <p className="text-gray-700 dark:text-gray-300">Delaying investments</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-red-500">❌</span>
-                  <p className="text-gray-700 dark:text-gray-300">Ignoring insurance</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-red-500">❌</span>
-                  <p className="text-gray-700 dark:text-gray-300">Following random stock tips</p>
-                </div>
+            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Avoid These Common Mistakes</h2>
+              <div className="space-y-4">
+                {commonMistakes.map((mistake, index) => (
+                  <div key={index} className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
+                    <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2">❌ {mistake.mistake}</h3>
+                    <p className="text-red-700 dark:text-red-300 text-sm mb-2"><strong>Impact:</strong> {mistake.impact}</p>
+                    <p className="text-green-700 dark:text-green-300 text-sm"><strong>Solution:</strong> {mistake.solution}</p>
+                  </div>
+                ))}
               </div>
             </section>
-
-            {/* India Specific */}
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">🇮🇳 Personal Finance in India</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Popular Savings Options</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">FDs, RDs, PPF, EPF, NPS</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Tax-Saving Options</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">ELSS, PPF, NPS, Insurance, Section 80C</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Digital Tools</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">UPI, Neobanks, Robo-advisors</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Government Schemes</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">Sukanya Samriddhi, Senior Citizens Saving, Atal Pension</p>
-                </div>
-              </div>
-            </section>
-
-            {/* Action Plan */}
-            <section className="bg-gradient-to-r from-green-500 to-blue-600 rounded-xl shadow-lg p-8 text-white">
-              <h2 className="text-2xl font-bold mb-6">✅ Action Plan to Improve Your Personal Finance</h2>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-200">✅</span>
-                  <p>Track your income & expenses → Budget properly</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-200">✅</span>
-                  <p>Build an emergency fund (at least ₹50,000–₹1,00,000 to start)</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-200">✅</span>
-                  <p>Get insurance (health + term life insurance)</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-200">✅</span>
-                  <p>Start investing early (even ₹500 SIP monthly)</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-200">✅</span>
-                  <p>Avoid unnecessary debt → Use credit wisely</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-200">✅</span>
-                  <p>Review your finances every 6 months</p>
-                </div>
-              </div>
-            </section>
-
-
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Progress */}
+            {/* Personal Finance Starter Checklist */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Learning Journey</h3>
-              <div className="text-center py-8">
-                <div className="text-4xl mb-4">📚</div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Explore personal finance concepts through our comprehensive overview and related tools.
-                </p>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Personal Finance Starter Checklist</h3>
+              <div className="space-y-3">
+                {starterChecklist.map((item, index) => (
+                  <label key={index} className="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" className="mt-1" />
+                    <span className="text-sm text-gray-700 dark:text-gray-300">{item.item}</span>
+                  </label>
+                ))}
               </div>
             </div>
 
-            {/* Neocred Tools */}
+            {/* Quick Tools */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">📊 Neocred Tools & Calculators</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Tools</h3>
               <div className="space-y-3">
-                <Link to="/calculators/budget-planner" className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                  <div className="font-medium text-gray-900 dark:text-white">Budget Planner (50/30/20 Rule)</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">Plan your monthly budget</div>
+                <Link to="/calculators/budget-planner" className="block bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
+                  <div className="flex items-center gap-2">
+                    <ChartBarIcon className="h-5 w-5 text-blue-600" />
+                    <span className="font-medium text-blue-900 dark:text-blue-100">Budget Planner</span>
+                  </div>
                 </Link>
-                <Link to="/calculators/emergency-fund" className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                  <div className="font-medium text-gray-900 dark:text-white">Emergency Fund Calculator</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">Calculate emergency fund needs</div>
+                <Link to="/calculators/emergency-fund" className="block bg-green-50 dark:bg-green-900/20 rounded-lg p-3 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
+                  <div className="flex items-center gap-2">
+                    <CalculatorIcon className="h-5 w-5 text-green-600" />
+                    <span className="font-medium text-green-900 dark:text-green-100">Emergency Fund Calculator</span>
+                  </div>
                 </Link>
-                <Link to="/calculators/fd-calculator" className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                  <div className="font-medium text-gray-900 dark:text-white">FD & RD Calculator</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">Calculate fixed deposit returns</div>
-                </Link>
-                <Link to="/calculators/sip-calculator" className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                  <div className="font-medium text-gray-900 dark:text-white">SIP & Mutual Fund Calculator</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">Plan your SIP investments</div>
-                </Link>
-                <Link to="/calculators/home-loan-emi" className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                  <div className="font-medium text-gray-900 dark:text-white">Loan EMI Calculator</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">Calculate loan EMIs</div>
-                </Link>
-                <Link to="/calculators/retirement-goal" className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                  <div className="font-medium text-gray-900 dark:text-white">Retirement Calculator</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">Plan your retirement corpus</div>
-                </Link>
-                <Link to="/calculators/net-worth-tracker" className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                  <div className="font-medium text-gray-900 dark:text-white">Net Worth Tracker</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">Track your net worth</div>
+                <Link to="/calculators/budget-rule" className="block bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
+                  <div className="flex items-center gap-2">
+                    <CalculatorIcon className="h-5 w-5 text-purple-600" />
+                    <span className="font-medium text-purple-900 dark:text-purple-100">50/30/20 Rule Calculator</span>
+                  </div>
                 </Link>
               </div>
             </div>
 
-            {/* How Neocred Helps */}
-            <div className="bg-gradient-to-br from-green-500 to-blue-600 rounded-xl p-6 text-white">
-              <h3 className="text-lg font-bold mb-4">🚀 How Neocred.in Helps</h3>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <span>📊</span>
-                  <p className="text-green-100 text-sm">Smart Tools & Calculators to manage money better</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span>💡</span>
-                  <p className="text-green-100 text-sm">Guides & Tips for financial literacy</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span>🔒</span>
-                  <p className="text-green-100 text-sm">Secure Finance Tracking without risks</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span>🎯</span>
-                  <p className="text-green-100 text-sm">Personalized Roadmaps for saving, investing & retiring rich</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Summary */}
-            <div className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl p-6 text-white">
-              <h3 className="text-lg font-bold mb-4">✨ Summary</h3>
-              <p className="text-purple-100 text-sm">
-                Personal Finance is all about earning, saving, investing, protecting, and planning. With Neocred.in, customers have everything at one place — from learning to tracking to planning.
+            {/* AI FinBot */}
+            <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+              <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
+                <ChatBubbleLeftRightIcon className="h-5 w-5" />
+                Ask FinBot
+              </h3>
+              <p className="text-blue-100 text-sm mb-4">
+                Get personalized financial advice based on your situation
               </p>
+              <div className="space-y-2 text-sm">
+                <p>• "How much should I save if my salary is ₹40,000?"</p>
+                <p>• "What's the right emergency fund size for me?"</p>
+                <p>• "Should I pay off debt or start investing?"</p>
+              </div>
+              <Link
+                to="/chatbot"
+                className="mt-4 block bg-white text-blue-600 text-center py-2 px-4 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+              >
+                Chat with FinBot
+              </Link>
+            </div>
+
+            {/* 2025 Updates */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">2025 Updates</h3>
+              <div className="space-y-3 text-sm">
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-3">
+                  <p className="text-yellow-800 dark:text-yellow-200">
+                    <strong>Savings Account:</strong> Best rates now 7-8% (SBI, HDFC, ICICI)
+                  </p>
+                </div>
+                <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3">
+                  <p className="text-green-800 dark:text-green-200">
+                    <strong>Tax Limit:</strong> 80C limit remains ₹1.5L, new regime popular
+                  </p>
+                </div>
+                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
+                  <p className="text-blue-800 dark:text-blue-200">
+                    <strong>Digital Banking:</strong> UPI limits increased, instant loans available
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Quiz Modal */}
+        {showQuiz && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                Question {currentQuiz + 1} of {quizQuestions.length}
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                {quizQuestions[currentQuiz].question}
+              </p>
+              <div className="space-y-2">
+                {quizQuestions[currentQuiz].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleQuizAnswer(index)}
+                    className="w-full text-left p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setShowQuiz(false)}
+                className="mt-4 text-gray-500 hover:text-gray-700 text-sm"
+              >
+                Close Quiz
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
