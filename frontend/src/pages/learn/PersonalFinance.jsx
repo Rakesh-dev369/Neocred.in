@@ -8,25 +8,44 @@ export default function PersonalFinance() {
   const [activeTab, setActiveTab] = useState({});
   const [bookmarks, setBookmarks] = useState(new Set());
   const [readMore, setReadMore] = useState({});
+  const [showQuickNav, setShowQuickNav] = useState(false);
+  const [hoveredDefinition, setHoveredDefinition] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const sections = [
-    { id: 'introduction', title: 'Introduction', icon: '📖' },
-    { id: 'core-components', title: 'Core Components', icon: '🎯' },
-    { id: 'budgeting', title: 'Budgeting & Planning', icon: '📊' },
-    { id: 'saving', title: 'Saving & Emergency', icon: '🏦' },
-    { id: 'investing', title: 'Investment Management', icon: '📈' },
-    { id: 'debt', title: 'Debt & Credit', icon: '💳' },
-    { id: 'retirement', title: 'Retirement Planning', icon: '🛡️' },
-    { id: 'insurance', title: 'Insurance & Risk', icon: '🛡️' },
-    { id: 'tax', title: 'Tax Planning', icon: '📄' },
-    { id: 'trends', title: 'Modern Trends', icon: '🚀' },
-    { id: 'challenges', title: 'Challenges', icon: '⚠️' },
-    { id: 'conclusion', title: 'Conclusion', icon: '⭐' }
+    { id: 'introduction', title: 'Introduction', icon: '📖', level: 'foundation' },
+    { id: 'core-components', title: 'Core Components', icon: '🎯', level: 'foundation' },
+    { id: 'budgeting', title: 'Budgeting & Planning', icon: '📊', level: 'foundation' },
+    { id: 'saving', title: 'Saving & Emergency', icon: '🏦', level: 'foundation' },
+    { id: 'investing', title: 'Investment Management', icon: '📈', level: 'advanced' },
+    { id: 'debt', title: 'Debt & Credit', icon: '💳', level: 'advanced' },
+    { id: 'retirement', title: 'Retirement Planning', icon: '🛡️', level: 'advanced' },
+    { id: 'insurance', title: 'Insurance & Risk', icon: '🛡️', level: 'advanced' },
+    { id: 'tax', title: 'Tax Planning', icon: '📄', level: 'advanced' },
+    { id: 'trends', title: 'Modern Trends', icon: '🚀', level: 'tips' },
+    { id: 'challenges', title: 'Challenges', icon: '⚠️', level: 'tips' },
+    { id: 'conclusion', title: 'Conclusion', icon: '⭐', level: 'resources' }
   ];
+
+  const quickNavSections = [
+    { id: 'introduction', title: 'Introduction', sections: ['introduction'] },
+    { id: 'core-components', title: 'Core Components', sections: ['core-components'] },
+    { id: 'foundations', title: 'Foundations', sections: ['budgeting', 'saving'] },
+    { id: 'advanced', title: 'Advanced', sections: ['investing', 'debt', 'retirement', 'insurance', 'tax'] },
+    { id: 'tips', title: 'Tips', sections: ['trends', 'challenges'] },
+    { id: 'resources', title: 'Resources', sections: ['conclusion'] }
+  ];
+
+  const definitions = {
+    budgeting: 'Planning income vs. expenses to achieve financial goals',
+    investing: 'Growing wealth through financial instruments over time',
+    debt: 'Money borrowed that must be repaid with interest',
+    insurance: 'Protection against financial loss from unexpected events',
+    retirement: 'Planning for financial independence after working years'
+  };
 
   const relatedPillars = [
     { name: 'Traditional Investments', path: '/learn/traditional-investments' },
@@ -89,6 +108,35 @@ export default function PersonalFinance() {
         </div>
       </div>
 
+      {/* Floating Quick Navigation */}
+      <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-40">
+        <button
+          onClick={() => setShowQuickNav(!showQuickNav)}
+          className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors mb-2"
+        >
+          📜
+        </button>
+        {showQuickNav && (
+          <div className="bg-white rounded-lg shadow-xl p-4 w-48 border">
+            <h4 className="font-bold text-sm mb-3 text-gray-800">Quick Navigation</h4>
+            <div className="space-y-2">
+              {quickNavSections.map((navSection) => (
+                <button
+                  key={navSection.id}
+                  onClick={() => {
+                    setActiveSection(navSection.sections[0]);
+                    setShowQuickNav(false);
+                  }}
+                  className="w-full text-left text-xs p-2 rounded hover:bg-blue-50 text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  {navSection.title}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 py-8 flex gap-8">
         {/* Left Sidebar TOC */}
         <div className="w-80 bg-white rounded-lg shadow-lg p-6 h-fit sticky top-8">
@@ -106,7 +154,11 @@ export default function PersonalFinance() {
               >
                 <span>{section.icon}</span>
                 <span className="text-sm font-medium">{section.title}</span>
-                {bookmarks.has(section.id) && <BookmarkIcon className="h-4 w-4 text-yellow-500 ml-auto" />}
+                {section.level === 'foundation' && <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded ml-auto">📘</span>}
+                {section.level === 'advanced' && <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded ml-auto">📗</span>}
+                {section.level === 'tips' && <span className="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded ml-auto">📕</span>}
+                {section.level === 'resources' && <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded ml-auto">📖</span>}
+                {bookmarks.has(section.id) && <BookmarkIcon className="h-4 w-4 text-yellow-500" />}
               </button>
             ))}
           </nav>
@@ -481,6 +533,16 @@ export default function PersonalFinance() {
                     <li>• Automate savings to ensure you pay yourself first</li>
                   </ul>
                 </div>
+                
+                <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg mt-6">
+                  <h4 className="font-bold text-blue-800 mb-2">🎯 Key Takeaway</h4>
+                  <p className="text-blue-700 text-sm">Budgeting helps you plan, prioritize, and prevent overspending. Start with the 50/30/20 rule and adjust based on your needs.</p>
+                </div>
+                
+                <div className="bg-green-50 border-l-4 border-green-400 p-4 rounded-lg mt-6">
+                  <h4 className="font-bold text-green-800 mb-2">🎯 Key Takeaway</h4>
+                  <p className="text-green-700 text-sm">Emergency funds provide financial security. Build 6 months of expenses in high-yield savings accounts (7-8% rates in 2025).</p>
+                </div>
               </div>
             </div>
           )}
@@ -608,6 +670,11 @@ export default function PersonalFinance() {
                     </ul>
                   </div>
                 </div>
+                
+                <div className="bg-purple-50 border-l-4 border-purple-400 p-4 rounded-lg mt-6">
+                  <h4 className="font-bold text-purple-800 mb-2">🎯 Key Takeaway</h4>
+                  <p className="text-purple-700 text-sm">Diversify investments across asset classes. Start with SIP in equity funds for long-term wealth creation. See <Link to="/learn/market-linked-investments" className="text-purple-600 underline">Market-Linked Investments</Link> for details.</p>
+                </div>
               </div>
             </div>
           )}
@@ -703,6 +770,11 @@ export default function PersonalFinance() {
                     </div>
                   </div>
                 </div>
+                
+                <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg mt-6">
+                  <h4 className="font-bold text-red-800 mb-2">🎯 Key Takeaway</h4>
+                  <p className="text-red-700 text-sm">Manage debt wisely - prioritize high-interest debt repayment. Maintain CIBIL score above 750 for best loan rates. Learn more about <Link to="/learn/banking-payments" className="text-red-600 underline">Banking & Payments</Link>.</p>
+                </div>
               </div>
             </div>
           )}
@@ -783,6 +855,11 @@ export default function PersonalFinance() {
                     </div>
                   </div>
                 </div>
+                
+                <div className="bg-orange-50 border-l-4 border-orange-400 p-4 rounded-lg mt-6">
+                  <h4 className="font-bold text-orange-800 mb-2">🎯 Key Takeaway</h4>
+                  <p className="text-orange-700 text-sm">Start retirement planning early to leverage compounding. Diversify between EPF, PPF, NPS, and equity investments for optimal returns.</p>
+                </div>
               </div>
             </div>
           )}
@@ -842,6 +919,11 @@ export default function PersonalFinance() {
                     </div>
                   </div>
                 </div>
+                
+                <div className="bg-indigo-50 border-l-4 border-indigo-400 p-4 rounded-lg mt-6">
+                  <h4 className="font-bold text-indigo-800 mb-2">🎯 Key Takeaway</h4>
+                  <p className="text-indigo-700 text-sm">Insurance protects your wealth from unexpected events. Get adequate life and health coverage. Explore <Link to="/learn/insurance-risk" className="text-indigo-600 underline">Insurance & Risk Management</Link> pillar.</p>
+                </div>
               </div>
             </div>
           )}
@@ -900,6 +982,11 @@ export default function PersonalFinance() {
                       </div>
                     </div>
                   </div>
+                </div>
+                
+                <div className="bg-teal-50 border-l-4 border-teal-400 p-4 rounded-lg mt-6">
+                  <h4 className="font-bold text-teal-800 mb-2">🎯 Key Takeaway</h4>
+                  <p className="text-teal-700 text-sm">Optimize taxes legally through 80C, 80D deductions. Choose the right tax regime based on your income and deductions available.</p>
                 </div>
               </div>
             </div>
