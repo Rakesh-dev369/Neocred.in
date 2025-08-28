@@ -22,5 +22,8 @@ Disallow: /admin/
 # Sitemap location
 Sitemap: https://neocred.in/sitemap.xml
 
+# Static content for AI crawlers
+# Visit https://neocred.in/static-content.html for complete site information
+
 # Crawl delay (optional)
 Crawl-delay: 1
