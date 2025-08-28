@@ -1,454 +1,1049 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeftIcon, CheckCircleIcon, PlayIcon, CalculatorIcon, TrophyIcon, ChatBubbleLeftRightIcon, BookOpenIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, BookmarkIcon, ChevronDownIcon, ChevronRightIcon, CalculatorIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 
 export default function PersonalFinance() {
-  const [activeLevel, setActiveLevel] = useState('beginner');
-  const [completedTopics, setCompletedTopics] = useState([]);
-  const [showQuiz, setShowQuiz] = useState(false);
-  const [quizScore, setQuizScore] = useState(null);
-  const [currentQuiz, setCurrentQuiz] = useState(0);
+  const [activeSection, setActiveSection] = useState('introduction');
+  const [expandedCards, setExpandedCards] = useState({});
+  const [activeTab, setActiveTab] = useState({});
+  const [bookmarks, setBookmarks] = useState(new Set());
+  const [readMore, setReadMore] = useState({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const learningLevels = {
-    beginner: {
-      title: 'Beginner Level',
-      description: 'Start your financial journey with basics',
-      topics: [
-        {
-          id: 'budgeting-101',
-          title: 'Budgeting 101',
-          description: 'Learn to track income and expenses',
-          duration: '10 min read',
-          tools: ['Budget Planner', '50/30/20 Rule Calculator']
-        },
-        {
-          id: 'savings-accounts',
-          title: 'Savings Accounts 2025',
-          description: 'Best savings accounts with 7-8% interest',
-          duration: '8 min read',
-          tools: ['Savings Calculator']
-        },
-        {
-          id: 'emergency-fund',
-          title: 'Emergency Fund Basics',
-          description: 'Build 6 months expense safety net',
-          duration: '12 min read',
-          tools: ['Emergency Fund Calculator']
-        }
-      ]
-    },
-    intermediate: {
-      title: 'Intermediate Level',
-      description: 'Manage debt and build credit',
-      topics: [
-        {
-          id: 'debt-management',
-          title: 'Debt Management Strategy',
-          description: 'Snowball vs Avalanche methods',
-          duration: '15 min read',
-          tools: ['Debt Repayment Planner']
-        },
-        {
-          id: 'credit-score',
-          title: 'Credit Score Mastery',
-          description: 'Build 750+ CIBIL score in 2025',
-          duration: '12 min read',
-          tools: ['Credit Score Simulator']
-        },
-        {
-          id: 'first-investments',
-          title: 'First Investments (FD, RD, PPF)',
-          description: 'Safe investment options for beginners',
-          duration: '18 min read',
-          tools: ['FD Calculator', 'RD Calculator', 'PPF Calculator']
-        }
-      ]
-    },
-    advanced: {
-      title: 'Advanced Level',
-      description: 'Wealth building and optimization',
-      topics: [
-        {
-          id: 'retirement-planning',
-          title: 'Retirement Planning 2025',
-          description: 'NPS, EPF, and retirement corpus building',
-          duration: '20 min read',
-          tools: ['Retirement Goal Planner', 'NPS Calculator']
-        },
-        {
-          id: 'wealth-building',
-          title: 'Wealth Building Strategies',
-          description: 'SIP, asset allocation, and compounding',
-          duration: '25 min read',
-          tools: ['SIP Calculator', 'Goal Based Investment']
-        },
-        {
-          id: 'tax-optimization',
-          title: 'Tax-efficient Saving (2025)',
-          description: '80C, ELSS, and tax planning strategies',
-          duration: '22 min read',
-          tools: ['HRA Exemption', 'Form 16 Breakdown']
-        }
-      ]
-    }
+  const sections = [
+    { id: 'introduction', title: 'Introduction', icon: '📖' },
+    { id: 'core-components', title: 'Core Components', icon: '🎯' },
+    { id: 'budgeting', title: 'Budgeting & Planning', icon: '📊' },
+    { id: 'saving', title: 'Saving & Emergency', icon: '🏦' },
+    { id: 'investing', title: 'Investment Management', icon: '📈' },
+    { id: 'debt', title: 'Debt & Credit', icon: '💳' },
+    { id: 'retirement', title: 'Retirement Planning', icon: '🛡️' },
+    { id: 'insurance', title: 'Insurance & Risk', icon: '🛡️' },
+    { id: 'tax', title: 'Tax Planning', icon: '📄' },
+    { id: 'trends', title: 'Modern Trends', icon: '🚀' },
+    { id: 'challenges', title: 'Challenges', icon: '⚠️' },
+    { id: 'conclusion', title: 'Conclusion', icon: '⭐' }
+  ];
+
+  const relatedPillars = [
+    { name: 'Traditional Investments', path: '/learn/traditional-investments' },
+    { name: 'Market-Linked Investments', path: '/learn/market-linked-investments' },
+    { name: 'Banking & Payments', path: '/learn/banking-payments' },
+    { name: 'Insurance & Risk', path: '/learn/insurance-risk' }
+  ];
+
+  const toggleCard = (cardId) => {
+    setExpandedCards(prev => ({ ...prev, [cardId]: !prev[cardId] }));
   };
 
-  const quizQuestions = [
-    {
-      question: 'What percentage of income should go to needs in the 50/30/20 rule?',
-      options: ['30%', '50%', '20%', '40%'],
-      correct: 1
-    },
-    {
-      question: 'How many months of expenses should an emergency fund cover?',
-      options: ['1-2 months', '3-6 months', '12 months', '24 months'],
-      correct: 1
-    },
-    {
-      question: 'What is a good CIBIL score in India?',
-      options: ['600+', '650+', '700+', '750+'],
-      correct: 3
-    }
-  ];
-
-  const caseStudies = [
-    {
-      name: 'Ravi - ₹30k Salary',
-      age: '25, Software Developer',
-      challenge: 'Managing expenses and starting investments',
-      solution: '50/30/20 rule + ₹2k SIP + ₹3k emergency fund',
-      result: '₹50k saved in first year, started investment journey'
-    },
-    {
-      name: 'Priya - ₹45k Salary',
-      age: '28, Marketing Manager',
-      challenge: 'Credit card debt and no savings',
-      solution: 'Debt snowball method + automated savings',
-      result: 'Cleared ₹80k debt in 18 months, built ₹1L emergency fund'
-    }
-  ];
-
-  const commonMistakes = [
-    {
-      mistake: 'Living on Credit Cards',
-      impact: 'High interest (36-48% annually)',
-      solution: 'Use debit card, pay full amount monthly'
-    },
-    {
-      mistake: 'No Emergency Fund',
-      impact: 'Forced to take loans during crisis',
-      solution: 'Build 6 months expenses in savings account'
-    },
-    {
-      mistake: 'Ignoring Insurance',
-      impact: 'Medical bills can wipe out savings',
-      solution: 'Health insurance + term life insurance'
-    }
-  ];
-
-  const starterChecklist = [
-    { item: 'Open high-interest savings account (7-8%)', done: false },
-    { item: 'Set up automated budget tracking', done: false },
-    { item: 'Build ₹10k emergency fund first', done: false },
-    { item: 'Get health insurance coverage', done: false },
-    { item: 'Start ₹1000 monthly SIP', done: false },
-    { item: 'Check and improve CIBIL score', done: false },
-    { item: 'Plan for tax saving (80C)', done: false }
-  ];
-
-  const markTopicComplete = (topicId) => {
-    if (!completedTopics.includes(topicId)) {
-      setCompletedTopics([...completedTopics, topicId]);
-    }
+  const setTab = (cardId, tab) => {
+    setActiveTab(prev => ({ ...prev, [cardId]: tab }));
   };
 
-  const calculateProgress = () => {
-    const totalTopics = Object.values(learningLevels).reduce((acc, level) => acc + level.topics.length, 0);
-    return Math.round((completedTopics.length / totalTopics) * 100);
+  const toggleBookmark = (sectionId) => {
+    setBookmarks(prev => {
+      const newBookmarks = new Set(prev);
+      if (newBookmarks.has(sectionId)) {
+        newBookmarks.delete(sectionId);
+      } else {
+        newBookmarks.add(sectionId);
+      }
+      return newBookmarks;
+    });
   };
 
-  const handleQuizAnswer = (answerIndex) => {
-    if (answerIndex === quizQuestions[currentQuiz].correct) {
-      setQuizScore((prev) => (prev || 0) + 1);
-    }
-    
-    if (currentQuiz < quizQuestions.length - 1) {
-      setCurrentQuiz(currentQuiz + 1);
-    } else {
-      const finalScore = quizScore + (answerIndex === quizQuestions[currentQuiz].correct ? 1 : 0);
-      alert(`Quiz completed! Score: ${finalScore}/${quizQuestions.length}`);
-      setShowQuiz(false);
-      setCurrentQuiz(0);
-      setQuizScore(null);
-    }
+  const toggleReadMore = (id) => {
+    setReadMore(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-b border-blue-200 dark:border-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-between items-center mb-4">
-            <Link 
-              to="/learn"
-              className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              <ArrowLeftIcon className="h-4 w-4 mr-2" />
-              Back to Learn
-            </Link>
-            <div className="flex items-center space-x-4">
-              <div className="bg-white dark:bg-gray-800 rounded-lg px-3 py-1">
-                <span className="text-sm text-gray-600 dark:text-gray-300">Progress: {calculateProgress()}%</span>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <Link 
+            to="/learn"
+            className="inline-flex items-center text-blue-200 hover:text-white mb-6 transition-colors"
+          >
+            <ArrowLeftIcon className="h-4 w-4 mr-2" />
+            Back to Learn
+          </Link>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold mb-2">Personal Finance</h1>
+              <p className="text-lg mb-4 text-blue-100">Master money management, wealth building, and financial independence.</p>
+              <div className="flex items-center space-x-4">
+                <span className="bg-blue-500 px-3 py-1 rounded-full text-sm">Pillar 1 of 8</span>
+                <span className="text-blue-200">• 12 Sections • 2025 Updated</span>
               </div>
-              {completedTopics.length >= 3 && (
-                <div className="flex items-center bg-yellow-100 dark:bg-yellow-900/20 rounded-lg px-3 py-1">
-                  <TrophyIcon className="h-4 w-4 text-yellow-600 mr-1" />
-                  <span className="text-sm text-yellow-800 dark:text-yellow-200">Budget Master</span>
-                </div>
-              )}
             </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-4xl">🏦</span>
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Personal Finance Mastery</h1>
-              <p className="text-gray-600 dark:text-gray-300">Master your money management with 2025's latest strategies</p>
+            <div className="hidden lg:block">
+              <div className="w-32 h-32 bg-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-4xl">🏦</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Learning Levels Navigation */}
-        <div className="flex flex-wrap gap-4 mb-8">
-          {Object.entries(learningLevels).map(([key, level]) => (
-            <button
-              key={key}
-              onClick={() => setActiveLevel(key)}
-              className={`px-6 py-3 rounded-lg font-medium transition-colors ${
-                activeLevel === key
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700'
-              }`}
-            >
-              {level.title}
-            </button>
-          ))}
+      <div className="max-w-7xl mx-auto px-4 py-8 flex gap-8">
+        {/* Left Sidebar TOC */}
+        <div className="w-80 bg-white rounded-lg shadow-lg p-6 h-fit sticky top-8">
+          <h3 className="font-bold text-lg mb-4 text-gray-800">Table of Contents</h3>
+          <nav className="space-y-2">
+            {sections.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                className={`w-full flex items-center space-x-3 p-3 rounded-lg text-left transition-all ${
+                  activeSection === section.id 
+                    ? 'bg-blue-100 text-blue-700 border-l-4 border-blue-500' 
+                    : 'hover:bg-gray-50 text-gray-600'
+                }`}
+              >
+                <span>{section.icon}</span>
+                <span className="text-sm font-medium">{section.title}</span>
+                {bookmarks.has(section.id) && <BookmarkIcon className="h-4 w-4 text-yellow-500 ml-auto" />}
+              </button>
+            ))}
+          </nav>
+
+          {/* Related Pillars */}
+          <div className="mt-8 pt-6 border-t">
+            <h4 className="font-semibold text-gray-800 mb-3">Related Pillars</h4>
+            <div className="space-y-2">
+              {relatedPillars.map((pillar, index) => (
+                <Link
+                  key={index}
+                  to={pillar.path}
+                  className="flex items-center justify-between p-2 rounded hover:bg-gray-50 text-sm text-gray-600 hover:text-blue-600"
+                >
+                  <span>{pillar.name}</span>
+                  <ArrowTopRightOnSquareIcon className="h-4 w-4" />
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Current Level Topics */}
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+        {/* Main Content */}
+        <div className="flex-1 space-y-8">
+          {/* Introduction Section */}
+          {activeSection === 'introduction' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
               <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{learningLevels[activeLevel].title}</h2>
-                  <p className="text-gray-600 dark:text-gray-300">{learningLevels[activeLevel].description}</p>
-                </div>
+                <h2 className="text-3xl font-bold text-gray-800">Introduction</h2>
                 <button
-                  onClick={() => setShowQuiz(true)}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                  onClick={() => toggleBookmark('introduction')}
+                  className={`p-2 rounded-full ${bookmarks.has('introduction') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
                 >
-                  Take Quiz
+                  <BookmarkIcon className="h-5 w-5" />
                 </button>
               </div>
               
-              <div className="space-y-4">
-                {learningLevels[activeLevel].topics.map((topic) => (
-                  <div key={topic.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{topic.title}</h3>
-                          {completedTopics.includes(topic.id) && (
-                            <CheckCircleIcon className="h-5 w-5 text-green-600" />
-                          )}
-                        </div>
-                        <p className="text-gray-600 dark:text-gray-300 mb-3">{topic.description}</p>
-                        <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-                          <span className="flex items-center gap-1">
-                            <BookOpenIcon className="h-4 w-4" />
-                            {topic.duration}
-                          </span>
-                          <span>Tools: {topic.tools.join(', ')}</span>
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Personal finance refers to the management of an individual's or household's financial activities, including earning, saving, investing, budgeting, spending, and protecting money. It encompasses short-term decisions such as managing daily expenses, as well as long-term strategies such as retirement planning, wealth building, and intergenerational financial security.
+                </p>
+                
+                {!readMore.intro && (
+                  <button
+                    onClick={() => toggleReadMore('intro')}
+                    className="text-blue-600 hover:text-blue-700 font-medium flex items-center"
+                  >
+                    Read more <ChevronDownIcon className="h-4 w-4 ml-1" />
+                  </button>
+                )}
+                
+                {readMore.intro && (
+                  <div className="mt-4">
+                    <p className="text-gray-700 mb-4">
+                      Personal finance is a critical life skill that influences financial independence, stability, and well-being. In today's rapidly evolving economic landscape, understanding personal finance has become more important than ever, especially in India where financial literacy rates remain low despite growing economic opportunities.
+                    </p>
+                    <p className="text-gray-700 mb-4">
+                      The field encompasses various interconnected areas including income optimization, expense management, strategic saving, intelligent investing, debt management, insurance planning, retirement preparation, and tax optimization. Each component plays a crucial role in building a comprehensive financial foundation.
+                    </p>
+                    <button
+                      onClick={() => toggleReadMore('intro')}
+                      className="text-blue-600 hover:text-blue-700 font-medium flex items-center"
+                    >
+                      Show less <ChevronRightIcon className="h-4 w-4 ml-1" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Core Components Section */}
+          {activeSection === 'core-components' && (
+            <div className="space-y-6">
+              <div className="bg-white rounded-lg shadow-lg p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-3xl font-bold text-gray-800">Core Components of Personal Finance</h2>
+                  <button
+                    onClick={() => toggleBookmark('core-components')}
+                    className={`p-2 rounded-full ${bookmarks.has('core-components') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                  >
+                    <BookmarkIcon className="h-5 w-5" />
+                  </button>
+                </div>
+                <p className="text-gray-700 mb-8">The core components of personal finance are interconnected areas that help individuals achieve financial health and independence:</p>
+              </div>
+
+              {/* Income Management Card */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div 
+                  className="p-6 cursor-pointer flex items-center justify-between bg-gradient-to-r from-green-50 to-green-100"
+                  onClick={() => toggleCard('income')}
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                      <span className="text-white text-2xl">💰</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800">Income Management</h3>
+                  </div>
+                  {expandedCards.income ? <ChevronDownIcon className="h-6 w-6" /> : <ChevronRightIcon className="h-6 w-6" />}
+                </div>
+                
+                {expandedCards.income && (
+                  <div className="p-6 border-t">
+                    <div className="flex border-b mb-6">
+                      {['Theory', 'Examples', 'Tools', 'Case Studies'].map((tab) => (
+                        <button
+                          key={tab}
+                          onClick={() => setTab('income', tab)}
+                          className={`px-4 py-2 font-medium ${
+                            (activeTab.income || 'Theory') === tab
+                              ? 'border-b-2 border-green-500 text-green-600'
+                              : 'text-gray-600 hover:text-green-600'
+                          }`}
+                        >
+                          {tab}
+                        </button>
+                      ))}
+                    </div>
+                    
+                    {(activeTab.income || 'Theory') === 'Theory' && (
+                      <div className="space-y-4">
+                        <p className="text-gray-700">Understanding and optimizing various sources of income is fundamental to personal finance success.</p>
+                        <ul className="space-y-2 text-gray-700">
+                          <li><strong>Primary Income:</strong> Salary, wages, business profits</li>
+                          <li><strong>Passive Income:</strong> Rental income, dividends, interest</li>
+                          <li><strong>Portfolio Income:</strong> Capital gains, trading profits</li>
+                          <li><strong>Side Income:</strong> Freelancing, consulting, part-time work</li>
+                        </ul>
+                      </div>
+                    )}
+                    
+                    {activeTab.income === 'Examples' && (
+                      <div className="space-y-4">
+                        <div className="bg-green-50 p-4 rounded-lg">
+                          <h4 className="font-semibold text-green-800 mb-2">Software Engineer (₹8L/year)</h4>
+                          <ul className="text-sm text-green-700 space-y-1">
+                            <li>• Primary: ₹8,00,000 (salary)</li>
+                            <li>• Side: ₹1,20,000 (freelancing)</li>
+                            <li>• Passive: ₹24,000 (FD interest)</li>
+                            <li>• Total: ₹9,44,000</li>
+                          </ul>
                         </div>
                       </div>
-                      <div className="flex flex-col gap-2 ml-4">
+                    )}
+                    
+                    {activeTab.income === 'Tools' && (
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <Link to="/calculators/budget-planner" className="bg-gray-50 p-4 rounded-lg hover:bg-gray-100">
+                            <h4 className="font-semibold mb-2">Income Tracker</h4>
+                            <p className="text-sm text-gray-600">Track multiple income sources</p>
+                            <span className="mt-2 text-green-600 text-sm font-medium">Use Tool →</span>
+                          </Link>
+                          <Link to="/calculators/first-salary-planner" className="bg-gray-50 p-4 rounded-lg hover:bg-gray-100">
+                            <h4 className="font-semibold mb-2">Side Income Calculator</h4>
+                            <p className="text-sm text-gray-600">Calculate potential earnings</p>
+                            <span className="mt-2 text-green-600 text-sm font-medium">Use Tool →</span>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {activeTab.income === 'Case Studies' && (
+                      <div className="space-y-4">
+                        <div className="bg-blue-50 p-4 rounded-lg">
+                          <h4 className="font-semibold text-blue-800 mb-2">Rahul's Income Diversification Journey</h4>
+                          <p className="text-sm text-blue-700 mb-2">Started with ₹5L salary, built multiple income streams over 3 years</p>
+                          <p className="text-sm text-blue-600">Result: 40% income increase through side projects and investments</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Budgeting Card */}
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div 
+                  className="p-6 cursor-pointer flex items-center justify-between bg-gradient-to-r from-blue-50 to-blue-100"
+                  onClick={() => toggleCard('budgeting')}
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                      <CalculatorIcon className="text-white h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800">Budgeting & Expense Management</h3>
+                  </div>
+                  {expandedCards.budgeting ? <ChevronDownIcon className="h-6 w-6" /> : <ChevronRightIcon className="h-6 w-6" />}
+                </div>
+                
+                {expandedCards.budgeting && (
+                  <div className="p-6 border-t">
+                    <div className="flex border-b mb-6">
+                      {['Theory', 'Examples', 'Tools', 'Case Studies'].map((tab) => (
                         <button
-                          onClick={() => markTopicComplete(topic.id)}
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                          key={tab}
+                          onClick={() => setTab('budgeting', tab)}
+                          className={`px-4 py-2 font-medium ${
+                            (activeTab.budgeting || 'Theory') === tab
+                              ? 'border-b-2 border-blue-500 text-blue-600'
+                              : 'text-gray-600 hover:text-blue-600'
+                          }`}
                         >
-                          <PlayIcon className="h-4 w-4" />
-                          Start Learning
+                          {tab}
                         </button>
-                        <Link
-                          to="/tools"
-                          className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center gap-2 text-center"
-                        >
-                          <CalculatorIcon className="h-4 w-4" />
-                          Use Tools
+                      ))}
+                    </div>
+                    
+                    {(activeTab.budgeting || 'Theory') === 'Theory' && (
+                      <div className="space-y-4">
+                        <p className="text-gray-700">Creating a spending plan to balance needs, wants, and savings effectively.</p>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="bg-blue-50 p-4 rounded-lg">
+                            <h4 className="font-semibold text-blue-800 mb-2">50/30/20 Rule</h4>
+                            <ul className="text-sm text-blue-700 space-y-1">
+                              <li>• 50% Needs (rent, food, utilities)</li>
+                              <li>• 30% Wants (entertainment, dining)</li>
+                              <li>• 20% Savings & Investments</li>
+                            </ul>
+                          </div>
+                          <div className="bg-blue-50 p-4 rounded-lg">
+                            <h4 className="font-semibold text-blue-800 mb-2">Zero-Based Budgeting</h4>
+                            <ul className="text-sm text-blue-700 space-y-1">
+                              <li>• Every rupee assigned purpose</li>
+                              <li>• Income - Expenses = 0</li>
+                              <li>• Maximum control over money</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {activeTab.budgeting === 'Examples' && (
+                      <div className="space-y-4">
+                        <div className="bg-blue-50 p-4 rounded-lg">
+                          <h4 className="font-semibold text-blue-800 mb-2">Monthly Budget (₹50,000 income)</h4>
+                          <div className="grid grid-cols-3 gap-4 text-sm">
+                            <div>
+                              <p className="font-medium text-blue-700">Needs (₹25,000)</p>
+                              <ul className="text-blue-600 space-y-1">
+                                <li>Rent: ₹15,000</li>
+                                <li>Food: ₹6,000</li>
+                                <li>Utilities: ₹4,000</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <p className="font-medium text-blue-700">Wants (₹15,000)</p>
+                              <ul className="text-blue-600 space-y-1">
+                                <li>Entertainment: ₹5,000</li>
+                                <li>Dining: ₹4,000</li>
+                                <li>Shopping: ₹6,000</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <p className="font-medium text-blue-700">Savings (₹10,000)</p>
+                              <ul className="text-blue-600 space-y-1">
+                                <li>Emergency: ₹3,000</li>
+                                <li>SIP: ₹5,000</li>
+                                <li>PPF: ₹2,000</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {activeTab.budgeting === 'Tools' && (
+                      <div className="grid grid-cols-2 gap-4">
+                        <Link to="/calculators/budget-planner" className="bg-gray-50 p-4 rounded-lg hover:bg-gray-100">
+                          <h4 className="font-semibold mb-2">Budget Planner</h4>
+                          <p className="text-sm text-gray-600">Create 50/30/20 budget</p>
+                          <span className="mt-2 text-blue-600 text-sm font-medium">Use Tool →</span>
+                        </Link>
+                        <Link to="/calculators/budget-rule" className="bg-gray-50 p-4 rounded-lg hover:bg-gray-100">
+                          <h4 className="font-semibold mb-2">Expense Tracker</h4>
+                          <p className="text-sm text-gray-600">Track daily expenses</p>
+                          <span className="mt-2 text-blue-600 text-sm font-medium">Use Tool →</span>
                         </Link>
                       </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
+                    )}
 
-            {/* Case Studies */}
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Real Success Stories</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {caseStudies.map((study, index) => (
-                  <div key={index} className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
-                    <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">{study.name}</h3>
-                    <p className="text-sm text-green-700 dark:text-green-300 mb-2">{study.age}</p>
-                    <div className="space-y-2 text-sm">
-                      <p><strong>Challenge:</strong> {study.challenge}</p>
-                      <p><strong>Solution:</strong> {study.solution}</p>
-                      <p><strong>Result:</strong> {study.result}</p>
-                    </div>
+                    {activeTab.budgeting === 'Case Studies' && (
+                      <div className="space-y-4">
+                        <div className="bg-green-50 p-4 rounded-lg">
+                          <h4 className="font-semibold text-green-800 mb-2">Priya's Budget Transformation</h4>
+                          <p className="text-sm text-green-700 mb-2">₹45k salary, reduced expenses by 25% using zero-based budgeting</p>
+                          <p className="text-sm text-green-600">Result: Increased savings rate from 5% to 25% in 6 months</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Common Mistakes */}
-            <section className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Avoid These Common Mistakes</h2>
-              <div className="space-y-4">
-                {commonMistakes.map((mistake, index) => (
-                  <div key={index} className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
-                    <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2">❌ {mistake.mistake}</h3>
-                    <p className="text-red-700 dark:text-red-300 text-sm mb-2"><strong>Impact:</strong> {mistake.impact}</p>
-                    <p className="text-green-700 dark:text-green-300 text-sm"><strong>Solution:</strong> {mistake.solution}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Personal Finance Starter Checklist */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Personal Finance Starter Checklist</h3>
-              <div className="space-y-3">
-                {starterChecklist.map((item, index) => (
-                  <label key={index} className="flex items-start gap-3 cursor-pointer">
-                    <input type="checkbox" className="mt-1" />
-                    <span className="text-sm text-gray-700 dark:text-gray-300">{item.item}</span>
-                  </label>
-                ))}
+                )}
               </div>
             </div>
+          )}
 
-            {/* Quick Tools */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Tools</h3>
-              <div className="space-y-3">
-                <Link to="/calculators/budget-planner" className="block bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                  <div className="flex items-center gap-2">
-                    <ChartBarIcon className="h-5 w-5 text-blue-600" />
-                    <span className="font-medium text-blue-900 dark:text-blue-100">Budget Planner</span>
+          {/* Budgeting Section */}
+          {activeSection === 'budgeting' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Budgeting and Expense Planning</h2>
+                <button
+                  onClick={() => toggleBookmark('budgeting')}
+                  className={`p-2 rounded-full ${bookmarks.has('budgeting') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Budgeting is the foundation of personal finance. It helps track income and expenses, avoid overspending, and achieve financial goals.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-blue-800 mb-4">Types of Budgeting</h3>
+                    <ul className="space-y-3 text-blue-700">
+                      <li className="flex items-start space-x-2">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full mt-2"></span>
+                        <div>
+                          <strong>Traditional Budgeting:</strong> Itemizing all expenses and income sources
+                        </div>
+                      </li>
+                      <li className="flex items-start space-x-2">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full mt-2"></span>
+                        <div>
+                          <strong>50/30/20 Rule:</strong> 50% needs, 30% wants, 20% savings
+                        </div>
+                      </li>
+                      <li className="flex items-start space-x-2">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full mt-2"></span>
+                        <div>
+                          <strong>Zero-Based Budgeting:</strong> Every rupee assigned a purpose
+                        </div>
+                      </li>
+                      <li className="flex items-start space-x-2">
+                        <span className="w-2 h-2 bg-blue-500 rounded-full mt-2"></span>
+                        <div>
+                          <strong>Envelope System:</strong> Cash-based tracking for categories
+                        </div>
+                      </li>
+                    </ul>
                   </div>
-                </Link>
-                <Link to="/calculators/emergency-fund" className="block bg-green-50 dark:bg-green-900/20 rounded-lg p-3 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
-                  <div className="flex items-center gap-2">
-                    <CalculatorIcon className="h-5 w-5 text-green-600" />
-                    <span className="font-medium text-green-900 dark:text-green-100">Emergency Fund Calculator</span>
+                  
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-green-800 mb-4">Budgeting Tools</h3>
+                    <div className="space-y-4">
+                      <div className="bg-white p-4 rounded-lg">
+                        <h4 className="font-semibold text-green-700 mb-2">Manual Tools</h4>
+                        <p className="text-sm text-green-600">Excel, Google Sheets, pen & paper</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h4 className="font-semibold text-green-700 mb-2">Indian Apps</h4>
+                        <p className="text-sm text-green-600">ET Money, Walnut, Money View</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h4 className="font-semibold text-green-700 mb-2">Global Apps</h4>
+                        <p className="text-sm text-green-600">YNAB, Mint, PocketGuard</p>
+                      </div>
+                    </div>
                   </div>
-                </Link>
-                <Link to="/calculators/budget-rule" className="block bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors">
-                  <div className="flex items-center gap-2">
-                    <CalculatorIcon className="h-5 w-5 text-purple-600" />
-                    <span className="font-medium text-purple-900 dark:text-purple-100">50/30/20 Rule Calculator</span>
-                  </div>
-                </Link>
+                </div>
+                
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg">
+                  <h3 className="text-lg font-bold text-yellow-800 mb-2">💡 Pro Tips for Effective Budgeting</h3>
+                  <ul className="space-y-2 text-yellow-700">
+                    <li>• Start with tracking expenses for 1 month before creating budget</li>
+                    <li>• Use the 24-hour rule for non-essential purchases above ₹1,000</li>
+                    <li>• Review and adjust budget monthly based on actual spending</li>
+                    <li>• Automate savings to ensure you pay yourself first</li>
+                  </ul>
+                </div>
               </div>
             </div>
+          )}
 
-            {/* AI FinBot */}
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
-              <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
-                <ChatBubbleLeftRightIcon className="h-5 w-5" />
-                Ask FinBot
-              </h3>
-              <p className="text-blue-100 text-sm mb-4">
-                Get personalized financial advice based on your situation
-              </p>
-              <div className="space-y-2 text-sm">
-                <p>• "How much should I save if my salary is ₹40,000?"</p>
-                <p>• "What's the right emergency fund size for me?"</p>
-                <p>• "Should I pay off debt or start investing?"</p>
+          {/* Investment Management Section */}
+          {activeSection === 'investing' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Investment Management</h2>
+                <button
+                  onClick={() => toggleBookmark('investing')}
+                  className={`p-2 rounded-full ${bookmarks.has('investing') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
               </div>
-              <Link
-                to="/chatbot"
-                className="mt-4 block bg-white text-blue-600 text-center py-2 px-4 rounded-lg font-medium hover:bg-gray-100 transition-colors"
-              >
-                Chat with FinBot
+              
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Investments are critical to wealth building and beating inflation. Understanding different asset classes and risk-return relationships is essential for long-term financial success.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-green-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-green-800 mb-4">Asset Classes</h3>
+                    <ul className="space-y-2 text-green-700">
+                      <li>• <strong>Equity:</strong> Stocks, mutual funds, ETFs (15-22% returns)</li>
+                      <li>• <strong>Debt:</strong> Bonds, FDs, debt funds (7-9% returns)</li>
+                      <li>• <strong>Real Estate:</strong> Property, REITs (10-12% returns)</li>
+                      <li>• <strong>Gold & Commodities:</strong> Physical gold, Gold ETFs</li>
+                      <li>• <strong>Alternative Assets:</strong> Crypto, startups, P2P lending</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-blue-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-blue-800 mb-4">Risk & Return Trade-off</h3>
+                    <ul className="space-y-2 text-blue-700">
+                      <li>• <strong>High Risk, High Return:</strong> Equity, startups, crypto</li>
+                      <li>• <strong>Medium Risk, Medium Return:</strong> Hybrid funds, REITs</li>
+                      <li>• <strong>Low Risk, Low Return:</strong> FDs, government bonds</li>
+                      <li>• <strong>Diversification:</strong> Spread across asset classes</li>
+                      <li>• <strong>Time Horizon:</strong> Longer = higher risk tolerance</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg mb-6">
+                  <h3 className="text-xl font-bold text-purple-800 mb-4">Popular Indian Investment Options (2025)</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-white p-4 rounded-lg">
+                      <h4 className="font-semibold text-purple-700 mb-2">Equity Investments</h4>
+                      <ul className="text-sm text-purple-600 space-y-1">
+                        <li>• SIP in Large Cap Funds</li>
+                        <li>• Index Funds (Nifty 50)</li>
+                        <li>• ELSS for Tax Saving</li>
+                        <li>• Direct Stocks (Blue Chip)</li>
+                      </ul>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg">
+                      <h4 className="font-semibold text-purple-700 mb-2">Debt Investments</h4>
+                      <ul className="text-sm text-purple-600 space-y-1">
+                        <li>• PPF (7.1% tax-free)</li>
+                        <li>• EPF (8.25% return)</li>
+                        <li>• FD (7-8.5% rates)</li>
+                        <li>• Debt Mutual Funds</li>
+                      </ul>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg">
+                      <h4 className="font-semibold text-purple-700 mb-2">Alternative Options</h4>
+                      <ul className="text-sm text-purple-600 space-y-1">
+                        <li>• Gold ETFs/SGBs</li>
+                        <li>• REITs (Real Estate)</li>
+                        <li>• NPS (Retirement)</li>
+                        <li>• International Funds</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeSection === 'saving' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Saving and Emergency Planning</h2>
+                <button
+                  onClick={() => toggleBookmark('saving')}
+                  className={`p-2 rounded-full ${bookmarks.has('saving') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Savings are the backbone of financial resilience. An emergency fund acts as a financial safety net for unforeseen expenses.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <div className="bg-green-50 p-6 rounded-lg">
+                    <h3 className="text-lg font-bold text-green-800 mb-4">Types of Savings</h3>
+                    <ul className="space-y-2 text-green-700">
+                      <li>• Short-term savings (holidays, gadgets)</li>
+                      <li>• Long-term savings (education, home purchase)</li>
+                      <li>• Emergency savings (3–12 months of living expenses)</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-blue-50 p-6 rounded-lg">
+                    <h3 className="text-lg font-bold text-blue-800 mb-4">Best Practices</h3>
+                    <ul className="space-y-2 text-blue-700">
+                      <li>• Automate savings (SIPs, recurring deposits)</li>
+                      <li>• Use high-yield savings accounts, liquid funds</li>
+                      <li>• Avoid dipping into emergency savings for non-emergencies</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-purple-50 p-6 rounded-lg">
+                    <h3 className="text-lg font-bold text-purple-800 mb-4">2025 Rates</h3>
+                    <ul className="space-y-2 text-purple-700">
+                      <li>• Savings Account: 7-8%</li>
+                      <li>• FD: 7-8.5%</li>
+                      <li>• Liquid Funds: 6-7%</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Debt & Credit Section */}
+          {activeSection === 'debt' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Debt and Credit Management</h2>
+                <button
+                  onClick={() => toggleBookmark('debt')}
+                  className={`p-2 rounded-full ${bookmarks.has('debt') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Debt can be constructive (home loan, education loan) or destructive (credit card debt, personal loans for lifestyle expenses). Managing credit wisely is crucial for financial health.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-red-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-red-800 mb-4">Types of Debt</h3>
+                    <div className="space-y-4">
+                      <div className="bg-white p-4 rounded-lg">
+                        <h4 className="font-semibold text-red-700 mb-2">Secured Debt (Good)</h4>
+                        <ul className="text-sm text-red-600 space-y-1">
+                          <li>• Home Loan (8.5-12% interest)</li>
+                          <li>• Car Loan (9-15% interest)</li>
+                          <li>• Education Loan (8-12% interest)</li>
+                          <li>• Gold Loan (10-16% interest)</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h4 className="font-semibold text-red-700 mb-2">Unsecured Debt (Risky)</h4>
+                        <ul className="text-sm text-red-600 space-y-1">
+                          <li>• Credit Card (36-48% interest)</li>
+                          <li>• Personal Loan (12-24% interest)</li>
+                          <li>• Payday Loans (Very High)</li>
+                          <li>• Buy Now Pay Later</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-green-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-green-800 mb-4">Credit Score Management</h3>
+                    <div className="space-y-4">
+                      <div className="bg-white p-4 rounded-lg">
+                        <h4 className="font-semibold text-green-700 mb-2">CIBIL Score Ranges</h4>
+                        <ul className="text-sm text-green-600 space-y-1">
+                          <li>• 750-900: Excellent (Best rates)</li>
+                          <li>• 700-749: Good (Decent rates)</li>
+                          <li>• 650-699: Fair (Higher rates)</li>
+                          <li>• 300-649: Poor (Loan rejection)</li>
+                        </ul>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h4 className="font-semibold text-green-700 mb-2">Improvement Tips</h4>
+                        <ul className="text-sm text-green-600 space-y-1">
+                          <li>• Pay EMIs on time (35% weightage)</li>
+                          <li>• Keep credit utilization &lt;30%</li>
+                          <li>• Maintain old credit accounts</li>
+                          <li>• Check credit report annually</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg">
+                  <h3 className="text-lg font-bold text-yellow-800 mb-2">💡 Debt Repayment Strategies</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-semibold text-yellow-700 mb-2">Debt Snowball Method</h4>
+                      <ul className="text-sm text-yellow-600 space-y-1">
+                        <li>• Pay minimums on all debts</li>
+                        <li>• Focus extra money on smallest debt</li>
+                        <li>• Build momentum with quick wins</li>
+                        <li>• Good for motivation</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-yellow-700 mb-2">Debt Avalanche Method</h4>
+                      <ul className="text-sm text-yellow-600 space-y-1">
+                        <li>• Pay minimums on all debts</li>
+                        <li>• Focus extra money on highest interest</li>
+                        <li>• Mathematically optimal</li>
+                        <li>• Saves more money long-term</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Retirement Planning Section */}
+          {activeSection === 'retirement' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Retirement and Long-Term Planning</h2>
+                <button
+                  onClick={() => toggleBookmark('retirement')}
+                  className={`p-2 rounded-full ${bookmarks.has('retirement') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Retirement planning ensures financial security post-employment. Starting early leverages the power of compounding for wealth creation.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <div className="bg-blue-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-blue-800 mb-4">Retirement Needs Assessment</h3>
+                    <ul className="space-y-2 text-blue-700">
+                      <li>• Estimate future expenses (inflation-adjusted)</li>
+                      <li>• Account for healthcare costs</li>
+                      <li>• Consider lifestyle changes</li>
+                      <li>• Plan for longevity (80+ years)</li>
+                      <li>• Factor in inflation (6-7% annually)</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-green-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-green-800 mb-4">Indian Retirement Instruments</h3>
+                    <ul className="space-y-2 text-green-700">
+                      <li>• <strong>EPF:</strong> 8.25% return, tax-free</li>
+                      <li>• <strong>PPF:</strong> 7.1% return, 15-year lock-in</li>
+                      <li>• <strong>NPS:</strong> Market-linked, tax benefits</li>
+                      <li>• <strong>Annuities:</strong> Guaranteed pension</li>
+                      <li>• <strong>Equity MFs:</strong> Long-term wealth creation</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-purple-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-purple-800 mb-4">Global Retirement Options</h3>
+                    <ul className="space-y-2 text-purple-700">
+                      <li>• <strong>401(k):</strong> USA employer-sponsored</li>
+                      <li>• <strong>Roth IRA:</strong> Tax-free withdrawals</li>
+                      <li>• <strong>State Pensions:</strong> UK, EU countries</li>
+                      <li>• <strong>Superannuation:</strong> Australia</li>
+                      <li>• <strong>RRSP:</strong> Canada retirement savings</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold text-orange-800 mb-4">Retirement Planning Best Practices (2025)</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold text-orange-700 mb-2">Start Early Strategy</h4>
+                      <ul className="text-sm text-orange-600 space-y-1">
+                        <li>• Begin investing at 25 vs 35 = 2x more corpus</li>
+                        <li>• ₹5,000 monthly SIP for 35 years = ₹2.8 Cr</li>
+                        <li>• Same amount for 25 years = ₹1.2 Cr</li>
+                        <li>• Power of compounding maximized</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-orange-700 mb-2">Diversification Strategy</h4>
+                      <ul className="text-sm text-orange-600 space-y-1">
+                        <li>• 60% Equity (growth phase)</li>
+                        <li>• 30% Debt (stability)</li>
+                        <li>• 10% Alternative (gold, REITs)</li>
+                        <li>• Rebalance annually</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Insurance & Risk Section */}
+          {activeSection === 'insurance' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Insurance and Risk Management</h2>
+                <button
+                  onClick={() => toggleBookmark('insurance')}
+                  className={`p-2 rounded-full ${bookmarks.has('insurance') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Insurance protects against financial shocks due to unforeseen events. It's a crucial component of comprehensive financial planning.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-blue-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-blue-800 mb-4">Types of Insurance</h3>
+                    <div className="space-y-3">
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-blue-700">Life Insurance</h4>
+                        <p className="text-sm text-blue-600">Term plans (₹1Cr for ₹15k/year), whole life policies</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-blue-700">Health Insurance</h4>
+                        <p className="text-sm text-blue-600">Individual (₹5-10L), family floater, critical illness</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-blue-700">General Insurance</h4>
+                        <p className="text-sm text-blue-600">Motor, travel, home, cyber insurance</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-green-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-green-800 mb-4">Risk Management Strategy</h3>
+                    <div className="space-y-3">
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-green-700">1. Identify Risks</h4>
+                        <p className="text-sm text-green-600">Death, disability, medical emergencies, property loss</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-green-700">2. Assess Impact</h4>
+                        <p className="text-sm text-green-600">Financial impact on family and goals</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-green-700">3. Mitigate & Insure</h4>
+                        <p className="text-sm text-green-600">Prevent risks, transfer through insurance</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tax Planning Section */}
+          {activeSection === 'tax' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Tax Planning and Optimization</h2>
+                <button
+                  onClick={() => toggleBookmark('tax')}
+                  className={`p-2 rounded-full ${bookmarks.has('tax') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Tax planning ensures legal savings and efficient allocation of income through various exemptions and deductions.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-green-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-green-800 mb-4">Indian Tax-Saving Options (2025)</h3>
+                    <div className="space-y-3">
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-green-700">Section 80C (₹1.5L limit)</h4>
+                        <p className="text-sm text-green-600">ELSS, PPF, NPS, EPF, Life Insurance, Home Loan Principal</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-green-700">Section 80D (₹25k-75k)</h4>
+                        <p className="text-sm text-green-600">Health Insurance Premiums (self, family, parents)</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-green-700">Other Sections</h4>
+                        <p className="text-sm text-green-600">80E (Education Loan), 24B (Home Loan Interest)</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-blue-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-blue-800 mb-4">Tax Regimes Comparison (2025)</h3>
+                    <div className="space-y-3">
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-blue-700">Old Regime</h4>
+                        <p className="text-sm text-blue-600">Higher rates but many deductions available</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-blue-700">New Regime</h4>
+                        <p className="text-sm text-blue-600">Lower rates, limited deductions, ₹75k standard deduction</p>
+                      </div>
+                      <div className="bg-white p-3 rounded">
+                        <h4 className="font-semibold text-blue-700">Best Choice</h4>
+                        <p className="text-sm text-blue-600">New regime for income &lt;₹15L, Old for higher income</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Modern Trends Section */}
+          {activeSection === 'trends' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Modern Trends in Personal Finance</h2>
+                <button
+                  onClick={() => toggleBookmark('trends')}
+                  className={`p-2 rounded-full ${bookmarks.has('trends') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-purple-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-purple-800 mb-4">Digital Finance Revolution</h3>
+                    <ul className="space-y-2 text-purple-700">
+                      <li>• UPI payments (₹100L+ daily volume)</li>
+                      <li>• Mobile banking adoption</li>
+                      <li>• Robo-advisors for investments</li>
+                      <li>• AI-powered financial planning</li>
+                      <li>• Neobanks and digital-first banks</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-orange-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-orange-800 mb-4">Investment Innovations</h3>
+                    <ul className="space-y-2 text-orange-700">
+                      <li>• Fractional investing (₹100 SIPs)</li>
+                      <li>• ESG & Sustainable investing</li>
+                      <li>• Cryptocurrency adoption</li>
+                      <li>• International diversification</li>
+                      <li>• FIRE movement (Financial Independence)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Challenges Section */}
+          {activeSection === 'challenges' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Challenges in Personal Finance</h2>
+                <button
+                  onClick={() => toggleBookmark('challenges')}
+                  className={`p-2 rounded-full ${bookmarks.has('challenges') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-red-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-red-800 mb-4">Major Challenges</h3>
+                    <ul className="space-y-2 text-red-700">
+                      <li>• Inflation eroding purchasing power (6-7% annually)</li>
+                      <li>• Rising healthcare and education costs</li>
+                      <li>• Low financial literacy (especially rural areas)</li>
+                      <li>• Mis-selling of financial products</li>
+                      <li>• Lifestyle inflation with income growth</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-green-50 p-6 rounded-lg">
+                    <h3 className="text-xl font-bold text-green-800 mb-4">Solutions & Best Practices</h3>
+                    <ul className="space-y-2 text-green-700">
+                      <li>• Continuous financial education</li>
+                      <li>• Diversified investment portfolio</li>
+                      <li>• Regular review and rebalancing</li>
+                      <li>• Professional financial advice</li>
+                      <li>• Emergency fund maintenance</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Conclusion Section */}
+          {activeSection === 'conclusion' && (
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold text-gray-800">Conclusion</h2>
+                <button
+                  onClick={() => toggleBookmark('conclusion')}
+                  className={`p-2 rounded-full ${bookmarks.has('conclusion') ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500'}`}
+                >
+                  <BookmarkIcon className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Personal finance is an evolving field, deeply influenced by economic conditions, government policies, and global markets. By mastering budgeting, saving, investing, debt management, retirement planning, insurance, and tax strategies, individuals can build financial independence, security, and prosperity for themselves and future generations.
+                </p>
+                
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">Key Takeaways for 2025</h3>
+                  <ul className="space-y-2 text-gray-700">
+                    <li>• Start investing early to leverage compounding</li>
+                    <li>• Maintain 6-month emergency fund in high-yield savings</li>
+                    <li>• Diversify across asset classes and geographies</li>
+                    <li>• Optimize taxes through available deductions</li>
+                    <li>• Protect wealth through adequate insurance</li>
+                    <li>• Stay updated with financial regulations and opportunities</li>
+                    <li>• Seek professional advice for complex financial decisions</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Quick Tools Section */}
+          <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
+            <h3 className="text-xl font-bold mb-4">Quick Tools & Calculators</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Link to="/calculators/budget-planner" className="bg-white/20 p-4 rounded-lg hover:bg-white/30 transition-colors">
+                <CalculatorIcon className="h-8 w-8 mb-2" />
+                <p className="font-medium">Budget Planner</p>
               </Link>
-            </div>
-
-            {/* 2025 Updates */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">2025 Updates</h3>
-              <div className="space-y-3 text-sm">
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-3">
-                  <p className="text-yellow-800 dark:text-yellow-200">
-                    <strong>Savings Account:</strong> Best rates now 7-8% (SBI, HDFC, ICICI)
-                  </p>
-                </div>
-                <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3">
-                  <p className="text-green-800 dark:text-green-200">
-                    <strong>Tax Limit:</strong> 80C limit remains ₹1.5L, new regime popular
-                  </p>
-                </div>
-                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
-                  <p className="text-blue-800 dark:text-blue-200">
-                    <strong>Digital Banking:</strong> UPI limits increased, instant loans available
-                  </p>
-                </div>
-              </div>
+              <Link to="/calculators/emergency-fund" className="bg-white/20 p-4 rounded-lg hover:bg-white/30 transition-colors">
+                <CalculatorIcon className="h-8 w-8 mb-2" />
+                <p className="font-medium">Emergency Fund</p>
+              </Link>
+              <Link to="/calculators/sip" className="bg-white/20 p-4 rounded-lg hover:bg-white/30 transition-colors">
+                <CalculatorIcon className="h-8 w-8 mb-2" />
+                <p className="font-medium">SIP Calculator</p>
+              </Link>
+              <Link to="/calculators/debt-repayment" className="bg-white/20 p-4 rounded-lg hover:bg-white/30 transition-colors">
+                <CalculatorIcon className="h-8 w-8 mb-2" />
+                <p className="font-medium">Debt Planner</p>
+              </Link>
             </div>
           </div>
         </div>
-
-        {/* Quiz Modal */}
-        {showQuiz && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-                Question {currentQuiz + 1} of {quizQuestions.length}
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                {quizQuestions[currentQuiz].question}
-              </p>
-              <div className="space-y-2">
-                {quizQuestions[currentQuiz].options.map((option, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleQuizAnswer(index)}
-                    className="w-full text-left p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-              <button
-                onClick={() => setShowQuiz(false)}
-                className="mt-4 text-gray-500 hover:text-gray-700 text-sm"
-              >
-                Close Quiz
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
