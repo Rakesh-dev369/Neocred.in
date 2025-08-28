@@ -19,11 +19,14 @@ Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
 
-# Sitemap location
+# Sitemap locations
 Sitemap: https://neocred.in/sitemap.xml
+Sitemap: https://neocred.in/sitemap-ai.xml
 
-# Static content for AI crawlers
-# Visit https://neocred.in/static-content.html for complete site information
+# AI Crawler Resources
+# Static HTML: https://neocred.in/static-content.html
+# JSON API: https://neocred.in/ai-content.json
+# AI Sitemap: https://neocred.in/sitemap-ai.xml
 
 # Crawl delay (optional)
 Crawl-delay: 1

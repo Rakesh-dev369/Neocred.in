@@ -1,0 +1,58 @@
+{
+  "site": "NeoCred - AI-Powered Financial Platform",
+  "description": "India's leading financial platform with 40+ calculators, AI assistant, and comprehensive learning resources",
+  "lastUpdated": "2025-01-27",
+  "features": {
+    "calculators": 40,
+    "learningPillars": 8,
+    "aiAssistant": "GPT-4 powered FinBot",
+    "newsUpdates": "Real-time financial news",
+    "userBase": "Growing financial literacy platform"
+  },
+  "pillars": {
+    "personalFinance": {
+      "sections": 12,
+      "features": ["Floating quick navigation", "Definition hover cards", "Level indicators", "Takeaway boxes", "Cross-linking"],
+      "content": "Complete Wikipedia-style guide covering budgeting, saving, investing, debt management, retirement planning, insurance, tax optimization",
+      "tools": ["Budget Planner", "Emergency Fund Calculator", "SIP Calculator", "Debt Repayment Planner"],
+      "data2025": "Updated with 7-8% savings rates, 80C limits, new tax regime comparisons"
+    },
+    "traditionalInvestments": {
+      "categories": ["Bank Deposits", "Government Schemes", "Bonds", "Retirement", "Gold", "Insurance"],
+      "content": "Comprehensive coverage of FD, RD, PPF, NSC, EPF, NPS with 2025 rates and strategies"
+    },
+    "marketLinkedInvestments": {
+      "categories": ["Equity", "Mutual Funds", "Derivatives", "Real Estate", "International", "Commodities", "Digital Assets"],
+      "content": "Complete guide to market investments with risk analysis and platform recommendations"
+    }
+  },
+  "calculators": {
+    "popular": [
+      {"name": "SIP Calculator", "description": "Systematic Investment Planning with rupee cost averaging"},
+      {"name": "Home Loan EMI", "description": "Monthly mortgage payments with current rates 8.5-12%"},
+      {"name": "Budget Planner", "description": "50/30/20 rule implementation for personal finance"},
+      {"name": "Emergency Fund", "description": "6 months expense safety net calculator"},
+      {"name": "Retirement Goal", "description": "NPS and EPF based retirement corpus calculation"}
+    ],
+    "categories": ["Investment", "Loans", "Savings", "Insurance", "Tax", "Retirement"]
+  },
+  "finbot": {
+    "model": "GPT-4-turbo",
+    "capabilities": ["Personalized financial advice", "Tool recommendations", "Real-time guidance", "VS comparisons"],
+    "examples": [
+      "How much should I save if my salary is ₹40,000?",
+      "What's the right emergency fund size for me?",
+      "Should I pay off debt or start investing?",
+      "Which mutual fund is best for SIP?",
+      "How to improve my CIBIL score?"
+    ]
+  },
+  "data2025": {
+    "savingsRates": "7-8%",
+    "fdRates": "7-8.5%",
+    "ppfRate": "7.1%",
+    "epfRate": "8.25%",
+    "homeLoanRates": "8.5-12%",
+    "taxLimits": "80C: ₹1.5L, Standard Deduction: ₹75k"
+  }
+}
