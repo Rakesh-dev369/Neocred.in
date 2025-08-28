@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect, lazy, Suspense } from 'react';
 import { Tab } from '@headlessui/react';
+import { useNavigate } from 'react-router-dom';
 import {
   CalculatorIcon,
   ChartBarIcon,
@@ -47,10 +48,9 @@ import NetWorthTracker from '../calculators/NetWorthTracker';
 import EmergencyFundCalculator from '../calculators/EmergencyFundCalculator';
 import BudgetRuleCalculator from '../calculators/BudgetRuleCalculator';
 import FirstSalaryPlanner from '../calculators/FirstSalaryPlanner';
-import ScholarshipEligibilityTool from '../calculators/ScholarshipEligibilityTool';
+
 import RentVsBuyCalculator from '../calculators/RentVsBuyCalculator';
 import RealReturnsCalculator from '../calculators/RealReturnsCalculator';
-import EducationCostEstimator from '../calculators/EducationCostEstimator';
 import RuleOf72Calculator from '../calculators/RuleOf72Calculator';
 import BudgetGoalPlanner from '../calculators/BudgetGoalPlanner';
 
@@ -59,6 +59,7 @@ function classNames(...classes) {
 }
 
 export default function Tools() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('All');
   const [selectedTag, setSelectedTag] = useState('All');
@@ -70,68 +71,67 @@ export default function Tools() {
   const [showPointsAnimation, setShowPointsAnimation] = useState(false);
   const [isFromChatbot, setIsFromChatbot] = useState(false);
   
-  // Enhanced tool data with tags, levels, and popularity (40+ tools)
+  // Enhanced tool data with tags, levels, and popularity (30+ tools)
   const allTools = [
     // Core Tools (4)
-    { name: 'FD Calculator', icon: CurrencyDollarIcon, component: FdCalculator, category: 'Core Tools', level: 'Beginner', tags: ['savings', 'deposit', 'fixed'], popularity: 95, description: 'Calculate returns on Fixed Deposits' },
-    { name: 'SIP Calculator', icon: ChartBarIcon, component: SIPCalculator, category: 'Core Tools', level: 'Beginner', tags: ['invest', 'sip', 'mutual-fund'], popularity: 98, description: 'Plan your systematic investment' },
-    { name: 'Budget Planner', icon: DocumentTextIcon, component: BudgetPlanner, category: 'Core Tools', level: 'Beginner', tags: ['budget', 'planning', 'expense'], popularity: 92, description: 'Manage your monthly budget' },
+    { name: 'FD Calculator', icon: CurrencyDollarIcon, component: FdCalculator, category: 'Core Tools', level: 'Beginner', tags: ['savings', 'deposit', 'fixed'], popularity: 95, description: 'Calculate returns on Fixed Deposits', pageUrl: '/calculators/fd' },
+    { name: 'SIP Calculator', icon: ChartBarIcon, component: SIPCalculator, category: 'Core Tools', level: 'Beginner', tags: ['invest', 'sip', 'mutual-fund'], popularity: 98, description: 'Plan your systematic investment', pageUrl: '/calculators/sip' },
+    { name: 'Budget Planner', icon: DocumentTextIcon, component: BudgetPlanner, category: 'Core Tools', level: 'Beginner', tags: ['budget', 'planning', 'expense'], popularity: 92, description: 'Manage your monthly budget', pageUrl: '/calculators/budget-planner' },
     { name: 'Tax Saver', icon: CalculatorIcon, component: TaxSaverCalc, category: 'Core Tools', level: 'Intermediate', tags: ['tax', 'savings', '80c'], popularity: 88, description: 'Calculate tax savings' },
     
     // Savings & Deposits (3)
-    { name: 'RD Calculator', icon: CalculatorIcon, component: RDCalculator, category: 'Savings & Deposits', level: 'Beginner', tags: ['savings', 'recurring', 'deposit'], popularity: 75, description: 'Calculates maturity and total interest from Recurring Deposits' },
-    { name: 'PPF Calculator', icon: CalculatorIcon, component: PPFCalculator, category: 'Savings & Deposits', level: 'Intermediate', tags: ['savings', 'ppf', 'tax'], popularity: 82, description: 'Calculates maturity value of Public Provident Fund' },
-    { name: 'Post Office FD Calculator', icon: CalculatorIcon, component: PostOfficeFDCalculator, category: 'Savings & Deposits', level: 'Beginner', tags: ['savings', 'deposit', 'post-office'], popularity: 65, description: 'For rural/senior-friendly schemes like Monthly Income Scheme' },
+    { name: 'RD Calculator', icon: CalculatorIcon, component: RDCalculator, category: 'Savings & Deposits', level: 'Beginner', tags: ['savings', 'recurring', 'deposit'], popularity: 75, description: 'Calculates maturity and total interest from Recurring Deposits', pageUrl: '/calculators/rd' },
+    { name: 'PPF Calculator', icon: CalculatorIcon, component: PPFCalculator, category: 'Savings & Deposits', level: 'Intermediate', tags: ['savings', 'ppf', 'tax'], popularity: 82, description: 'Calculates maturity value of Public Provident Fund', pageUrl: '/calculators/ppf' },
+
     
     // Investment Tools (6)
-    { name: 'Step-up SIP Calculator', icon: ChartBarIcon, component: StepUpSIPCalculator, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'sip', 'step-up'], popularity: 78, description: 'Calculates returns if SIP amount increases yearly' },
-    { name: 'Lumpsum Investment Calculator', icon: CurrencyDollarIcon, component: LumpsumInvestmentCalculator, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'lumpsum', 'cagr'], popularity: 80, description: 'Calculates one-time investment returns (with CAGR)' },
-    { name: 'Goal-Based Investment Planner', icon: ChartBarIcon, component: GoalBasedInvestmentPlanner, category: 'Investment Tools', level: 'Advanced', tags: ['invest', 'goal', 'planning'], popularity: 72, description: 'Helps users invest monthly to reach future goals' },
-    { name: 'Mutual Fund Return Tracker', icon: ChartBarIcon, component: MutualFundReturnTracker, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'mutual-fund', 'returns'], popularity: 76, description: 'Estimates mutual fund returns over a period' },
-    { name: 'Gold Investment Calculator', icon: CurrencyDollarIcon, component: GoldInvestmentCalculator, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'gold', 'sgb'], popularity: 68, description: 'SGB/digital gold returns over years' },
-    { name: 'Rule of 72 Calculator', icon: CalculatorIcon, component: RuleOf72Calculator, category: 'Investment Tools', level: 'Beginner', tags: ['invest', 'doubling', 'rule72'], popularity: 84, description: 'Quick way to estimate investment doubling time' },
+    { name: 'Step-up SIP Calculator', icon: ChartBarIcon, component: StepUpSIPCalculator, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'sip', 'step-up'], popularity: 78, description: 'Calculates returns if SIP amount increases yearly', pageUrl: '/calculators/step-up-sip' },
+    { name: 'Lumpsum Investment Calculator', icon: CurrencyDollarIcon, component: LumpsumInvestmentCalculator, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'lumpsum', 'cagr'], popularity: 80, description: 'Calculates one-time investment returns (with CAGR)', pageUrl: '/calculators/lumpsum' },
+    { name: 'Goal-Based Investment Planner', icon: ChartBarIcon, component: GoalBasedInvestmentPlanner, category: 'Investment Tools', level: 'Advanced', tags: ['invest', 'goal', 'planning'], popularity: 72, description: 'Helps users invest monthly to reach future goals', pageUrl: '/calculators/goal-based-investment' },
+    { name: 'Mutual Fund Return Tracker', icon: ChartBarIcon, component: MutualFundReturnTracker, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'mutual-fund', 'returns'], popularity: 76, description: 'Estimates mutual fund returns over a period', pageUrl: '/calculators/mutual-fund-tracker' },
+    { name: 'Gold Investment Calculator', icon: CurrencyDollarIcon, component: GoldInvestmentCalculator, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'gold', 'sgb'], popularity: 68, description: 'SGB/digital gold returns over years', pageUrl: '/calculators/gold-investment' },
+    { name: 'Rule of 72 Calculator', icon: CalculatorIcon, component: RuleOf72Calculator, category: 'Investment Tools', level: 'Beginner', tags: ['invest', 'doubling', 'rule72'], popularity: 84, description: 'Quick way to estimate investment doubling time', pageUrl: '/calculators/rule-of-72' },
     
     // Loan & Credit Tools (6)
-    { name: 'Home Loan EMI Calculator', icon: CalculatorIcon, component: HomeLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'home', 'emi'], popularity: 90, description: 'Estimate EMI + interest breakup' },
-    { name: 'Education Loan EMI Calculator', icon: CalculatorIcon, component: EducationLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'education', 'student'], popularity: 70, description: 'Helps students plan repayment' },
-    { name: 'Car/Bike Loan EMI Calculator', icon: CalculatorIcon, component: CarBikeLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Beginner', tags: ['loan', 'vehicle', 'emi'], popularity: 74, description: 'For vehicle buyers' },
-    { name: 'Credit Card EMI Calculator', icon: CalculatorIcon, component: CreditCardEMICalculator, category: 'Loan & Credit Tools', level: 'Beginner', tags: ['credit', 'card', 'emi'], popularity: 82, description: 'Helps understand EMI on card purchases' },
-    { name: 'Loan Eligibility Checker', icon: CalculatorIcon, component: LoanEligibilityChecker, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'eligibility', 'income'], popularity: 77, description: 'Based on salary/income, debt ratio' },
-    { name: 'Loan Affordability Tool', icon: CalculatorIcon, component: LoanAffordabilityTool, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'affordability', 'emi'], popularity: 71, description: 'Shows how much EMI one can afford monthly' },
+    { name: 'Home Loan EMI Calculator', icon: CalculatorIcon, component: HomeLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'home', 'emi'], popularity: 90, description: 'Estimate EMI + interest breakup', pageUrl: '/calculators/home-loan-emi' },
+    { name: 'Education Loan EMI Calculator', icon: CalculatorIcon, component: EducationLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'education', 'student'], popularity: 70, description: 'Helps students plan repayment', pageUrl: '/calculators/education-loan-emi' },
+    { name: 'Car/Bike Loan EMI Calculator', icon: CalculatorIcon, component: CarBikeLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Beginner', tags: ['loan', 'vehicle', 'emi'], popularity: 74, description: 'For vehicle buyers', pageUrl: '/calculators/car-loan-emi' },
+
+    { name: 'Loan Eligibility Checker', icon: CalculatorIcon, component: LoanEligibilityChecker, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'eligibility', 'income'], popularity: 77, description: 'Based on salary/income, debt ratio', pageUrl: '/calculators/loan-eligibility' },
+
     
     // Insurance Tools (4)
-    { name: 'Term Life Insurance Estimator', icon: CalculatorIcon, component: TermLifeInsuranceEstimator, category: 'Insurance Tools', level: 'Intermediate', tags: ['insurance', 'life', 'family'], popularity: 85, description: 'Estimates ideal life cover based on income & age' },
-    { name: 'Health Insurance Premium Estimator', icon: CalculatorIcon, component: HealthInsurancePremiumEstimator, category: 'Insurance Tools', level: 'Beginner', tags: ['insurance', 'health', 'family'], popularity: 88, description: 'Based on city, age, coverage amount' },
-    { name: 'Vehicle Insurance Estimator', icon: CalculatorIcon, component: VehicleInsuranceEstimator, category: 'Insurance Tools', level: 'Beginner', tags: ['insurance', 'vehicle', 'premium'], popularity: 69, description: 'Basic premium for private cars/bikes' },
-    { name: 'Crop Insurance Estimator', icon: CalculatorIcon, component: CropInsuranceEstimator, category: 'Insurance Tools', level: 'Intermediate', tags: ['insurance', 'crop', 'agriculture'], popularity: 45, description: 'For rural audience (optional, Bharat-focused)' },
+    { name: 'Term Life Insurance Estimator', icon: CalculatorIcon, component: TermLifeInsuranceEstimator, category: 'Insurance Tools', level: 'Intermediate', tags: ['insurance', 'life', 'family'], popularity: 85, description: 'Estimates ideal life cover based on income & age', pageUrl: '/calculators/term-life-insurance' },
+    { name: 'Health Insurance Premium Estimator', icon: CalculatorIcon, component: HealthInsurancePremiumEstimator, category: 'Insurance Tools', level: 'Beginner', tags: ['insurance', 'health', 'family'], popularity: 88, description: 'Based on city, age, coverage amount', pageUrl: '/calculators/health-insurance' },
+
+
     
     // Retirement Tools (4)
-    { name: 'NPS Return Calculator', icon: ChartBarIcon, component: NPSReturnCalculator, category: 'Retirement Tools', level: 'Advanced', tags: ['retirement', 'nps', 'pension'], popularity: 65, description: 'Calculates future value based on investment %' },
-    { name: 'Retirement Goal Planner', icon: ChartBarIcon, component: RetirementGoalPlanner, category: 'Retirement Tools', level: 'Advanced', tags: ['retirement', 'planning', 'goal'], popularity: 78, description: 'Helps users invest monthly for post-60 life' },
-    { name: 'Annuity Calculator', icon: CurrencyDollarIcon, component: AnnuityCalculator, category: 'Retirement Tools', level: 'Advanced', tags: ['retirement', 'annuity', 'income'], popularity: 58, description: 'Post-retirement income based on lump sum corpus' },
-    { name: 'EPF Maturity Calculator', icon: CalculatorIcon, component: EPFMaturityCalculator, category: 'Retirement Tools', level: 'Intermediate', tags: ['retirement', 'epf', 'provident'], popularity: 73, description: 'For salaried employees (estimate maturity at 58)' },
+    { name: 'NPS Return Calculator', icon: ChartBarIcon, component: NPSReturnCalculator, category: 'Retirement Tools', level: 'Advanced', tags: ['retirement', 'nps', 'pension'], popularity: 65, description: 'Calculates future value based on investment %', pageUrl: '/calculators/nps-return' },
+    { name: 'Retirement Goal Planner', icon: ChartBarIcon, component: RetirementGoalPlanner, category: 'Retirement Tools', level: 'Advanced', tags: ['retirement', 'planning', 'goal'], popularity: 78, description: 'Helps users invest monthly for post-60 life', pageUrl: '/calculators/retirement-goal' },
+
+    { name: 'EPF Maturity Calculator', icon: CalculatorIcon, component: EPFMaturityCalculator, category: 'Retirement Tools', level: 'Intermediate', tags: ['retirement', 'epf', 'provident'], popularity: 73, description: 'For salaried employees (estimate maturity at 58)', pageUrl: '/calculators/epf-maturity' },
     
     // Credit & Score Tools (2)
-    { name: 'Credit Score Simulator', icon: ChartBarIcon, category: 'Credit & Score Tools', level: 'Advanced', tags: ['credit', 'score', 'simulation'], popularity: 67, description: 'Simulates how score changes based on EMI defaults, usage', locked: true },
-    { name: 'Debt Repayment Planner', icon: CalculatorIcon, component: DebtRepaymentPlanner, category: 'Credit & Score Tools', level: 'Advanced', tags: ['debt', 'credit', 'planning'], popularity: 72, description: 'Strategizes how to repay loans faster using snowball/avalanche method' },
+    { name: 'Credit Score Simulator', icon: ChartBarIcon, category: 'Credit & Score Tools', level: 'Advanced', tags: ['credit', 'score', 'simulation'], popularity: 67, description: 'Simulates how score changes based on EMI defaults, usage', pageUrl: '/calculators/credit-score-simulator' },
+    { name: 'Debt Repayment Planner', icon: CalculatorIcon, component: DebtRepaymentPlanner, category: 'Credit & Score Tools', level: 'Advanced', tags: ['debt', 'credit', 'planning'], popularity: 72, description: 'Strategizes how to repay loans faster using snowball/avalanche method', pageUrl: '/calculators/debt-repayment' },
     
     // Tax & Salary Tools (3)
-    { name: 'HRA Exemption Calculator', icon: CalculatorIcon, component: HRAExemptionCalculator, category: 'Tax & Salary Tools', level: 'Intermediate', tags: ['tax', 'hra', 'salary'], popularity: 80, description: 'Show HRA deduction based on salary & rent' },
-    { name: 'Form 16 Breakdown Tool', icon: DocumentTextIcon, component: Form16BreakdownTool, category: 'Tax & Salary Tools', level: 'Beginner', tags: ['tax', 'form16', 'salary'], popularity: 75, description: 'Explains salary components to employees' },
-    { name: 'TDS Estimator', icon: CalculatorIcon, component: TDSEstimator, category: 'Tax & Salary Tools', level: 'Intermediate', tags: ['tax', 'tds', 'freelance'], popularity: 70, description: 'For freelancers, contract workers, creators' },
+    { name: 'HRA Exemption Calculator', icon: CalculatorIcon, component: HRAExemptionCalculator, category: 'Tax & Salary Tools', level: 'Intermediate', tags: ['tax', 'hra', 'salary'], popularity: 80, description: 'Show HRA deduction based on salary & rent', pageUrl: '/calculators/hra-exemption' },
+
+
     
     // Personal Planning Tools (5)
-    { name: 'Net Worth Tracker', icon: ChartBarIcon, component: NetWorthTracker, category: 'Personal Planning Tools', level: 'Beginner', tags: ['planning', 'wealth', 'assets'], popularity: 68, description: 'Calculates total assets – liabilities' },
-    { name: 'Emergency Fund Calculator', icon: CurrencyDollarIcon, component: EmergencyFundCalculator, category: 'Personal Planning Tools', level: 'Beginner', tags: ['emergency', 'savings', 'planning'], popularity: 85, description: 'Shows how much savings needed for 3/6 months' },
-    { name: '50/30/20 Rule Budgeter', icon: DocumentTextIcon, component: BudgetRuleCalculator, category: 'Personal Planning Tools', level: 'Beginner', tags: ['budget', 'rule', 'planning'], popularity: 79, description: 'Income-based auto-planner' },
-    { name: 'First Salary Planner', icon: CalculatorIcon, component: FirstSalaryPlanner, category: 'Personal Planning Tools', level: 'Beginner', tags: ['salary', 'fresher', 'planning'], popularity: 83, description: 'For freshers to plan savings, tax, and spend smartly' },
-    { name: 'Budget Goal Planner', icon: DocumentTextIcon, component: BudgetGoalPlanner, category: 'Personal Planning Tools', level: 'Intermediate', tags: ['budget', 'goals', 'inflation'], popularity: 81, description: 'Plan multiple financial goals with inflation adjustment' },
+    { name: 'Net Worth Tracker', icon: ChartBarIcon, component: NetWorthTracker, category: 'Personal Planning Tools', level: 'Beginner', tags: ['planning', 'wealth', 'assets'], popularity: 68, description: 'Calculates total assets – liabilities', pageUrl: '/calculators/net-worth-tracker' },
+    { name: 'Emergency Fund Calculator', icon: CurrencyDollarIcon, component: EmergencyFundCalculator, category: 'Personal Planning Tools', level: 'Beginner', tags: ['emergency', 'savings', 'planning'], popularity: 85, description: 'Shows how much savings needed for 3/6 months', pageUrl: '/calculators/emergency-fund' },
+    { name: '50/30/20 Rule Budgeter', icon: DocumentTextIcon, component: BudgetRuleCalculator, category: 'Personal Planning Tools', level: 'Beginner', tags: ['budget', 'rule', 'planning'], popularity: 79, description: 'Income-based auto-planner', pageUrl: '/calculators/budget-rule' },
+    { name: 'First Salary Planner', icon: CalculatorIcon, component: FirstSalaryPlanner, category: 'Personal Planning Tools', level: 'Beginner', tags: ['salary', 'fresher', 'planning'], popularity: 83, description: 'For freshers to plan savings, tax, and spend smartly', pageUrl: '/calculators/first-salary-planner' },
+
     
     // Specialized Tools (4)
-    { name: 'Scholarship Eligibility Tool', icon: DocumentTextIcon, component: ScholarshipEligibilityTool, category: 'Specialized Tools', level: 'Beginner', tags: ['education', 'student', 'scholarship'], popularity: 60, description: 'Based on marks, income, state – India-focused' },
-    { name: 'Rent vs Buy Home Calculator', icon: CalculatorIcon, component: RentVsBuyCalculator, category: 'Specialized Tools', level: 'Advanced', tags: ['property', 'rent', 'buy'], popularity: 75, description: 'Compares renting vs buying a house over years' },
-    { name: 'Real Returns Calculator', icon: ChartBarIcon, component: RealReturnsCalculator, category: 'Specialized Tools', level: 'Advanced', tags: ['returns', 'inflation', 'real'], popularity: 64, description: 'Adjusts returns for inflation impact' },
-    { name: 'Education Cost Estimator', icon: CalculatorIcon, component: EducationCostEstimator, category: 'Specialized Tools', level: 'Intermediate', tags: ['education', 'cost', 'planning'], popularity: 66, description: 'Plan for future cost of school/college fees' }
+
+    { name: 'Rent vs Buy Home Calculator', icon: CalculatorIcon, component: RentVsBuyCalculator, category: 'Specialized Tools', level: 'Advanced', tags: ['property', 'rent', 'buy'], popularity: 75, description: 'Compares renting vs buying a house over years', pageUrl: '/calculators/rent-vs-buy' },
+    { name: 'Real Returns Calculator', icon: ChartBarIcon, component: RealReturnsCalculator, category: 'Specialized Tools', level: 'Advanced', tags: ['returns', 'inflation', 'real'], popularity: 64, description: 'Adjusts returns for inflation impact', pageUrl: '/calculators/real-returns' }
   ];
   
   // Load data from localStorage and handle URL parameters on component mount
@@ -267,8 +267,12 @@ export default function Tools() {
       }`}
       onClick={() => {
         if (!tool.locked) {
-          setSelectedTool(tool);
-          trackToolUsage(tool);
+          if (tool.pageUrl) {
+            navigate(tool.pageUrl);
+          } else {
+            setSelectedTool(tool);
+            trackToolUsage(tool);
+          }
         }
       }}
     >

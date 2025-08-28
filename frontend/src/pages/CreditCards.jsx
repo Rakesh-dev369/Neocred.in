@@ -9,7 +9,7 @@ export default function CreditCards() {
   const navigate = useNavigate();
 
   const publicSectorCards = [
-    { name: 'State Bank of India', bank: 'SBI', slug: 'sbi', fee: 'Various', cashback: '11 Credit Cards', rating: 4.2, categories: ['Student', 'Salaried', 'Business'] },
+    { name: 'State Bank of India', bank: 'SBI', slug: 'sbi', fee: 'Various', cashback: '12 Credit Cards', rating: 4.2, categories: ['Student', 'Salaried', 'Business'] },
     { name: 'Bank of Baroda', bank: 'Bank of Baroda', slug: 'bob', fee: 'Various', cashback: '1 Credit Card', rating: 4.0, categories: ['Student', 'Salaried', 'Business'] },
     { name: 'Punjab National Bank', bank: 'PNB', slug: 'pnb', fee: 'Various', cashback: '1 Credit Card', rating: 3.8, categories: ['Student', 'Salaried', 'Business'] },
     { name: 'Union Bank of India', bank: 'Union Bank', slug: 'union', fee: 'Various', cashback: '1 Credit Card', rating: 3.9, categories: ['Student', 'Salaried', 'Business'] },

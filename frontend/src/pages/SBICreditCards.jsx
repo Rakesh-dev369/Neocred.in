@@ -166,6 +166,22 @@ export default function SBICreditCards() {
       applyLink: 'https://www.sbicard.com/sprint/c/cashback?CS=sbic&GEMID1=cashback_hb&GEMID2=org_hp'
     },
     {
+      name: 'SBI Card PULSE',
+      type: 'Health & Wellness Card',
+      category: 'Salaried',
+      categories: ['Salaried', 'Business'],
+      annualFee: '₹1,499 + Taxes (Waived on ₹2L spend)',
+      features: [
+        'Noise ColorFit Pulse 4 Pro Smart Watch worth ₹7,999',
+        '1 year FITPASS PRO & Netmeds First Membership',
+        '10 Reward Points per ₹100 on health, sports, dining',
+        '8 domestic lounge visits + Priority Pass for 2 years',
+        '₹1,500 E-Voucher on ₹4L annual spend',
+        '₹1L fraud liability insurance cover'
+      ],
+      applyLink: 'https://www.sbicard.com/en/personal/credit-cards/lifestyle/sbi-card-pulse.page'
+    },
+    {
       name: 'BPCL SBI Card OCTANE',
       type: 'Fuel Card',
       category: 'Student',

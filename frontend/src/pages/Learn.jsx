@@ -35,12 +35,7 @@ const LearnPage = () => {
         ctaText="Start Learning"
       />
 
-      {/* 1. Your Financial Literacy Journey */}
-      <div id="literacy-journey">
-        <LiteracyJourney />
-      </div>
-
-      {/* 2. 8 Pillars of Financial Literacy */}
+      {/* 8 Pillars of Financial Literacy */}
       <PillarGrid />
 
       {/* 3. Weekly Financial Tips */}
