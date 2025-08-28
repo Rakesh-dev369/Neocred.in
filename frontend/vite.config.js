@@ -7,6 +7,9 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     rollupOptions: {
+      input: {
+        main: './index.html'
+      },
       output: {
         entryFileNames: 'assets/[name]-[hash]-v4.js',
         chunkFileNames: 'assets/[name]-[hash]-v4.js',
@@ -16,8 +19,10 @@ export default defineConfig({
           router: ['react-router-dom']
         }
       }
-    }
+    },
+    copyPublicDir: true
   },
+  publicDir: 'public',
   server: {
     port: 3000,
     host: true

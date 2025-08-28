@@ -4,20 +4,20 @@
   "routes": [
     {
       "src": "/robots.txt",
-      "dest": "/robots.txt"
+      "headers": { "Content-Type": "text/plain" }
     },
     {
       "src": "/sitemap.xml",
-      "dest": "/sitemap.xml"
+      "headers": { "Content-Type": "application/xml" }
     },
     {
       "src": "/.well-known/(.*)",
-      "dest": "/.well-known/$1"
+      "headers": { "Content-Type": "text/plain" }
     }
   ],
   "rewrites": [
     {
-      "source": "/((?!assets/|robots.txt|sitemap.xml|.well-known/).*)",
+      "source": "/((?!api|_next|robots.txt|sitemap.xml|.well-known|favicon.ico|manifest.json).*)",
       "destination": "/index.html"
     }
   ]
