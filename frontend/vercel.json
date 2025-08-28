@@ -1,20 +1,4 @@
 {
-  "framework": "vite",
-  "outputDirectory": "dist",
-  "routes": [
-    {
-      "src": "/robots.txt",
-      "headers": { "Content-Type": "text/plain" }
-    },
-    {
-      "src": "/sitemap.xml",
-      "headers": { "Content-Type": "application/xml" }
-    },
-    {
-      "src": "/.well-known/(.*)",
-      "headers": { "Content-Type": "text/plain" }
-    }
-  ],
   "rewrites": [
     {
       "source": "/((?!api|_next|robots.txt|sitemap.xml|.well-known|favicon.ico|manifest.json).*)",
