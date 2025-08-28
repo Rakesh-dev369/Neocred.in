@@ -399,6 +399,83 @@ async def get_stats():
         "uptime": "99.9%"
     }
 
+# AI Content API Endpoints for Crawlers
+@app.get(
+    "/api/learn",
+    summary="📚 Learning Pillars",
+    description="Get all learning pillars for AI crawlers",
+    tags=["AI Content"]
+)
+async def get_all_pillars():
+    return {
+        "pillars": [
+            {"id": "personal-finance", "title": "Personal Finance", "sections": 9, "description": "Master money management, wealth building, and financial independence"},
+            {"id": "traditional-investments", "title": "Traditional Investments", "sections": 6, "description": "Safe, government-backed investment options"},
+            {"id": "market-linked-investments", "title": "Market-Linked Investments", "sections": 9, "description": "Equity, mutual funds, and market investments"},
+            {"id": "banking-payments", "title": "Banking & Payments", "sections": 5, "description": "Digital banking and payment systems"},
+            {"id": "insurance-risk", "title": "Insurance & Risk", "sections": 4, "description": "Insurance planning and risk management"},
+            {"id": "corporate-finance", "title": "Corporate Finance", "sections": 6, "description": "Business financial planning"},
+            {"id": "govt-public-finance", "title": "Government & Public Finance", "sections": 5, "description": "Government schemes and policies"},
+            {"id": "alt-fintech", "title": "Alternative Finance & Fintech", "sections": 7, "description": "Fintech innovations and alternatives"}
+        ],
+        "totalPillars": 8,
+        "lastUpdated": datetime.now().isoformat()
+    }
+
+@app.get(
+    "/api/pillars/{pillar_id}",
+    summary="📖 Pillar Details",
+    description="Get detailed content for specific pillar",
+    tags=["AI Content"]
+)
+async def get_pillar(pillar_id: str):
+    if pillar_id == "personal-finance":
+        return {
+            "id": "personal-finance",
+            "title": "Personal Finance",
+            "description": "Master money management, wealth building, and financial independence",
+            "sections": [
+                {"id": "introduction", "title": "Introduction", "content": "Personal finance management fundamentals", "level": "foundation"},
+                {"id": "budgeting", "title": "Budgeting & Planning", "content": "50/30/20 rule, zero-based budgeting", "level": "foundation", "takeaway": "Budgeting helps you plan, prioritize, and prevent overspending"},
+                {"id": "saving", "title": "Saving & Emergency", "content": "Emergency funds, high-yield savings (7-8% rates)", "level": "foundation", "takeaway": "Build 6 months of expenses in high-yield savings accounts"},
+                {"id": "investing", "title": "Investment Management", "content": "Asset classes, diversification, SIP strategies", "level": "advanced", "takeaway": "Diversify investments across asset classes for long-term wealth creation"},
+                {"id": "debt", "title": "Debt & Credit", "content": "CIBIL score management, debt repayment strategies", "level": "advanced", "takeaway": "Maintain CIBIL score above 750 for best loan rates"},
+                {"id": "retirement", "title": "Retirement Planning", "content": "EPF, PPF, NPS, retirement corpus calculation", "level": "advanced", "takeaway": "Start retirement planning early to leverage compounding"},
+                {"id": "insurance", "title": "Insurance & Risk", "content": "Life insurance, health insurance, risk management", "level": "advanced", "takeaway": "Insurance protects your wealth from unexpected events"},
+                {"id": "tax", "title": "Tax Planning", "content": "Section 80C, 80D deductions, tax optimization", "level": "advanced", "takeaway": "Optimize taxes legally through available deductions"}
+            ],
+            "tools": [
+                {"name": "Budget Planner", "url": "/calculators/budget-planner"},
+                {"name": "Emergency Fund Calculator", "url": "/calculators/emergency-fund"},
+                {"name": "SIP Calculator", "url": "/calculators/sip"},
+                {"name": "Debt Repayment Planner", "url": "/calculators/debt-repayment"}
+            ],
+            "lastUpdated": "2025-01-27"
+        }
+    else:
+        raise HTTPException(status_code=404, detail="Pillar not found")
+
+@app.get(
+    "/api/calculators",
+    summary="🧮 All Calculators",
+    description="Get complete list of financial calculators",
+    tags=["AI Content"]
+)
+async def get_all_calculators():
+    return {
+        "categories": {
+            "investment": ["SIP Calculator", "Lumpsum Calculator", "Step-up SIP", "Goal Based Investment"],
+            "loans": ["Home Loan EMI", "Car Loan EMI", "Education Loan EMI", "Personal Loan EMI"],
+            "savings": ["FD Calculator", "RD Calculator", "PPF Calculator", "Emergency Fund"],
+            "insurance": ["Term Life Insurance", "Health Insurance", "Vehicle Insurance"],
+            "tax": ["HRA Exemption", "Form 16 Breakdown", "80C Calculator"],
+            "retirement": ["Retirement Goal", "NPS Return", "EPF Maturity", "Annuity Calculator"]
+        },
+        "totalCalculators": 33,
+        "popular": ["SIP Calculator", "Home Loan EMI", "Budget Planner", "Emergency Fund", "FD Calculator"],
+        "lastUpdated": datetime.now().isoformat()
+    }
+
 @app.get(
     "/api/news",
     summary="📰 Financial News",
