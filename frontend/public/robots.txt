@@ -22,6 +22,7 @@ Disallow: /admin/
 # Sitemap locations
 Sitemap: https://neocred.in/sitemap.xml
 Sitemap: https://neocred.in/sitemap-ai.xml
+Sitemap: https://neocred.in/sitemap-complete.xml
 
 # AI Crawler Resources
 # Static HTML: https://neocred.in/static-content.html

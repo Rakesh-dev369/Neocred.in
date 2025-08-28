@@ -1,0 +1,940 @@
+{
+  "site": "NeoCred",
+  "url": "https://neocred.in",
+  "description": "AI-Powered Financial Platform with 40+ calculators and comprehensive learning resources",
+  "lastUpdated": "2025-08-28T20:38:57.882830",
+  "totalPages": 133,
+  "pages": [
+    {
+      "url": "https://neocred.in/",
+      "path": "/",
+      "priority": 1.0,
+      "changefreq": "daily",
+      "category": "Main"
+    },
+    {
+      "url": "https://neocred.in/learn",
+      "path": "/learn",
+      "priority": 0.9,
+      "changefreq": "weekly",
+      "category": "Main"
+    },
+    {
+      "url": "https://neocred.in/tools",
+      "path": "/tools",
+      "priority": 0.9,
+      "changefreq": "weekly",
+      "category": "Main"
+    },
+    {
+      "url": "https://neocred.in/chatbot",
+      "path": "/chatbot",
+      "priority": 0.8,
+      "changefreq": "monthly",
+      "category": "Main"
+    },
+    {
+      "url": "https://neocred.in/about",
+      "path": "/about",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/contact",
+      "path": "/contact",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/news",
+      "path": "/news",
+      "priority": 0.7,
+      "changefreq": "daily",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/explore",
+      "path": "/explore",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/learn/personal-finance",
+      "path": "/learn/personal-finance",
+      "priority": 0.9,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/traditional-investments",
+      "path": "/learn/traditional-investments",
+      "priority": 0.8,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/market-linked-investments",
+      "path": "/learn/market-linked-investments",
+      "priority": 0.8,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/banking-payments",
+      "path": "/learn/banking-payments",
+      "priority": 0.8,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/insurance-risk",
+      "path": "/learn/insurance-risk",
+      "priority": 0.8,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/corporate-finance",
+      "path": "/learn/corporate-finance",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/govt-public-finance",
+      "path": "/learn/govt-public-finance",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/alt-fintech",
+      "path": "/learn/alt-fintech",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/fixed-deposits",
+      "path": "/learn/fixed-deposits",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/recurring-deposits",
+      "path": "/learn/recurring-deposits",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/savings-account",
+      "path": "/learn/savings-account",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/ppf",
+      "path": "/learn/ppf",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/nsc",
+      "path": "/learn/nsc",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/current-account",
+      "path": "/learn/current-account",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/kisan-vikas-patra",
+      "path": "/learn/kisan-vikas-patra",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/senior-citizens-savings",
+      "path": "/learn/senior-citizens-savings",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/sukanya-samriddhi-yojana",
+      "path": "/learn/sukanya-samriddhi-yojana",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/post-office-monthly-income",
+      "path": "/learn/post-office-monthly-income",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/government-bonds",
+      "path": "/learn/government-bonds",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/corporate-bonds",
+      "path": "/learn/corporate-bonds",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/tax-free-bonds",
+      "path": "/learn/tax-free-bonds",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/state-development-loans",
+      "path": "/learn/state-development-loans",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/employees-provident-fund",
+      "path": "/learn/employees-provident-fund",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/voluntary-provident-fund",
+      "path": "/learn/voluntary-provident-fund",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/national-pension-scheme",
+      "path": "/learn/national-pension-scheme",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/atal-pension-yojana",
+      "path": "/learn/atal-pension-yojana",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/physical-gold",
+      "path": "/learn/physical-gold",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/gold-etfs",
+      "path": "/learn/gold-etfs",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/sovereign-gold-bonds",
+      "path": "/learn/sovereign-gold-bonds",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/silver-investment",
+      "path": "/learn/silver-investment",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/endowment-plans",
+      "path": "/learn/endowment-plans",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/money-back-policies",
+      "path": "/learn/money-back-policies",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/guaranteed-savings-plans",
+      "path": "/learn/guaranteed-savings-plans",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/unit-linked-insurance-plans",
+      "path": "/learn/unit-linked-insurance-plans",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/direct-equity",
+      "path": "/learn/direct-equity",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/blue-chip-stocks",
+      "path": "/learn/blue-chip-stocks",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/mid-small-cap-stocks",
+      "path": "/learn/mid-small-cap-stocks",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/ipos",
+      "path": "/learn/ipos",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/rights-issues",
+      "path": "/learn/rights-issues",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/equity-mutual-funds",
+      "path": "/learn/equity-mutual-funds",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/debt-mutual-funds",
+      "path": "/learn/debt-mutual-funds",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/hybrid-funds",
+      "path": "/learn/hybrid-funds",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/index-funds-etfs",
+      "path": "/learn/index-funds-etfs",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/derivatives-trading",
+      "path": "/learn/derivatives-trading",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/futures-options",
+      "path": "/learn/futures-options",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/commodity-trading",
+      "path": "/learn/commodity-trading",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/currency-trading",
+      "path": "/learn/currency-trading",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/index-derivatives",
+      "path": "/learn/index-derivatives",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/portfolio-management-services",
+      "path": "/learn/portfolio-management-services",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/alternative-investment-funds",
+      "path": "/learn/alternative-investment-funds",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/hedge-funds",
+      "path": "/learn/hedge-funds",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/direct-real-estate",
+      "path": "/learn/direct-real-estate",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/reits",
+      "path": "/learn/reits",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/fractional-real-estate",
+      "path": "/learn/fractional-real-estate",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/global-equity",
+      "path": "/learn/global-equity",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/international-mutual-funds",
+      "path": "/learn/international-mutual-funds",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/foreign-bonds",
+      "path": "/learn/foreign-bonds",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/market-linked-gold",
+      "path": "/learn/market-linked-gold",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/commodity-etfs",
+      "path": "/learn/commodity-etfs",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/energy-investments",
+      "path": "/learn/energy-investments",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/structured-products",
+      "path": "/learn/structured-products",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/cryptocurrency",
+      "path": "/learn/cryptocurrency",
+      "priority": 0.6,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/crypto-etfs",
+      "path": "/learn/crypto-etfs",
+      "priority": 0.6,
+      "changefreq": "weekly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/learn/tokenized-assets",
+      "path": "/learn/tokenized-assets",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Learning"
+    },
+    {
+      "url": "https://neocred.in/calculators/sip",
+      "path": "/calculators/sip",
+      "priority": 0.8,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/home-loan-emi",
+      "path": "/calculators/home-loan-emi",
+      "priority": 0.8,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/fd",
+      "path": "/calculators/fd",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/budget-planner",
+      "path": "/calculators/budget-planner",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/emergency-fund",
+      "path": "/calculators/emergency-fund",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/retirement-goal",
+      "path": "/calculators/retirement-goal",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/ppf",
+      "path": "/calculators/ppf",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/rd",
+      "path": "/calculators/rd",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/car-loan-emi",
+      "path": "/calculators/car-loan-emi",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/credit-card-emi",
+      "path": "/calculators/credit-card-emi",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/education-loan-emi",
+      "path": "/calculators/education-loan-emi",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/health-insurance",
+      "path": "/calculators/health-insurance",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/term-life-insurance",
+      "path": "/calculators/term-life-insurance",
+      "priority": 0.7,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/vehicle-insurance",
+      "path": "/calculators/vehicle-insurance",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/rule-of-72",
+      "path": "/calculators/rule-of-72",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/first-salary-planner",
+      "path": "/calculators/first-salary-planner",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/budget-rule",
+      "path": "/calculators/budget-rule",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/form16-breakdown",
+      "path": "/calculators/form16-breakdown",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/net-worth-tracker",
+      "path": "/calculators/net-worth-tracker",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/post-office-fd",
+      "path": "/calculators/post-office-fd",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/step-up-sip",
+      "path": "/calculators/step-up-sip",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/lumpsum",
+      "path": "/calculators/lumpsum",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/mutual-fund-tracker",
+      "path": "/calculators/mutual-fund-tracker",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/gold-investment",
+      "path": "/calculators/gold-investment",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/loan-eligibility",
+      "path": "/calculators/loan-eligibility",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/loan-affordability",
+      "path": "/calculators/loan-affordability",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/epf-maturity",
+      "path": "/calculators/epf-maturity",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/hra-exemption",
+      "path": "/calculators/hra-exemption",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/budget-goal-planner",
+      "path": "/calculators/budget-goal-planner",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/goal-based-investment",
+      "path": "/calculators/goal-based-investment",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/nps-return",
+      "path": "/calculators/nps-return",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/rent-vs-buy",
+      "path": "/calculators/rent-vs-buy",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/annuity",
+      "path": "/calculators/annuity",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/debt-repayment",
+      "path": "/calculators/debt-repayment",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/real-returns",
+      "path": "/calculators/real-returns",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/calculators/credit-score-simulator",
+      "path": "/calculators/credit-score-simulator",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Calculators"
+    },
+    {
+      "url": "https://neocred.in/credit-cards",
+      "path": "/credit-cards",
+      "priority": 0.7,
+      "changefreq": "weekly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/sbi",
+      "path": "/credit-cards/sbi",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/bob",
+      "path": "/credit-cards/bob",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/pnb",
+      "path": "/credit-cards/pnb",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/union",
+      "path": "/credit-cards/union",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/canara",
+      "path": "/credit-cards/canara",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/indian",
+      "path": "/credit-cards/indian",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/boi",
+      "path": "/credit-cards/boi",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/central",
+      "path": "/credit-cards/central",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/uco",
+      "path": "/credit-cards/uco",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/iob",
+      "path": "/credit-cards/iob",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/credit-cards/bom",
+      "path": "/credit-cards/bom",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Credit Cards"
+    },
+    {
+      "url": "https://neocred.in/insurance-platforms",
+      "path": "/insurance-platforms",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/personal-loans",
+      "path": "/personal-loans",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/government-schemes",
+      "path": "/government-schemes",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/finance-jobs",
+      "path": "/finance-jobs",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/business-tools",
+      "path": "/business-tools",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/rewards",
+      "path": "/rewards",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/expert-consultation",
+      "path": "/expert-consultation",
+      "priority": 0.6,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/pan-check",
+      "path": "/pan-check",
+      "priority": 0.5,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/loan-check",
+      "path": "/loan-check",
+      "priority": 0.5,
+      "changefreq": "monthly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/privacy",
+      "path": "/privacy",
+      "priority": 0.4,
+      "changefreq": "yearly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/terms",
+      "path": "/terms",
+      "priority": 0.4,
+      "changefreq": "yearly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/disclaimer",
+      "path": "/disclaimer",
+      "priority": 0.4,
+      "changefreq": "yearly",
+      "category": "Other"
+    },
+    {
+      "url": "https://neocred.in/cookies",
+      "path": "/cookies",
+      "priority": 0.4,
+      "changefreq": "yearly",
+      "category": "Other"
+    }
+  ]
+}
