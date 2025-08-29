@@ -27,6 +27,7 @@ Sitemap: https://neocred.in/sitemap-complete.xml
 # AI Crawler Resources
 # Static HTML: https://neocred.in/static-content.html
 # Text Version: https://neocred.in/learn-text.html
+# Static Pages: https://neocred.in/learn/personal-finance.html
 # JSON API: https://neocred.in/ai-content.json
 # Content API: https://neocred-backend.fly.dev/api/learn
 # AI Sitemap: https://neocred.in/sitemap-ai.xml
