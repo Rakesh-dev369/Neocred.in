@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeftIcon, BookmarkIcon, ChevronDownIcon, ChevronRightIcon, CalculatorIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
-import SEOHead from '../components/SEOHead';
 
 export default function PersonalFinance() {
   const [activeSection, setActiveSection] = useState('introduction');
@@ -80,13 +79,7 @@ export default function PersonalFinance() {
   };
 
   return (
-    <>
-      <SEOHead 
-        page="personal-finance" 
-        customTitle="Personal Finance Guide 2025 - Complete Learning Hub | NeoCred"
-        customDescription="Master personal finance with budgeting, investing, debt management, retirement planning. Interactive learning with 2025 updated data and tools."
-      />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-8">
         <div className="max-w-7xl mx-auto px-4">
@@ -1140,6 +1133,5 @@ export default function PersonalFinance() {
         </div>
       </div>
     </div>
-    </>
   );
 }

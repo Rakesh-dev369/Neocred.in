@@ -278,7 +278,7 @@ export default function RecurringDeposits() {
                     <li>• Inflation erosion over long term</li>
                     <li>• Limited liquidity during tenure</li>
                     <li>• Fixed returns despite market changes</li>
-                    <li>• TDS applicable if interest > ₹40,000</li>
+                    <li>• TDS applicable if interest &gt; ₹40,000</li>
                   </ul>
                 </div>
               </div>
@@ -372,7 +372,7 @@ export default function RecurringDeposits() {
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Tax Rules 2025</h3>
               <div className="space-y-3 text-sm">
                 <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                  <p className="text-red-800 dark:text-red-200"><strong>TDS:</strong> 10% if annual interest > ₹40,000</p>
+                  <p className="text-red-800 dark:text-red-200"><strong>TDS:</strong> 10% if annual interest &gt; ₹40,000</p>
                 </div>
                 <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                   <p className="text-blue-800 dark:text-blue-200"><strong>Taxation:</strong> Interest taxed as per income slab</p>
