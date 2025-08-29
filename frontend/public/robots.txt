@@ -1,37 +1,43 @@
 User-agent: *
 Allow: /
 
-# Specific permissions for ChatGPT
-User-agent: ChatGPT-User
-Allow: /
-Crawl-delay: 0
+# Sitemap
+Sitemap: https://neocred.in/sitemap.xml
 
+# Allow all crawlers and AI bots
 User-agent: GPTBot
 Allow: /
-Crawl-delay: 0
+
+User-agent: ChatGPT-User
+Allow: /
 
 User-agent: CCBot
 Allow: /
-Crawl-delay: 0
 
-# Allow all crawlers to access all content
-Disallow: /api/
-Disallow: /_next/
-Disallow: /admin/
+User-agent: anthropic-ai
+Allow: /
 
-# Sitemap locations
-Sitemap: https://neocred.in/sitemap.xml
-Sitemap: https://neocred.in/sitemap-ai.xml
-Sitemap: https://neocred.in/sitemap-complete.xml
+User-agent: Claude-Web
+Allow: /
 
-# AI Crawler Resources
-# Static HTML: https://neocred.in/static-content.html
-# Text Version: https://neocred.in/learn-text.html
-# Static Pages: https://neocred.in/learn/personal-finance.html
-# JSON API: https://neocred.in/ai-content.json
-# Content API: https://neocred-backend.fly.dev/api/learn
-# AI Sitemap: https://neocred.in/sitemap-ai.xml
-# Complete Data: https://neocred.in/complete-site-data.json
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Specific paths for AI crawlers
+Allow: /learn/
+Allow: /learn/personal-finance
+Allow: /learn/personal-finance.html
+Allow: /api/learn
+Allow: /api/learn/personal-finance
+Allow: /api/calculators
+Allow: /static-content.html
 
 # Crawl delay (optional)
 Crawl-delay: 1
+
+# Disallow admin or sensitive paths (if any)
+Disallow: /admin/
+Disallow: /private/

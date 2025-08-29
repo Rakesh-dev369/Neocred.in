@@ -1,5 +1,17 @@
-/robots.txt    /robots.txt   200
-/sitemap.xml   /sitemap.xml  200
-/static-content.html /static-content.html 200
-/.well-known/* /.well-known/:splat 200
-/*    /index.html   200
+# Netlify/Vercel redirects and rewrites
+
+# API proxy to backend
+/api/* https://neocred-backend.fly.dev/api/:splat 200
+
+# Static HTML fallbacks for crawlers and bots
+/learn/personal-finance /learn/personal-finance.html 200! Condition=User-Agent:bot,crawler,spider,crawling
+
+# SPA routing - serve index.html for all other routes
+/* /index.html 200
+
+# Force HTTPS
+http://neocred.in/* https://neocred.in/:splat 301!
+http://www.neocred.in/* https://neocred.in/:splat 301!
+
+# Redirect www to non-www
+https://www.neocred.in/* https://neocred.in/:splat 301!

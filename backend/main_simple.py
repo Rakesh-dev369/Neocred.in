@@ -403,77 +403,495 @@ async def get_stats():
 @app.get(
     "/api/learn",
     summary="📚 Learning Pillars",
-    description="Get all learning pillars for AI crawlers",
+    description="Get all learning pillars for AI crawlers and bots",
     tags=["AI Content"]
 )
 async def get_all_pillars():
-    return {
-        "pillars": [
-            {"id": "personal-finance", "title": "Personal Finance", "sections": 9, "description": "Master money management, wealth building, and financial independence"},
-            {"id": "traditional-investments", "title": "Traditional Investments", "sections": 6, "description": "Safe, government-backed investment options"},
-            {"id": "market-linked-investments", "title": "Market-Linked Investments", "sections": 9, "description": "Equity, mutual funds, and market investments"},
-            {"id": "banking-payments", "title": "Banking & Payments", "sections": 5, "description": "Digital banking and payment systems"},
-            {"id": "insurance-risk", "title": "Insurance & Risk", "sections": 4, "description": "Insurance planning and risk management"},
-            {"id": "corporate-finance", "title": "Corporate Finance", "sections": 6, "description": "Business financial planning"},
-            {"id": "govt-public-finance", "title": "Government & Public Finance", "sections": 5, "description": "Government schemes and policies"},
-            {"id": "alt-fintech", "title": "Alternative Finance & Fintech", "sections": 7, "description": "Fintech innovations and alternatives"}
-        ],
-        "totalPillars": 8,
-        "lastUpdated": datetime.now().isoformat()
-    }
-
-@app.get(
-    "/api/pillars/{pillar_id}",
-    summary="📖 Pillar Details",
-    description="Get detailed content for specific pillar",
-    tags=["AI Content"]
-)
-async def get_pillar(pillar_id: str):
-    if pillar_id == "personal-finance":
-        return {
+    """Enhanced API endpoint for AI crawlers with comprehensive pillar data"""
+    pillars = [
+        {
             "id": "personal-finance",
             "title": "Personal Finance",
             "description": "Master money management, wealth building, and financial independence",
-            "sections": [
-                {"id": "introduction", "title": "Introduction", "content": "Personal finance management fundamentals", "level": "foundation"},
-                {"id": "budgeting", "title": "Budgeting & Planning", "content": "50/30/20 rule, zero-based budgeting", "level": "foundation", "takeaway": "Budgeting helps you plan, prioritize, and prevent overspending"},
-                {"id": "saving", "title": "Saving & Emergency", "content": "Emergency funds, high-yield savings (7-8% rates)", "level": "foundation", "takeaway": "Build 6 months of expenses in high-yield savings accounts"},
-                {"id": "investing", "title": "Investment Management", "content": "Asset classes, diversification, SIP strategies", "level": "advanced", "takeaway": "Diversify investments across asset classes for long-term wealth creation"},
-                {"id": "debt", "title": "Debt & Credit", "content": "CIBIL score management, debt repayment strategies", "level": "advanced", "takeaway": "Maintain CIBIL score above 750 for best loan rates"},
-                {"id": "retirement", "title": "Retirement Planning", "content": "EPF, PPF, NPS, retirement corpus calculation", "level": "advanced", "takeaway": "Start retirement planning early to leverage compounding"},
-                {"id": "insurance", "title": "Insurance & Risk", "content": "Life insurance, health insurance, risk management", "level": "advanced", "takeaway": "Insurance protects your wealth from unexpected events"},
-                {"id": "tax", "title": "Tax Planning", "content": "Section 80C, 80D deductions, tax optimization", "level": "advanced", "takeaway": "Optimize taxes legally through available deductions"}
-            ],
-            "tools": [
-                {"name": "Budget Planner", "url": "/calculators/budget-planner"},
-                {"name": "Emergency Fund Calculator", "url": "/calculators/emergency-fund"},
-                {"name": "SIP Calculator", "url": "/calculators/sip"},
-                {"name": "Debt Repayment Planner", "url": "/calculators/debt-repayment"}
-            ],
-            "lastUpdated": "2025-01-27"
+            "pillar": 1,
+            "level": "Foundation to Advanced",
+            "sections": 12,
+            "updated": "2025-01-27",
+            "url": "/learn/personal-finance",
+            "api_url": "/api/learn/personal-finance",
+            "static_url": "/learn/personal-finance.html",
+            "content_summary": "Comprehensive guide covering budgeting (50/30/20 rule), saving (emergency funds), investing (SIP, mutual funds), debt management (CIBIL score), retirement planning (EPF, PPF, NPS), insurance (life, health), and tax optimization (80C, 80D deductions). Updated with 2025 interest rates and regulations."
+        },
+        {
+            "id": "banking-payments",
+            "title": "Banking & Payments",
+            "description": "Digital banking, UPI, payment systems, and financial technology",
+            "pillar": 2,
+            "level": "Foundation",
+            "sections": 8,
+            "updated": "2025-01-27",
+            "url": "/learn/banking-payments",
+            "api_url": "/api/learn/banking-payments",
+            "static_url": "/learn/banking-payments.html",
+            "content_summary": "Digital banking revolution, UPI payments, neobanks, payment security, and fintech innovations in India."
+        },
+        {
+            "id": "investments-capital",
+            "title": "Investments & Capital Markets",
+            "description": "Stock markets, mutual funds, bonds, and investment strategies",
+            "pillar": 3,
+            "level": "Intermediate to Advanced",
+            "sections": 10,
+            "updated": "2025-01-27",
+            "url": "/learn/investments-capital",
+            "api_url": "/api/learn/investments-capital",
+            "static_url": "/learn/investments-capital.html",
+            "content_summary": "Comprehensive coverage of equity markets, mutual funds, ETFs, bonds, derivatives, and portfolio management strategies."
+        },
+        {
+            "id": "insurance-risk",
+            "title": "Insurance & Risk Management",
+            "description": "Life, health, general insurance, and risk mitigation strategies",
+            "pillar": 4,
+            "level": "Intermediate",
+            "sections": 9,
+            "updated": "2025-01-27",
+            "url": "/learn/insurance-risk",
+            "api_url": "/api/learn/insurance-risk",
+            "static_url": "/learn/insurance-risk.html",
+            "content_summary": "Complete insurance planning guide covering term life, health, motor, and general insurance with risk assessment strategies."
+        },
+        {
+            "id": "corporate-finance",
+            "title": "Corporate Finance",
+            "description": "Business finance, valuation, mergers, and corporate strategies",
+            "pillar": 5,
+            "level": "Advanced",
+            "sections": 7,
+            "updated": "2025-01-27",
+            "url": "/learn/corporate-finance",
+            "api_url": "/api/learn/corporate-finance",
+            "static_url": "/learn/corporate-finance.html",
+            "content_summary": "Advanced corporate finance concepts including valuation, capital structure, M&A, and financial strategy."
+        },
+        {
+            "id": "govt-public-finance",
+            "title": "Government & Public Finance",
+            "description": "Fiscal policy, government schemes, and public financial management",
+            "pillar": 6,
+            "level": "Advanced",
+            "sections": 6,
+            "updated": "2025-01-27",
+            "url": "/learn/govt-public-finance",
+            "api_url": "/api/learn/govt-public-finance",
+            "static_url": "/learn/govt-public-finance.html",
+            "content_summary": "Government financial policies, budget analysis, public schemes, and fiscal management in India."
+        },
+        {
+            "id": "alt-fintech",
+            "title": "Alternative Finance & Fintech",
+            "description": "Cryptocurrency, P2P lending, neobanks, and financial innovation",
+            "pillar": 7,
+            "level": "Advanced",
+            "sections": 8,
+            "updated": "2025-01-27",
+            "url": "/learn/alt-fintech",
+            "api_url": "/api/learn/alt-fintech",
+            "static_url": "/learn/alt-fintech.html",
+            "content_summary": "Emerging financial technologies including cryptocurrency, blockchain, P2P lending, and fintech innovations."
+        },
+        {
+            "id": "international-trade",
+            "title": "International Trade & Finance",
+            "description": "Global markets, forex, trade finance, and international investments",
+            "pillar": 8,
+            "level": "Advanced",
+            "sections": 7,
+            "updated": "2025-01-27",
+            "url": "/learn/international-trade",
+            "api_url": "/api/learn/international-trade",
+            "static_url": "/learn/international-trade.html",
+            "content_summary": "Global finance, forex markets, international investments, and cross-border trade finance."
         }
-    else:
-        raise HTTPException(status_code=404, detail="Pillar not found")
+    ]
+    
+    return {
+        "success": True,
+        "data": {
+            "pillars": pillars,
+            "total_pillars": len(pillars),
+            "last_updated": "2025-01-27",
+            "api_version": "2.0",
+            "access_methods": {
+                "interactive": "Visit /learn/{pillar-id} for full interactive experience",
+                "static_html": "Visit /learn/{pillar-id}.html for crawler-friendly version",
+                "api_json": "Use /api/learn/{pillar-id} for structured JSON data",
+                "complete_content": "Visit /static-content.html for all content in one page"
+            }
+        }
+    }
+
+@app.get(
+    "/api/learn/{pillar_id}",
+    summary="📖 Detailed Pillar Content",
+    description="Get comprehensive content for specific learning pillar - optimized for AI crawlers",
+    tags=["AI Content"]
+)
+async def get_pillar_content(pillar_id: str):
+    """Enhanced pillar content API for AI tools and crawlers"""
+    
+    if pillar_id == "personal-finance":
+        content = {
+            "id": "personal-finance",
+            "title": "Personal Finance",
+            "description": "Master money management, wealth building, and financial independence",
+            "pillar": 1,
+            "level": "Foundation to Advanced",
+            "sections": [
+                {
+                    "id": "introduction",
+                    "title": "Introduction to Personal Finance",
+                    "content": "Personal finance refers to the management of an individual's or household's financial activities, including earning, saving, investing, budgeting, spending, and protecting money. It encompasses short-term decisions such as managing daily expenses, as well as long-term strategies such as retirement planning, wealth building, and intergenerational financial security. Personal finance is a critical life skill that influences financial independence, stability, and well-being. In today's rapidly evolving economic landscape, understanding personal finance has become more important than ever, especially in India where financial literacy rates remain low despite growing economic opportunities.",
+                    "level": "foundation",
+                    "key_points": [
+                        "Critical life skill for financial independence",
+                        "Encompasses income optimization and expense management",
+                        "Includes strategic saving and intelligent investing",
+                        "Covers debt management and insurance planning",
+                        "Essential for building intergenerational wealth"
+                    ]
+                },
+                {
+                    "id": "budgeting",
+                    "title": "Budgeting and Expense Planning",
+                    "content": "Budgeting is the foundation of personal finance. It helps track income and expenses, avoid overspending, and achieve financial goals. The 50/30/20 rule allocates 50% for needs (rent, food, utilities), 30% for wants (entertainment, dining), and 20% for savings and investments. Zero-based budgeting assigns every rupee a purpose, ensuring maximum control over money. Effective budgeting requires tracking expenses for at least one month before creating a budget, using the 24-hour rule for non-essential purchases above ₹1,000, and reviewing the budget monthly based on actual spending patterns.",
+                    "level": "foundation",
+                    "key_points": [
+                        "50/30/20 Rule: 50% needs, 30% wants, 20% savings",
+                        "Zero-based budgeting assigns every rupee a purpose",
+                        "Track expenses for 1 month before creating budget",
+                        "Use 24-hour rule for purchases above ₹1,000",
+                        "Review and adjust budget monthly",
+                        "Automate savings to pay yourself first"
+                    ],
+                    "takeaway": "Budgeting helps you plan, prioritize, and prevent overspending. Start with the 50/30/20 rule and adjust based on your needs.",
+                    "tools": [
+                        {"name": "Budget Planner", "url": "/calculators/budget-planner"},
+                        {"name": "Expense Tracker", "url": "/calculators/budget-rule"}
+                    ]
+                },
+                {
+                    "id": "saving",
+                    "title": "Saving and Emergency Planning",
+                    "content": "Savings are the backbone of financial resilience. An emergency fund acts as a financial safety net for unforeseen expenses. Build 6-12 months of living expenses in high-yield savings accounts. In 2025, savings account rates are 7-8%, fixed deposits offer 7-8.5%, and liquid funds provide 6-7% returns. Types of savings include short-term savings for holidays and gadgets, long-term savings for education and home purchases, and emergency savings for unexpected expenses. Best practices include automating savings through SIPs and recurring deposits, using high-yield savings accounts and liquid funds, and avoiding dipping into emergency savings for non-emergencies.",
+                    "level": "foundation",
+                    "key_points": [
+                        "Build 6 months of expenses in emergency fund",
+                        "Savings Account rates: 7-8% (2025)",
+                        "Fixed Deposits: 7-8.5% (2025)",
+                        "Liquid Funds: 6-7% (2025)",
+                        "Automate savings through SIPs and RDs",
+                        "Use high-yield savings accounts for emergency funds"
+                    ],
+                    "takeaway": "Emergency funds provide financial security. Build 6 months of expenses in high-yield savings accounts (7-8% rates in 2025).",
+                    "tools": [
+                        {"name": "Emergency Fund Calculator", "url": "/calculators/emergency-fund"}
+                    ]
+                },
+                {
+                    "id": "investing",
+                    "title": "Investment Management",
+                    "content": "Investments are critical to wealth building and beating inflation. Understanding different asset classes and risk-return relationships is essential for long-term financial success. Asset classes include equity (stocks, mutual funds, ETFs with 15-22% expected returns), debt (bonds, FDs, debt funds with 7-9% returns), real estate (property, REITs with 10-12% returns), gold and commodities, and alternative assets like crypto and P2P lending. Popular Indian investment options in 2025 include SIP in large cap funds, index funds (Nifty 50), ELSS for tax saving, PPF (7.1% tax-free), EPF (8.25% return), and debt mutual funds. Diversification across asset classes is crucial for risk management.",
+                    "level": "advanced",
+                    "key_points": [
+                        "Equity: 15-22% expected returns (2025)",
+                        "Debt: 7-9% expected returns (2025)",
+                        "Real Estate: 10-12% expected returns (2025)",
+                        "Start with SIP in equity funds for long-term wealth",
+                        "PPF offers 7.1% tax-free returns",
+                        "EPF provides 8.25% returns in 2025",
+                        "Diversify across asset classes for risk management"
+                    ],
+                    "takeaway": "Diversify investments across asset classes. Start with SIP in equity funds for long-term wealth creation.",
+                    "tools": [
+                        {"name": "SIP Calculator", "url": "/calculators/sip"},
+                        {"name": "Lumpsum Calculator", "url": "/calculators/lumpsum"},
+                        {"name": "Goal Based Investment", "url": "/calculators/goal-based-investment"}
+                    ]
+                },
+                {
+                    "id": "debt",
+                    "title": "Debt and Credit Management",
+                    "content": "Debt can be constructive (home loan, education loan) or destructive (credit card debt, personal loans for lifestyle expenses). Managing credit wisely is crucial for financial health. CIBIL score ranges: 750-900 (excellent, best rates), 700-749 (good, decent rates), 650-699 (fair, higher rates), 300-649 (poor, loan rejection). Interest rates in 2025: Credit cards (36-48%), personal loans (12-24%), home loans (8.5-12%), car loans (9-15%). Debt repayment strategies include the debt avalanche method (pay highest interest first) and debt snowball method (pay smallest debt first). Maintain CIBIL score above 750 by paying EMIs on time, keeping credit utilization below 30%, and checking credit reports annually.",
+                    "level": "advanced",
+                    "key_points": [
+                        "CIBIL Score 750+ for best loan rates",
+                        "Credit Card interest: 36-48% (2025)",
+                        "Home Loan interest: 8.5-12% (2025)",
+                        "Pay high-interest debt first (avalanche method)",
+                        "Keep credit utilization below 30%",
+                        "Pay EMIs on time (35% weightage in CIBIL)",
+                        "Check credit report annually"
+                    ],
+                    "takeaway": "Manage debt wisely - prioritize high-interest debt repayment. Maintain CIBIL score above 750 for best loan rates.",
+                    "tools": [
+                        {"name": "Debt Repayment Planner", "url": "/calculators/debt-repayment"},
+                        {"name": "Home Loan EMI", "url": "/calculators/home-loan-emi"},
+                        {"name": "Credit Card EMI", "url": "/calculators/credit-card-emi"}
+                    ]
+                },
+                {
+                    "id": "retirement",
+                    "title": "Retirement Planning",
+                    "content": "Retirement planning ensures financial security post-employment. Starting early leverages the power of compounding for wealth creation. Indian retirement instruments in 2025: EPF (8.25% return, tax-free), PPF (7.1% return, 15-year lock-in), NPS (market-linked, tax benefits), annuities (guaranteed pension), and equity mutual funds for long-term wealth creation. Starting investment at 25 vs 35 results in 2x more corpus due to compounding. A ₹5,000 monthly SIP for 35 years creates ₹2.8 crores, while the same amount for 25 years creates ₹1.2 crores. Diversification strategy: 60% equity (growth phase), 30% debt (stability), 10% alternatives (gold, REITs), with annual rebalancing.",
+                    "level": "advanced",
+                    "key_points": [
+                        "EPF: 8.25% return, tax-free (2025)",
+                        "PPF: 7.1% return, 15-year lock-in (2025)",
+                        "NPS: Market-linked, tax benefits",
+                        "Start at 25 vs 35 = 2x more corpus",
+                        "₹5,000 SIP for 35 years = ₹2.8 Cr",
+                        "Diversify: 60% equity, 30% debt, 10% alternatives",
+                        "Rebalance portfolio annually"
+                    ],
+                    "takeaway": "Start retirement planning early to leverage compounding. Diversify between EPF, PPF, NPS, and equity investments for optimal returns.",
+                    "tools": [
+                        {"name": "Retirement Goal Planner", "url": "/calculators/retirement-goal"},
+                        {"name": "PPF Calculator", "url": "/calculators/ppf"},
+                        {"name": "NPS Return Calculator", "url": "/calculators/nps-return"}
+                    ]
+                },
+                {
+                    "id": "insurance",
+                    "title": "Insurance and Risk Management",
+                    "content": "Insurance protects against financial shocks due to unforeseen events. It's a crucial component of comprehensive financial planning. Types of insurance include life insurance (term plans offering ₹1 crore coverage for ₹15,000/year, whole life policies), health insurance (individual ₹5-10L coverage, family floater, critical illness), and general insurance (motor, travel, home, cyber insurance). Risk management strategy involves identifying risks (death, disability, medical emergencies, property loss), assessing financial impact on family and goals, and mitigating risks through prevention and insurance transfer. Get adequate life and health coverage first, then consider other insurance types based on specific needs.",
+                    "level": "advanced",
+                    "key_points": [
+                        "Term Life Insurance: ₹1Cr for ₹15k/year",
+                        "Health Insurance: ₹5-10L coverage recommended",
+                        "Get adequate life and health coverage first",
+                        "Review insurance coverage annually",
+                        "Identify and assess all financial risks",
+                        "Use insurance to transfer major risks",
+                        "Don't over-insure or under-insure"
+                    ],
+                    "takeaway": "Insurance protects your wealth from unexpected events. Get adequate life and health coverage.",
+                    "tools": [
+                        {"name": "Term Life Insurance", "url": "/calculators/term-life-insurance"},
+                        {"name": "Health Insurance", "url": "/calculators/health-insurance"},
+                        {"name": "Vehicle Insurance", "url": "/calculators/vehicle-insurance"}
+                    ]
+                },
+                {
+                    "id": "tax",
+                    "title": "Tax Planning and Optimization",
+                    "content": "Tax planning ensures legal savings and efficient allocation of income through various exemptions and deductions. Indian tax-saving options in 2025: Section 80C (₹1.5L limit for ELSS, PPF, NPS, EPF, life insurance, home loan principal), Section 80D (₹25k-75k for health insurance premiums for self, family, parents), and other sections like 80E (education loan interest) and 24B (home loan interest). Tax regime comparison: Old regime has higher rates but many deductions available, while new regime offers lower rates with limited deductions and ₹75k standard deduction. Choose new regime for income below ₹15L, old regime for higher income with substantial deductions.",
+                    "level": "advanced",
+                    "key_points": [
+                        "Section 80C: ₹1.5L limit (ELSS, PPF, NPS)",
+                        "Section 80D: ₹25k-75k (Health Insurance)",
+                        "New regime for income <₹15L, Old for higher",
+                        "Standard deduction: ₹75k (2025)",
+                        "ELSS offers tax saving with equity returns",
+                        "PPF provides tax-free returns",
+                        "Plan tax-saving investments by December"
+                    ],
+                    "takeaway": "Optimize taxes legally through 80C, 80D deductions. Choose the right tax regime based on your income and deductions available.",
+                    "tools": [
+                        {"name": "HRA Exemption Calculator", "url": "/calculators/hra-exemption"},
+                        {"name": "Form 16 Breakdown", "url": "/calculators/form16-breakdown"},
+                        {"name": "Tax Saver Calculator", "url": "/calculators/tax-saver"}
+                    ]
+                }
+            ],
+            "modern_trends": {
+                "digital_finance": [
+                    "UPI payments (₹100L+ daily volume)",
+                    "Mobile banking adoption",
+                    "Robo-advisors for investments",
+                    "AI-powered financial planning",
+                    "Neobanks and digital-first banks"
+                ],
+                "investment_innovations": [
+                    "Fractional investing (₹100 SIPs)",
+                    "ESG & Sustainable investing",
+                    "Cryptocurrency adoption",
+                    "International diversification",
+                    "FIRE movement (Financial Independence)"
+                ]
+            },
+            "challenges": [
+                "Inflation eroding purchasing power (6-7% annually)",
+                "Rising healthcare and education costs",
+                "Low financial literacy (especially rural areas)",
+                "Mis-selling of financial products",
+                "Lifestyle inflation with income growth"
+            ],
+            "key_takeaways_2025": [
+                "Start investing early to leverage compounding",
+                "Maintain 6-month emergency fund in high-yield savings",
+                "Diversify across asset classes and geographies",
+                "Optimize taxes through available deductions",
+                "Protect wealth through adequate insurance",
+                "Stay updated with financial regulations and opportunities",
+                "Seek professional advice for complex financial decisions"
+            ],
+            "related_pillars": [
+                {"name": "Traditional Investments", "url": "/learn/traditional-investments"},
+                {"name": "Market-Linked Investments", "url": "/learn/market-linked-investments"},
+                {"name": "Banking & Payments", "url": "/learn/banking-payments"},
+                {"name": "Insurance & Risk", "url": "/learn/insurance-risk"}
+            ],
+            "updated": "2025-01-27",
+            "static_url": "/learn/personal-finance.html",
+            "interactive_url": "/learn/personal-finance"
+        }
+        
+        return {
+            "success": True,
+            "data": content
+        }
+    
+    # Return basic structure for other pillars
+    pillar_map = {
+        "banking-payments": {
+            "title": "Banking & Payments",
+            "description": "Digital banking, UPI, payment systems, and financial technology",
+            "sections": 8
+        },
+        "investments-capital": {
+            "title": "Investments & Capital Markets",
+            "description": "Stock markets, mutual funds, bonds, and investment strategies",
+            "sections": 10
+        },
+        "insurance-risk": {
+            "title": "Insurance & Risk Management",
+            "description": "Life, health, general insurance, and risk mitigation strategies",
+            "sections": 9
+        },
+        "corporate-finance": {
+            "title": "Corporate Finance",
+            "description": "Business finance, valuation, mergers, and corporate strategies",
+            "sections": 7
+        },
+        "govt-public-finance": {
+            "title": "Government & Public Finance",
+            "description": "Fiscal policy, government schemes, and public financial management",
+            "sections": 6
+        },
+        "alt-fintech": {
+            "title": "Alternative Finance & Fintech",
+            "description": "Cryptocurrency, P2P lending, neobanks, and financial innovation",
+            "sections": 8
+        },
+        "international-trade": {
+            "title": "International Trade & Finance",
+            "description": "Global markets, forex, trade finance, and international investments",
+            "sections": 7
+        }
+    }
+    
+    if pillar_id in pillar_map:
+        pillar_info = pillar_map[pillar_id]
+        return {
+            "success": True,
+            "data": {
+                "id": pillar_id,
+                "title": pillar_info["title"],
+                "description": pillar_info["description"],
+                "sections": pillar_info["sections"],
+                "message": "Detailed content coming soon",
+                "static_url": f"/learn/{pillar_id}.html",
+                "interactive_url": f"/learn/{pillar_id}",
+                "updated": "2025-01-27"
+            }
+        }
+    
+    return {
+        "success": False,
+        "error": "Pillar not found",
+        "available_pillars": list(pillar_map.keys()) + ["personal-finance"]
+    }
 
 @app.get(
     "/api/calculators",
-    summary="🧮 All Calculators",
-    description="Get complete list of financial calculators",
+    summary="🧮 Complete Calculator Directory",
+    description="Get comprehensive list of all 33+ financial calculators with metadata",
     tags=["AI Content"]
 )
 async def get_all_calculators():
+    """Enhanced calculator API for AI tools with detailed metadata"""
+    calculators = {
+        "investment": [
+            {"id": "sip", "name": "SIP Calculator", "description": "Calculate systematic investment plan returns", "url": "/calculators/sip"},
+            {"id": "lumpsum", "name": "Lumpsum Calculator", "description": "Calculate one-time investment returns", "url": "/calculators/lumpsum"},
+            {"id": "step-up-sip", "name": "Step-up SIP Calculator", "description": "Calculate SIP with annual increment", "url": "/calculators/step-up-sip"},
+            {"id": "goal-based-investment", "name": "Goal Based Investment", "description": "Plan investments for specific goals", "url": "/calculators/goal-based-investment"},
+            {"id": "mutual-fund-tracker", "name": "Mutual Fund Tracker", "description": "Track mutual fund portfolio performance", "url": "/calculators/mutual-fund-tracker"},
+            {"id": "gold-investment", "name": "Gold Investment Calculator", "description": "Calculate gold investment returns", "url": "/calculators/gold-investment"}
+        ],
+        "loans": [
+            {"id": "home-loan-emi", "name": "Home Loan EMI Calculator", "description": "Calculate home loan EMI and amortization", "url": "/calculators/home-loan-emi"},
+            {"id": "car-loan-emi", "name": "Car Loan EMI Calculator", "description": "Calculate car loan EMI", "url": "/calculators/car-loan-emi"},
+            {"id": "education-loan-emi", "name": "Education Loan EMI", "description": "Calculate education loan EMI", "url": "/calculators/education-loan-emi"},
+            {"id": "loan-eligibility", "name": "Loan Eligibility Checker", "description": "Check loan eligibility based on income", "url": "/calculators/loan-eligibility"},
+            {"id": "loan-affordability", "name": "Loan Affordability Tool", "description": "Calculate affordable loan amount", "url": "/calculators/loan-affordability"}
+        ],
+        "savings": [
+            {"id": "fd", "name": "FD Calculator", "description": "Calculate fixed deposit maturity amount", "url": "/calculators/fd"},
+            {"id": "rd", "name": "RD Calculator", "description": "Calculate recurring deposit returns", "url": "/calculators/rd"},
+            {"id": "ppf", "name": "PPF Calculator", "description": "Calculate PPF maturity with 7.1% rate", "url": "/calculators/ppf"},
+            {"id": "emergency-fund", "name": "Emergency Fund Calculator", "description": "Calculate emergency fund requirements", "url": "/calculators/emergency-fund"},
+            {"id": "post-office-fd", "name": "Post Office FD Calculator", "description": "Calculate post office FD returns", "url": "/calculators/post-office-fd"}
+        ],
+        "insurance": [
+            {"id": "term-life-insurance", "name": "Term Life Insurance", "description": "Calculate term insurance coverage needs", "url": "/calculators/term-life-insurance"},
+            {"id": "health-insurance", "name": "Health Insurance Calculator", "description": "Calculate health insurance premium", "url": "/calculators/health-insurance"},
+            {"id": "vehicle-insurance", "name": "Vehicle Insurance Calculator", "description": "Calculate vehicle insurance premium", "url": "/calculators/vehicle-insurance"}
+        ],
+        "tax": [
+            {"id": "hra-exemption", "name": "HRA Exemption Calculator", "description": "Calculate HRA tax exemption", "url": "/calculators/hra-exemption"},
+            {"id": "form16-breakdown", "name": "Form 16 Breakdown Tool", "description": "Analyze Form 16 tax details", "url": "/calculators/form16-breakdown"},
+            {"id": "tax-saver", "name": "Tax Saver Calculator", "description": "Calculate 80C tax savings", "url": "/calculators/tax-saver"}
+        ],
+        "retirement": [
+            {"id": "retirement-goal", "name": "Retirement Goal Planner", "description": "Plan retirement corpus requirements", "url": "/calculators/retirement-goal"},
+            {"id": "nps-return", "name": "NPS Return Calculator", "description": "Calculate NPS returns and pension", "url": "/calculators/nps-return"},
+            {"id": "epf-maturity", "name": "EPF Maturity Calculator", "description": "Calculate EPF maturity with 8.25% rate", "url": "/calculators/epf-maturity"},
+            {"id": "annuity", "name": "Annuity Calculator", "description": "Calculate annuity payments and returns", "url": "/calculators/annuity"}
+        ],
+        "planning": [
+            {"id": "budget-planner", "name": "Budget Planner", "description": "Create 50/30/20 budget plan", "url": "/calculators/budget-planner"},
+            {"id": "budget-rule", "name": "Budget Rule Calculator", "description": "Apply various budgeting rules", "url": "/calculators/budget-rule"},
+            {"id": "net-worth-tracker", "name": "Net Worth Tracker", "description": "Track assets and liabilities", "url": "/calculators/net-worth-tracker"},
+            {"id": "debt-repayment", "name": "Debt Repayment Planner", "description": "Plan debt repayment strategy", "url": "/calculators/debt-repayment"},
+            {"id": "rent-vs-buy", "name": "Rent vs Buy Calculator", "description": "Compare renting vs buying home", "url": "/calculators/rent-vs-buy"}
+        ]
+    }
+    
+    # Flatten all calculators for total count
+    all_calculators = []
+    for category, calc_list in calculators.items():
+        all_calculators.extend(calc_list)
+    
     return {
-        "categories": {
-            "investment": ["SIP Calculator", "Lumpsum Calculator", "Step-up SIP", "Goal Based Investment"],
-            "loans": ["Home Loan EMI", "Car Loan EMI", "Education Loan EMI", "Personal Loan EMI"],
-            "savings": ["FD Calculator", "RD Calculator", "PPF Calculator", "Emergency Fund"],
-            "insurance": ["Term Life Insurance", "Health Insurance", "Vehicle Insurance"],
-            "tax": ["HRA Exemption", "Form 16 Breakdown", "80C Calculator"],
-            "retirement": ["Retirement Goal", "NPS Return", "EPF Maturity", "Annuity Calculator"]
-        },
-        "totalCalculators": 33,
-        "popular": ["SIP Calculator", "Home Loan EMI", "Budget Planner", "Emergency Fund", "FD Calculator"],
-        "lastUpdated": datetime.now().isoformat()
+        "success": True,
+        "data": {
+            "categories": calculators,
+            "total_calculators": len(all_calculators),
+            "popular": [
+                "SIP Calculator", "Home Loan EMI Calculator", "Budget Planner", 
+                "Emergency Fund Calculator", "FD Calculator", "PPF Calculator"
+            ],
+            "new_2025": [
+                "Goal Based Investment", "Debt Repayment Planner", "Net Worth Tracker"
+            ],
+            "category_counts": {
+                category: len(calc_list) for category, calc_list in calculators.items()
+            },
+            "last_updated": "2025-01-27",
+            "api_version": "2.0"
+        }
     }
 
 @app.get(

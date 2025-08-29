@@ -1,22 +1,28 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+    },
+  },
   build: {
     rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          icons: ['lucide-react', '@heroicons/react']
-        }
-      }
-    }
+      input: {
+        main: resolve(__dirname, 'index.html'),
+      },
+    },
   },
-  // Enable static generation for specific routes
-  ssr: {
-    noExternal: ['react-router-dom']
-  }
+  server: {
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/learn\/.*/, to: '/index.html' },
+        { from: /^\/api\/.*/, to: '/index.html' },
+      ],
+    },
+  },
 })

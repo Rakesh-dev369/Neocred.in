@@ -66,6 +66,42 @@
     <link rel="alternate" type="application/json" href="/complete-site-data.json" title="Complete Site Data" />
     <link rel="alternate" type="text/html" href="/learn-text.html" title="Text Version for AI" />
     
+    <!-- Sitemap and API endpoints for crawlers -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="alternate" type="application/json" href="/api/learn" title="Learning Pillars API" />
+    <link rel="alternate" type="application/json" href="/api/calculators" title="Calculators API" />
+    
+    <!-- Static content for AI crawlers -->
+    <link rel="alternate" type="text/html" href="/static-content.html" title="Complete Site Content" />
+    <link rel="alternate" type="text/html" href="/learn/personal-finance.html" title="Personal Finance Guide" />
+    
+    <!-- Structured Data for Search Engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "NeoCred",
+      "description": "AI-Powered Financial Platform with 30+ calculators and comprehensive learning resources",
+      "url": "https://neocred.in",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://neocred.in/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "NeoCred",
+        "url": "https://neocred.in"
+      },
+      "mainEntity": {
+        "@type": "EducationalOrganization",
+        "name": "NeoCred Financial Education",
+        "description": "Comprehensive financial literacy platform with 8 learning pillars",
+        "url": "https://neocred.in/learn"
+      }
+    }
+    </script>
+    
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
     
