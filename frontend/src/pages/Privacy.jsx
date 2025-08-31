@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronUpIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../utils/constants';
 
 export default function Privacy() {
   const [activeSection, setActiveSection] = useState('');
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    
+    const handleScroll = () => {
+      setShowScrollTop(window.pageYOffset > 300);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const sections = [
     { id: 'who-we-are', title: '1. Who We Are', icon: '🏢' },
@@ -25,7 +42,12 @@ export default function Privacy() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        {/* Animated Gradient Layers */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 via-transparent to-purple-100/20 dark:from-blue-900/20 dark:to-purple-900/20 animate-pulse" />
+      </div>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-purple-100/50 to-gray-200 dark:from-purple-900/20 dark:to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -58,59 +80,13 @@ export default function Privacy() {
           </div>
           
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Last Updated: <span className="text-gray-900 dark:text-white font-medium">December 15, 2024</span>
+            Last Updated: <span className="text-gray-900 dark:text-white font-medium">January 15, 2025</span>
           </p>
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-          {/* Table of Contents - Sticky Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="glass-card sticky top-8">
-              <h3 className="text-xl font-bold mb-6 text-center">
-                📋 <span className="text-purple-400">Contents</span>
-              </h3>
-              <nav className="space-y-2">
-                {sections.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => scrollToSection(section.id)}
-                    className={`w-full text-left p-3 rounded-lg transition-all duration-300 hover:bg-white/10 ${
-                      activeSection === section.id ? 'bg-purple-500/20 text-purple-600 dark:text-purple-300' : 'text-gray-700 dark:text-gray-300'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-lg">{section.icon}</span>
-                      <span className="text-sm font-medium">{section.title}</span>
-                    </div>
-                  </button>
-                ))}
-              </nav>
-              
-              {/* Quick Actions */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Quick Actions</h4>
-                <div className="space-y-2">
-                  <a 
-                    href="mailto:privacy@neocred.in"
-                    className="block p-2 bg-gray-100 dark:bg-white/5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-sm text-gray-700 dark:text-gray-300"
-                  >
-                    📧 Email Privacy Team
-                  </a>
-                  <Link 
-                    to={ROUTES.TERMS}
-                    className="block p-2 bg-gray-100 dark:bg-white/5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-sm text-gray-700 dark:text-gray-300"
-                  >
-                    📄 View Terms of Service
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="lg:col-span-3">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div>
             <div className="space-y-12">
               {/* Introduction */}
               <div className="glass-card">
@@ -340,8 +316,8 @@ export default function Privacy() {
                 <div className="mt-6 bg-blue-600/20 border border-blue-500/30 rounded-lg p-4">
                   <p className="text-blue-800 dark:text-blue-100 text-sm">
                     📧 To exercise any of these rights, email us at: 
-                    <a href="mailto:privacy@neocred.in" className="text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 underline">
-                      privacy@neocred.in
+                    <a href="mailto:hello@neocred.in" className="text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-200 underline">
+                      hello@neocred.in
                     </a>
                   </p>
                 </div>
@@ -400,8 +376,8 @@ export default function Privacy() {
                     <p className="text-yellow-800 dark:text-yellow-100 text-sm">
                       📞 <strong>Emergency Contact:</strong> If you suspect a security issue, 
                       immediately email us at 
-                      <a href="mailto:security@neocred.in" className="text-yellow-600 dark:text-yellow-300 hover:text-yellow-700 dark:hover:text-yellow-200 underline">
-                        security@neocred.in
+                      <a href="mailto:hello@neocred.in" className="text-yellow-600 dark:text-yellow-300 hover:text-yellow-700 dark:hover:text-yellow-200 underline">
+                        hello@neocred.in
                       </a>
                     </p>
                   </div>
@@ -447,8 +423,8 @@ export default function Privacy() {
                       <span className="text-2xl">📧</span>
                       <span className="font-medium text-gray-900 dark:text-white">Privacy Team</span>
                     </div>
-                    <a href="mailto:privacy@neocred.in" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
-                      privacy@neocred.in
+                    <a href="mailto:hello@neocred.in" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
+                      hello@neocred.in
                     </a>
                   </div>
                   <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-lg">
@@ -475,9 +451,19 @@ export default function Privacy() {
                 </p>
               </div>
             </div>
-          </div>
         </div>
       </div>
+      
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-28 right-4 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-30"
+          aria-label="Scroll to top"
+        >
+          <ChevronUpIcon className="h-6 w-6" />
+        </button>
+      )}
     </div>
   );
 }

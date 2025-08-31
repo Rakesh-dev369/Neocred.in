@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEOHead from '../components/SEO/SEOHead';
 import {
   ArrowTrendingUpIcon,
   ChartBarIcon,
@@ -968,7 +969,32 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-black dark:to-gray-800 transition-colors duration-300">
+    <>
+      <SEOHead 
+        title="NeoCred - AI-Powered Financial Platform | 40+ Calculators & Tools"
+        description="Master your financial future with NeoCred's 40+ calculators, AI assistant, and comprehensive learning resources. SIP, EMI, Tax, Budget planning tools for Indians."
+        keywords="financial calculator India, SIP calculator, home loan EMI calculator, investment planning, budget planner, tax saver, AI financial advisor, FinBot, mutual fund calculator"
+        canonicalUrl="/"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "NeoCred",
+          "description": "AI-Powered Financial Platform with 40+ calculators and comprehensive learning resources",
+          "url": "https://neocred.in",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://neocred.in/tools?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "NeoCred",
+            "url": "https://neocred.in",
+            "logo": "https://neocred.in/logo.png"
+          }
+        }}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-black dark:to-gray-800 transition-colors duration-300">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white py-20">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -1023,6 +1049,7 @@ export default function Home() {
       </section>
 
 
-    </div>
+      </div>
+    </>
   );
 }

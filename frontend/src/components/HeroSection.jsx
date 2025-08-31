@@ -78,6 +78,36 @@ export default function HeroSection() {
             </Link>
           </div>
 
+          <div className="flex flex-wrap gap-3 justify-center items-center mt-8">
+            <Link
+              to="/learn/corporate-finance"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-full font-medium transition-all duration-300 hover:scale-105"
+            >
+              🏢 Corporation
+            </Link>
+            
+            <Link
+              to="/learn/government-finance"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-full font-medium transition-all duration-300 hover:scale-105"
+            >
+              🏛️ Government
+            </Link>
+            
+            <Link
+              to="/learn/alternative-finance"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-full font-medium transition-all duration-300 hover:scale-105"
+            >
+              🔄 Alternative
+            </Link>
+            
+            <Link
+              to="/learn/international-finance"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-full font-medium transition-all duration-300 hover:scale-105"
+            >
+              🌍 International
+            </Link>
+          </div>
+
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="glass-card text-center hover:bg-white/15 transition-all duration-300 cursor-pointer hover:scale-105">
               <div className="text-4xl font-bold text-blue-400 mb-2">

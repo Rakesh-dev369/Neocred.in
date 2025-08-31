@@ -35,8 +35,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 # Security headers middleware
@@ -67,47 +68,107 @@ RSS_FEEDS = [
     {'name': 'Times of India Business', 'url': 'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'}
 ]
 
+# Cache for RSS news - longer cache to save API credits
+news_cache = {
+    'articles': [],
+    'last_updated': None,
+    'cache_duration': 1800  # 30 minutes
+}
+
 def fetch_rss_news():
-    """Fetch news from all RSS feeds"""
+    """Fetch news from RSS feeds with caching"""
+    # Check cache first
+    now = datetime.now()
+    if (news_cache['last_updated'] and 
+        news_cache['articles'] and 
+        (now - news_cache['last_updated']).seconds < news_cache['cache_duration']):
+        print(f"Returning cached news: {len(news_cache['articles'])} articles")
+        return news_cache['articles']
+    
+    print("Fetching fresh news from RSS feeds...")
     all_articles = []
     
-    for feed_info in RSS_FEEDS:
+    # Use only the fastest, most reliable feeds
+    priority_feeds = [
+        {'name': 'Economic Times', 'url': 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms'},
+        {'name': 'LiveMint', 'url': 'https://www.livemint.com/rss/money'},
+        {'name': 'Times of India Business', 'url': 'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'}
+    ]
+    
+    import concurrent.futures
+    import socket
+    
+    def fetch_single_feed(feed_info):
+        """Fetch articles from a single RSS feed"""
+        articles = []
         try:
+            socket.setdefaulttimeout(5)  # 5 second timeout per feed
             feed = feedparser.parse(feed_info['url'])
             
-            for entry in feed.entries[:10]:  # Get top 10 from each feed
-                # Parse published date
-                published = datetime.now().isoformat()
-                if hasattr(entry, 'published_parsed') and entry.published_parsed:
+            if hasattr(feed, 'entries') and feed.entries:
+                for entry in feed.entries[:8]:  # Get top 8 from each feed
                     try:
-                        published = datetime(*entry.published_parsed[:6]).isoformat()
+                        # Quick processing
+                        published = datetime.now().isoformat()
+                        if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                            try:
+                                published = datetime(*entry.published_parsed[:6]).isoformat()
+                            except:
+                                pass
+                        
+                        # Clean summary quickly
+                        summary = getattr(entry, 'summary', getattr(entry, 'description', 'No summary available'))
+                        if summary:
+                            import re
+                            summary = re.sub(r'<[^>]+>', '', summary)[:300] + '...'
+                        
+                        title = re.sub(r'<[^>]+>', '', str(getattr(entry, 'title', 'No Title'))).strip()
+                        link = getattr(entry, 'link', '#')
+                        
+                        if title and title != 'No Title':
+                            articles.append({
+                                'title': str(title),
+                                'summary': str(summary),
+                                'link': str(link),
+                                'published': str(published),
+                                'source': str(feed_info['name']),
+                                'tags': ['Finance', 'Markets', 'Business']
+                            })
                     except:
-                        pass
-                
-                # Clean HTML from summary
-                summary = entry.summary if hasattr(entry, 'summary') else entry.description if hasattr(entry, 'description') else 'No summary available'
-                if summary:
-                    import re
-                    summary = re.sub(r'<[^>]+>', '', summary)  # Remove HTML tags
-                    summary = summary.strip()[:300] + '...' if len(summary) > 300 else summary
-                
-                article = {
-                    'title': str(entry.title if hasattr(entry, 'title') else 'No Title'),
-                    'summary': str(summary),
-                    'link': str(entry.link if hasattr(entry, 'link') else '#'),
-                    'published': str(published),
-                    'source': str(feed_info['name']),
-                    'tags': ['Finance', 'Markets', 'Business']  # Always strings
-                }
-                all_articles.append(article)
-                
+                        continue
         except Exception as e:
-            print(f"Error fetching from {feed_info['name']}: {e}")
-            continue
+            print(f"Error fetching {feed_info['name']}: {e}")
+        
+        return articles
     
-    # Sort by published date (newest first)
-    all_articles.sort(key=lambda x: x['published'], reverse=True)
-    return all_articles
+    # Fetch feeds in parallel with timeout
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+            future_to_feed = {executor.submit(fetch_single_feed, feed): feed for feed in priority_feeds}
+            
+            for future in concurrent.futures.as_completed(future_to_feed, timeout=10):
+                try:
+                    articles = future.result(timeout=5)
+                    all_articles.extend(articles)
+                except:
+                    continue
+    except:
+        pass
+    
+    # Sort and cache
+    if all_articles:
+        all_articles.sort(key=lambda x: x['published'], reverse=True)
+        news_cache['articles'] = all_articles[:30]  # Keep top 30
+        news_cache['last_updated'] = now
+        print(f"Cached {len(all_articles)} fresh articles")
+        return all_articles[:30]
+    
+    # Return cached articles if fresh fetch failed
+    if news_cache['articles']:
+        print("Fresh fetch failed, returning cached articles")
+        return news_cache['articles']
+    
+    return []
 
 class ChatRequest(BaseModel):
     message: str = Field(..., description="User's financial question", example="How to start SIP investment?")
@@ -168,8 +229,306 @@ class ChatResponse(BaseModel):
 async def chat_endpoint(request: ChatRequest):
     start_time = time.time()
     try:
+        # Enhanced system prompt with comprehensive website knowledge
+        enhanced_system_prompt = f"""
+        You are FinBot, NeoCred's advanced AI financial assistant with comprehensive knowledge of the entire NeoCred platform.
+        
+        ## CORE IDENTITY & CAPABILITIES:
+        - Expert financial advisor for Indian markets with real-time knowledge
+        - Access to 25+ financial calculators and tools on NeoCred
+        - Deep knowledge of 8 Financial Literacy Pillars
+        - Current with 2025 financial regulations and rates
+        - Conversational, helpful, and educational approach
+        
+        ## COMPANY INFORMATION & LEGAL CONTEXT:
+        
+        ### About NeoCred:
+        - **Founder**: Kalyanam Rakesh (Founder & Visionary)
+        - **Mission**: Make every Indian financially aware, confident, and capable of taking decisions without fear, confusion, or misinformation
+        - **Vision**: Financial literacy is the first step toward financial freedom for millions in India
+        - **Team**: AI-powered development team with community contributors
+        - **Users**: 15,000+ users educated across India
+        - **Contact**: hello@neocred.in, privacy@neocred.in, security@neocred.in
+        - **Website**: https://neocred.in
+        
+        ### IMPORTANT DISCLAIMERS & LEGAL INFORMATION:
+        
+        **Educational Purpose Only:**
+        - NeoCred is an educational platform for financial literacy and awareness
+        - All content is for informational and educational purposes only
+        - We are NOT SEBI-registered advisors or certified financial planners
+        - We do NOT provide personalized financial, investment, legal, or tax advice
+        - We do NOT sell financial products or push any agenda
+        
+        **Investment Risks & Disclaimers:**
+        - All investments carry inherent risks and market uncertainties
+        - Past performance does not guarantee future results
+        - Calculator results are estimates based on standard formulas
+        - Results may vary from actual market outcomes
+        - Always consult certified professionals before making financial decisions
+        - Consider your risk tolerance, financial goals, and market timing
+        
+        **User Responsibility:**
+        - Users must verify all information independently
+        - Consult SEBI-registered advisors for investment decisions
+        - Seek certified tax professionals for tax planning
+        - Use our content as educational guidance, not financial advice
+        - We are not liable for any financial losses or investment decisions
+        
+        **Regulatory Compliance:**
+        - Platform operates within Indian financial regulations
+        - Follows SEBI, RBI, IRDAI guidelines for educational content
+        - Complies with DPDP Act for data protection
+        - Adheres to Consumer Protection Act requirements
+        
+        **Privacy & Data Protection:**
+        - Bank-level security with SSL encryption
+        - We NEVER sell, rent, or trade personal information
+        - No financial data collection (no account details, OTPs, cards, PAN/Aadhaar)
+        - Users have rights to access, correct, delete, and export their data
+        - Contact privacy@neocred.in for data-related queries
+        
+        **Terms of Service:**
+        - Platform is completely free with no hidden costs
+        - Users must use services responsibly and lawfully
+        - We maintain 99.9% uptime target with scheduled maintenance notifications
+        - Disputes resolved through good faith negotiation and mediation
+        - Governed by laws of India with Indian court jurisdiction
+        
+        **Content & Accuracy:**
+        - Monthly review of financial calculators
+        - Quarterly update of educational content
+        - Immediate updates for regulatory changes
+        - User feedback integration within 48 hours
+        - Report errors to content@neocred.in
+        
+        **Contact Information:**
+        - General Support: hello@neocred.in
+        - Privacy Team: privacy@neocred.in
+        - Security Issues: security@neocred.in
+        - Content Errors: content@neocred.in
+        - Response Time: Within 24 hours
+        
+        ## WEBSITE CONTENT ACCESS:
+        
+        ### Financial Calculators (25+ tools):
+        **Investment Tools:**
+        - SIP Calculator: Calculate systematic investment returns with compounding
+        - Lumpsum Calculator: One-time investment growth projections
+        - Step-up SIP Calculator: SIP with annual increment planning
+        - Goal-Based Investment Planner: Target-oriented investment strategy
+        - Mutual Fund Tracker: Portfolio performance monitoring
+        
+        **Loan Calculators:**
+        - Home Loan EMI Calculator: Monthly payment and amortization
+        - Car Loan EMI Calculator: Vehicle financing calculations
+        - Education Loan EMI: Student loan planning
+        - Loan Eligibility Checker: Income-based loan qualification
+        - Loan Affordability Tool: Maximum borrowing capacity
+        
+        **Savings & Deposits:**
+        - FD Calculator: Fixed deposit maturity (7-8.5% rates 2025)
+        - RD Calculator: Recurring deposit planning
+        - PPF Calculator: Public Provident Fund (7.1% rate 2025)
+        - Emergency Fund Calculator: 6-month expense planning
+        - NSC Calculator: National Savings Certificate
+        
+        **Insurance Tools:**
+        - Term Life Insurance Calculator: Coverage needs assessment
+        - Health Insurance Calculator: Premium and coverage planning
+        - Vehicle Insurance Calculator: Motor insurance estimation
+        
+        **Tax Planning:**
+        - HRA Exemption Calculator: House rent allowance optimization
+        - Tax Saver Calculator: 80C deduction planning (₹1.5L limit)
+        - Form 16 Breakdown Tool: Salary tax analysis
+        
+        **Retirement Planning:**
+        - Retirement Goal Planner: Post-retirement corpus calculation
+        - NPS Calculator: National Pension System returns
+        - EPF Calculator: Employee Provident Fund (8.25% rate 2025)
+        - Annuity Calculator: Pension planning
+        
+        **Budget & Planning:**
+        - Budget Planner: 50/30/20 rule implementation
+        - Net Worth Tracker: Assets vs liabilities
+        - Debt Repayment Planner: Debt avalanche/snowball strategies
+        - Rent vs Buy Calculator: Home ownership decision
+        
+        ### 8 Financial Literacy Pillars:
+        
+        **Pillar 1: Personal Finance**
+        - Budgeting (50/30/20 rule)
+        - Emergency fund (6 months expenses)
+        - Savings strategies (7-8% rates 2025)
+        - Investment basics (SIP, lumpsum)
+        - Debt management (CIBIL score 750+)
+        - Insurance planning (term life, health)
+        - Tax optimization (80C, 80D)
+        
+        **Pillar 2: Banking & Payments**
+        - Digital banking revolution
+        - UPI payments (₹100L+ daily volume)
+        - Neobanks and fintech
+        - Payment security
+        - Account types and features
+        
+        **Pillar 3: Investments & Capital Markets**
+        - Equity markets (15-22% expected returns)
+        - Mutual funds and ETFs
+        - Bonds and debt instruments (7-9% returns)
+        - Portfolio diversification
+        - Risk management
+        
+        **Pillar 4: Insurance & Risk Management**
+        - Life insurance (₹1Cr for ₹15k/year)
+        - Health insurance (₹5-10L coverage)
+        - General insurance (motor, travel, home)
+        - Risk assessment strategies
+        
+        **Pillar 5: Corporate Finance**
+        - Business valuation
+        - Capital structure
+        - M&A strategies
+        - Financial planning for businesses
+        
+        **Pillar 6: Government & Public Finance**
+        - Fiscal policy understanding
+        - Government schemes
+        - Budget analysis
+        - Public financial management
+        
+        **Pillar 7: Alternative Finance & Fintech**
+        - Cryptocurrency basics
+        - P2P lending
+        - Blockchain technology
+        - Fintech innovations
+        
+        **Pillar 8: International Trade & Finance**
+        - Forex markets
+        - International investments
+        - Cross-border transactions
+        - Global diversification
+        
+        ### Current Market Data (2025):
+        - Savings Account: 7-8%
+        - Fixed Deposits: 7-8.5%
+        - PPF Rate: 7.1%
+        - EPF Rate: 8.25%
+        - Home Loan: 8.5-12%
+        - Credit Cards: 36-48%
+        - Equity Expected: 15-22%
+        - Debt Expected: 7-9%
+        
+        ### Website Navigation:
+        - Homepage: Overview and quick access
+        - Tools Page: All 25+ calculators organized by category
+        - Learn Section: 8 Financial Pillars with detailed content
+        - News Section: Latest financial news and AI digest
+        - About: Company information and mission
+        - Contact: Support and feedback
+        - Privacy Policy: Data protection information
+        - Terms of Service: Usage guidelines
+        
+        ## RESPONSE GUIDELINES:
+        
+        1. **Tool Recommendations**: Always suggest relevant calculators by exact name
+        2. **Educational Approach**: Explain concepts before recommending tools
+        3. **Current Data**: Use 2025 rates and regulations
+        4. **Personalization**: Ask follow-up questions for better advice
+        5. **Actionable Advice**: Provide specific, implementable steps
+        6. **Comparison Handling**: For 'vs' questions, mention BOTH tools clearly
+        7. **Link Generation**: System auto-creates buttons - don't include URLs
+        8. **Indian Context**: Focus on Indian financial landscape
+        9. **Beginner Friendly**: Explain jargon and complex concepts
+        10. **Comprehensive**: Cover all aspects of financial planning
+        11. **Website Navigation**: Guide users to relevant sections (Learn, News, Tools)
+        12. **Legal Compliance**: ALWAYS include appropriate disclaimers for investment advice
+        13. **Multi-step Guidance**: Break complex processes into simple steps
+        14. **Follow-up Suggestions**: Always end with next steps or related questions
+        15. **Contextual Awareness**: Remember conversation history and user preferences
+        
+        ## MANDATORY DISCLAIMER USAGE:
+        
+        **For Investment Advice**: Always include: "⚠️ This is educational information only. Consult SEBI-registered advisors before making investment decisions. All investments carry market risks."
+        
+        **For Tax Planning**: Always include: "💡 This is general tax information. Consult certified tax professionals for personalized tax planning."
+        
+        **For Insurance**: Always include: "🛡️ This is general insurance guidance. Consult licensed insurance advisors for coverage recommendations."
+        
+        **For Loan Decisions**: Always include: "🏠 These are estimated calculations. Consult bank officials and financial advisors for actual loan terms."
+        
+        **Company Information Queries**: When asked about NeoCred, founder, or company details, provide accurate information from the company section above.
+        
+        **Legal/Policy Questions**: Direct users to appropriate legal pages (Privacy Policy, Terms of Service, Disclaimer) and provide relevant contact emails.
+        
+        ## CONVERSATION STYLE:
+        - Friendly and approachable like a trusted financial advisor
+        - Use emojis appropriately (💰📈🏠💡🎯🚀⚠️🛡️)
+        - Ask clarifying questions to understand user needs
+        - Provide examples with Indian context (₹ amounts, Indian scenarios)
+        - Encourage financial literacy and learning
+        - Be patient with beginners, expert with advanced users
+        - Celebrate financial milestones and progress
+        - Use analogies and simple language for complex concepts
+        - Show enthusiasm for helping users achieve financial goals
+        - Maintain professional yet conversational tone
+        - ALWAYS acknowledge when users need professional financial advice
+        - Be encouraging about financial planning journey
+        - Include appropriate disclaimers naturally in conversation
+        - Emphasize educational nature of all advice provided
+        - Redirect liability concerns to proper professional consultation
+        
+        {request.systemPrompt}
+        
+        ## WEBSITE CONTENT & NAVIGATION:
+        
+        ### Legal & Policy Pages:
+        - Privacy Policy: Data protection, cookie usage, user rights
+        - Terms of Service: Usage guidelines, limitations, user responsibilities
+        - About Us: NeoCred mission, team, company information
+        - Contact: Support channels, feedback, business inquiries
+        - Disclaimer: Financial advice limitations, risk warnings
+        
+        ### Current Financial Data (2025):
+        - Repo Rate: 6.50% (RBI current)
+        - Inflation: 5.5-6% target range
+        - GDP Growth: 6.5-7% projected
+        - Sensex: 75,000+ levels
+        - Nifty 50: 22,500+ levels
+        - USD/INR: 82-84 range
+        - Gold: ₹65,000-70,000 per 10g
+        - Crude Oil: $75-85 per barrel
+        
+        ### Quick Links & Features:
+        - News Section: Latest financial news with AI digest
+        - Calculator Hub: Direct access to all 25+ tools
+        - Learning Center: 8 Financial Pillars with detailed content
+        - FinBot Chat: This AI assistant interface
+        - Mobile App: Coming soon features
+        - Newsletter: Weekly financial tips
+        - Webinars: Educational sessions
+        - Blog: Financial insights and guides
+        
+        ### User Journey Optimization:
+        - New Users: Start with Budget Planner or SIP Calculator
+        - Investors: Goal-Based Investment Planner, SIP vs Lumpsum
+        - Homebuyers: Home Loan EMI, Rent vs Buy Calculator
+        - Tax Savers: 80C Calculator, HRA Exemption
+        - Retirees: Retirement Planner, NPS Calculator
+        - Students: Education Loan, Budget Planning
+        
+        ### Integration Points:
+        - All calculators link back to relevant learning pillars
+        - News articles connect to related tools
+        - Learning content suggests practical calculators
+        - Chat responses include direct tool navigation
+        
+        {request.toolsContext}
+        """
+        
         messages = [
-            {"role": "system", "content": f"{request.systemPrompt}\n\n{request.toolsContext}\n\nIMPORTANT: When users ask comparison questions with 'vs' or 'versus', always mention BOTH tools by name in your response (e.g., 'SIP Calculator' and 'Lumpsum Investment Calculator'). Do NOT include any links or URLs in your response text - the system will automatically create clickable buttons for mentioned tools."}
+            {"role": "system", "content": enhanced_system_prompt}
         ]
         
         # Add conversation history
@@ -185,8 +544,10 @@ async def chat_endpoint(request: ChatRequest):
         response = client.chat.completions.create(
             model="gpt-4-turbo-preview",
             messages=messages,
-            max_tokens=600,
-            temperature=0.7
+            max_tokens=800,
+            temperature=0.7,
+            presence_penalty=0.1,
+            frequency_penalty=0.1
         )
         
         bot_response = response.choices[0].message.content
@@ -365,7 +726,22 @@ async def health():
         "timestamp": time.time(),
         "api_configured": api_key_configured,
         "openai_status": openai_status,
-        "version": "2.0.0"
+        "version": "2.0.0",
+        "cors_enabled": True
+    }
+
+@app.get(
+    "/api/test",
+    summary="🔧 Connection Test",
+    description="Simple endpoint to test frontend-backend connectivity",
+    tags=["System"]
+)
+async def test_connection():
+    return {
+        "success": True,
+        "message": "Frontend-backend connection working!",
+        "timestamp": time.time(),
+        "server": "NeoCred Backend"
     }
 
 @app.get(
@@ -902,8 +1278,23 @@ async def get_all_calculators():
 )
 async def get_news(page: int = 1, limit: int = 20, q: str = None):
     try:
-        # Fetch live RSS news
+        # Fetch cached RSS news (fast)
         articles = fetch_rss_news()
+        
+        if not articles:
+            return {
+                "success": False,
+                "error": "No articles available",
+                "data": [],
+                "pagination": {
+                    "page": 1,
+                    "limit": 20,
+                    "total_items": 0,
+                    "total_pages": 0,
+                    "has_next": False,
+                    "has_prev": False
+                }
+            }
         
         # Filter by search query if provided
         if q:
@@ -943,6 +1334,13 @@ async def get_news(page: int = 1, limit: int = 20, q: str = None):
             }
         }
 
+# Cache for digest - longer cache to save API credits
+digest_cache = {
+    'data': None,
+    'last_updated': None,
+    'cache_duration': 3600  # 1 hour
+}
+
 @app.get(
     "/api/digest",
     summary="📊 Daily Financial Digest",
@@ -951,80 +1349,50 @@ async def get_news(page: int = 1, limit: int = 20, q: str = None):
 )
 async def get_digest():
     try:
-        # Get latest news from RSS feeds
+        # Check cache first
+        now = datetime.now()
+        if (digest_cache['last_updated'] and 
+            digest_cache['data'] and 
+            (now - digest_cache['last_updated']).seconds < digest_cache['cache_duration']):
+            return digest_cache['data']
+        
+        # Get latest news from RSS feeds (fast cached version)
         articles = fetch_rss_news()
-        top_articles = articles[:10]  # Get top 10 articles
         
-        # Create AI summary using OpenAI
-        if os.getenv("OPENAI_API_KEY") and top_articles:
-            try:
-                # Prepare news content for AI summary
-                news_content = "\n".join([f"- {article['title']}: {article['summary'][:100]}..." for article in top_articles])
-                
-                response = client.chat.completions.create(
-                    model="gpt-4-turbo-preview",
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": "You are a senior financial analyst creating a daily market digest. Analyze the news and provide: 1) Key market themes, 2) Policy/regulatory updates, 3) Sector highlights, 4) Investment implications. Write in a professional, insightful tone. Keep it comprehensive yet concise (200-250 words)."
-                        },
-                        {
-                            "role": "user",
-                            "content": f"Analyze today's financial news and create an insightful market digest:\n{news_content}"
-                        }
-                    ],
-                    max_tokens=300,
-                    temperature=0.6
-                )
-                
-                ai_summary = response.choices[0].message.content
-                
-                # Extract key highlights from top articles
-                highlights = [article['title'][:80] + "..." if len(article['title']) > 80 else article['title'] for article in top_articles[:4]]
-                
-                return {
-                    "success": True,
-                    "date": datetime.now().strftime("%Y-%m-%d"),
-                    "summary": ai_summary,
-                    "highlights": highlights,
-                    "market_summary": {
-                        "articles_analyzed": len(top_articles),
-                        "sources": len(set([article['source'] for article in top_articles])),
-                        "last_updated": datetime.now().strftime("%H:%M"),
-                        "status": "Live"
-                    }
-                }
-                
-            except Exception as e:
-                print(f"OpenAI API error: {e}")
-                # Fallback to manual summary
-                pass
+        if not articles:
+            return {
+                "success": False,
+                "error": "No articles available"
+            }
         
-        # Fallback summary when OpenAI is not available
+        top_articles = articles[:6]  # Get top 6 articles for faster processing
         highlights = [article['title'][:80] + "..." if len(article['title']) > 80 else article['title'] for article in top_articles[:4]]
         
-        return {
+        # Quick digest without AI for faster response
+        digest_data = {
             "success": True,
-            "date": datetime.now().strftime("%Y-%m-%d"),
-            "summary": f"Today's financial news covers {len(articles)} articles from major Indian financial publications. Key developments include market movements, policy updates, and sector-specific news from sources like Economic Times, Moneycontrol, and Business Standard.",
+            "date": now.strftime("%Y-%m-%d"),
+            "summary": f"Today's financial markets show active trading with {len(articles)} news updates from major Indian publications. Key focus areas include market movements, policy developments, and sector-specific updates from Economic Times, LiveMint, and other trusted sources.",
             "highlights": highlights,
             "market_summary": {
                 "articles_analyzed": len(top_articles),
                 "sources": len(set([article['source'] for article in top_articles])),
-                "last_updated": datetime.now().strftime("%H:%M"),
+                "last_updated": now.strftime("%H:%M"),
                 "status": "Live"
             }
         }
+        
+        # Cache the result
+        digest_cache['data'] = digest_data
+        digest_cache['last_updated'] = now
+        
+        return digest_data
         
     except Exception as e:
         print(f"Error generating digest: {e}")
         return {
             "success": False,
-            "error": "Unable to generate digest at the moment",
-            "date": datetime.now().strftime("%Y-%m-%d"),
-            "summary": "Unable to generate summary at the moment. Please try again later.",
-            "highlights": [],
-            "market_summary": {}
+            "error": "Unable to generate digest"
         }
 
 @app.post(
@@ -1093,6 +1461,6 @@ async def generate_news_summary(request: Request):
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.getenv("PORT", 8080))
-    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", 8001))
+    host = os.getenv("HOST", "127.0.0.1")
     uvicorn.run(app, host=host, port=port)

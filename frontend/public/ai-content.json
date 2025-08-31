@@ -1,58 +1,158 @@
 {
-  "site": "NeoCred - AI-Powered Financial Platform",
-  "description": "India's leading financial platform with 40+ calculators, AI assistant, and comprehensive learning resources",
-  "lastUpdated": "2025-01-27",
-  "features": {
-    "calculators": 40,
-    "learningPillars": 8,
-    "aiAssistant": "GPT-4 powered FinBot",
-    "newsUpdates": "Real-time financial news",
-    "userBase": "Growing financial literacy platform"
+  "site": {
+    "name": "NeoCred",
+    "description": "AI-Powered Financial Platform with 40+ calculators and comprehensive learning resources",
+    "url": "https://neocred.in",
+    "type": "Financial Technology Platform",
+    "target_audience": "Indian users seeking financial literacy and planning tools",
+    "languages": ["English", "Hindi", "Telugu"],
+    "last_updated": "2024-12-19"
   },
-  "pillars": {
-    "personalFinance": {
-      "sections": 12,
-      "features": ["Floating quick navigation", "Definition hover cards", "Level indicators", "Takeaway boxes", "Cross-linking"],
-      "content": "Complete Wikipedia-style guide covering budgeting, saving, investing, debt management, retirement planning, insurance, tax optimization",
-      "tools": ["Budget Planner", "Emergency Fund Calculator", "SIP Calculator", "Debt Repayment Planner"],
-      "data2025": "Updated with 7-8% savings rates, 80C limits, new tax regime comparisons"
+  "main_features": {
+    "calculators": {
+      "count": 40,
+      "categories": [
+        "Investment Planning (SIP, Lumpsum, Step-up SIP, Goal Planning)",
+        "Loan Calculators (Home Loan EMI, Car Loan, Personal Loan, Education Loan)",
+        "Savings Tools (FD, RD, PPF, NSC, Emergency Fund)",
+        "Insurance Estimators (Term Life, Health, Vehicle, Crop)",
+        "Tax Planning (80C Savings, HRA, Form 16 Analysis, TDS)",
+        "Retirement Planning (NPS, EPF, Annuity, Retirement Goal)",
+        "Budget Management (50/30/20 Rule, Budget Planner, Net Worth Tracker)",
+        "Credit Tools (Credit Score Simulator, Debt Repayment Planner)"
+      ],
+      "popular_tools": [
+        "SIP Calculator - Systematic Investment Planning",
+        "Home Loan EMI Calculator - Monthly payment calculation",
+        "FD Calculator - Fixed deposit returns",
+        "Budget Planner - Income and expense management",
+        "Emergency Fund Calculator - Financial safety planning"
+      ]
     },
-    "traditionalInvestments": {
-      "categories": ["Bank Deposits", "Government Schemes", "Bonds", "Retirement", "Gold", "Insurance"],
-      "content": "Comprehensive coverage of FD, RD, PPF, NSC, EPF, NPS with 2025 rates and strategies"
+    "ai_assistant": {
+      "name": "FinBot",
+      "technology": "GPT-4-turbo powered",
+      "capabilities": [
+        "Financial advice for Indian markets",
+        "Tool recommendations based on user queries",
+        "Investment planning guidance",
+        "Tax optimization strategies",
+        "Loan and EMI calculations",
+        "Budget and savings planning"
+      ],
+      "specializations": [
+        "SIP and Mutual Fund planning",
+        "Home loan and EMI calculations",
+        "Tax saving under Section 80C",
+        "Emergency fund planning",
+        "Retirement corpus building",
+        "Insurance planning"
+      ]
     },
-    "marketLinkedInvestments": {
-      "categories": ["Equity", "Mutual Funds", "Derivatives", "Real Estate", "International", "Commodities", "Digital Assets"],
-      "content": "Complete guide to market investments with risk analysis and platform recommendations"
+    "learning_platform": {
+      "pillars": [
+        "Personal Finance Fundamentals",
+        "Emergency Fund Planning",
+        "Investment Portfolio Management",
+        "Credit Score & Debt Management",
+        "Retirement Planning",
+        "Insurance Strategy",
+        "Tax Optimization",
+        "Wealth Tracking & Estate Planning"
+      ],
+      "content_types": [
+        "Interactive guides",
+        "Video tutorials",
+        "Weekly financial tips",
+        "Market insights",
+        "Investment strategies"
+      ]
+    },
+    "news_platform": {
+      "features": [
+        "Real-time financial news",
+        "Market updates",
+        "RBI policy changes",
+        "Investment opportunities",
+        "Tax law updates"
+      ],
+      "sources": "Curated from reliable financial news sources",
+      "update_frequency": "Real-time"
     }
   },
-  "calculators": {
-    "popular": [
-      {"name": "SIP Calculator", "description": "Systematic Investment Planning with rupee cost averaging"},
-      {"name": "Home Loan EMI", "description": "Monthly mortgage payments with current rates 8.5-12%"},
-      {"name": "Budget Planner", "description": "50/30/20 rule implementation for personal finance"},
-      {"name": "Emergency Fund", "description": "6 months expense safety net calculator"},
-      {"name": "Retirement Goal", "description": "NPS and EPF based retirement corpus calculation"}
-    ],
-    "categories": ["Investment", "Loans", "Savings", "Insurance", "Tax", "Retirement"]
+  "target_keywords": [
+    "financial calculator India",
+    "SIP calculator",
+    "home loan EMI calculator",
+    "investment planning tools",
+    "financial planning India",
+    "budget planner",
+    "tax saver calculator",
+    "retirement planning calculator",
+    "emergency fund calculator",
+    "AI financial advisor",
+    "FinBot assistant",
+    "mutual fund calculator",
+    "FD calculator",
+    "PPF calculator",
+    "financial literacy India"
+  ],
+  "user_benefits": [
+    "Free access to 40+ financial calculators",
+    "AI-powered personalized financial advice",
+    "Comprehensive financial education",
+    "Real-time market news and updates",
+    "Tools designed specifically for Indian financial system",
+    "Support for multiple Indian languages",
+    "Mobile-responsive design",
+    "No registration required for basic tools"
+  ],
+  "technical_features": {
+    "frontend": "React 19 with Vite",
+    "backend": "FastAPI with Python",
+    "ai_integration": "OpenAI GPT-4-turbo",
+    "database": "SQLite with Redis caching",
+    "styling": "Tailwind CSS with Framer Motion",
+    "pwa_support": true,
+    "mobile_optimized": true,
+    "offline_capable": "Partial (calculators work offline)"
   },
-  "finbot": {
-    "model": "GPT-4-turbo",
-    "capabilities": ["Personalized financial advice", "Tool recommendations", "Real-time guidance", "VS comparisons"],
-    "examples": [
-      "How much should I save if my salary is ₹40,000?",
-      "What's the right emergency fund size for me?",
-      "Should I pay off debt or start investing?",
-      "Which mutual fund is best for SIP?",
-      "How to improve my CIBIL score?"
-    ]
+  "content_structure": {
+    "pages": {
+      "home": "Main landing page with feature overview",
+      "tools": "40+ financial calculators organized by category",
+      "learn": "8 pillars of financial literacy with interactive content",
+      "chatbot": "AI-powered financial assistant",
+      "news": "Real-time financial news and market updates",
+      "explore": "Discover financial products and services",
+      "rewards": "Gamification system for user engagement",
+      "career": "Job opportunities in fintech"
+    },
+    "calculator_categories": {
+      "investment": "SIP, Lumpsum, Step-up SIP, Goal Planning, Mutual Fund Tracker",
+      "loans": "Home Loan EMI, Car Loan, Education Loan, Personal Loan",
+      "savings": "FD, RD, PPF, NSC, Post Office schemes",
+      "insurance": "Term Life, Health, Vehicle, Crop insurance estimators",
+      "tax": "80C savings, HRA exemption, Form 16 analysis",
+      "retirement": "NPS, EPF, Annuity, Retirement goal planning",
+      "budget": "Budget planner, 50/30/20 rule, Net worth tracker",
+      "credit": "Credit score simulator, Debt repayment planner"
+    }
   },
-  "data2025": {
-    "savingsRates": "7-8%",
-    "fdRates": "7-8.5%",
-    "ppfRate": "7.1%",
-    "epfRate": "8.25%",
-    "homeLoanRates": "8.5-12%",
-    "taxLimits": "80C: ₹1.5L, Standard Deduction: ₹75k"
+  "api_endpoints": {
+    "chat": "/api/chat - AI assistant conversations",
+    "calculators": "/api/calculators - Calculator data and results",
+    "news": "/api/news - Financial news feed",
+    "learn": "/api/learn - Learning content and progress",
+    "health": "/health - System health check"
+  },
+  "seo_optimization": {
+    "meta_tags": "Comprehensive meta tags for all pages",
+    "structured_data": "Schema.org markup for better search visibility",
+    "sitemap": "XML sitemaps for all content",
+    "robots_txt": "Optimized for search engines and AI crawlers",
+    "canonical_urls": "Proper canonical URL structure",
+    "open_graph": "Social media optimization",
+    "twitter_cards": "Enhanced Twitter sharing"
   }
 }

@@ -63,42 +63,85 @@ Example Response Format:
 To try the Emergency Fund Calculator tool, click the Open Tool button below!`;
 
 export const FINBOT_INTRO_MESSAGE = {
-  text: "💰 Hi! I'm FinBot 🤖, your AI financial assistant from NeoCred! 🚀\n\n📈 I help with **investments**, **budgeting**, **taxes**, and **loans** while suggesting our powerful tools! ✨\n\n🔧 **Explore 40+ Tools**: Calculators for all your financial needs 💎\n📚 **Learn**: Comprehensive financial guides 📖\n📰 **News**: Stay updated with market trends 📊\n\nWhat financial goal can I help you achieve today? 🎯💪",
-  suggestions: ['Show me all 40+ tools 🔧', 'Investment advice 📈', 'Budget planning 💰', 'Tax saving tips 📄'],
+  text: "🚀 **Welcome to FinBot AI!** 🤖\n\nI'm your intelligent financial assistant with access to:\n\n✨ **25+ Financial Calculators** - SIP, EMI, Tax, Budget & more\n📚 **8 Learning Pillars** - Complete financial education\n📰 **Live Market News** - AI-powered daily digest\n🎯 **Personalized Advice** - Tailored to Indian markets\n\n💡 **I can help you with:**\n• Investment planning (SIP, Mutual Funds, FD)\n• Loan calculations (Home, Car, Education)\n• Tax optimization (80C, HRA, New vs Old regime)\n• Budget planning (50/30/20 rule, Emergency funds)\n• Insurance planning (Term, Health, Vehicle)\n• Retirement planning (NPS, PPF, EPF)\n\n🔥 **Try asking:** \"How to start SIP?\" or \"Calculate my home loan EMI\"\n\nWhat financial goal can I help you achieve today? 💪",
+  suggestions: [
+    '📈 Start SIP investment',
+    '🏠 Calculate home loan EMI', 
+    '💰 Create monthly budget',
+    '📄 Save tax under 80C',
+    '🎯 Plan retirement corpus',
+    '🔧 Show all calculators'
+  ],
   toolLink: '/tools'
 };
 
 export const QUICK_SUGGESTIONS = [
-  "Show me SIP calculator",
-  "Help with budget planning",
-  "Calculate my EMI",
-  "Tax saving under 80C",
-  "Investment options for beginners",
-  "Emergency fund planning",
-  "Compare FD rates",
-  "Insurance calculator"
+  "📈 SIP Calculator - Start systematic investing",
+  "🏠 Home Loan EMI - Calculate monthly payments", 
+  "💰 Budget Planner - 50/30/20 rule implementation",
+  "📄 Tax Saver - 80C deduction optimization",
+  "🎯 Goal Planner - Target-based investments",
+  "🚨 Emergency Fund - 6-month safety planning",
+  "💎 FD Calculator - Fixed deposit returns",
+  "🛡️ Insurance Estimator - Coverage planning",
+  "🔄 Step-up SIP - Annual increment planning",
+  "🏛️ PPF Calculator - 15-year tax-free returns",
+  "📊 Retirement Planner - Post-work financial security",
+  "💳 Credit Score - Improvement strategies"
 ];
 
 export const CONVERSATION_STARTERS = {
   investment: [
-    "How to start investing with ₹1000?",
-    "SIP vs lump sum investment?",
-    "Best mutual funds for beginners?"
+    "How to start SIP with ₹1000 monthly?",
+    "SIP vs lumpsum - which is better?",
+    "Best mutual funds for beginners in 2025?",
+    "Goal-based investment planning guide",
+    "Step-up SIP vs regular SIP comparison",
+    "Gold investment vs equity - which to choose?"
   ],
   budgeting: [
-    "Create my first budget",
-    "Track monthly expenses",
-    "50/30/20 rule explained"
+    "Create my first monthly budget",
+    "50/30/20 rule implementation guide",
+    "Emergency fund - how much to save?",
+    "Track and reduce monthly expenses",
+    "Budget for first salary planning",
+    "Net worth calculation and tracking"
   ],
   loans: [
-    "Calculate home loan EMI",
-    "Personal loan vs credit card?",
-    "Improve loan eligibility"
+    "Calculate home loan EMI and eligibility",
+    "Car loan vs personal loan comparison",
+    "Education loan planning for abroad studies",
+    "Improve CIBIL score for better rates",
+    "Rent vs buy home decision calculator",
+    "Debt repayment strategy planning"
   ],
   taxes: [
-    "Save tax under 80C",
-    "Old vs new tax regime?",
-    "Tax-saving investments"
+    "Save maximum tax under Section 80C",
+    "Old vs new tax regime - which to choose?",
+    "HRA exemption calculation guide",
+    "Form 16 analysis and breakdown",
+    "Tax-saving investments for 2025",
+    "TDS calculation and planning"
+  ],
+  insurance: [
+    "How much term life insurance do I need?",
+    "Health insurance premium calculation",
+    "Vehicle insurance cost estimation",
+    "Crop insurance for farmers guide"
+  ],
+  retirement: [
+    "Retirement corpus planning calculator",
+    "NPS vs PPF vs EPF comparison",
+    "Annuity planning for pension",
+    "Early retirement FIRE strategy"
+  ],
+  general: [
+    "Complete financial planning roadmap",
+    "Investment options for different age groups",
+    "Financial planning for women",
+    "Student financial planning guide",
+    "Senior citizen investment options",
+    "Financial planning for freelancers"
   ]
 };
 
@@ -200,7 +243,8 @@ export const ROUTES = {
   PRIVACY: '/privacy',
   TERMS: '/terms',
   DISCLAIMER: '/disclaimer',
-  COOKIES: '/cookies'
+  COOKIES: '/cookies',
+  CAREER: '/career'
 };
 
 export const TOOL_ROUTES = {

@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
-import { Clock, ExternalLink, Tag, Image, Sparkles } from 'lucide-react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { Clock, ExternalLink, Tag, Image, Sparkles, Bookmark, BookmarkCheck, Share2, TrendingUp } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { trackNewsClick } from '../../hooks/useAnalytics';
 
-const SafeNewsCard = ({ article }) => {
+// Move source colors outside component to prevent recreation
+const SOURCE_COLORS = {
+  'RBI': 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
+  'PIB': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+  'MoneyControl': 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
+  'Business Standard': 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300',
+  'Economic Times': 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+  'LiveMint': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+  'Times of India Business': 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
+};
+
+const SafeNewsCard = ({ article, isBookmarked, onBookmark, onShare }) => {
   const [aiSummary, setAiSummary] = useState('');
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
@@ -45,9 +57,12 @@ const SafeNewsCard = ({ article }) => {
     
     setLoadingSummary(true);
     try {
-      const response = await fetch('https://neocred-backend.fly.dev/api/news/summary', {
+      const response = await fetch('/api/news/summary', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
         body: JSON.stringify({ title, summary })
       });
       const data = await response.json();
@@ -67,18 +82,26 @@ const SafeNewsCard = ({ article }) => {
     }
   };
 
-  const getSourceColor = (source) => {
-    const colors = {
-      'RBI': 'bg-blue-100 text-blue-800',
-      'PIB': 'bg-green-100 text-green-800',
-      'MoneyControl': 'bg-purple-100 text-purple-800',
-      'Business Standard': 'bg-orange-100 text-orange-800',
-      'Economic Times': 'bg-red-100 text-red-800',
-      'LiveMint': 'bg-green-100 text-green-800',
-      'Times of India Business': 'bg-blue-100 text-blue-800'
-    };
-    return colors[source] || 'bg-gray-100 text-gray-800';
-  };
+  const getSourceColor = useMemo(() => {
+    return SOURCE_COLORS[source] || 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+  }, [source]);
+  
+  const isValidUrl = useMemo(() => {
+    try {
+      const url = new URL(link);
+      return url.protocol === 'https:' && (
+        url.hostname.includes('rbi.org.in') ||
+        url.hostname.includes('pib.gov.in') ||
+        url.hostname.includes('moneycontrol.com') ||
+        url.hostname.includes('business-standard.com') ||
+        url.hostname.includes('economictimes.indiatimes.com') ||
+        url.hostname.includes('livemint.com') ||
+        url.hostname.includes('timesofindia.indiatimes.com')
+      );
+    } catch {
+      return false;
+    }
+  }, [link]);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg transition-all duration-300 overflow-hidden">
@@ -93,9 +116,27 @@ const SafeNewsCard = ({ article }) => {
         
         {/* Source Badge */}
         <div className="absolute top-3 left-3">
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getSourceColor(source)} backdrop-blur-sm`}>
+          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getSourceColor} backdrop-blur-sm shadow-sm`}>
             {source}
           </span>
+        </div>
+        
+        {/* Bookmark Button */}
+        <div className="absolute top-3 right-12">
+          <button
+            onClick={() => onBookmark?.(article)}
+            className={`p-2 rounded-full backdrop-blur-sm transition-colors ${
+              isBookmarked 
+                ? 'bg-yellow-500 text-white shadow-lg' 
+                : 'bg-black/20 text-white hover:bg-black/40'
+            }`}
+          >
+            {isBookmarked ? (
+              <BookmarkCheck className="w-4 h-4" />
+            ) : (
+              <Bookmark className="w-4 h-4" />
+            )}
+          </button>
         </div>
         
         {/* Time Badge */}
@@ -156,25 +197,44 @@ const SafeNewsCard = ({ article }) => {
         )}
 
         {/* Actions */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
           <button
             onClick={handleAISummary}
             disabled={loadingSummary}
-            className="inline-flex items-center px-4 py-3 min-h-[44px] text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors disabled:opacity-50 touch-manipulation"
+            className="flex-1 inline-flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors disabled:opacity-50 touch-manipulation"
           >
             <Sparkles className="w-4 h-4 mr-1" />
             {loadingSummary ? 'Generating...' : showSummary ? 'Hide Summary' : 'AI Summary'}
           </button>
-          <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackNewsClick(title)}
-            className="inline-flex items-center px-4 py-3 min-h-[44px] text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors touch-manipulation"
+          
+          <button
+            onClick={() => onShare?.(article)}
+            className="p-3 text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            title="Share article"
           >
-            Read More
-            <ExternalLink className="w-4 h-4 ml-2" />
-          </a>
+            <Share2 className="w-4 h-4" />
+          </button>
+          
+          {isValidUrl ? (
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackNewsClick(title)}
+              className="flex-1 inline-flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors touch-manipulation"
+            >
+              Read More
+              <ExternalLink className="w-4 h-4 ml-2" />
+            </a>
+          ) : (
+            <button
+              disabled
+              className="flex-1 inline-flex items-center justify-center px-4 py-3 min-h-[44px] text-sm font-medium text-gray-400 bg-gray-100 dark:bg-gray-800 rounded-lg cursor-not-allowed touch-manipulation"
+              title="Link not available"
+            >
+              Link Unavailable
+            </button>
+          )}
         </div>
       </div>
     </div>

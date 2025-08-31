@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronUpIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../utils/constants';
 
 const ContactPage = () => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,6 +16,21 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [contactHistory, setContactHistory] = useState([]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    
+    const handleScroll = () => {
+      setShowScrollTop(window.pageYOffset > 300);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   
   // Load contact history from localStorage
   React.useEffect(() => {
@@ -113,7 +130,12 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        {/* Animated Gradient Layers */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 via-transparent to-green-100/20 dark:from-blue-900/20 dark:to-green-900/20 animate-pulse" />
+      </div>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-blue-100/50 to-gray-200 dark:from-blue-900/20 dark:to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -472,6 +494,17 @@ const ContactPage = () => {
           </div>
         )}
       </div>
+      
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-28 right-4 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-30"
+          aria-label="Scroll to top"
+        >
+          <ChevronUpIcon className="h-6 w-6" />
+        </button>
+      )}
     </div>
   );
 };

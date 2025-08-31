@@ -52,9 +52,6 @@ export default function Navbar() {
               </Link>
             ))}
             <ThemeToggle />
-            <Link to={ROUTES.CONTACT} className="btn-primary">
-              Contact
-            </Link>
           </div>
 
           <div className="md:hidden flex items-center space-x-2">
@@ -86,13 +83,7 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <Link
-              to={ROUTES.CONTACT}
-              className="block px-4 py-3 min-h-[44px] text-base font-medium text-gray-900 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors touch-manipulation"
-              onClick={() => setIsOpen(false)}
-            >
-              Contact
-            </Link>
+
           </div>
         </div>
       )}

@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronUpIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../utils/constants';
 
 export default function Terms() {
   const [activeSection, setActiveSection] = useState('');
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    
+    const handleScroll = () => {
+      setShowScrollTop(window.pageYOffset > 300);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const sections = [
     { id: 'who-we-are', title: '1. Who We Are', icon: '🏢' },
@@ -26,7 +43,12 @@ export default function Terms() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        {/* Animated Gradient Layers */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 via-transparent to-green-100/20 dark:from-blue-900/20 dark:to-green-900/20 animate-pulse" />
+      </div>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-blue-100/50 to-gray-200 dark:from-blue-900/20 dark:to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -59,59 +81,13 @@ export default function Terms() {
           </div>
           
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Effective Date: <span className="text-gray-900 dark:text-white font-medium">December 15, 2024</span>
+            Effective Date: <span className="text-gray-900 dark:text-white font-medium">January 15, 2025</span>
           </p>
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-          {/* Table of Contents - Sticky Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="glass-card sticky top-8">
-              <h3 className="text-xl font-bold mb-6 text-center">
-                📋 <span className="text-blue-400">Contents</span>
-              </h3>
-              <nav className="space-y-2">
-                {sections.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => scrollToSection(section.id)}
-                    className={`w-full text-left p-3 rounded-lg transition-all duration-300 hover:bg-white/10 ${
-                      activeSection === section.id ? 'bg-blue-500/20 text-blue-600 dark:text-blue-300' : 'text-gray-700 dark:text-gray-300'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-lg">{section.icon}</span>
-                      <span className="text-sm font-medium">{section.title}</span>
-                    </div>
-                  </button>
-                ))}
-              </nav>
-              
-              {/* Quick Actions */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Quick Actions</h4>
-                <div className="space-y-2">
-                  <a 
-                    href="mailto:hello@neocred.in"
-                    className="block p-2 bg-gray-100 dark:bg-white/5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-sm text-gray-700 dark:text-gray-300"
-                  >
-                    📧 Contact Support
-                  </a>
-                  <Link 
-                    to={ROUTES.PRIVACY}
-                    className="block p-2 bg-gray-100 dark:bg-white/5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-sm text-gray-700 dark:text-gray-300"
-                  >
-                    🔒 Privacy Policy
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="lg:col-span-3">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div>
             <div className="space-y-12">
               {/* Introduction */}
               <div className="glass-card">
@@ -399,9 +375,19 @@ export default function Terms() {
                 </a>
               </div>
             </div>
-          </div>
         </div>
       </div>
+      
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-28 right-4 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-30"
+          aria-label="Scroll to top"
+        >
+          <ChevronUpIcon className="h-6 w-6" />
+        </button>
+      )}
     </div>
   );
 }

@@ -30,20 +30,24 @@ const UCOBankCreditCards = lazy(() => import('./pages/UCOBankCreditCards'));
 const IOBCreditCards = lazy(() => import('./pages/IOBCreditCards'));
 const BankOfMaharashtraCreditCards = lazy(() => import('./pages/BankOfMaharashtraCreditCards'));
 const ExpertConsultation = lazy(() => import('./pages/ExpertConsultation'));
-const FixedDeposits = lazy(() => import('./pages/investments/FixedDeposits'));
-const RecurringDeposits = lazy(() => import('./pages/investments/RecurringDeposits'));
-const PPF = lazy(() => import('./pages/investments/PPF'));
-const NSC = lazy(() => import('./pages/investments/NSC'));
-const MutualFunds = lazy(() => import('./pages/investments/MutualFunds'));
-const SIP = lazy(() => import('./pages/investments/SIP'));
+
 const PersonalFinance = lazy(() => import('./pages/learn/PersonalFinance'));
+const EmergencyFundPlan = lazy(() => import('./pages/learn/EmergencyFundPlan'));
+const BondsCompleteGuide = lazy(() => import('./pages/learn/BondsCompleteGuide'));
+const InvestmentPortfolioGuide = lazy(() => import('./pages/learn/InvestmentPortfolioGuide'));
+const CreditScoreDebtManagement = lazy(() => import('./pages/learn/CreditScoreDebtManagement'));
+const RetirementPlanning = lazy(() => import('./pages/learn/RetirementPlanning'));
+const InsuranceStrategy = lazy(() => import('./pages/learn/InsuranceStrategy'));
+const TaxOptimization = lazy(() => import('./pages/learn/TaxOptimization'));
+const WealthTracking = lazy(() => import('./pages/learn/WealthTracking'));
+const EstatePlanning = lazy(() => import('./pages/learn/EstatePlanning'));
 const BankingPayments = lazy(() => import('./pages/learn/BankingPayments'));
-const InvestmentsCapital = lazy(() => import('./pages/learn/InvestmentsCapital'));
-const InsuranceRisk = lazy(() => import('./pages/learn/InsuranceRisk'));
+const Insurance = lazy(() => import('./pages/learn/Insurance'));
+const Investments = lazy(() => import('./pages/learn/Investments'));
 const CorporateFinance = lazy(() => import('./pages/learn/CorporateFinance'));
-const GovtPublicFinance = lazy(() => import('./pages/learn/GovtPublicFinance'));
-const AltFintech = lazy(() => import('./pages/learn/AltFintech'));
-const InternationalTrade = lazy(() => import('./pages/learn/InternationalTrade'));
+const GovernmentFinance = lazy(() => import('./pages/learn/GovernmentFinance'));
+const AlternativeFinance = lazy(() => import('./pages/learn/AlternativeFinance'));
+const InternationalFinance = lazy(() => import('./pages/learn/InternationalFinance'));
 const TraditionalInvestments = lazy(() => import('./pages/learn/TraditionalInvestments'));
 const MarketLinkedInvestments = lazy(() => import('./pages/learn/MarketLinkedInvestments'));
 const RetirementInvestments = lazy(() => import('./pages/learn/RetirementInvestments'));
@@ -91,6 +95,7 @@ const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Disclaimer = lazy(() => import('./pages/Disclaimer'));
 const Cookies = lazy(() => import('./pages/Cookies'));
+const Career = lazy(() => import('./pages/Career'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const FontDemo = lazy(() => import('./components/FontDemo'));
 const SIPCalculatorPage = lazy(() => import('./pages/calculators/SIPCalculatorPage'));
@@ -200,20 +205,24 @@ function App() {
           <Route path="/business-tools" element={<MainLayout><BusinessTools /></MainLayout>} />
           <Route path="/rewards" element={<MainLayout><Rewards /></MainLayout>} />
           <Route path="/expert-consultation" element={<MainLayout><ExpertConsultation /></MainLayout>} />
-          <Route path="/investments/fixed-deposits" element={<MainLayout><FixedDeposits /></MainLayout>} />
-          <Route path="/investments/recurring-deposits" element={<MainLayout><RecurringDeposits /></MainLayout>} />
-          <Route path="/investments/ppf" element={<MainLayout><PPF /></MainLayout>} />
-          <Route path="/investments/nsc" element={<MainLayout><NSC /></MainLayout>} />
-          <Route path="/investments/mutual-funds" element={<MainLayout><MutualFunds /></MainLayout>} />
-          <Route path="/investments/sip" element={<MainLayout><SIP /></MainLayout>} />
+
           <Route path="/learn/personal-finance" element={<MainLayout><PersonalFinance /></MainLayout>} />
+          <Route path="/learn/emergency-fund-plan" element={<MainLayout><EmergencyFundPlan /></MainLayout>} />
+          <Route path="/learn/bonds-complete-guide" element={<MainLayout><BondsCompleteGuide /></MainLayout>} />
+          <Route path="/learn/investment-portfolio-guide" element={<MainLayout><InvestmentPortfolioGuide /></MainLayout>} />
+          <Route path="/learn/credit-score-debt-management" element={<MainLayout><CreditScoreDebtManagement /></MainLayout>} />
+          <Route path="/learn/retirement-planning" element={<MainLayout><RetirementPlanning /></MainLayout>} />
+          <Route path="/learn/insurance-strategy" element={<MainLayout><InsuranceStrategy /></MainLayout>} />
+          <Route path="/learn/tax-optimization" element={<MainLayout><TaxOptimization /></MainLayout>} />
+          <Route path="/learn/wealth-tracking" element={<MainLayout><WealthTracking /></MainLayout>} />
+          <Route path="/learn/estate-planning" element={<MainLayout><EstatePlanning /></MainLayout>} />
           <Route path="/learn/banking-payments" element={<MainLayout><BankingPayments /></MainLayout>} />
-          <Route path="/learn/investments-capital" element={<MainLayout><InvestmentsCapital /></MainLayout>} />
-          <Route path="/learn/insurance-risk" element={<MainLayout><InsuranceRisk /></MainLayout>} />
+          <Route path="/learn/insurance" element={<MainLayout><Insurance /></MainLayout>} />
+          <Route path="/learn/investments" element={<MainLayout><Investments /></MainLayout>} />
           <Route path="/learn/corporate-finance" element={<MainLayout><CorporateFinance /></MainLayout>} />
-          <Route path="/learn/govt-public-finance" element={<MainLayout><GovtPublicFinance /></MainLayout>} />
-          <Route path="/learn/alt-fintech" element={<MainLayout><AltFintech /></MainLayout>} />
-          <Route path="/learn/international-trade" element={<MainLayout><InternationalTrade /></MainLayout>} />
+          <Route path="/learn/government-finance" element={<MainLayout><GovernmentFinance /></MainLayout>} />
+          <Route path="/learn/alternative-finance" element={<MainLayout><AlternativeFinance /></MainLayout>} />
+          <Route path="/learn/international-finance" element={<MainLayout><InternationalFinance /></MainLayout>} />
           <Route path="/learn/traditional-investments" element={<MainLayout><TraditionalInvestments /></MainLayout>} />
           <Route path="/learn/market-linked-investments" element={<MainLayout><MarketLinkedInvestments /></MainLayout>} />
           <Route path="/learn/retirement-investments" element={<MainLayout><RetirementInvestments /></MainLayout>} />
@@ -287,6 +296,7 @@ function App() {
           <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
           <Route path="/disclaimer" element={<MainLayout><Disclaimer /></MainLayout>} />
           <Route path="/cookies" element={<MainLayout><Cookies /></MainLayout>} />
+          <Route path="/career" element={<MainLayout><Career /></MainLayout>} />
           <Route path="/fonts" element={<MainLayout><FontDemo /></MainLayout>} />
           <Route path="/calculators/sip" element={<MainLayout><SIPCalculatorPage /></MainLayout>} />
           <Route path="/calculators/home-loan-emi" element={<MainLayout><HomeLoanEMICalculatorPage /></MainLayout>} />

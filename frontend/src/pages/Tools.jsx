@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, lazy, Suspense } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Tab } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -10,17 +11,19 @@ import {
   FunnelIcon,
   FireIcon,
   SparklesIcon,
-  HeartIcon
+  HeartIcon,
+  ClockIcon,
+  ArrowRightIcon,
+  ChevronUpIcon
 } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 
 const FdCalculator = lazy(() => import('../calculators/FdCalculator'));
 const SIPCalculator = lazy(() => import('../calculators/SIPCalculator'));
 const BudgetPlanner = lazy(() => import('../calculators/BudgetPlanner'));
-const TaxSaverCalc = lazy(() => import('../calculators/TaxSaverCalc'));
+
 import RDCalculator from '../calculators/RDCalculator';
 import PPFCalculator from '../calculators/PPFCalculator';
-import PostOfficeFDCalculator from '../calculators/PostOfficeFDCalculator';
 import StepUpSIPCalculator from '../calculators/StepUpSIPCalculator';
 import LumpsumInvestmentCalculator from '../calculators/LumpsumInvestmentCalculator';
 import GoalBasedInvestmentPlanner from '../calculators/GoalBasedInvestmentPlanner';
@@ -29,21 +32,16 @@ import GoldInvestmentCalculator from '../calculators/GoldInvestmentCalculator';
 import HomeLoanEMICalculator from '../calculators/HomeLoanEMICalculator';
 import EducationLoanEMICalculator from '../calculators/EducationLoanEMICalculator';
 import CarBikeLoanEMICalculator from '../calculators/CarBikeLoanEMICalculator';
-import CreditCardEMICalculator from '../calculators/CreditCardEMICalculator';
 import LoanEligibilityChecker from '../calculators/LoanEligibilityChecker';
-import LoanAffordabilityTool from '../calculators/LoanAffordabilityTool';
 import TermLifeInsuranceEstimator from '../calculators/TermLifeInsuranceEstimator';
 import HealthInsurancePremiumEstimator from '../calculators/HealthInsurancePremiumEstimator';
-import VehicleInsuranceEstimator from '../calculators/VehicleInsuranceEstimator';
-import CropInsuranceEstimator from '../calculators/CropInsuranceEstimator';
+
 import NPSReturnCalculator from '../calculators/NPSReturnCalculator';
 import RetirementGoalPlanner from '../calculators/RetirementGoalPlanner';
-import AnnuityCalculator from '../calculators/AnnuityCalculator';
 import EPFMaturityCalculator from '../calculators/EPFMaturityCalculator';
 import DebtRepaymentPlanner from '../calculators/DebtRepaymentPlanner';
 import HRAExemptionCalculator from '../calculators/HRAExemptionCalculator';
-import Form16BreakdownTool from '../calculators/Form16BreakdownTool';
-import TDSEstimator from '../calculators/TDSEstimator';
+
 import NetWorthTracker from '../calculators/NetWorthTracker';
 import EmergencyFundCalculator from '../calculators/EmergencyFundCalculator';
 import BudgetRuleCalculator from '../calculators/BudgetRuleCalculator';
@@ -52,7 +50,6 @@ import FirstSalaryPlanner from '../calculators/FirstSalaryPlanner';
 import RentVsBuyCalculator from '../calculators/RentVsBuyCalculator';
 import RealReturnsCalculator from '../calculators/RealReturnsCalculator';
 import RuleOf72Calculator from '../calculators/RuleOf72Calculator';
-import BudgetGoalPlanner from '../calculators/BudgetGoalPlanner';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -70,16 +67,19 @@ export default function Tools() {
   const [userPoints, setUserPoints] = useState(0);
   const [showPointsAnimation, setShowPointsAnimation] = useState(false);
   const [isFromChatbot, setIsFromChatbot] = useState(false);
+  const [searchSuggestions, setSearchSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   
   // Enhanced tool data with tags, levels, and popularity (30+ tools)
-  const allTools = [
+  const allTools = useMemo(() => [
     // Core Tools (4)
     { name: 'FD Calculator', icon: CurrencyDollarIcon, component: FdCalculator, category: 'Core Tools', level: 'Beginner', tags: ['savings', 'deposit', 'fixed'], popularity: 95, description: 'Calculate returns on Fixed Deposits', pageUrl: '/calculators/fd' },
     { name: 'SIP Calculator', icon: ChartBarIcon, component: SIPCalculator, category: 'Core Tools', level: 'Beginner', tags: ['invest', 'sip', 'mutual-fund'], popularity: 98, description: 'Plan your systematic investment', pageUrl: '/calculators/sip' },
     { name: 'Budget Planner', icon: DocumentTextIcon, component: BudgetPlanner, category: 'Core Tools', level: 'Beginner', tags: ['budget', 'planning', 'expense'], popularity: 92, description: 'Manage your monthly budget', pageUrl: '/calculators/budget-planner' },
-    { name: 'Tax Saver', icon: CalculatorIcon, component: TaxSaverCalc, category: 'Core Tools', level: 'Intermediate', tags: ['tax', 'savings', '80c'], popularity: 88, description: 'Calculate tax savings' },
+    { name: 'HRA Exemption Calculator', icon: CalculatorIcon, component: HRAExemptionCalculator, category: 'Core Tools', level: 'Intermediate', tags: ['tax', 'hra', 'salary'], popularity: 88, description: 'Calculate HRA tax exemption', pageUrl: '/calculators/hra-exemption' },
     
-    // Savings & Deposits (3)
+    // Savings & Deposits (2)
     { name: 'RD Calculator', icon: CalculatorIcon, component: RDCalculator, category: 'Savings & Deposits', level: 'Beginner', tags: ['savings', 'recurring', 'deposit'], popularity: 75, description: 'Calculates maturity and total interest from Recurring Deposits', pageUrl: '/calculators/rd' },
     { name: 'PPF Calculator', icon: CalculatorIcon, component: PPFCalculator, category: 'Savings & Deposits', level: 'Intermediate', tags: ['savings', 'ppf', 'tax'], popularity: 82, description: 'Calculates maturity value of Public Provident Fund', pageUrl: '/calculators/ppf' },
 
@@ -92,62 +92,66 @@ export default function Tools() {
     { name: 'Gold Investment Calculator', icon: CurrencyDollarIcon, component: GoldInvestmentCalculator, category: 'Investment Tools', level: 'Intermediate', tags: ['invest', 'gold', 'sgb'], popularity: 68, description: 'SGB/digital gold returns over years', pageUrl: '/calculators/gold-investment' },
     { name: 'Rule of 72 Calculator', icon: CalculatorIcon, component: RuleOf72Calculator, category: 'Investment Tools', level: 'Beginner', tags: ['invest', 'doubling', 'rule72'], popularity: 84, description: 'Quick way to estimate investment doubling time', pageUrl: '/calculators/rule-of-72' },
     
-    // Loan & Credit Tools (6)
+    // Loan & Credit Tools (4)
     { name: 'Home Loan EMI Calculator', icon: CalculatorIcon, component: HomeLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'home', 'emi'], popularity: 90, description: 'Estimate EMI + interest breakup', pageUrl: '/calculators/home-loan-emi' },
     { name: 'Education Loan EMI Calculator', icon: CalculatorIcon, component: EducationLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'education', 'student'], popularity: 70, description: 'Helps students plan repayment', pageUrl: '/calculators/education-loan-emi' },
     { name: 'Car/Bike Loan EMI Calculator', icon: CalculatorIcon, component: CarBikeLoanEMICalculator, category: 'Loan & Credit Tools', level: 'Beginner', tags: ['loan', 'vehicle', 'emi'], popularity: 74, description: 'For vehicle buyers', pageUrl: '/calculators/car-loan-emi' },
-
     { name: 'Loan Eligibility Checker', icon: CalculatorIcon, component: LoanEligibilityChecker, category: 'Loan & Credit Tools', level: 'Intermediate', tags: ['loan', 'eligibility', 'income'], popularity: 77, description: 'Based on salary/income, debt ratio', pageUrl: '/calculators/loan-eligibility' },
 
     
-    // Insurance Tools (4)
+    // Insurance Tools (2)
     { name: 'Term Life Insurance Estimator', icon: CalculatorIcon, component: TermLifeInsuranceEstimator, category: 'Insurance Tools', level: 'Intermediate', tags: ['insurance', 'life', 'family'], popularity: 85, description: 'Estimates ideal life cover based on income & age', pageUrl: '/calculators/term-life-insurance' },
     { name: 'Health Insurance Premium Estimator', icon: CalculatorIcon, component: HealthInsurancePremiumEstimator, category: 'Insurance Tools', level: 'Beginner', tags: ['insurance', 'health', 'family'], popularity: 88, description: 'Based on city, age, coverage amount', pageUrl: '/calculators/health-insurance' },
 
 
     
-    // Retirement Tools (4)
+    // Retirement Tools (3)
     { name: 'NPS Return Calculator', icon: ChartBarIcon, component: NPSReturnCalculator, category: 'Retirement Tools', level: 'Advanced', tags: ['retirement', 'nps', 'pension'], popularity: 65, description: 'Calculates future value based on investment %', pageUrl: '/calculators/nps-return' },
     { name: 'Retirement Goal Planner', icon: ChartBarIcon, component: RetirementGoalPlanner, category: 'Retirement Tools', level: 'Advanced', tags: ['retirement', 'planning', 'goal'], popularity: 78, description: 'Helps users invest monthly for post-60 life', pageUrl: '/calculators/retirement-goal' },
-
     { name: 'EPF Maturity Calculator', icon: CalculatorIcon, component: EPFMaturityCalculator, category: 'Retirement Tools', level: 'Intermediate', tags: ['retirement', 'epf', 'provident'], popularity: 73, description: 'For salaried employees (estimate maturity at 58)', pageUrl: '/calculators/epf-maturity' },
     
     // Credit & Score Tools (2)
     { name: 'Credit Score Simulator', icon: ChartBarIcon, category: 'Credit & Score Tools', level: 'Advanced', tags: ['credit', 'score', 'simulation'], popularity: 67, description: 'Simulates how score changes based on EMI defaults, usage', pageUrl: '/calculators/credit-score-simulator' },
     { name: 'Debt Repayment Planner', icon: CalculatorIcon, component: DebtRepaymentPlanner, category: 'Credit & Score Tools', level: 'Advanced', tags: ['debt', 'credit', 'planning'], popularity: 72, description: 'Strategizes how to repay loans faster using snowball/avalanche method', pageUrl: '/calculators/debt-repayment' },
     
-    // Tax & Salary Tools (3)
-    { name: 'HRA Exemption Calculator', icon: CalculatorIcon, component: HRAExemptionCalculator, category: 'Tax & Salary Tools', level: 'Intermediate', tags: ['tax', 'hra', 'salary'], popularity: 80, description: 'Show HRA deduction based on salary & rent', pageUrl: '/calculators/hra-exemption' },
+    // Tax & Salary Tools (0)
 
 
     
-    // Personal Planning Tools (5)
+    // Personal Planning Tools (4)
     { name: 'Net Worth Tracker', icon: ChartBarIcon, component: NetWorthTracker, category: 'Personal Planning Tools', level: 'Beginner', tags: ['planning', 'wealth', 'assets'], popularity: 68, description: 'Calculates total assets – liabilities', pageUrl: '/calculators/net-worth-tracker' },
     { name: 'Emergency Fund Calculator', icon: CurrencyDollarIcon, component: EmergencyFundCalculator, category: 'Personal Planning Tools', level: 'Beginner', tags: ['emergency', 'savings', 'planning'], popularity: 85, description: 'Shows how much savings needed for 3/6 months', pageUrl: '/calculators/emergency-fund' },
     { name: '50/30/20 Rule Budgeter', icon: DocumentTextIcon, component: BudgetRuleCalculator, category: 'Personal Planning Tools', level: 'Beginner', tags: ['budget', 'rule', 'planning'], popularity: 79, description: 'Income-based auto-planner', pageUrl: '/calculators/budget-rule' },
     { name: 'First Salary Planner', icon: CalculatorIcon, component: FirstSalaryPlanner, category: 'Personal Planning Tools', level: 'Beginner', tags: ['salary', 'fresher', 'planning'], popularity: 83, description: 'For freshers to plan savings, tax, and spend smartly', pageUrl: '/calculators/first-salary-planner' },
 
     
-    // Specialized Tools (4)
+    // Specialized Tools (2)
 
     { name: 'Rent vs Buy Home Calculator', icon: CalculatorIcon, component: RentVsBuyCalculator, category: 'Specialized Tools', level: 'Advanced', tags: ['property', 'rent', 'buy'], popularity: 75, description: 'Compares renting vs buying a house over years', pageUrl: '/calculators/rent-vs-buy' },
     { name: 'Real Returns Calculator', icon: ChartBarIcon, component: RealReturnsCalculator, category: 'Specialized Tools', level: 'Advanced', tags: ['returns', 'inflation', 'real'], popularity: 64, description: 'Adjusts returns for inflation impact', pageUrl: '/calculators/real-returns' }
-  ];
+  ], []);
   
   // Load data from localStorage and handle URL parameters on component mount
   useEffect(() => {
-    const savedFavorites = localStorage.getItem('favoriteTools');
-    const savedRecent = localStorage.getItem('recentTools');
-    const savedPoints = localStorage.getItem('learningPoints');
+    // Scroll to top on page load
+    window.scrollTo(0, 0);
     
-    if (savedFavorites) {
-      setFavoriteTools(new Set(JSON.parse(savedFavorites)));
-    }
-    if (savedRecent) {
-      setRecentTools(JSON.parse(savedRecent));
-    }
-    if (savedPoints) {
-      setUserPoints(parseInt(savedPoints));
+    try {
+      const savedFavorites = localStorage.getItem('favoriteTools');
+      const savedRecent = localStorage.getItem('recentTools');
+      const savedPoints = localStorage.getItem('learningPoints');
+      
+      if (savedFavorites) {
+        setFavoriteTools(new Set(JSON.parse(savedFavorites)));
+      }
+      if (savedRecent) {
+        setRecentTools(JSON.parse(savedRecent));
+      }
+      if (savedPoints) {
+        setUserPoints(parseInt(savedPoints, 10) || 0);
+      }
+    } catch (error) {
+      console.warn('Error loading saved data from localStorage:', error);
     }
     
     // Handle URL parameter to auto-open tool
@@ -159,43 +163,59 @@ export default function Tools() {
     setIsFromChatbot(fromChat);
     
     // Handle recommended tools from home page
-    if (recommended && savedRecent && JSON.parse(savedRecent).length > 0) {
-      setSelectedCategory('Recent');
+    try {
+      if (recommended && savedRecent && JSON.parse(savedRecent).length > 0) {
+        setSelectedCategory('Recent');
+      }
+    } catch (error) {
+      console.warn('Error parsing savedRecent:', error);
     }
     
     if (toolName) {
-      console.log('Looking for tool:', toolName);
       const tool = allTools.find(t => t.name === toolName);
-      console.log('Found tool:', tool);
       if (tool && !tool.locked) {
         setSelectedTool(tool);
         trackToolUsage(tool);
-      } else {
-        console.log('Tool not found or locked:', toolName);
       }
     }
+    
+    // Scroll to top functionality
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   
   // Track tool usage and award points
   const trackToolUsage = (tool) => {
-    // Add to recent tools (keep last 3)
-    const newRecent = [tool.name, ...recentTools.filter(name => name !== tool.name)].slice(0, 3);
-    setRecentTools(newRecent);
-    localStorage.setItem('recentTools', JSON.stringify(newRecent));
-    
-    // Award points (10 points per tool use)
-    const newPoints = userPoints + 10;
-    setUserPoints(newPoints);
-    localStorage.setItem('learningPoints', newPoints.toString());
-    
-    // Show animation
-    setShowPointsAnimation(true);
-    setTimeout(() => setShowPointsAnimation(false), 2000);
-    
-    // Track usage analytics
-    const usageData = JSON.parse(localStorage.getItem('toolUsageAnalytics') || '{}');
-    usageData[tool.name] = (usageData[tool.name] || 0) + 1;
-    localStorage.setItem('toolUsageAnalytics', JSON.stringify(usageData));
+    try {
+      // Add to recent tools (keep last 3)
+      const newRecent = [tool.name, ...recentTools.filter(name => name !== tool.name)].slice(0, 3);
+      setRecentTools(newRecent);
+      localStorage.setItem('recentTools', JSON.stringify(newRecent));
+      
+      // Award points (10 points per tool use)
+      const newPoints = userPoints + 10;
+      setUserPoints(newPoints);
+      localStorage.setItem('learningPoints', newPoints.toString());
+      
+      // Show animation
+      setShowPointsAnimation(true);
+      setTimeout(() => setShowPointsAnimation(false), 2000);
+      
+      // Track usage analytics
+      const usageData = JSON.parse(localStorage.getItem('toolUsageAnalytics') || '{}');
+      usageData[tool.name] = (usageData[tool.name] || 0) + 1;
+      localStorage.setItem('toolUsageAnalytics', JSON.stringify(usageData));
+    } catch (error) {
+      console.warn('Error tracking tool usage:', error);
+    }
   };
 
   // Toggle favorite status
@@ -243,7 +263,7 @@ export default function Tools() {
   }, [searchTerm, selectedLevel, selectedTag, selectedCategory, favoriteTools, recentTools, allTools]);
   
   // Popular tools (top 6 by popularity)
-  const popularTools = allTools.sort((a, b) => b.popularity - a.popularity).slice(0, 6);
+  const popularTools = [...allTools].sort((a, b) => b.popularity - a.popularity).slice(0, 6);
   
   // Get unique values for filters
   const levels = ['All', 'Beginner', 'Intermediate', 'Advanced'];
@@ -262,8 +282,10 @@ export default function Tools() {
   const renderToolCard = (tool) => (
     <div 
       key={tool.name}
-      className={`bg-gray-100 dark:bg-white/5 p-6 rounded-xl transition-all duration-300 group ${
-        tool.locked ? 'opacity-75 cursor-not-allowed' : 'hover:bg-gray-200 dark:hover:bg-white/15 cursor-pointer'
+      className={`relative bg-white dark:bg-gray-800 p-6 rounded-2xl transition-all duration-500 group border border-gray-200 dark:border-gray-700 h-full flex flex-col ${
+        tool.locked 
+          ? 'opacity-75 cursor-not-allowed' 
+          : 'hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-400/20 cursor-pointer hover:-translate-y-2 hover:border-blue-300 dark:hover:border-blue-600'
       }`}
       onClick={() => {
         if (!tool.locked) {
@@ -276,15 +298,23 @@ export default function Tools() {
         }
       }}
     >
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
-          <tool.icon className={`h-6 w-6 transition-colors ${
-            tool.locked ? 'text-gray-500 dark:text-white/50' : 'text-gray-900 dark:text-white group-hover:text-blue-400'
-          }`} />
+      {/* Gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="flex items-start justify-between mb-4 relative z-10">
+        <div className="flex items-center gap-4">
+          <div className={`p-3 rounded-xl transition-all duration-300 ${
+            tool.locked 
+              ? 'bg-gray-100 dark:bg-gray-700' 
+              : 'bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 group-hover:from-blue-100 group-hover:to-purple-100 dark:group-hover:from-blue-800/30 dark:group-hover:to-purple-800/30 group-hover:scale-110'
+          }`}>
+            <tool.icon className={`h-6 w-6 transition-all duration-300 ${
+              tool.locked ? 'text-gray-500 dark:text-white/50' : 'text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300'
+            }`} />
+          </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className={`text-lg font-semibold transition-colors ${
-                tool.locked ? 'text-gray-500 dark:text-white/60' : 'text-gray-900 dark:text-white group-hover:text-blue-400'
+              <h3 className={`text-lg font-bold transition-all duration-300 ${
+                tool.locked ? 'text-gray-500 dark:text-white/60' : 'text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400'
               }`}>{tool.name}</h3>
               {tool.locked && (
                 <span className="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-full border border-yellow-500/30">
@@ -327,42 +357,138 @@ export default function Tools() {
           )}
         </div>
       </div>
-      <p className={`text-sm mb-3 ${
-        tool.locked ? 'text-gray-500 dark:text-white/50' : 'text-gray-600 dark:text-white/70'
+      <p className={`text-sm mb-4 leading-relaxed relative z-10 flex-grow ${
+        tool.locked ? 'text-gray-500 dark:text-white/50' : 'text-gray-600 dark:text-white/70 group-hover:text-gray-700 dark:group-hover:text-white/80'
       }`}>{tool.description}</p>
-      <div className="flex flex-wrap gap-1">
-        {tool.tags.slice(0, 3).map(tag => (
-          <span key={tag} className={`text-xs px-2 py-1 rounded-full ${
-            tool.locked ? 'bg-gray-200 dark:bg-white/5 text-gray-500 dark:text-white/50' : 'bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-white/80'
-          }`}>
+      
+      {/* Enhanced tags with better styling */}
+      <div className="flex flex-wrap gap-2 mb-4 relative z-10">
+        {tool.tags.slice(0, 3).map((tag, index) => (
+          <span key={tag} className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all duration-300 ${
+            tool.locked 
+              ? 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400' 
+              : 'bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-700 dark:text-blue-300 group-hover:from-blue-200 group-hover:to-purple-200 dark:group-hover:from-blue-800/50 dark:group-hover:to-purple-800/50'
+          }`} style={{ animationDelay: `${index * 100}ms` }}>
             {tag}
           </span>
         ))}
       </div>
-      {tool.locked && (
-        <div className="mt-3 pt-3 border-t border-white/10">
-          <p className="text-xs text-yellow-300/80">
-            🔒 This tool is currently locked. Coming soon!
-          </p>
+      
+      {/* Action button - fixed at bottom */}
+      <div className={`flex items-center justify-between relative z-10 mt-auto ${
+        tool.locked ? 'opacity-50' : ''
+      }`}>
+        <div className={`text-sm font-medium transition-colors ${
+          tool.locked 
+            ? 'text-gray-400 dark:text-gray-500'
+            : 'text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300'
+        }`}>
+          {tool.locked ? '🔒 Coming Soon' : 'Open Calculator →'}
         </div>
-      )}
+        <div className={`text-xs px-2 py-1 rounded-full ${
+          tool.popularity > 85 
+            ? 'bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-700 dark:text-orange-300'
+            : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+        }`}>
+          {tool.popularity}% popular
+        </div>
+      </div>
     </div>
   );
 
   return (
-    <div className="py-12 min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Financial Tools & Calculators
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-white/80 max-w-3xl mx-auto mb-6">
-              Make informed financial decisions with our comprehensive suite of calculators and planning tools.
-            </p>
+    <div className="py-12 min-h-screen relative overflow-hidden text-gray-900 dark:text-white transition-all duration-500">
+      {/* Advanced Background System */}
+      <div className="fixed inset-0 z-0">
+        {/* Primary Gradient Base */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900/10 dark:to-indigo-900/10"></div>
+        
+        {/* Animated Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-purple-50/40 via-transparent to-blue-100/30 dark:from-purple-900/8 dark:via-transparent dark:to-blue-900/12 animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-bl from-emerald-50/30 via-transparent to-cyan-50/40 dark:from-emerald-900/6 dark:via-transparent dark:to-cyan-900/8" style={{animationDelay: '3s'}}></div>
+        
+        {/* Floating Calculator Icons */}
+        <div className="absolute top-20 left-16 w-20 h-20 bg-gradient-to-br from-blue-200/25 to-purple-300/30 dark:from-blue-600/15 dark:to-purple-600/20 rounded-2xl blur-lg animate-float rotate-12"></div>
+        <div className="absolute top-32 right-24 w-16 h-16 bg-gradient-to-br from-emerald-200/30 to-teal-300/35 dark:from-emerald-600/15 dark:to-teal-600/20 rounded-xl blur-md animate-float-delayed -rotate-6"></div>
+        <div className="absolute bottom-40 left-1/4 w-24 h-24 bg-gradient-to-br from-indigo-200/20 to-blue-300/25 dark:from-indigo-600/12 dark:to-blue-600/15 rounded-3xl blur-xl animate-float-slow rotate-45"></div>
+        <div className="absolute top-1/2 right-1/3 w-18 h-18 bg-gradient-to-br from-purple-200/25 to-pink-300/30 dark:from-purple-600/12 dark:to-pink-600/15 rounded-2xl blur-lg animate-float-reverse -rotate-12"></div>
+        <div className="absolute bottom-24 right-16 w-22 h-22 bg-gradient-to-br from-teal-200/22 to-cyan-300/28 dark:from-teal-600/10 dark:to-cyan-600/12 rounded-2xl blur-xl animate-float-delayed rotate-30"></div>
+        
+        {/* Mathematical Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08]" style={{
+          backgroundImage: `
+            linear-gradient(90deg, rgb(59 130 246) 1px, transparent 1px),
+            linear-gradient(180deg, rgb(59 130 246) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px'
+        }}></div>
+        
+        {/* Dynamic Calculator Symbols */}
+        <div className="absolute top-1/4 left-1/5 text-blue-200/20 dark:text-blue-600/10 text-6xl font-bold animate-pulse" style={{animationDelay: '1s'}}>+</div>
+        <div className="absolute top-3/4 right-1/4 text-purple-200/20 dark:text-purple-600/10 text-5xl font-bold animate-pulse" style={{animationDelay: '2s'}}>%</div>
+        <div className="absolute bottom-1/3 left-1/3 text-emerald-200/20 dark:text-emerald-600/10 text-4xl font-bold animate-pulse" style={{animationDelay: '0.5s'}}>₹</div>
+        <div className="absolute top-1/3 right-1/5 text-indigo-200/20 dark:text-indigo-600/10 text-5xl font-bold animate-pulse" style={{animationDelay: '1.5s'}}>×</div>
+        
+        {/* Floating Particles */}
+        <div className="absolute inset-0">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className={`absolute w-1 h-1 bg-blue-400/40 dark:bg-blue-300/25 rounded-full animate-particle-float`}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 12}s`,
+                animationDuration: `${18 + Math.random() * 12}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Mesh Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent dark:via-gray-800/15 animate-mesh-move"></div>
+      </div>
+      
+      {/* Content Container */}
+      <div className="relative z-10">
+      <style jsx>{`
+        @keyframes fade-in-up {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in-up {
+          animation: fade-in-up 0.6s ease-out forwards;
+          opacity: 0;
+        }
+      `}</style>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 relative">
+              {/* Enhanced Header Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-transparent to-purple-50/40 dark:from-blue-900/20 dark:via-transparent dark:to-purple-900/15 rounded-3xl blur-3xl"></div>
+              <div className="relative z-10">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                🧮 Financial Tools & Calculators
+              </h1>
+              <p className="text-xl text-gray-600 dark:text-white/80 max-w-3xl mx-auto mb-6">
+                Make informed financial decisions with our comprehensive suite of <span className="font-semibold text-blue-600 dark:text-blue-400">{allTools.length}+ calculators</span> and planning tools.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-8">
+                <span className="flex items-center gap-1">🟢 {allTools.filter(t => t.level === 'Beginner').length} Beginner</span>
+                <span className="flex items-center gap-1">🟡 {allTools.filter(t => t.level === 'Intermediate').length} Intermediate</span>
+                <span className="flex items-center gap-1">🔴 {allTools.filter(t => t.level === 'Advanced').length} Advanced</span>
+                <span className="flex items-center gap-1">🔥 {allTools.filter(t => t.popularity > 85).length} Popular</span>
+              </div>
+            </div>
             
             {/* Points Display */}
             {userPoints > 0 && (
-              <div className="mb-6 flex justify-center">
+              <div className="mb-8 flex justify-center">
                 <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl inline-flex items-center gap-2 px-4 py-2 relative">
                   <span className="text-2xl">🏆</span>
                   <span className="text-yellow-600 dark:text-yellow-400 font-bold">{userPoints.toLocaleString()}</span>
@@ -376,73 +502,124 @@ export default function Tools() {
               </div>
             )}
             
-            {/* Quick Access Cards */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl">
-                <div className="flex items-center gap-3 mb-2">
-                  <SparklesIcon className="h-5 w-5 text-blue-400" />
-                  <span className="text-gray-900 dark:text-white font-medium">Not sure where to begin?</span>
+            {/* Enhanced Quick Access Cards */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+              <div className="group bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/30 p-6 rounded-2xl border border-blue-200 dark:border-blue-700 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-500 hover:-translate-y-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-blue-500 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                    <SparklesIcon className="h-5 w-5 text-white" />
+                  </div>
+                  <span className="text-gray-900 dark:text-white font-semibold">New to Financial Planning?</span>
                 </div>
                 <button 
                   onClick={() => setSelectedLevel('Beginner')}
-                  className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm transition-colors"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold text-sm transition-all duration-300 flex items-center gap-2 group-hover:gap-3"
                 >
-                  → Try Beginner Tools
+                  Start with Beginner Tools
+                  <ArrowRightIcon className="w-4 h-4" />
                 </button>
               </div>
               
               {recentToolsList.length > 0 && (
-                <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-lg">🕒</span>
-                    <span className="text-gray-900 dark:text-white font-medium">Recently Used ({recentToolsList.length})</span>
+                <div className="group bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/30 p-6 rounded-2xl border border-green-200 dark:border-green-700 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-500 hover:-translate-y-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-green-500 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                      <ClockIcon className="h-5 w-5 text-white" />
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold">Continue Learning ({recentToolsList.length})</span>
                   </div>
                   <button 
                     onClick={() => setSelectedCategory('Recent')}
-                    className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-medium text-sm transition-colors"
+                    className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 font-semibold text-sm transition-all duration-300 flex items-center gap-2 group-hover:gap-3"
                   >
-                    → Continue Where You Left Off
+                    Resume Recent Tools
+                    <ArrowRightIcon className="w-4 h-4" />
                   </button>
                 </div>
               )}
               
               {favoriteToolsList.length > 0 && (
-                <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl">
-                  <div className="flex items-center gap-3 mb-2">
-                    <HeartIconSolid className="h-5 w-5 text-red-400" />
-                    <span className="text-gray-900 dark:text-white font-medium">Your Favorites ({favoriteToolsList.length})</span>
+                <div className="group bg-gradient-to-br from-red-50 to-pink-100 dark:from-red-900/20 dark:to-pink-900/30 p-6 rounded-2xl border border-red-200 dark:border-red-700 hover:shadow-xl hover:shadow-red-500/20 transition-all duration-500 hover:-translate-y-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-red-500 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                      <HeartIconSolid className="h-5 w-5 text-white" />
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold">Your Favorites ({favoriteToolsList.length})</span>
                   </div>
                   <button 
                     onClick={() => setSelectedCategory('Favorites')}
-                    className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-medium text-sm transition-colors"
+                    className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-semibold text-sm transition-all duration-300 flex items-center gap-2 group-hover:gap-3"
                   >
-                    → View Favorite Tools
+                    View Saved Tools
+                    <ArrowRightIcon className="w-4 h-4" />
                   </button>
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Search and Filters */}
-          <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Search Bar */}
-              <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500 dark:text-white/50" />
+            {/* Enhanced Search and Filters */}
+            <div className="relative mb-8">
+              {/* Filter Section Background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-50/80 to-blue-50/60 dark:from-gray-800/60 dark:to-blue-900/30 backdrop-blur-sm rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 via-transparent to-purple-100/20 dark:from-blue-900/15 dark:via-transparent dark:to-purple-900/10 rounded-2xl"></div>
+              <div className="relative z-10 p-6 border border-gray-200/50 dark:border-gray-700/50 rounded-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Advanced Search Bar */}
+              <div className="relative lg:col-span-2">
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-500 dark:text-blue-400" />
                 <input
                   type="text"
-                  placeholder="Search tools..."
+                  placeholder="Search by name, category, or tags..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-white dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSearchTerm(value);
+                    
+                    // Generate search suggestions
+                    if (value.length > 0) {
+                      const suggestions = allTools
+                        .filter(tool => 
+                          tool.name.toLowerCase().includes(value.toLowerCase()) ||
+                          tool.tags.some(tag => tag.toLowerCase().includes(value.toLowerCase()))
+                        )
+                        .slice(0, 5)
+                        .map(tool => tool.name);
+                      setSearchSuggestions(suggestions);
+                      setShowSuggestions(true);
+                    } else {
+                      setShowSuggestions(false);
+                    }
+                  }}
+                  onFocus={() => searchTerm.length > 0 && setShowSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300"
                 />
+                
+                {/* Search Suggestions Dropdown */}
+                {showSuggestions && searchSuggestions.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-2xl z-50 overflow-hidden">
+                    {searchSuggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setSearchTerm(suggestion);
+                          setShowSuggestions(false);
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-900 dark:text-white transition-colors border-b border-gray-100 dark:border-gray-700 last:border-b-0"
+                      >
+                        <MagnifyingGlassIcon className="inline w-4 h-4 mr-2 text-gray-400" />
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
               
-              {/* Level Filter */}
+              {/* Enhanced Level Filter */}
               <select
                 value={selectedLevel}
                 onChange={(e) => setSelectedLevel(e.target.value)}
-                className="bg-white dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 font-medium"
               >
                 {levels.map(level => (
                   <option key={level} value={level} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
@@ -451,11 +628,11 @@ export default function Tools() {
                 ))}
               </select>
               
-              {/* Tag Filter */}
+              {/* Enhanced Tag Filter */}
               <select
                 value={selectedTag}
                 onChange={(e) => setSelectedTag(e.target.value)}
-                className="bg-white dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 font-medium"
               >
                 {tags.map(tag => (
                   <option key={tag} value={tag} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white capitalize">
@@ -464,11 +641,11 @@ export default function Tools() {
                 ))}
               </select>
               
-              {/* Category Filter */}
+              {/* Enhanced Category Filter */}
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="bg-white dark:bg-white/10 border border-gray-300 dark:border-white/20 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-xl px-4 py-3 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 font-medium"
               >
                 {categories.map(category => (
                   <option key={category} value={category} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
@@ -476,12 +653,15 @@ export default function Tools() {
                   </option>
                 ))}
               </select>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* All Tools Grid */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
+            {/* All Tools Grid */}
+            <div className="mb-8 relative">
+              {/* Tools Grid Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-blue-50/30 dark:from-gray-800/20 dark:via-transparent dark:to-blue-900/10 rounded-3xl blur-3xl"></div>
+              <div className="flex items-center justify-between mb-6 relative z-10">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {searchTerm || selectedLevel !== 'All' || selectedTag !== 'All' || selectedCategory !== 'All' 
                   ? `Filtered Tools (${filteredTools.length})` 
@@ -494,11 +674,19 @@ export default function Tools() {
             </div>
             
             {filteredTools.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredTools.map(tool => renderToolCard(tool))}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+                {filteredTools.map((tool, index) => (
+                  <div
+                    key={tool.name}
+                    className="animate-fade-in-up"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    {renderToolCard(tool)}
+                  </div>
+                ))}
               </div>
             ) : (
-              <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl text-center py-12">
+              <div className="bg-gray-100/80 dark:bg-white/10 backdrop-blur-sm p-6 rounded-xl text-center py-12 relative z-10 border border-gray-200/50 dark:border-gray-700/50">
                 <div className="text-gray-500 dark:text-white/50 mb-4">
                   <MagnifyingGlassIcon className="h-12 w-12 mx-auto mb-3" />
                   <p className="text-lg">No tools found</p>
@@ -517,9 +705,9 @@ export default function Tools() {
                 </button>
               </div>
             )}
-          </div>
-          
-          {/* Selected Tool Modal/Panel */}
+            </div>
+            
+            {/* Selected Tool Modal/Panel */}
           {selectedTool && (
             <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="bg-white dark:bg-gray-900 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
@@ -575,7 +763,26 @@ export default function Tools() {
             </div>
           )}
 
+          </div>
         </div>
       </div>
+      
+      {/* Scroll to Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            onClick={scrollToTop}
+            className="fixed bottom-28 right-4 z-50 p-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ChevronUpIcon className="h-6 w-6" />
+          </motion.button>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

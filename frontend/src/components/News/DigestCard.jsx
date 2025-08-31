@@ -1,30 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Sparkles, TrendingUp, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Calendar, Sparkles, TrendingUp, RefreshCw, BarChart3 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const DigestCard = () => {
   const [digest, setDigest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchDigest = async () => {
+  const fetchDigest = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://neocred-backend.fly.dev';
-      const response = await fetch(`${API_BASE}/api/digest`);
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
+      
+      // Add timeout and better error handling
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
+      const response = await fetch(`${API_BASE}/api/digest`, {
+        signal: controller.signal,
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+      
       const data = await response.json();
       
       if (data.success) {
         setDigest(data);
       } else {
-        setError('Failed to load digest');
+        setError(data.error || 'Failed to load digest');
       }
     } catch (err) {
-      setError('Network error occurred');
+      console.error('Digest API error:', err);
+      let errorMessage = 'Unable to load digest. Please try again.';
+      
+      if (err.name === 'AbortError') {
+        errorMessage = 'Request timeout. The server is taking too long to respond.';
+      } else if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+        errorMessage = 'Cannot connect to server. Please check if the backend is running.';
+      } else if (err.message.includes('Server error')) {
+        errorMessage = 'Server error. Please try again later.';
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchDigest();
@@ -76,7 +107,13 @@ const DigestCard = () => {
             <RefreshCw className="w-4 h-4" />
           </button>
         </div>
-        <p className="text-red-600 dark:text-red-400">{error}</p>
+        <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
+        <button
+          onClick={fetchDigest}
+          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+        >
+          Try Again
+        </button>
       </div>
     );
   }
@@ -86,7 +123,11 @@ const DigestCard = () => {
   }
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl border border-blue-100 dark:border-blue-800 p-6 mb-8">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl border border-blue-100 dark:border-blue-800 p-6 mb-8"
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-300 flex items-center">
@@ -137,9 +178,7 @@ const DigestCard = () => {
                 <div className="text-xs text-gray-600 dark:text-gray-400 uppercase tracking-wide">
                   {key.replace('_', ' ')}
                 </div>
-                <div className={`text-sm font-semibold ${
-                  String(value).startsWith('+') ? 'text-green-600' : String(value).startsWith('-') ? 'text-red-600' : 'text-gray-900 dark:text-white'
-                }`}>
+                <div className="text-sm font-semibold text-gray-900 dark:text-white">
                   {String(value)}
                 </div>
               </div>
@@ -147,7 +186,7 @@ const DigestCard = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronUpIcon } from '@heroicons/react/24/outline';
 import { ROUTES } from '../utils/constants';
 
 export default function Disclaimer() {
   const [activeSection, setActiveSection] = useState('');
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    
+    const handleScroll = () => {
+      setShowScrollTop(window.pageYOffset > 300);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const sections = [
     { id: 'educational-purpose', title: '1. Educational Purpose', icon: '📚' },
@@ -26,7 +43,12 @@ export default function Disclaimer() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        {/* Animated Gradient Layers */}
+        <div className="absolute inset-0 bg-gradient-to-r from-red-100/20 via-transparent to-orange-100/20 dark:from-red-900/20 dark:to-orange-900/20 animate-pulse" />
+      </div>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-red-100 to-gray-50 dark:from-red-900/20 dark:to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -59,59 +81,13 @@ export default function Disclaimer() {
           </div>
           
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            Effective Date: <span className="text-gray-900 dark:text-white font-medium">December 15, 2024</span>
+            Effective Date: <span className="text-gray-900 dark:text-white font-medium">January 15, 2025</span>
           </p>
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-          {/* Table of Contents - Sticky Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl sticky top-8">
-              <h3 className="text-xl font-bold mb-6 text-center">
-                📋 <span className="text-red-600 dark:text-red-400">Contents</span>
-              </h3>
-              <nav className="space-y-2">
-                {sections.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => scrollToSection(section.id)}
-                    className={`w-full text-left p-3 rounded-lg transition-all duration-300 hover:bg-gray-200 dark:hover:bg-white/10 ${
-                      activeSection === section.id ? 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300' : 'text-gray-700 dark:text-gray-300'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-lg">{section.icon}</span>
-                      <span className="text-sm font-medium">{section.title}</span>
-                    </div>
-                  </button>
-                ))}
-              </nav>
-              
-              {/* Quick Actions */}
-              <div className="mt-8 pt-6 border-t border-gray-300 dark:border-white/10">
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Related Pages</h4>
-                <div className="space-y-2">
-                  <Link 
-                    to={ROUTES.TERMS}
-                    className="block p-2 bg-gray-200 dark:bg-white/5 rounded-lg hover:bg-gray-300 dark:hover:bg-white/10 transition-colors text-sm text-gray-900 dark:text-white"
-                  >
-                    📄 Terms of Service
-                  </Link>
-                  <Link 
-                    to={ROUTES.PRIVACY}
-                    className="block p-2 bg-gray-200 dark:bg-white/5 rounded-lg hover:bg-gray-300 dark:hover:bg-white/10 transition-colors text-sm text-gray-900 dark:text-white"
-                  >
-                    🔒 Privacy Policy
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="lg:col-span-3">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div>
             <div className="space-y-12">
               {/* Introduction */}
               <div className="bg-gray-100 dark:bg-white/5 p-6 rounded-xl">
@@ -319,8 +295,8 @@ export default function Disclaimer() {
                   <div className="bg-yellow-100 dark:bg-yellow-600/20 border border-yellow-300 dark:border-yellow-500/30 rounded-lg p-4">
                     <p className="text-yellow-800 dark:text-yellow-100 text-sm">
                       📧 <strong>Report Errors:</strong> Found outdated information? Email us at 
-                      <a href="mailto:content@neocred.in" className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 underline">
-                        content@neocred.in
+                      <a href="mailto:hello@neocred.in" className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 underline">
+                        hello@neocred.in
                       </a> for immediate review.
                     </p>
                   </div>
@@ -431,9 +407,19 @@ export default function Disclaimer() {
                 </p>
               </div>
             </div>
-          </div>
         </div>
       </div>
+      
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-28 right-4 bg-red-600 hover:bg-red-700 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-30"
+          aria-label="Scroll to top"
+        >
+          <ChevronUpIcon className="h-6 w-6" />
+        </button>
+      )}
     </div>
   );
 }

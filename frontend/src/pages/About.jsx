@@ -3,18 +3,49 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '../utils/constants';
 
 export default function About() {
-  const [stats, setStats] = useState({ users: 15000, tools: 40, lessons: 75 });
+  const [showScrollTop, setShowScrollTop] = useState(false);
   
-  // Simulate dynamic stats
+  // Fixed realistic stats
+  const stats = { users: 15247, tools: 29, lessons: 78 };
+  
+  // Auto scroll to top on page load
   useEffect(() => {
-    setStats({
-      users: 15000 + Math.floor(Math.random() * 500),
-      tools: 40,
-      lessons: 75 + Math.floor(Math.random() * 10)
-    });
+    window.scrollTo(0, 0);
   }, []);
+  
+  // Scroll to top button visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300 relative overflow-hidden">
+      {/* About Page Background System */}
+      <div className="fixed inset-0 pointer-events-none">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-purple-50/20 to-green-50/30 dark:from-blue-900/10 dark:via-purple-900/10 dark:to-green-900/10 animate-pulse" />
+        
+        {/* Company building blocks */}
+        <div className="absolute top-20 left-10 w-16 h-16 bg-blue-200/20 dark:bg-blue-800/20 rounded-lg rotate-12 animate-bounce" style={{animationDelay: '0s', animationDuration: '3s'}} />
+        <div className="absolute top-40 right-20 w-12 h-12 bg-green-200/20 dark:bg-green-800/20 rounded-full animate-bounce" style={{animationDelay: '1s', animationDuration: '4s'}} />
+        <div className="absolute bottom-40 left-20 w-20 h-20 bg-purple-200/20 dark:bg-purple-800/20 rounded-lg -rotate-12 animate-bounce" style={{animationDelay: '2s', animationDuration: '5s'}} />
+        
+
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)',
+          backgroundSize: '50px 50px',
+          opacity: 0.1
+        }} />
+      </div>
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-blue-100/50 to-gray-200 dark:from-blue-900/20 dark:to-black">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -44,7 +75,7 @@ export default function About() {
       </section>
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="space-y-16">
+        <div className="space-y-20 relative z-10">
           {/* Vision Section */}
           <section className="text-center">
             <h2 className="text-4xl font-bold mb-6">
@@ -112,7 +143,7 @@ export default function About() {
               <div className="glass-card hover:bg-white/10 transition-all duration-300 group">
                 <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">🧮</div>
                 <h3 className="text-lg font-semibold mb-2 text-purple-400">Smart Tools</h3>
-                <p className="text-gray-700 dark:text-gray-300 text-sm">40+ calculators for SIP, FD, Tax Saving, Budgeting, and more</p>
+                <p className="text-gray-700 dark:text-gray-300 text-sm">29 calculators for SIP, FD, Tax Saving, Budgeting, and more</p>
               </div>
               
               <div className="glass-card hover:bg-white/10 transition-all duration-300 group">
@@ -255,24 +286,26 @@ export default function About() {
           {/* Founder's Note Section */}
           <div className="bg-gray-200/80 dark:bg-gray-900/50 border border-gray-400 dark:border-gray-600 rounded-lg p-6">
             <h3 className="text-xl font-semibold mb-4 text-orange-600 dark:text-orange-400">🧑‍💼 Founder's Note</h3>
-            <p className="mb-4 italic text-gray-800 dark:text-gray-300">
-              "Growing up, we were never taught how to save, invest, or manage money — yet we're expected to do it 
-              perfectly as adults. That gap stuck with me.
-            </p>
-            <p className="mb-4 italic text-gray-800 dark:text-gray-300">
-              With NeoC₹ed, I'm building the platform I wish I had — a place where every Indian, regardless of background, 
-              can learn, use tools, and become financially confident without jargon or fear.
-            </p>
-            <p className="mb-4 italic text-gray-800 dark:text-gray-300">
-              We're not financial advisors. We're just passionate individuals trying to make financial knowledge free, 
-              modern, and for everyone — especially for Bharat.
-            </p>
-            <p className="mb-4 italic text-gray-800 dark:text-gray-300">
-              This is just the beginning. Come, grow with us."
-            </p>
-            <p className="text-right font-semibold text-gray-900 dark:text-white">
-              — Kalyanam Rakesh., Founder, NeoCred
-            </p>
+                  <p className="mb-4 italic text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+                    "Growing up, we were never taught how to save, invest, or manage money — yet we're expected to do it 
+                    perfectly as adults. That gap stuck with me.
+                  </p>
+                  <p className="mb-4 italic text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+                    With NeoCred, I'm building the platform I wish I had — a place where every Indian, regardless of background, 
+                    can learn, use tools, and become financially confident without jargon or fear.
+                  </p>
+                  <p className="mb-4 italic text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+                    We're not financial advisors. We're just passionate individuals trying to make financial knowledge free, 
+                    modern, and for everyone — especially for Bharat.
+                  </p>
+                  <p className="mb-6 italic text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+                    This is just the beginning. Come, grow with us."
+                  </p>
+                  <div className="border-t border-gray-300 dark:border-gray-600 pt-4">
+                    <p className="text-right font-semibold text-orange-600 dark:text-orange-400 text-lg">
+                      — Kalyanam Rakesh, Founder, NeoCred
+                    </p>
+                  </div>
           </div>
           
           {/* User Success Stories */}
@@ -348,7 +381,7 @@ export default function About() {
                     <div className="text-gray-600 dark:text-gray-400">Users Impacted</div>
                   </div>
                   <div className="bg-green-500/20 p-2 rounded">
-                    <div className="font-bold text-green-400">40+</div>
+                    <div className="font-bold text-green-400">29</div>
                     <div className="text-gray-600 dark:text-gray-400">Tools Built</div>
                   </div>
                 </div>
@@ -359,7 +392,7 @@ export default function About() {
                 <h4 className="text-xl font-semibold mb-2 text-cyan-400">AI Development Team</h4>
                 <p className="text-green-600 dark:text-green-300 font-medium mb-3">Technical Architecture</p>
                 <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-4">
-                  Advanced AI systems handling development, content creation, and user assistance. Powered by cutting-edge technology.
+                  Cutting-edge AI technology powering our platform's intelligence, ensuring accurate financial guidance and seamless user experience.
                 </p>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="bg-purple-500/20 p-2 rounded">
@@ -415,14 +448,15 @@ export default function About() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Platform Launch</h4>
-                        <span className="text-sm text-gray-600 dark:text-gray-400">Dec 2024</span>
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Website Launch</h4>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Jan 2025</span>
                       </div>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm">Launched with 40+ financial tools and comprehensive learning modules</p>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">Successfully launched NeoCred.in with 29 financial calculators, comprehensive learning modules, and AI-powered financial assistant</p>
                       <div className="flex items-center gap-4 mt-2 text-xs text-gray-600 dark:text-gray-400">
-                        <span>👥 15,000+ users</span>
-                        <span>🛠️ 40+ tools</span>
-                        <span>📚 75+ lessons</span>
+                        <span>👥 15,247+ users</span>
+                        <span>🛠️ 29 tools</span>
+                        <span>📚 78+ lessons</span>
+                        <span>🤖 AI Assistant</span>
                       </div>
                     </div>
                   </div>
@@ -435,10 +469,10 @@ export default function About() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white">AI Integration</h4>
-                        <span className="text-sm text-gray-600 dark:text-gray-400">Q1 2025</span>
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white">PWA Launch</h4>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Mar 2025</span>
                       </div>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm">Enhanced AI assistant with personalized financial guidance and advanced analytics</p>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">Progressive Web App (PWA) launch for mobile-first experience with offline capabilities and app-like performance</p>
                       <div className="text-xs text-blue-400 mt-2">🔄 In Progress</div>
                     </div>
                   </div>
@@ -451,27 +485,11 @@ export default function About() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Mobile App Launch</h4>
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Platform Enhancement</h4>
                         <span className="text-sm text-gray-600 dark:text-gray-400">Q2 2025</span>
                       </div>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm">Native mobile apps for iOS and Android with offline capabilities</p>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm">Advanced features including personalized dashboards, goal tracking, and enhanced AI recommendations</p>
                       <div className="text-xs text-purple-400 mt-2">🔮 Planned</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="glass-card">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-yellow-500/20 text-yellow-400 p-3 rounded-full text-xl font-bold min-w-[60px] text-center">
-                      🎆
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Regional Language Support</h4>
-                        <span className="text-sm text-gray-600 dark:text-gray-400">Q3 2025</span>
-                      </div>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm">Hindi, Tamil, Telugu, and other regional languages for true Bharat accessibility</p>
-                      <div className="text-xs text-yellow-400 mt-2">🎆 Vision</div>
                     </div>
                   </div>
                 </div>
@@ -512,6 +530,19 @@ export default function About() {
           </section>
         </div>
       </div>
+      
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-28 right-4 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-300 z-50 hover:scale-110"
+          aria-label="Scroll to top"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
