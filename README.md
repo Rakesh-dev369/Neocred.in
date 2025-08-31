@@ -1,6 +1,6 @@
 # 🛡️₹ Neocred - AI-Powered Financial Platform
 
-> **Master Your Financial Future** with 30+ calculators, AI assistant, and comprehensive learning resources.
+> **Master Your Financial Future** with 29+ calculators, AI assistant, and comprehensive learning resources.
 
 ## ✨ Features
 
@@ -10,7 +10,7 @@
 - Real-time financial guidance
 - VS comparison support (SIP vs Lumpsum, etc.)
 
-### 🧮 **30+ Financial Calculators**
+### 🧮 **29+ Financial Calculators**
 - **Investment**: SIP, Lumpsum, Step-up SIP, Goal Planning
 - **Loans**: Home Loan EMI, Car Loan, Personal Loan
 - **Savings**: FD, RD, PPF, NSC

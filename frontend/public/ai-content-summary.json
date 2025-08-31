@@ -1,0 +1,194 @@
+{
+  "website": {
+    "name": "NeoCred",
+    "description": "AI-Powered Financial Platform with 30+ calculators and comprehensive learning resources",
+    "url": "https://neocred.in",
+    "type": "Financial Education & Tools Platform",
+    "target_audience": "Indian investors, financial learners, professionals",
+    "last_updated": "2025-01-03"
+  },
+  "key_features": {
+    "calculators": {
+      "count": "30+",
+      "categories": [
+        "Investment Calculators (SIP, Lumpsum, Step-up SIP)",
+        "Loan Calculators (Home Loan EMI, Car Loan, Personal Loan)",
+        "Savings Calculators (FD, RD, PPF, NSC)",
+        "Insurance Calculators (Term Life, Health, Vehicle)",
+        "Tax Calculators (80C Savings, HRA, Form 16 Analysis)",
+        "Retirement Calculators (NPS, EPF, Annuity Planning)"
+      ],
+      "popular_tools": [
+        "SIP Calculator - Plan systematic investments",
+        "Home Loan EMI Calculator - Calculate monthly payments",
+        "FD Calculator - Fixed deposit returns",
+        "Budget Planner - Manage finances effectively",
+        "PPF Calculator - Public Provident Fund planning",
+        "Term Insurance Calculator - Life insurance needs",
+        "HRA Calculator - House rent allowance optimization"
+      ]
+    },
+    "ai_assistant": {
+      "name": "FinBot",
+      "technology": "GPT-4-turbo powered",
+      "capabilities": [
+        "Smart tool recommendations",
+        "Real-time financial guidance",
+        "VS comparison support (SIP vs Lumpsum, etc.)",
+        "Personalized financial advice"
+      ],
+      "url": "/chatbot"
+    },
+    "learning_system": {
+      "structure": "8 Pillars of Financial Literacy",
+      "approach": "Action-oriented learning guides"
+    }
+  },
+  "eight_financial_pillars": [
+    {
+      "pillar": "Personal Finance",
+      "description": "Budgeting, Emergency Funds, Goal Planning",
+      "url": "/learn/personal-finance",
+      "topics": ["Budgeting basics", "Emergency fund creation", "Financial goal setting", "Expense tracking"]
+    },
+    {
+      "pillar": "Investments & Capital Markets",
+      "description": "Stocks, Mutual Funds, Bonds, SIPs",
+      "url": "/learn/investments",
+      "topics": ["Mutual fund investing", "Stock market basics", "SIP strategies", "Portfolio diversification"]
+    },
+    {
+      "pillar": "Insurance & Risk Management",
+      "description": "Life, Health, General Insurance",
+      "url": "/learn/insurance",
+      "topics": ["Term life insurance", "Health insurance planning", "Vehicle insurance", "Risk assessment"]
+    },
+    {
+      "pillar": "Banking & Digital Payments",
+      "description": "Modern Banking Solutions, Digital Payments",
+      "url": "/learn/banking-payments",
+      "topics": ["Digital banking", "UPI payments", "Credit cards", "Banking products"]
+    },
+    {
+      "pillar": "Corporate Finance & Business",
+      "description": "Business Financial Management",
+      "url": "/learn/corporate-finance",
+      "topics": ["Business finance", "Corporate investments", "Financial planning for businesses"]
+    },
+    {
+      "pillar": "Government & Public Finance",
+      "description": "Policy Understanding, Government Schemes",
+      "url": "/learn/government-finance",
+      "topics": ["Government schemes", "Public finance", "Policy impacts", "Regulatory understanding"]
+    },
+    {
+      "pillar": "International Finance & Trade",
+      "description": "Global Markets, International Trade",
+      "url": "/learn/international-finance",
+      "topics": ["Global investing", "Currency markets", "International trade", "Foreign investments"]
+    },
+    {
+      "pillar": "Alternative Finance & Emerging Tech",
+      "description": "Fintech, Cryptocurrency, Emerging Technologies",
+      "url": "/learn/alternative-finance",
+      "topics": ["Fintech innovations", "Cryptocurrency basics", "Digital assets", "Emerging financial technologies"]
+    }
+  ],
+  "action_plans": [
+    {
+      "title": "Emergency Fund Plan",
+      "description": "Build 6-12 months expense safety net",
+      "url": "/learn/emergency-fund-plan",
+      "steps": ["Calculate monthly expenses", "Set emergency fund target", "Choose savings instruments", "Automate savings"]
+    },
+    {
+      "title": "Investment Portfolio Guide",
+      "description": "Diversification strategies for growth",
+      "url": "/learn/investment-portfolio-guide",
+      "steps": ["Asset allocation", "Risk assessment", "Fund selection", "Portfolio rebalancing"]
+    },
+    {
+      "title": "Retirement Planning",
+      "description": "Long-term wealth building strategy",
+      "url": "/learn/retirement-planning",
+      "steps": ["Retirement corpus calculation", "Investment planning", "Tax optimization", "Withdrawal strategy"]
+    },
+    {
+      "title": "Insurance Strategy",
+      "description": "Comprehensive protection planning",
+      "url": "/learn/insurance-strategy",
+      "steps": ["Insurance needs analysis", "Product comparison", "Coverage optimization", "Claim process"]
+    },
+    {
+      "title": "Tax Optimization",
+      "description": "Maximize savings, minimize taxes",
+      "url": "/learn/tax-optimization",
+      "steps": ["Tax planning", "80C investments", "Tax-saving strategies", "Documentation"]
+    },
+    {
+      "title": "Bonds Complete Guide",
+      "description": "Fixed income investing mastery",
+      "url": "/learn/bonds-complete-guide",
+      "steps": ["Bond basics", "Types of bonds", "Investment strategies", "Risk management"]
+    },
+    {
+      "title": "Credit Score & Debt Management",
+      "description": "Financial health improvement",
+      "url": "/learn/credit-score-debt-management",
+      "steps": ["Credit score improvement", "Debt consolidation", "Payment strategies", "Credit monitoring"]
+    },
+    {
+      "title": "Wealth Tracking",
+      "description": "Monitor financial progress",
+      "url": "/learn/wealth-tracking",
+      "steps": ["Net worth calculation", "Progress tracking", "Goal monitoring", "Performance analysis"]
+    },
+    {
+      "title": "Estate Planning",
+      "description": "Legacy and inheritance planning",
+      "url": "/learn/estate-planning",
+      "steps": ["Will creation", "Nomination updates", "Tax planning", "Succession planning"]
+    }
+  ],
+  "additional_features": {
+    "financial_news": {
+      "description": "Real-time market updates and financial news",
+      "url": "/news",
+      "features": ["Policy changes & RBI updates", "Advanced filtering & search", "Bookmark system"]
+    },
+    "explore_section": {
+      "description": "Comprehensive financial tools and resources",
+      "url": "/explore"
+    },
+    "rewards_program": {
+      "description": "Gamified learning and engagement system",
+      "url": "/rewards"
+    }
+  },
+  "technology_stack": {
+    "frontend": ["React 19", "Vite", "Tailwind CSS", "Framer Motion", "React Router", "Zustand"],
+    "backend": ["FastAPI (Python)", "OpenAI GPT-4-turbo integration", "SQLite database", "Redis caching"],
+    "deployment": "Docker-ready with comprehensive API documentation"
+  },
+  "target_keywords": [
+    "financial calculator India",
+    "SIP calculator",
+    "home loan EMI calculator",
+    "investment planning India",
+    "budget planner",
+    "tax saver calculator",
+    "AI financial advisor",
+    "FinBot",
+    "mutual fund calculator",
+    "retirement planning India",
+    "emergency fund calculator",
+    "financial literacy India",
+    "investment guide India",
+    "personal finance India"
+  ],
+  "contact_information": {
+    "website": "https://neocred.in",
+    "support_email": "support@neocred.in",
+    "github": "https://github.com/Rakesh-dev369/Neocred.in"
+  }
+}
