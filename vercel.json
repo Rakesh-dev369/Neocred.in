@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://api.neocred.in/api/$1"
+      "destination": "https://neocred-backend.fly.dev/api/$1"
     },
     {
       "source": "/(.*)",
