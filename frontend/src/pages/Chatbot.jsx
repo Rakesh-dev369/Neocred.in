@@ -41,6 +41,8 @@ export default function Chatbot() {
   const [error, setError] = useState(null);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [rateLimitWarning, setRateLimitWarning] = useState(false);
+  const [lastMessageTime, setLastMessageTime] = useState(0);
+  const [messageCount, setMessageCount] = useState(0);
   
   // Use website's theme context
   const { isDark: darkMode, toggleTheme } = useTheme();
@@ -58,10 +60,45 @@ export default function Chatbot() {
   const sendMessage = useCallback(async (text) => {
     if (!text.trim()) return;
     
+    // Rate limiting check
+    const now = Date.now();
+    const timeSinceLastMessage = now - lastMessageTime;
+    
+    // Allow 1 message per 2 seconds, or 5 messages per minute
+    if (timeSinceLastMessage < 2000 && messageCount >= 1) {
+      setRateLimitWarning(true);
+      setError('⏱️ **Rate Limited**\n\nPlease wait 2 seconds between messages.');
+      setTimeout(() => {
+        setRateLimitWarning(false);
+        setError(null);
+      }, 2000);
+      return;
+    }
+    
+    // Reset message count every minute
+    if (timeSinceLastMessage > 60000) {
+      setMessageCount(0);
+    }
+    
+    if (messageCount >= 10) {
+      setRateLimitWarning(true);
+      setError('⏱️ **Rate Limited**\n\nYou can send up to 10 messages per minute. Please wait.');
+      setTimeout(() => {
+        setRateLimitWarning(false);
+        setError(null);
+        setMessageCount(0);
+      }, 10000);
+      return;
+    }
+    
     if (text.length > 1000) {
       setError('Message too long. Please keep it under 1000 characters.');
       return;
     }
+    
+    // Update rate limiting counters
+    setLastMessageTime(now);
+    setMessageCount(prev => prev + 1);
     
     const userMessage = {
       id: Date.now(),
@@ -145,8 +182,12 @@ export default function Chatbot() {
     let errorText = "❌ **Backend Connection Failed**\n\nI'm unable to connect to the NeoCred AI service. This could be because:\n\n• The backend server is starting up (takes 10-30 seconds)\n• Network connectivity issues\n• Server maintenance\n\nPlease wait a moment and try again! 🔄";
     
     if (error.message?.includes('429')) {
-      errorText = "⏱️ **Rate Limited**\n\nYou're sending messages too quickly. Please wait a moment before trying again.";
+      errorText = "⏱️ **API Rate Limited**\n\nThe AI service is temporarily rate limited. Please wait 30 seconds before trying again.";
       setRateLimitWarning(true);
+      setTimeout(() => {
+        setRateLimitWarning(false);
+        setError(null);
+      }, 30000);
     } else if (error.message?.includes('network') || !isOnline) {
       errorText = "🌐 **Network Issue**\n\nPlease check your internet connection and try again.";
     } else if (error.message?.includes('500')) {
@@ -179,6 +220,8 @@ export default function Chatbot() {
     localStorage.removeItem('chatbot-messages');
     setError(null);
     setRateLimitWarning(false);
+    setMessageCount(0);
+    setLastMessageTime(0);
   };
   
   const navigateToTool = (toolLink) => {
