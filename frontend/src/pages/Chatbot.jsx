@@ -54,7 +54,7 @@ export default function Chatbot() {
   const [conversationTemplates] = useState(CONVERSATION_STARTERS);
   const [showTemplates, setShowTemplates] = useState(false);
 
-  // Enhanced message sending with better context management
+  // Fixed message sending to prevent duplicates
   const sendMessage = useCallback(async (text) => {
     if (!text.trim()) return;
     
@@ -69,6 +69,8 @@ export default function Chatbot() {
       sender: 'user',
       timestamp: new Date().toISOString()
     };
+    
+    // Add user message
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
     setIsTyping(true);
@@ -76,14 +78,11 @@ export default function Chatbot() {
     setRateLimitWarning(false);
     
     try {
-      // Use functional update to get latest messages
-      setMessages(prev => {
-        const conversationHistory = [...prev, userMessage].slice(-10); // Last 10 messages
-        
-        // Continue with API call
-        (async () => {
-          try {
-      // Sending conversation history
+      // Get conversation history for API call
+      const currentMessages = messages.concat(userMessage);
+      const conversationHistory = currentMessages.slice(-10); // Last 10 messages
+      
+      // Send to API
       const response = await sendChatMessage(text, conversationHistory);
       
       const botMessage = {
@@ -100,29 +99,20 @@ export default function Chatbot() {
         isApiResponse: response.isApiResponse
       };
       
-      // Bot message created successfully
+      // Add bot message
       setMessages(prev => [...prev, botMessage]);
       
       // Enhanced user preference tracking
       updateUserPreferences(text);
       
-          } catch (error) {
-            console.error('Chat API error');
-            handleChatError(error);
-          } finally {
-            setIsLoading(false);
-            setIsTyping(false);
-          }
-        })();
-        
-        return [...prev, userMessage];
-      });
     } catch (error) {
-      console.error('Message processing error');
+      console.error('Chat API error:', error);
+      handleChatError(error);
+    } finally {
       setIsLoading(false);
       setIsTyping(false);
     }
-  }, []);
+  }, [messages]);
   
   // Enhanced preference tracking
   const updateUserPreferences = (text) => {
@@ -179,7 +169,7 @@ export default function Chatbot() {
   const clearMessages = () => {
     setMessages([
       {
-        id: 1,
+        id: Date.now(), // Use new ID to force re-render
         text: FINBOT_INTRO_MESSAGE.text || FINBOT_INTRO_MESSAGE,
         sender: 'bot',
         timestamp: new Date().toISOString(),
@@ -187,6 +177,8 @@ export default function Chatbot() {
       }
     ]);
     localStorage.removeItem('chatbot-messages');
+    setError(null);
+    setRateLimitWarning(false);
   };
   
   const navigateToTool = (toolLink) => {
@@ -318,17 +310,21 @@ export default function Chatbot() {
 
   // Enhanced initialization and event handling
   useEffect(() => {
-    const savedMessages = localStorage.getItem('chatbot-messages');
+    // Clear old messages on component mount to prevent old responses
+    localStorage.removeItem('chatbot-messages');
+    
     const savedPreferences = localStorage.getItem('user-preferences');
     
-    if (savedMessages) {
-      try {
-        const parsed = JSON.parse(savedMessages);
-        setMessages(parsed);
-      } catch (error) {
-        console.error('Error loading messages:', error);
+    // Always start with fresh intro message
+    setMessages([
+      {
+        id: 1,
+        text: FINBOT_INTRO_MESSAGE.text || FINBOT_INTRO_MESSAGE,
+        sender: 'bot',
+        timestamp: new Date().toISOString(),
+        suggestions: FINBOT_INTRO_MESSAGE.suggestions || []
       }
-    }
+    ]);
     
     if (savedPreferences) {
       try {
@@ -361,12 +357,12 @@ export default function Chatbot() {
     }
   }, [messages, scrollToBottom]);
 
-  // Enhanced persistence
-  useEffect(() => {
-    if (messages.length > 1) {
-      localStorage.setItem('chatbot-messages', JSON.stringify(messages));
-    }
-  }, [messages]);
+  // Don't persist messages to prevent old responses
+  // useEffect(() => {
+  //   if (messages.length > 1) {
+  //     localStorage.setItem('chatbot-messages', JSON.stringify(messages));
+  //   }
+  // }, [messages]);
   
   useEffect(() => {
     localStorage.setItem('user-preferences', JSON.stringify(userPreferences));
@@ -375,7 +371,7 @@ export default function Chatbot() {
 
 
   return (
-    <div className={`h-screen flex flex-col transition-colors duration-300 ${darkMode ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'}`}>
+    <div className={`h-screen max-h-screen flex flex-col transition-colors duration-300 overflow-hidden ${darkMode ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'}`}>
       {/* Enhanced Chat Header */}
       <div className={`border-b backdrop-blur-sm transition-all duration-300 ${
         darkMode 
@@ -474,9 +470,9 @@ export default function Chatbot() {
       </div>
       
       {/* Enhanced Messages Area */}
-      <div className={`flex-1 overflow-y-auto transition-colors duration-300 ${
+      <div className={`flex-1 overflow-y-auto transition-colors duration-300 pb-safe ${
         darkMode ? 'bg-transparent' : 'bg-transparent'
-      }`}>
+      }`} style={{ WebkitOverflowScrolling: 'touch' }}>
         <div className="max-w-6xl mx-auto px-6 py-8 space-y-8">
               {messages.length === 1 ? (
                 <div className="text-center py-12 animate-fade-in">
@@ -643,34 +639,22 @@ export default function Chatbot() {
         </div>
       </div>
       
-      {/* Enhanced Input Area */}
-      <div className={`border-t backdrop-blur-sm transition-all duration-300 ${
+      {/* Enhanced Input Area - Fixed for Mobile */}
+      <div className={`border-t backdrop-blur-sm transition-all duration-300 sticky bottom-0 z-10 ${
         darkMode 
-          ? 'bg-gray-800/80 border-gray-700 shadow-lg' 
-          : 'bg-white/80 border-gray-200 shadow-sm'
+          ? 'bg-gray-800/95 border-gray-700 shadow-lg' 
+          : 'bg-white/95 border-gray-200 shadow-sm'
       }`}>
-        <div className="max-w-6xl mx-auto px-4 py-3">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
           <form onSubmit={handleSubmit} className="relative">
-            <div className={`flex items-end space-x-3 p-3 rounded-2xl border-2 transition-all duration-300 ${
+            <div className={`flex items-end space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 ${
               darkMode 
                 ? 'bg-gray-700/50 border-gray-600 focus-within:border-blue-500 focus-within:bg-gray-700/70' 
                 : 'bg-white border-gray-200 focus-within:border-blue-400 focus-within:shadow-lg'
             } backdrop-blur-sm`}>
               
-              {/* Left Actions */}
-              <div className="flex items-center space-x-2">
-                {/* Voice Input - Coming Soon */}
-                <button
-                  type="button"
-                  disabled
-                  className={`p-2 rounded-lg opacity-50 cursor-not-allowed ${
-                    darkMode ? 'text-gray-500' : 'text-gray-400'
-                  }`}
-                  title="Voice Input - Coming Soon"
-                >
-                  🎤
-                </button>
-                
+              {/* Left Actions - Hidden on mobile */}
+              <div className="hidden sm:flex items-center space-x-2">
                 <button
                   type="button"
                   onClick={() => setShowTemplates(!showTemplates)}
@@ -695,14 +679,14 @@ export default function Chatbot() {
                       handleSubmit(e);
                     }
                   }}
-                  placeholder="Ask me anything about finance, investments, loans, taxes... 💬"
-                  className={`w-full px-0 py-2 bg-transparent border-none focus:ring-0 focus:outline-none resize-none text-sm leading-relaxed transition-all duration-200 ${
+                  placeholder="Ask about finance, investments, loans..."
+                  className={`w-full px-0 py-2 bg-transparent border-none focus:ring-0 focus:outline-none resize-none text-sm sm:text-base leading-relaxed transition-all duration-200 ${
                     darkMode ? 'text-white placeholder-gray-400' : 'text-gray-900 placeholder-gray-500'
                   }`}
                   disabled={isLoading || !isOnline}
                   maxLength={1000}
                   rows={1}
-                  style={{ minHeight: '24px', maxHeight: '120px' }}
+                  style={{ minHeight: '20px', maxHeight: '80px' }}
                 />
                 
                 {/* Character Count */}
@@ -772,29 +756,29 @@ export default function Chatbot() {
               </div>
             )}
             
-            {/* Status Indicators */}
-            <div className="flex items-center justify-between mt-2 px-1">
-              <div className="flex items-center space-x-3 text-xs">
+            {/* Status Indicators - Mobile Optimized */}
+            <div className="flex items-center justify-between mt-1 sm:mt-2 px-1">
+              <div className="flex items-center space-x-2 sm:space-x-3 text-xs">
                 <div className={`flex items-center space-x-1 ${
                   isOnline ? 'text-green-500' : 'text-red-500'
                 }`}>
-                  <div className={`w-2 h-2 rounded-full ${
+                  <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
                     isOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'
                   }`} />
-                  <span>{isOnline ? 'Online' : 'Offline'}</span>
+                  <span className="hidden sm:inline">{isOnline ? 'Online' : 'Offline'}</span>
                 </div>
                 
                 {rateLimitWarning && (
                   <div className="flex items-center space-x-1 text-yellow-500">
-                    <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse" />
-                    <span>Rate Limited</span>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-yellow-500 animate-pulse" />
+                    <span className="hidden sm:inline">Rate Limited</span>
                   </div>
                 )}
               </div>
               
               <div className={`text-xs ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-                <span className="hidden sm:inline">Press Enter to send • Shift+Enter for new line • </span>
-                <span className="text-green-500">✓ Secure & Private</span>
+                <span className="hidden md:inline">Press Enter to send • Shift+Enter for new line • </span>
+                <span className="text-green-500 text-xs">✓ Secure</span>
               </div>
             </div>
           </form>

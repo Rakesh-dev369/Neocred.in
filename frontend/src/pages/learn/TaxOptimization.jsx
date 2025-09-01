@@ -834,7 +834,7 @@ export default function TaxOptimization() {
                             </div>
                           </div>
                           <div>
-                            <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">LTCG (> 2 years)</h4>
+                            <h4 className="font-bold text-blue-800 dark:text-blue-200 mb-3">LTCG (&gt; 2 years)</h4>
                             <p className="text-blue-700 dark:text-blue-300 text-sm mb-2">20% with indexation benefit</p>
                             <div className="bg-blue-100 dark:bg-blue-800/30 p-3 rounded-lg">
                               <p className="text-xs text-blue-800 dark:text-blue-200">

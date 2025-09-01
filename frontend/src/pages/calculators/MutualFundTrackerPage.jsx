@@ -250,7 +250,6 @@ const MutualFundTrackerPage = () => {
               ) : null;
             })()}
           </div>
-          })()}
         </div>
       </div>
 

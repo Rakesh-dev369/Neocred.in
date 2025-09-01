@@ -6,7 +6,7 @@ export const sendChatMessage = async (message, conversationHistory = []) => {
   await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 400));
   
   try {
-    const apiUrl = import.meta.env?.VITE_API_BASE_URL || 'https://neocred-backend.fly.dev';
+    const apiUrl = import.meta.env?.VITE_API_BASE_URL || 'http://localhost:8001';
     console.log('Attempting API call to:', `${apiUrl}/api/chat`);
     console.log('Sending message:', message);
     console.log('Conversation history length:', conversationHistory.length);

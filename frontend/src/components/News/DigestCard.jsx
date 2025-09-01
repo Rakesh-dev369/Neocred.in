@@ -13,9 +13,11 @@ const DigestCard = () => {
     try {
       const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
       
-      // Add timeout and better error handling
+      console.log('Fetching digest from:', `${API_BASE}/api/digest`);
+      console.log('API_BASE:', API_BASE);
+      
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       
       const response = await fetch(`${API_BASE}/api/digest`, {
         signal: controller.signal,
@@ -41,12 +43,19 @@ const DigestCard = () => {
       }
     } catch (err) {
       console.error('Digest API error:', err);
+      console.error('Error details:', {
+        name: err.name,
+        message: err.message,
+        stack: err.stack,
+        url: `${API_BASE}/api/digest`
+      });
+      
       let errorMessage = 'Unable to load digest. Please try again.';
       
       if (err.name === 'AbortError') {
         errorMessage = 'Request timeout. The server is taking too long to respond.';
-      } else if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-        errorMessage = 'Cannot connect to server. Please check if the backend is running.';
+      } else if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError') || err.message.includes('fetch')) {
+        errorMessage = `Cannot connect to server at ${API_BASE}. Please check if the backend is running on port 8001.`;
       } else if (err.message.includes('Server error')) {
         errorMessage = 'Server error. Please try again later.';
       }

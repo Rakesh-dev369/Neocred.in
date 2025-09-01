@@ -209,7 +209,6 @@ const PPFCalculatorPage = () => {
               ) : null;
             })()}
           </div>
-          })()}
         </div>
       </div>
 

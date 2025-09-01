@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://neocred-backend.fly.dev';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
 
 const SYSTEM_PROMPT = `You are FinBot, NeoCred's AI-powered financial assistant. You help users with:
 - 40+ Financial Calculators (SIP, FD, Home Loan EMI, etc.)

@@ -75,8 +75,11 @@ export default function News() {
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001';
       const url = `${API_BASE_URL}/api/news?${params}`;
       
+      console.log('Fetching news from:', url);
+      console.log('API_BASE_URL:', API_BASE_URL);
+      
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       
       const response = await fetch(url, {
         signal: controller.signal,
@@ -121,12 +124,19 @@ export default function News() {
       }
     } catch (err) {
       console.error('News API error:', err);
+      console.error('Error details:', {
+        name: err.name,
+        message: err.message,
+        stack: err.stack,
+        url: `${API_BASE_URL}/api/news?${params}`
+      });
+      
       let errorMessage = 'Unable to load news. Please try again.';
       
       if (err.name === 'AbortError') {
         errorMessage = 'Request timeout. The server is taking too long to respond.';
-      } else if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-        errorMessage = 'Cannot connect to server. Please check if the backend is running.';
+      } else if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError') || err.message.includes('fetch')) {
+        errorMessage = `Cannot connect to server at ${API_BASE_URL}. Please check if the backend is running on port 8001.`;
       } else if (err.message.includes('Server error')) {
         errorMessage = 'Server error. Please try again later.';
       }

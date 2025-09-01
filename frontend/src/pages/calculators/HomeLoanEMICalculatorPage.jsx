@@ -210,7 +210,6 @@ const HomeLoanEMICalculatorPage = () => {
               ) : null;
             })()}
           </div>
-          })()}
         </div>
       </div>
 

@@ -1,11 +1,65 @@
-FROM python:3.11-slim
+# Multi-stage build for production optimization
+FROM python:3.11-slim as builder
 
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    libpq-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create and set work directory
 WORKDIR /app
 
-# Install dependencies in one layer
+# Copy requirements and install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir fastapi uvicorn openai python-dotenv feedparser requests
+RUN pip install --no-cache-dir -r requirements.txt
 
+# Production stage
+FROM python:3.11-slim as production
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    ENVIRONMENT=production
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    libpq5 \
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd -r neocred \
+    && useradd -r -g neocred neocred
+
+# Set work directory
+WORKDIR /app
+
+# Copy Python packages from builder stage
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+# Copy application code
 COPY . .
 
-CMD ["uvicorn", "main_simple:app", "--host", "0.0.0.0", "--port", "8080"]
+# Create logs directory
+RUN mkdir -p logs && chown -R neocred:neocred /app
+
+# Switch to non-root user
+USER neocred
+
+# Expose port
+EXPOSE 8001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8001/health || exit 1
+
+# Run the application
+CMD ["python", "-m", "uvicorn", "main_enterprise:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "4"]

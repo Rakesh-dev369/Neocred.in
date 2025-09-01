@@ -18,10 +18,16 @@ export default defineConfig({
     },
   },
   server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8001',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
     historyApiFallback: {
       rewrites: [
         { from: /^\/learn\/.*/, to: '/index.html' },
-        { from: /^\/api\/.*/, to: '/index.html' },
       ],
     },
   },

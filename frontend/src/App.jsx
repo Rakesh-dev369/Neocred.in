@@ -54,35 +54,7 @@ const RetirementInvestments = lazy(() => import('./pages/learn/RetirementInvestm
 const AlternativeInvestments = lazy(() => import('./pages/learn/AlternativeInvestments'));
 const GoalBasedInvesting = lazy(() => import('./pages/learn/GoalBasedInvesting'));
 const TaxSavingInvestments = lazy(() => import('./pages/learn/TaxSavingInvestments'));
-const FixedDepositsLearn = lazy(() => import('./pages/learn/FixedDeposits'));
-const RecurringDepositsLearn = lazy(() => import('./pages/learn/RecurringDeposits'));
-const SavingsAccount = lazy(() => import('./pages/learn/SavingsAccount'));
-const PPFLearn = lazy(() => import('./pages/learn/PPFLearn'));
-const NSCLearn = lazy(() => import('./pages/learn/NSCLearn'));
-const CurrentAccount = lazy(() => import('./pages/learn/CurrentAccount'));
-const KisanVikasPatra = lazy(() => import('./pages/learn/KisanVikasPatra'));
-const SeniorCitizensSavings = lazy(() => import('./pages/learn/SeniorCitizensSavings'));
-const SukanyaSamriddhiYojana = lazy(() => import('./pages/learn/SukanyaSamriddhiYojana'));
-const PostOfficeMonthlyIncome = lazy(() => import('./pages/learn/PostOfficeMonthlyIncome'));
-const GovernmentBonds = lazy(() => import('./pages/learn/GovernmentBonds'));
-const CorporateBonds = lazy(() => import('./pages/learn/CorporateBonds'));
-const TaxFreeBonds = lazy(() => import('./pages/learn/TaxFreeBonds'));
-const StateDevelopmentLoans = lazy(() => import('./pages/learn/StateDevelopmentLoans'));
-const EmployeesProvidentFund = lazy(() => import('./pages/learn/EmployeesProvidentFund'));
-const VoluntaryProvidentFund = lazy(() => import('./pages/learn/VoluntaryProvidentFund'));
-const NationalPensionScheme = lazy(() => import('./pages/learn/NationalPensionScheme'));
-const AtalPensionYojana = lazy(() => import('./pages/learn/AtalPensionYojana'));
-const PhysicalGold = lazy(() => import('./pages/learn/PhysicalGold'));
-const GoldETFs = lazy(() => import('./pages/learn/GoldETFs'));
-const SovereignGoldBonds = lazy(() => import('./pages/learn/SovereignGoldBonds'));
-const SilverInvestment = lazy(() => import('./pages/learn/SilverInvestment'));
-const EndowmentPlans = lazy(() => import('./pages/learn/EndowmentPlans'));
-const MoneyBackPolicies = lazy(() => import('./pages/learn/MoneyBackPolicies'));
-const GuaranteedSavingsPlans = lazy(() => import('./pages/learn/GuaranteedSavingsPlans'));
-const UnitLinkedInsurancePlans = lazy(() => import('./pages/learn/UnitLinkedInsurancePlans'));
-const PostOfficeSavingsAccount = lazy(() => import('./pages/learn/PostOfficeSavingsAccount'));
-const PostOfficeRecurringDeposit = lazy(() => import('./pages/learn/PostOfficeRecurringDeposit'));
-const PostOfficeTimeDeposit = lazy(() => import('./pages/learn/PostOfficeTimeDeposit'));
+
 const InsurancePlatforms = lazy(() => import('./pages/InsurancePlatforms'));
 const PersonalLoans = lazy(() => import('./pages/PersonalLoans'));
 const GovernmentSchemes = lazy(() => import('./pages/GovernmentSchemes'));
@@ -135,37 +107,7 @@ const DebtRepaymentPage = lazy(() => import('./pages/calculators/DebtRepaymentPa
 const RealReturnsPage = lazy(() => import('./pages/calculators/RealReturnsPage'));
 const CreditScoreSimulatorPage = lazy(() => import('./pages/calculators/CreditScoreSimulatorPage'));
 
-// Market-Linked Investment Pages
-const DirectEquity = lazy(() => import('./pages/learn/DirectEquity'));
-const BlueChipStocks = lazy(() => import('./pages/learn/BlueChipStocks'));
-const MidSmallCapStocks = lazy(() => import('./pages/learn/MidSmallCapStocks'));
-const IPOs = lazy(() => import('./pages/learn/IPOs'));
-const RightsIssues = lazy(() => import('./pages/learn/RightsIssues'));
-const EquityMutualFunds = lazy(() => import('./pages/learn/EquityMutualFunds'));
-const DebtMutualFunds = lazy(() => import('./pages/learn/DebtMutualFunds'));
-const HybridFunds = lazy(() => import('./pages/learn/HybridFunds'));
-const IndexFundsETFs = lazy(() => import('./pages/learn/IndexFundsETFs'));
-const DerivativesTrading = lazy(() => import('./pages/learn/DerivativesTrading'));
-const FuturesOptions = lazy(() => import('./pages/learn/FuturesOptions'));
-const CommodityTrading = lazy(() => import('./pages/learn/CommodityTrading'));
-const CurrencyTrading = lazy(() => import('./pages/learn/CurrencyTrading'));
-const IndexDerivatives = lazy(() => import('./pages/learn/IndexDerivatives'));
-const PortfolioManagementServices = lazy(() => import('./pages/learn/PortfolioManagementServices'));
-const AlternativeInvestmentFunds = lazy(() => import('./pages/learn/AlternativeInvestmentFunds'));
-const HedgeFunds = lazy(() => import('./pages/learn/HedgeFunds'));
-const DirectRealEstate = lazy(() => import('./pages/learn/DirectRealEstate'));
-const REITs = lazy(() => import('./pages/learn/REITs'));
-const FractionalRealEstate = lazy(() => import('./pages/learn/FractionalRealEstate'));
-const GlobalEquity = lazy(() => import('./pages/learn/GlobalEquity'));
-const InternationalMutualFunds = lazy(() => import('./pages/learn/InternationalMutualFunds'));
-const ForeignBonds = lazy(() => import('./pages/learn/ForeignBonds'));
-const MarketLinkedGold = lazy(() => import('./pages/learn/MarketLinkedGold'));
-const CommodityETFs = lazy(() => import('./pages/learn/CommodityETFs'));
-const EnergyInvestments = lazy(() => import('./pages/learn/EnergyInvestments'));
-const StructuredProducts = lazy(() => import('./pages/learn/StructuredProducts'));
-const Cryptocurrency = lazy(() => import('./pages/learn/Cryptocurrency'));
-const CryptoETFs = lazy(() => import('./pages/learn/CryptoETFs'));
-const TokenizedAssets = lazy(() => import('./pages/learn/TokenizedAssets'));
+
 
 import './App.css';
 
@@ -229,67 +171,9 @@ function App() {
           <Route path="/learn/alternative-investments" element={<MainLayout><AlternativeInvestments /></MainLayout>} />
           <Route path="/learn/goal-based-investing" element={<MainLayout><GoalBasedInvesting /></MainLayout>} />
           <Route path="/learn/tax-saving-investments" element={<MainLayout><TaxSavingInvestments /></MainLayout>} />
-          <Route path="/learn/fixed-deposits" element={<MainLayout><FixedDepositsLearn /></MainLayout>} />
-          <Route path="/learn/recurring-deposits" element={<MainLayout><RecurringDepositsLearn /></MainLayout>} />
-          <Route path="/learn/savings-account" element={<MainLayout><SavingsAccount /></MainLayout>} />
-          <Route path="/learn/ppf" element={<MainLayout><PPFLearn /></MainLayout>} />
-          <Route path="/learn/nsc" element={<MainLayout><NSCLearn /></MainLayout>} />
-          <Route path="/learn/current-account" element={<MainLayout><CurrentAccount /></MainLayout>} />
-          <Route path="/learn/kisan-vikas-patra" element={<MainLayout><KisanVikasPatra /></MainLayout>} />
-          <Route path="/learn/senior-citizens-savings" element={<MainLayout><SeniorCitizensSavings /></MainLayout>} />
-          <Route path="/learn/sukanya-samriddhi-yojana" element={<MainLayout><SukanyaSamriddhiYojana /></MainLayout>} />
-          <Route path="/learn/post-office-monthly-income" element={<MainLayout><PostOfficeMonthlyIncome /></MainLayout>} />
-          <Route path="/learn/government-bonds" element={<MainLayout><GovernmentBonds /></MainLayout>} />
-          <Route path="/learn/corporate-bonds" element={<MainLayout><CorporateBonds /></MainLayout>} />
-          <Route path="/learn/tax-free-bonds" element={<MainLayout><TaxFreeBonds /></MainLayout>} />
-          <Route path="/learn/state-development-loans" element={<MainLayout><StateDevelopmentLoans /></MainLayout>} />
-          <Route path="/learn/employees-provident-fund" element={<MainLayout><EmployeesProvidentFund /></MainLayout>} />
-          <Route path="/learn/voluntary-provident-fund" element={<MainLayout><VoluntaryProvidentFund /></MainLayout>} />
-          <Route path="/learn/national-pension-scheme" element={<MainLayout><NationalPensionScheme /></MainLayout>} />
-          <Route path="/learn/atal-pension-yojana" element={<MainLayout><AtalPensionYojana /></MainLayout>} />
-          <Route path="/learn/physical-gold" element={<MainLayout><PhysicalGold /></MainLayout>} />
-          <Route path="/learn/gold-etfs" element={<MainLayout><GoldETFs /></MainLayout>} />
-          <Route path="/learn/sovereign-gold-bonds" element={<MainLayout><SovereignGoldBonds /></MainLayout>} />
-          <Route path="/learn/silver-investment" element={<MainLayout><SilverInvestment /></MainLayout>} />
-          <Route path="/learn/endowment-plans" element={<MainLayout><EndowmentPlans /></MainLayout>} />
-          <Route path="/learn/money-back-policies" element={<MainLayout><MoneyBackPolicies /></MainLayout>} />
-          <Route path="/learn/guaranteed-savings-plans" element={<MainLayout><GuaranteedSavingsPlans /></MainLayout>} />
-          <Route path="/learn/unit-linked-insurance-plans" element={<MainLayout><UnitLinkedInsurancePlans /></MainLayout>} />
-          <Route path="/learn/post-office-savings-account" element={<MainLayout><PostOfficeSavingsAccount /></MainLayout>} />
-          <Route path="/learn/post-office-recurring-deposit" element={<MainLayout><PostOfficeRecurringDeposit /></MainLayout>} />
-          <Route path="/learn/post-office-time-deposit" element={<MainLayout><PostOfficeTimeDeposit /></MainLayout>} />
+
           
-          {/* Market-Linked Investment Routes */}
-          <Route path="/learn/direct-equity" element={<MainLayout><DirectEquity /></MainLayout>} />
-          <Route path="/learn/blue-chip-stocks" element={<MainLayout><BlueChipStocks /></MainLayout>} />
-          <Route path="/learn/mid-small-cap-stocks" element={<MainLayout><MidSmallCapStocks /></MainLayout>} />
-          <Route path="/learn/ipos" element={<MainLayout><IPOs /></MainLayout>} />
-          <Route path="/learn/rights-issues" element={<MainLayout><RightsIssues /></MainLayout>} />
-          <Route path="/learn/equity-mutual-funds" element={<MainLayout><EquityMutualFunds /></MainLayout>} />
-          <Route path="/learn/debt-mutual-funds" element={<MainLayout><DebtMutualFunds /></MainLayout>} />
-          <Route path="/learn/hybrid-funds" element={<MainLayout><HybridFunds /></MainLayout>} />
-          <Route path="/learn/index-funds-etfs" element={<MainLayout><IndexFundsETFs /></MainLayout>} />
-          <Route path="/learn/derivatives-trading" element={<MainLayout><DerivativesTrading /></MainLayout>} />
-          <Route path="/learn/futures-options" element={<MainLayout><FuturesOptions /></MainLayout>} />
-          <Route path="/learn/commodity-trading" element={<MainLayout><CommodityTrading /></MainLayout>} />
-          <Route path="/learn/currency-trading" element={<MainLayout><CurrencyTrading /></MainLayout>} />
-          <Route path="/learn/index-derivatives" element={<MainLayout><IndexDerivatives /></MainLayout>} />
-          <Route path="/learn/portfolio-management-services" element={<MainLayout><PortfolioManagementServices /></MainLayout>} />
-          <Route path="/learn/alternative-investment-funds" element={<MainLayout><AlternativeInvestmentFunds /></MainLayout>} />
-          <Route path="/learn/hedge-funds" element={<MainLayout><HedgeFunds /></MainLayout>} />
-          <Route path="/learn/direct-real-estate" element={<MainLayout><DirectRealEstate /></MainLayout>} />
-          <Route path="/learn/reits" element={<MainLayout><REITs /></MainLayout>} />
-          <Route path="/learn/fractional-real-estate" element={<MainLayout><FractionalRealEstate /></MainLayout>} />
-          <Route path="/learn/global-equity" element={<MainLayout><GlobalEquity /></MainLayout>} />
-          <Route path="/learn/international-mutual-funds" element={<MainLayout><InternationalMutualFunds /></MainLayout>} />
-          <Route path="/learn/foreign-bonds" element={<MainLayout><ForeignBonds /></MainLayout>} />
-          <Route path="/learn/market-linked-gold" element={<MainLayout><MarketLinkedGold /></MainLayout>} />
-          <Route path="/learn/commodity-etfs" element={<MainLayout><CommodityETFs /></MainLayout>} />
-          <Route path="/learn/energy-investments" element={<MainLayout><EnergyInvestments /></MainLayout>} />
-          <Route path="/learn/structured-products" element={<MainLayout><StructuredProducts /></MainLayout>} />
-          <Route path="/learn/cryptocurrency" element={<MainLayout><Cryptocurrency /></MainLayout>} />
-          <Route path="/learn/crypto-etfs" element={<MainLayout><CryptoETFs /></MainLayout>} />
-          <Route path="/learn/tokenized-assets" element={<MainLayout><TokenizedAssets /></MainLayout>} />
+
           <Route path="/pan-check" element={<MainLayout><PanCheck /></MainLayout>} />
           <Route path="/loan-check" element={<MainLayout><LoanCheck /></MainLayout>} />
           <Route path="/privacy" element={<MainLayout><Privacy /></MainLayout>} />

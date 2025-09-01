@@ -231,7 +231,6 @@ const LumpsumCalculatorPage = () => {
               ) : null;
             })()}
           </div>
-          })()}
         </div>
       </div>
 
