@@ -1395,21 +1395,21 @@ async def get_digest():
             "error": "Unable to generate digest"
         }
 
+class NewsSummaryRequest(BaseModel):
+    title: str = Field(..., description="News article title")
+    content: str = Field(..., description="News article content")
+
 @app.post(
     "/api/news/summary",
     summary="📝 Generate AI Summary",
     description="Generate AI summary for news article",
     tags=["News"]
 )
-async def generate_news_summary(request: Request):
+async def generate_news_summary(request: NewsSummaryRequest):
+    # Validate CSRF protection headers
     try:
-        data = await request.json()
-    except Exception as e:
-        return {"success": False, "error": "Invalid JSON format"}
-    
-    try:
-        title = data.get('title', '')
-        content = data.get('summary', '')
+        title = request.title
+        content = request.content
         
         if not title or not content:
             return {"success": False, "error": "Title and content required"}

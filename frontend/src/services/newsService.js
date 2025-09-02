@@ -32,11 +32,15 @@ class NewsService {
 
   async generateSummary(title, content = '') {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/news/summary?title=${encodeURIComponent(title)}&content=${encodeURIComponent(content)}`, {
+      const response = await fetch(`${API_BASE_URL}/api/news/summary`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        }
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-Protection': '1',
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify({ title, content })
       });
       
       if (!response.ok) {
