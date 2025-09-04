@@ -32,6 +32,7 @@ import {
   CheckCircleIcon as CheckCircleSolid,
   StarIcon as StarSolid
 } from '@heroicons/react/24/solid';
+import { getNextPillar, getPreviousPillar } from '../../data/learningData';
 
 export default function PersonalFinance() {
   const [activeSection, setActiveSection] = useState('introduction');
@@ -42,6 +43,11 @@ export default function PersonalFinance() {
   const [showQuickNav, setShowQuickNav] = useState(false);
   const [completedSections, setCompletedSections] = useState(new Set());
   const [readingProgress, setReadingProgress] = useState(0);
+
+  // Get navigation data
+  const currentPillarId = 1; // Personal Finance is pillar 1
+  const nextPillar = getNextPillar(currentPillarId);
+  const previousPillar = getPreviousPillar(currentPillarId);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -192,28 +198,28 @@ export default function PersonalFinance() {
 
   const relatedPillars = [
     { 
-      name: 'Investments & Capital Markets', 
-      path: '/learn/investments', 
-      icon: '📈',
-      description: 'Deep dive into investment strategies'
-    },
-    { 
       name: 'Banking & Payments', 
       path: '/learn/banking-payments', 
       icon: '🏦',
-      description: 'Modern banking and payment systems'
+      description: 'Next: Digital banking and payment systems'
     },
     { 
-      name: 'Insurance & Risk Management', 
+      name: 'Insurance & Risk Shield', 
       path: '/learn/insurance', 
       icon: '🛡️',
-      description: 'Comprehensive risk protection'
+      description: 'Intermediate: Risk management and protection'
     },
     { 
-      name: 'Government & Public Finance', 
+      name: 'Investment & Wealth Building', 
+      path: '/learn/investments', 
+      icon: '📈',
+      description: 'Intermediate: Build wealth through investments'
+    },
+    { 
+      name: 'Tax & Government Finance', 
       path: '/learn/government-finance', 
       icon: '🏛️',
-      description: 'Tax policies and government schemes'
+      description: 'Intermediate: Tax planning and schemes'
     }
   ];
 
@@ -285,26 +291,41 @@ export default function PersonalFinance() {
               <p className="text-blue-100">Pillar 1 of 8 • Complete Financial Mastery • 12 Sections • 2025 Updated</p>
             </div>
             <div className="hidden md:flex items-center space-x-4">
-              <Link
-                to="/learn/banking-payments"
-                className="flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
-              >
-                Next: Banking & Payments
-                <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
-              </Link>
+              {nextPillar && (
+                <Link
+                  to={nextPillar.path}
+                  className="flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+                >
+                  Next: {nextPillar.title}
+                  <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+                </Link>
+              )}
               <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
                 <CurrencyRupeeIcon className="h-8 w-8" />
               </div>
             </div>
           </div>
+          
+          {/* Mobile Navigation Buttons */}
+          <div className="md:hidden mt-4">
+            {nextPillar && (
+              <Link
+                to={nextPillar.path}
+                className="flex items-center justify-center w-full px-4 py-3 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+              >
+                Next Pillar: {nextPillar.title}
+                <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+              </Link>
+            )}
+          </div>
         </div>
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex gap-8">
-          {/* Sidebar */}
-          <div className="w-80">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 h-fit sticky top-8 border border-gray-200 dark:border-gray-700">
+        <div className="lg:flex lg:gap-8">
+          {/* Sidebar - Mobile: Below hero, Desktop: Left side */}
+          <div className="w-full lg:w-80 mb-8 lg:mb-0">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 h-fit lg:sticky lg:top-8 border border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center">
                   <BookmarkIcon className="h-5 w-5 mr-2" />
@@ -392,7 +413,7 @@ export default function PersonalFinance() {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 space-y-8 main-content">
+          <div className="flex-1 space-y-8 main-content lg:order-2">
             {/* Introduction Section */}
             {activeSection === 'introduction' && (
               <motion.div 
@@ -2351,22 +2372,75 @@ export default function PersonalFinance() {
                       >
                         Back to Learn Hub
                       </Link>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">Next Pillar:</span>
-                        <Link
-                          to="/learn/banking-payments"
-                          className="flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl"
-                        >
-                          <span className="mr-2">🏦</span>
-                          Banking & Payments
-                          <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
-                        </Link>
-                      </div>
+                      <Link
+                        to="/calculators"
+                        className="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      >
+                        Explore Calculators
+                      </Link>
+                      {nextPillar && (
+                        <div className="flex items-center space-x-2">
+                          <span className="text-sm text-gray-500 dark:text-gray-400">Next Pillar:</span>
+                          <Link
+                            to={nextPillar.path}
+                            className="flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                          >
+                            <span className="mr-2">🏦</span>
+                            {nextPillar.title}
+                            <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </motion.div>
             )}
+
+            {/* Next Pillar Navigation */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-xl p-8 text-white relative overflow-hidden mb-8"
+            >
+              <div className="relative z-10">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold mb-4">🎉 Congratulations! You've completed Personal Finance</h3>
+                  <p className="text-blue-100 mb-6">Ready to continue your financial learning journey?</p>
+                  
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    {nextPillar && (
+                      <div className="text-center">
+                        <p className="text-sm text-blue-200 mb-2">Next Pillar:</p>
+                        <Link
+                          to={nextPillar.path}
+                          className="inline-flex items-center px-8 py-4 bg-white text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                        >
+                          <span className="text-2xl mr-3">🏦</span>
+                          <div className="text-left">
+                            <div className="text-lg">{nextPillar.title}</div>
+                            <div className="text-sm opacity-75">Pillar 2 of 8</div>
+                          </div>
+                          <ArrowTopRightOnSquareIcon className="h-5 w-5 ml-3" />
+                        </Link>
+                      </div>
+                    )}
+                    
+                    <div className="text-center">
+                      <p className="text-sm text-blue-200 mb-2">Or explore:</p>
+                      <Link
+                        to="/learn"
+                        className="inline-flex items-center px-6 py-3 bg-white/20 text-white font-semibold rounded-xl hover:bg-white/30 transition-colors border border-white/30"
+                      >
+                        All 8 Pillars
+                        <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
             {/* Tools Section */}
             <motion.div 

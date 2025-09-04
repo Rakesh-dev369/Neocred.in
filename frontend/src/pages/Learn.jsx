@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
@@ -16,6 +16,11 @@ import {
   LightBulbIcon,
   FireIcon
 } from '@heroicons/react/24/outline';
+import SEOHead from '../components/SEO/SEOHead';
+import AnimatedBackground from '../components/AnimatedBackground';
+import PillarsGrid from '../components/learn/PillarsGrid';
+import { PILLAR_DATA, POPULAR_TOPICS } from '../data/learningData';
+import { safeJSONParse, safeJSONStringify, debounce } from '../utils/storageUtils';
 
 
 const Learn = () => {
@@ -28,64 +33,36 @@ const Learn = () => {
   const [completedPillars, setCompletedPillars] = useState(new Set());
   const [showScrollTop, setShowScrollTop] = useState(false);
   
-  // Load saved data from localStorage with error handling
+  // Optimized localStorage loading with safe parsing
   useEffect(() => {
-    // Scroll to top on page load
     window.scrollTo(0, 0);
     
-    try {
-      const savedBookmarks = localStorage.getItem('bookmarkedTopics');
-      const savedRead = localStorage.getItem('readTopics');
-      const savedPillarProgress = localStorage.getItem('pillarProgress');
-      const savedPillarBookmarks = localStorage.getItem('bookmarkedPillars');
-      const savedUserLevel = localStorage.getItem('userLevel');
-      const savedCompletedPillars = localStorage.getItem('completedPillars');
-      
-      if (savedBookmarks) {
-        setBookmarkedTopics(new Set(JSON.parse(savedBookmarks)));
-      }
-      if (savedRead) {
-        setReadTopics(new Set(JSON.parse(savedRead)));
-      }
-      if (savedPillarProgress) {
-        setPillarProgress(JSON.parse(savedPillarProgress));
-      }
-      if (savedPillarBookmarks) {
-        setBookmarkedPillars(new Set(JSON.parse(savedPillarBookmarks)));
-      }
-      if (savedUserLevel) {
-        setUserLevel(savedUserLevel);
-      }
-      if (savedCompletedPillars) {
-        setCompletedPillars(new Set(JSON.parse(savedCompletedPillars)));
-      }
-    } catch (error) {
-      console.warn('Error loading saved data from localStorage:', error);
-    }
+    setBookmarkedTopics(new Set(safeJSONParse('bookmarkedTopics', [])));
+    setReadTopics(new Set(safeJSONParse('readTopics', [])));
+    setPillarProgress(safeJSONParse('pillarProgress', {}));
+    setBookmarkedPillars(new Set(safeJSONParse('bookmarkedPillars', [])));
+    setUserLevel(safeJSONParse('userLevel', 'Beginner'));
+    setCompletedPillars(new Set(safeJSONParse('completedPillars', [])));
     
-    // Calculate real progress based on localStorage activity
-    const calculateProgress = () => {
-      try {
-        const progress = {};
-        const toolUsage = JSON.parse(localStorage.getItem('toolUsageAnalytics') || '{}');
-        const learningPoints = parseInt(localStorage.getItem('learningPoints') || '0');
-        
-        // Calculate progress based on activity
-        progress[1] = Math.min(Math.floor(learningPoints / 50) * 10, 100); // Personal Finance
-        progress[2] = Math.min(Object.keys(toolUsage).length * 15, 100); // Banking
-        progress[3] = toolUsage['Term Life Insurance Estimator'] ? 45 : 0; // Insurance
-        progress[4] = (toolUsage['SIP Calculator'] ? 30 : 0) + (toolUsage['Mutual Fund Return Tracker'] ? 25 : 0); // Investment
-        progress[5] = learningPoints > 500 ? 25 : 0; // Corporate Finance
-        progress[6] = toolUsage['HRA Exemption Calculator'] ? 40 : 0; // Tax
-        progress[7] = learningPoints > 1000 ? 15 : 0; // Alternative Finance
-        progress[8] = learningPoints > 1500 ? 10 : 0; // International Finance
-        
-        setPillarProgress(progress);
-        localStorage.setItem('pillarProgress', JSON.stringify(progress));
-      } catch (error) {
-        console.warn('Error calculating progress:', error);
-      }
-    };
+    // Debounced progress calculation for better performance
+    const calculateProgress = debounce(() => {
+      const toolUsage = safeJSONParse('toolUsageAnalytics', {});
+      const learningPoints = parseInt(safeJSONParse('learningPoints', '0'));
+      
+      const progress = {
+        1: Math.min(Math.floor(learningPoints / 50) * 10, 100),
+        2: Math.min(Object.keys(toolUsage).length * 15, 100),
+        3: toolUsage['Term Life Insurance Estimator'] ? 45 : 0,
+        4: (toolUsage['SIP Calculator'] ? 30 : 0) + (toolUsage['Mutual Fund Return Tracker'] ? 25 : 0),
+        5: learningPoints > 500 ? 25 : 0,
+        6: toolUsage['HRA Exemption Calculator'] ? 40 : 0,
+        7: learningPoints > 1000 ? 15 : 0,
+        8: learningPoints > 1500 ? 10 : 0
+      };
+      
+      setPillarProgress(progress);
+      safeJSONStringify('pillarProgress', progress);
+    }, 300);
     
     calculateProgress();
     
@@ -106,261 +83,9 @@ const Learn = () => {
     return pillarProgress[pillarId] || 0;
   };
 
-  const pillars = React.useMemo(() => {
-    // Memoize static pillar data to avoid recreation
-    const staticPillars = [
-    {
-      id: 1,
-      title: "Personal Finance Mastery",
-      description: "Master budgeting, emergency funds, debt elimination & financial goal setting.",
-      detailedDescription: "Build a solid financial foundation with proven strategies for budgeting, saving, and debt management.",
-      icon: "💰",
-      path: "/learn/personal-finance",
-      gradient: "from-blue-400 to-indigo-600",
-      bgGradient: "from-blue-50 to-indigo-50",
-      darkBgGradient: "from-blue-900/20 to-indigo-900/20",
-      progress: pillarProgress[1] || 0,
-      sections: 12,
-      duration: "2h 45m",
-      difficulty: 1,
-      difficultyLabel: "Beginner",
-      prerequisite: null,
-      completionRate: 94,
-      avgSavings: "₹50,000",
-      learningOutcomes: [
-        "Create a bulletproof budget that actually works",
-        "Build 6-month emergency fund systematically",
-        "Eliminate debt using proven strategies",
-        "Set and achieve financial goals"
-      ],
-      keyTopics: ["50/30/20 Rule", "Emergency Fund", "Debt Snowball", "Goal Setting"],
-      tools: ["Budget Planner", "Emergency Fund Calculator", "Debt Repayment Planner"],
-      recommended: userLevel === 'Beginner',
-      popular: true,
-      testimonial: "Saved ₹45K in first 6 months!",
-      nextPillar: 2
-    },
-    {
-      id: 2,
-      title: "Digital Banking & Payments",
-      description: "Master UPI, digital wallets, online banking & payment security.",
-      detailedDescription: "Navigate the digital financial ecosystem safely and efficiently with modern banking tools.",
-      icon: "🏦",
-      path: "/learn/banking-payments",
-      gradient: "from-blue-400 to-indigo-600",
-      bgGradient: "from-blue-50 to-indigo-50",
-      darkBgGradient: "from-blue-900/20 to-indigo-900/20",
-      progress: pillarProgress[2] || 0,
-      sections: 10,
-      duration: "2h 20m",
-      difficulty: 1,
-      difficultyLabel: "Beginner",
-      prerequisite: null,
-      completionRate: 89,
-      avgSavings: "₹15,000",
-      learningOutcomes: [
-        "Use UPI & digital payments securely",
-        "Choose the right bank accounts",
-        "Avoid banking fees and charges",
-        "Protect against financial fraud"
-      ],
-      keyTopics: ["UPI Security", "Account Types", "Digital Wallets", "Fraud Prevention"],
-      tools: ["Bank Comparison", "Fee Calculator"],
-      recommended: false,
-      popular: false,
-      testimonial: "No more banking fees!",
-      nextPillar: 3
-    },
-    {
-      id: 3,
-      title: "Insurance & Risk Shield",
-      description: "Build comprehensive protection with life, health & general insurance.",
-      detailedDescription: "Protect your family and assets with the right insurance coverage at optimal costs.",
-      icon: "🛡️",
-      path: "/learn/insurance",
-      gradient: "from-red-400 to-pink-600",
-      bgGradient: "from-red-50 to-pink-50",
-      darkBgGradient: "from-red-900/20 to-pink-900/20",
-      progress: pillarProgress[3] || 0,
-      sections: 11,
-      duration: "2h 35m",
-      difficulty: 2,
-      difficultyLabel: "Intermediate",
-      prerequisite: 1,
-      completionRate: 87,
-      avgSavings: "₹75,000",
-      learningOutcomes: [
-        "Calculate optimal life insurance coverage",
-        "Choose the right health insurance plan",
-        "Understand policy terms and exclusions",
-        "Claim insurance efficiently"
-      ],
-      keyTopics: ["Term vs ULIP", "Health Insurance", "Claim Process", "Riders"],
-      tools: ["Life Insurance Calculator", "Health Insurance Estimator"],
-      recommended: completedPillars.has(1),
-      popular: true,
-      testimonial: "Saved ₹60K on premiums!",
-      nextPillar: 4
-    },
-    {
-      id: 4,
-      title: "Investment & Wealth Building",
-      description: "Build wealth through mutual funds, SIP, stocks, bonds & ETFs.",
-      detailedDescription: "Create a diversified investment portfolio to achieve long-term financial goals.",
-      icon: "📈",
-      path: "/learn/investments",
-      gradient: "from-purple-400 to-violet-600",
-      bgGradient: "from-purple-50 to-violet-50",
-      darkBgGradient: "from-purple-900/20 to-violet-900/20",
-      progress: pillarProgress[4] || 0,
-      sections: 13,
-      duration: "3h 10m",
-      difficulty: 2,
-      difficultyLabel: "Intermediate",
-      prerequisite: 1,
-      completionRate: 91,
-      avgSavings: "₹2,50,000",
-      learningOutcomes: [
-        "Start SIP with proper asset allocation",
-        "Build a diversified portfolio",
-        "Understand risk vs return",
-        "Track and rebalance investments"
-      ],
-      keyTopics: ["SIP Strategy", "Asset Allocation", "Mutual Funds", "Portfolio Rebalancing"],
-      tools: ["SIP Calculator", "Asset Allocation Tool", "Portfolio Tracker"],
-      recommended: completedPillars.has(1) && userLevel !== 'Beginner',
-      popular: true,
-      testimonial: "Built ₹10L portfolio!",
-      nextPillar: 5
-    },
-    {
-      id: 5,
-      title: "Business & Corporate Finance",
-      description: "Master business funding, valuations, financial statements & growth.",
-      detailedDescription: "Understand corporate finance principles for business growth and investment decisions.",
-      icon: "🏢",
-      path: "/learn/corporate-finance",
-      gradient: "from-orange-400 to-amber-600",
-      bgGradient: "from-orange-50 to-amber-50",
-      darkBgGradient: "from-orange-900/20 to-amber-900/20",
-      progress: pillarProgress[5] || 0,
-      sections: 10,
-      duration: "2h 30m",
-      difficulty: 3,
-      difficultyLabel: "Advanced",
-      prerequisite: 4,
-      completionRate: 78,
-      avgSavings: "₹5,00,000",
-      learningOutcomes: [
-        "Analyze company financial statements",
-        "Understand business valuation methods",
-        "Evaluate investment opportunities",
-        "Make informed business decisions"
-      ],
-      keyTopics: ["Financial Statements", "Valuation", "Cash Flow", "ROI Analysis"],
-      tools: ["Business Valuation Calculator", "ROI Calculator"],
-      recommended: completedPillars.has(4) && userLevel === 'Advanced',
-      popular: false,
-      testimonial: "Increased business ROI by 40%!",
-      nextPillar: 6
-    },
-    {
-      id: 6,
-      title: "Tax & Government Finance",
-      description: "Master tax planning, government schemes, subsidies & fiscal policy.",
-      detailedDescription: "Optimize taxes and leverage government schemes for maximum financial benefit.",
-      icon: "🏛️",
-      path: "/learn/government-finance",
-      gradient: "from-indigo-600 to-purple-700",
-      bgGradient: "from-indigo-50 to-purple-50",
-      darkBgGradient: "from-indigo-900/20 to-purple-900/20",
-      progress: pillarProgress[6] || 0,
-      sections: 9,
-      duration: "2h 15m",
-      difficulty: 2,
-      difficultyLabel: "Intermediate",
-      prerequisite: 1,
-      completionRate: 85,
-      avgSavings: "₹1,25,000",
-      learningOutcomes: [
-        "Optimize tax using 80C, 80D deductions",
-        "Choose between old vs new tax regime",
-        "Leverage government schemes effectively",
-        "Plan tax-efficient investments"
-      ],
-      keyTopics: ["Tax Deductions", "Government Schemes", "Tax Planning", "Regime Comparison"],
-      tools: ["Tax Calculator", "HRA Calculator", "80C Optimizer"],
-      recommended: completedPillars.has(1),
-      popular: true,
-      testimonial: "Saved ₹85K in taxes!",
-      nextPillar: 7
-    },
-    {
-      id: 7,
-      title: "Alternative & Emerging Finance",
-      description: "Explore crypto, blockchain, P2P lending & crowdfunding opportunities.",
-      detailedDescription: "Navigate emerging financial technologies and alternative investment opportunities.",
-      icon: "🚀",
-      path: "/learn/alternative-finance",
-      gradient: "from-purple-600 to-pink-700",
-      bgGradient: "from-purple-50 to-pink-50",
-      darkBgGradient: "from-purple-900/20 to-pink-900/20",
-      progress: pillarProgress[7] || 0,
-      sections: 11,
-      duration: "2h 50m",
-      difficulty: 3,
-      difficultyLabel: "Advanced",
-      prerequisite: 4,
-      completionRate: 72,
-      avgSavings: "₹3,00,000",
-      learningOutcomes: [
-        "Understand cryptocurrency basics safely",
-        "Evaluate P2P lending opportunities",
-        "Assess crowdfunding investments",
-        "Manage alternative investment risks"
-      ],
-      keyTopics: ["Cryptocurrency", "P2P Lending", "Crowdfunding", "Risk Management"],
-      tools: ["Crypto Calculator", "P2P Returns Calculator"],
-      recommended: completedPillars.has(4) && userLevel === 'Advanced',
-      popular: false,
-      testimonial: "Diversified beyond traditional assets!",
-      nextPillar: 8
-    },
-    {
-      id: 8,
-      title: "Global Finance & Trade",
-      description: "Master forex, international investing, trade finance & remittances.",
-      detailedDescription: "Expand your financial horizons with international markets and global opportunities.",
-      icon: "🌍",
-      path: "/learn/international-finance",
-      gradient: "from-green-400 to-emerald-600",
-      bgGradient: "from-green-50 to-emerald-50",
-      darkBgGradient: "from-green-900/20 to-emerald-900/20",
-      progress: pillarProgress[8] || 0,
-      sections: 11,
-      duration: "2h 40m",
-      difficulty: 3,
-      difficultyLabel: "Advanced",
-      prerequisite: 4,
-      completionRate: 68,
-      avgSavings: "₹4,00,000",
-      learningOutcomes: [
-        "Invest in international markets",
-        "Understand forex and currency risks",
-        "Navigate global trade finance",
-        "Optimize international remittances"
-      ],
-      keyTopics: ["Forex Trading", "International Investing", "Trade Finance", "Remittances"],
-      tools: ["Currency Converter", "International Investment Calculator"],
-      recommended: completedPillars.has(4) && userLevel === 'Advanced',
-      popular: false,
-      testimonial: "Expanded globally with confidence!",
-      nextPillar: null
-    }
-    ];
-    
-    // Only update dynamic properties
-    return staticPillars.map(pillar => ({
+  // Optimized pillars with static data from external file
+  const pillars = useMemo(() => {
+    return PILLAR_DATA.map(pillar => ({
       ...pillar,
       progress: pillarProgress[pillar.id] || 0,
       recommended: pillar.id === 1 ? userLevel === 'Beginner' : 
@@ -373,88 +98,9 @@ const Learn = () => {
     }));
   }, [pillarProgress, userLevel, completedPillars]);
 
-  const popularTopics = [
-    {
-      id: 'emergency-fund',
-      title: "Emergency Fund Planning by Age & Life Stage",
-      icon: "🛡️",
-      difficulty: "Beginner",
-      time: "12 min read",
-      trending: true,
-      badge: "New",
-      path: "/learn/emergency-fund-plan",
-      author: "NeoCred Team",
-      views: "15.2K",
-      category: "Planning"
-    },
-    {
-      id: 'tax-saving-2025',
-      title: "Tax Saving Investments 2025: Complete Guide",
-      icon: "💸",
-      difficulty: "Intermediate",
-      time: "18 min read",
-      trending: true,
-      badge: "Updated",
-      path: "/learn/tax-optimization",
-      author: "Tax Expert",
-      views: "23.8K",
-      category: "Tax Planning"
-    },
-    {
-      id: 'investment-ladder',
-      title: "7-Step Investment Ladder: FD to Mutual Funds",
-      icon: "📈",
-      difficulty: "Intermediate",
-      time: "15 min read",
-      trending: true,
-      badge: "Popular",
-      path: "/learn/investment-portfolio-guide",
-      author: "Investment Team",
-      views: "31.5K",
-      category: "Investing"
-    },
-    {
-      id: 'credit-score-guide',
-      title: "Credit Score Improvement: 9-Step Action Plan",
-      icon: "📊",
-      difficulty: "Beginner",
-      time: "14 min read",
-      trending: true,
-      badge: "Trending",
-      path: "/learn/credit-score-debt-management",
-      author: "Credit Expert",
-      views: "19.7K",
-      category: "Credit"
-    },
-    {
-      id: 'retirement-planning',
-      title: "Retirement Planning 2025: Age-Based Strategy",
-      icon: "🏖️",
-      difficulty: "Advanced",
-      time: "22 min read",
-      trending: false,
-      badge: "Comprehensive",
-      path: "/learn/retirement-planning",
-      author: "Retirement Planner",
-      views: "12.3K",
-      category: "Retirement"
-    },
-    {
-      id: 'insurance-strategy',
-      title: "Insurance Strategy: Life + Health Coverage Guide",
-      icon: "🛡️",
-      difficulty: "Intermediate",
-      time: "16 min read",
-      trending: false,
-      badge: "Essential",
-      path: "/learn/insurance-strategy",
-      author: "Insurance Expert",
-      views: "18.9K",
-      category: "Insurance"
-    }
-  ];
+  const popularTopics = POPULAR_TOPICS;
 
-  const toggleBookmark = (topicId) => {
+  const toggleBookmark = useCallback((topicId) => {
     const newBookmarks = new Set(bookmarkedTopics);
     if (newBookmarks.has(topicId)) {
       newBookmarks.delete(topicId);
@@ -462,15 +108,15 @@ const Learn = () => {
       newBookmarks.add(topicId);
     }
     setBookmarkedTopics(newBookmarks);
-    localStorage.setItem('bookmarkedTopics', JSON.stringify([...newBookmarks]));
-  };
+    safeJSONStringify('bookmarkedTopics', [...newBookmarks]);
+  }, [bookmarkedTopics]);
 
-  const markAsRead = (topicId) => {
+  const markAsRead = useCallback((topicId) => {
     const newRead = new Set(readTopics);
     newRead.add(topicId);
     setReadTopics(newRead);
-    localStorage.setItem('readTopics', JSON.stringify([...newRead]));
-  };
+    safeJSONStringify('readTopics', [...newRead]);
+  }, [readTopics]);
 
   const togglePillarBookmark = (pillarId) => {
     const newBookmarks = new Set(bookmarkedPillars);
@@ -483,20 +129,18 @@ const Learn = () => {
     localStorage.setItem('bookmarkedPillars', JSON.stringify([...newBookmarks]));
   };
 
-  const startPillarLearning = (pillar) => {
-    // Award points for starting a pillar
-    const currentPoints = parseInt(localStorage.getItem('learningPoints') || '0');
+  const startPillarLearning = useCallback((pillar) => {
+    const currentPoints = parseInt(safeJSONParse('learningPoints', '0'));
     const newPoints = currentPoints + 25;
-    localStorage.setItem('learningPoints', newPoints.toString());
+    safeJSONStringify('learningPoints', newPoints.toString());
     
-    // Track pillar start
-    const pillarActivity = JSON.parse(localStorage.getItem('pillarActivity') || '{}');
+    const pillarActivity = safeJSONParse('pillarActivity', {});
     pillarActivity[pillar.id] = {
       started: new Date().toISOString(),
       lastAccessed: new Date().toISOString()
     };
-    localStorage.setItem('pillarActivity', JSON.stringify(pillarActivity));
-  };
+    safeJSONStringify('pillarActivity', pillarActivity);
+  }, []);
 
   const getRecommendedPillars = () => {
     return pillars.filter(pillar => pillar.recommended).slice(0, 3);
@@ -612,52 +256,30 @@ const Learn = () => {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Advanced Background System */}
-      <div className="fixed inset-0 z-0">
-        {/* Primary Gradient Base */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/10 dark:to-purple-900/10"></div>
-        
-        {/* Animated Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-emerald-50/50 via-transparent to-blue-100/30 dark:from-emerald-900/5 dark:via-transparent dark:to-blue-900/10 animate-pulse"></div>
-        <div className="absolute inset-0 bg-gradient-to-bl from-purple-50/30 via-transparent to-pink-50/40 dark:from-purple-900/5 dark:via-transparent dark:to-pink-900/5" style={{animationDelay: '2s'}}></div>
-        
-        {/* Floating Geometric Shapes */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-purple-300/20 dark:from-blue-600/10 dark:to-purple-600/10 rounded-full blur-xl animate-float"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-emerald-200/25 to-teal-300/25 dark:from-emerald-600/10 dark:to-teal-600/10 rounded-full blur-lg animate-float-delayed"></div>
-        <div className="absolute bottom-32 left-1/4 w-40 h-40 bg-gradient-to-br from-indigo-200/15 to-blue-300/20 dark:from-indigo-600/8 dark:to-blue-600/8 rounded-full blur-2xl animate-float-slow"></div>
-        <div className="absolute top-1/3 right-1/3 w-28 h-28 bg-gradient-to-br from-purple-200/20 to-pink-300/20 dark:from-purple-600/8 dark:to-pink-600/8 rounded-full blur-xl animate-float-reverse"></div>
-        <div className="absolute bottom-20 right-10 w-36 h-36 bg-gradient-to-br from-teal-200/18 to-cyan-300/22 dark:from-teal-600/8 dark:to-cyan-600/8 rounded-full blur-2xl animate-float-delayed"></div>
-        
-        {/* Subtle Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgb(59 130 246) 1px, transparent 0)`,
-          backgroundSize: '50px 50px'
-        }}></div>
-        
-        {/* Dynamic Light Rays */}
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-200/30 to-transparent dark:via-blue-600/20 transform rotate-12 animate-pulse"></div>
-        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-200/25 to-transparent dark:via-purple-600/15 transform -rotate-12" style={{animationDelay: '1s'}}></div>
-        
-        {/* Particle System */}
-        <div className="absolute inset-0">
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={i}
-              className={`absolute w-1 h-1 bg-blue-400/30 dark:bg-blue-300/20 rounded-full animate-particle-float`}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 10}s`,
-                animationDuration: `${15 + Math.random() * 10}s`
-              }}
-            />
-          ))}
-        </div>
-        
-        {/* Mesh Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent dark:via-gray-800/10 animate-mesh-move"></div>
-      </div>
+    <>
+      <SEOHead 
+        title="Learn Financial Planning - NeoCred's 8 Learning Pillars | Free Financial Education"
+        description="Master personal finance with NeoCred's comprehensive 8-pillar learning system. From budgeting to investments, insurance to taxes - complete financial education for Indians."
+        keywords="financial education India, personal finance learning, investment education, tax planning guide, insurance learning, budgeting course, financial literacy India, money management course, SIP learning, EMI education"
+        canonicalUrl="/learn"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Course",
+          "name": "NeoCred Financial Learning Platform",
+          "description": "Comprehensive 8-pillar financial education system covering personal finance, investments, insurance, and more",
+          "provider": {
+            "@type": "Organization",
+            "name": "NeoCred",
+            "url": "https://neocred.in"
+          },
+          "courseMode": "online",
+          "educationalLevel": "beginner to advanced",
+          "teaches": ["Personal Finance", "Investment Planning", "Tax Optimization", "Insurance Planning", "Banking", "Corporate Finance", "Alternative Finance", "International Finance"]
+        }}
+      />
+      
+      <div className="min-h-screen relative overflow-hidden">
+        <AnimatedBackground />
       
       {/* Content Container */}
       <div className="relative z-10">
@@ -799,140 +421,12 @@ const Learn = () => {
             )}
           </motion.div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pillars.map((pillar, index) => {
-              const isLocked = false;
-              const isCompleted = pillar.progress === 100;
-              const isInProgress = pillar.progress > 0 && pillar.progress < 100;
-              
-              return (
-                <motion.div
-                  key={pillar.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group relative"
-                  onMouseEnter={() => setHoveredPillar(pillar.id)}
-                  onMouseLeave={() => setHoveredPillar(null)}
-                >
-                  <Link 
-                    to={pillar.path}
-                    onClick={() => startPillarLearning(pillar)}
-                    className={`block relative overflow-hidden bg-gradient-to-br ${pillar.bgGradient} dark:${pillar.darkBgGradient} rounded-2xl p-6 transition-all duration-500 border border-gray-200 dark:border-gray-700 h-full hover:shadow-2xl group-hover:border-transparent group-hover:-translate-y-2`}
-                  >
-                    {/* Background Gradient Overlay */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                    
-                    {/* Status Badges */}
-                    <div className="absolute top-3 right-3 flex flex-col gap-1.5 items-end">
-                      {/* Status Badges - Only show most important one */}
-                      {isCompleted ? (
-                        <div className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-2 py-0.5 rounded-full text-xs font-medium">
-                          ✓ Complete
-                        </div>
-                      ) : isInProgress ? (
-                        <div className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-2 py-0.5 rounded-full text-xs font-medium">
-                          {pillar.progress}%
-                        </div>
-                      ) : pillar.recommended ? (
-                        <div className="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 px-2 py-0.5 rounded-full text-xs font-medium animate-pulse">
-                          Recommended
-                        </div>
-                      ) : pillar.popular ? (
-                        <div className="bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 px-2 py-0.5 rounded-full text-xs font-medium">
-                          🔥 Popular
-                        </div>
-                      ) : null}
-                    </div>
-                    
-                    <div className="relative z-10 pt-2">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="text-4xl transform group-hover:scale-110 transition-transform duration-300">
-                          {pillar.icon}
-                        </div>
-                      </div>
-                      
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300 leading-tight">
-                        {pillar.title}
-                      </h3>
-                      
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed">
-                        {pillar.description}
-                      </p>
-                      
-                      {/* Key Metrics */}
-                      <div className="grid grid-cols-2 gap-2 mb-4 text-xs">
-                        <div className="flex items-center text-gray-500 dark:text-gray-400">
-                          <ClockIcon className="w-3 h-3 mr-1" />
-                          {pillar.duration}
-                        </div>
-                        <div className="flex items-center text-gray-500 dark:text-gray-400">
-                          <BookOpenIcon className="w-3 h-3 mr-1" />
-                          {pillar.sections} sections
-                        </div>
-                        <div className="flex items-center text-blue-600 dark:text-blue-400 col-span-2">
-                          📊 {pillar.progress}% complete
-                        </div>
-                      </div>
-                      
-                      {/* Progress Bar */}
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-4">
-                        <div 
-                          className={`h-2 rounded-full bg-gradient-to-r ${pillar.gradient} transition-all duration-500`}
-                          style={{ width: `${pillar.progress}%` }}
-                        />
-                      </div>
-                      
-                      {/* Difficulty Badge */}
-                      <div className="mb-4">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyBg(pillar.difficulty)}`}>
-                          {pillar.difficultyLabel}
-                        </span>
-                      </div>
-                      
-
-                      
-                      {/* Prerequisites */}
-                      {pillar.prerequisite && (
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                          Requires: {pillars.find(p => p.id === pillar.prerequisite)?.title}
-                        </div>
-                      )}
-                      
-                      {/* CTA */}
-                      <div className={`flex items-center font-medium transition-colors ${
-                        isCompleted
-                          ? 'text-green-600 dark:text-green-400'
-                          : isInProgress
-                          ? 'text-blue-600 dark:text-blue-400 group-hover:text-purple-600 dark:group-hover:text-purple-400'
-                          : 'text-blue-600 dark:text-blue-400 group-hover:text-purple-600 dark:group-hover:text-purple-400'
-                      }`}>
-                        {isCompleted
-                          ? '✓ Completed • Review'
-                          : isInProgress
-                          ? 'Continue Learning'
-                          : 'Start Learning'
-                        }
-                        <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                      
-                      {/* Testimonial */}
-                      {pillar.testimonial && hoveredPillar === pillar.id && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="mt-3 p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg text-xs text-gray-600 dark:text-gray-400 italic"
-                        >
-                          "{pillar.testimonial}"
-                        </motion.div>
-                      )}
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
+          <PillarsGrid 
+            pillars={pillars}
+            onPillarStart={startPillarLearning}
+            hoveredPillar={hoveredPillar}
+            setHoveredPillar={setHoveredPillar}
+          />
           
           {/* Learning Path Recommendations */}
           {getRecommendedPillars().length > 0 && (
@@ -1380,6 +874,7 @@ const Learn = () => {
         )}
       </AnimatePresence>
     </div>
+    </>
   );
 };
 

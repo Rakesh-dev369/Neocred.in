@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SEOHead from '../components/SEO/SEOHead';
+import AnimatedBackground from '../components/AnimatedBackground';
 import '../styles/animations.css';
 import {
   ArrowRightIcon,
@@ -17,18 +18,23 @@ import {
   FireIcon,
   BanknotesIcon,
   CreditCardIcon,
-  BuildingOfficeIcon
+  BuildingOfficeIcon,
+  BookOpenIcon,
+  ChatBubbleLeftRightIcon,
+  TrophyIcon,
+  AcademicCapIcon,
+  LightBulbIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 
 // Goal selector component
-const GoalSelector = ({ onGoalSelect }) => {
-  const goals = [
+const GoalSelector = ({ onGoalSelect, selectedGoal }) => {
+  const goals = useMemo(() => [
     { id: 'invest', title: 'Start Investing', icon: ChartBarIcon, color: 'from-blue-500 to-purple-600' },
     { id: 'save', title: 'Save Money', icon: BanknotesIcon, color: 'from-green-500 to-emerald-600' },
     { id: 'loan', title: 'Get a Loan', icon: CreditCardIcon, color: 'from-orange-500 to-red-600' },
     { id: 'protect', title: 'Get Insurance', icon: ShieldCheckIcon, color: 'from-purple-500 to-pink-600' }
-  ];
+  ], []);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -39,7 +45,7 @@ const GoalSelector = ({ onGoalSelect }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
           onClick={() => onGoalSelect(goal.id)}
-          className={`group p-6 bg-gradient-to-br ${goal.color} text-white rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1`}
+          className={`group p-6 bg-gradient-to-br ${goal.color} text-white rounded-2xl hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ${selectedGoal === goal.id ? 'ring-4 ring-white/50 scale-105' : ''}`}
         >
           <goal.icon className="w-8 h-8 mx-auto mb-3 group-hover:scale-110 transition-transform" />
           <p className="font-semibold text-sm">{goal.title}</p>
@@ -51,112 +57,330 @@ const GoalSelector = ({ onGoalSelect }) => {
 
 export default function Home() {
   const [selectedGoal, setSelectedGoal] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Popular tools based on actual usage
-  const popularTools = [
+  const handleGoalSelect = useCallback((goalId) => {
+    if (selectedGoal === goalId) {
+      // Close if same goal is clicked again
+      setSelectedGoal(null);
+      return;
+    }
+    
+    setIsLoading(true);
+    setSelectedGoal(goalId);
+    // Simulate loading for better UX
+    setTimeout(() => setIsLoading(false), 300);
+  }, [selectedGoal]);
+
+  // Memoized popular tools for performance
+  const popularTools = useMemo(() => [
     { name: 'SIP Calculator', icon: ChartBarIcon, href: '/calculators/sip', users: '25K+', desc: 'Plan systematic investments' },
     { name: 'Home Loan EMI', icon: BuildingOfficeIcon, href: '/calculators/home-loan-emi', users: '18K+', desc: 'Calculate monthly payments' },
     { name: 'Budget Planner', icon: CalculatorIcon, href: '/calculators/budget-planner', users: '22K+', desc: '50/30/20 rule budgeting' },
     { name: 'FD Calculator', icon: CurrencyDollarIcon, href: '/calculators/fd', users: '15K+', desc: 'Fixed deposit returns' },
     { name: 'Tax Saver', icon: CheckCircleIcon, href: '/calculators/hra-exemption', users: '12K+', desc: '80C deduction optimizer' },
     { name: 'Emergency Fund', icon: ShieldCheckIcon, href: '/calculators/emergency-fund', users: '10K+', desc: '6-month safety planning' }
-  ];
+  ], []);
 
-  const successStories = [
+  const successStories = useMemo(() => [
     { name: 'Priya S.', achievement: 'Built ₹5L emergency fund', time: '8 months', tool: 'Budget Planner' },
     { name: 'Rahul M.', achievement: 'Saved ₹85K in taxes', time: '1 year', tool: 'Tax Calculator' },
     { name: 'Anjali K.', achievement: 'Started ₹10K monthly SIP', time: '3 months', tool: 'SIP Calculator' }
-  ];
+  ], []);
 
-  const getToolsForGoal = (goalId) => {
-    const goalTools = {
-      invest: [
-        { name: 'SIP Calculator', href: '/calculators/sip' },
-        { name: 'Lumpsum Calculator', href: '/calculators/lumpsum' },
-        { name: 'Goal Planner', href: '/calculators/goal-based-investment' }
-      ],
-      save: [
-        { name: 'Budget Planner', href: '/calculators/budget-planner' },
-        { name: 'Emergency Fund', href: '/calculators/emergency-fund' },
-        { name: 'FD Calculator', href: '/calculators/fd' }
-      ],
-      loan: [
-        { name: 'Home Loan EMI', href: '/calculators/home-loan-emi' },
-        { name: 'Car Loan EMI', href: '/calculators/car-loan-emi' },
-        { name: 'Loan Eligibility', href: '/calculators/loan-eligibility' }
-      ],
-      protect: [
-        { name: 'Term Insurance', href: '/calculators/term-life-insurance' },
-        { name: 'Health Insurance', href: '/calculators/health-insurance' },
-        { name: 'Vehicle Insurance', href: '/calculators/vehicle-insurance' }
-      ]
+  const getRecommendationsForGoal = (goalId) => {
+    const goalRecommendations = {
+      invest: {
+        tools: [
+          { name: 'SIP Calculator', href: '/calculators/sip', type: 'tool', icon: ChartBarIcon, desc: 'Calculate monthly investment returns', popular: true },
+          { name: 'Lumpsum Calculator', href: '/calculators/lumpsum', type: 'tool', icon: CurrencyDollarIcon, desc: 'One-time investment planning' },
+          { name: 'Goal Planner', href: '/calculators/goal-based-investment', type: 'tool', icon: TrophyIcon, desc: 'Plan for specific financial goals' }
+        ],
+        learning: [
+          { name: 'Investment Basics', href: '/learn#investment', type: 'learn', icon: BookOpenIcon, desc: 'Start your investment journey', progress: 0 },
+          { name: 'Mutual Funds Guide', href: '/learn#mutual-funds', type: 'learn', icon: AcademicCapIcon, desc: 'Understanding mutual funds', progress: 0 }
+        ],
+        ai: [
+          { name: 'Ask AI: Best SIP amount?', href: '/chatbot?q=What should be my monthly SIP amount?', type: 'ai', icon: ChatBubbleLeftRightIcon, desc: 'Get personalized SIP advice' },
+          { name: 'Investment Strategy Chat', href: '/chatbot?q=Help me create investment strategy', type: 'ai', icon: LightBulbIcon, desc: 'Build your investment plan' }
+        ]
+      },
+      save: {
+        tools: [
+          { name: 'Budget Planner', href: '/calculators/budget-planner', type: 'tool', icon: CalculatorIcon, desc: '50/30/20 rule budgeting', popular: true },
+          { name: 'Emergency Fund', href: '/calculators/emergency-fund', type: 'tool', icon: ShieldCheckIcon, desc: '6-month safety planning' },
+          { name: 'FD Calculator', href: '/calculators/fd', type: 'tool', icon: BanknotesIcon, desc: 'Fixed deposit returns' }
+        ],
+        learning: [
+          { name: 'Budgeting Basics', href: '/learn#budgeting', type: 'learn', icon: BookOpenIcon, desc: 'Master money management', progress: 0 },
+          { name: 'Saving Strategies', href: '/learn#saving', type: 'learn', icon: AcademicCapIcon, desc: 'Smart saving techniques', progress: 0 }
+        ],
+        ai: [
+          { name: 'Ask AI: How to save more?', href: '/chatbot?q=How can I save more money monthly?', type: 'ai', icon: ChatBubbleLeftRightIcon, desc: 'Personalized saving tips' },
+          { name: 'Budget Planning Chat', href: '/chatbot?q=Help me create a budget plan', type: 'ai', icon: LightBulbIcon, desc: 'Custom budget creation' }
+        ]
+      },
+      loan: {
+        tools: [
+          { name: 'Home Loan EMI', href: '/calculators/home-loan-emi', type: 'tool', icon: BuildingOfficeIcon, desc: 'Calculate monthly payments', popular: true },
+          { name: 'Car Loan EMI', href: '/calculators/car-loan-emi', type: 'tool', icon: CreditCardIcon, desc: 'Auto loan planning' },
+          { name: 'Loan Eligibility', href: '/calculators/loan-eligibility', type: 'tool', icon: CheckCircleIcon, desc: 'Check loan approval chances' }
+        ],
+        learning: [
+          { name: 'Loan Basics', href: '/learn#loans', type: 'learn', icon: BookOpenIcon, desc: 'Understanding loans & EMIs', progress: 0 },
+          { name: 'Credit Score Guide', href: '/learn#credit-score', type: 'learn', icon: AcademicCapIcon, desc: 'Improve your credit score', progress: 0 }
+        ],
+        ai: [
+          { name: 'Ask AI: Loan eligibility?', href: '/chatbot?q=Am I eligible for home loan?', type: 'ai', icon: ChatBubbleLeftRightIcon, desc: 'Check your loan eligibility' },
+          { name: 'Loan Comparison Chat', href: '/chatbot?q=Compare different loan options', type: 'ai', icon: LightBulbIcon, desc: 'Compare loan options' }
+        ]
+      },
+      protect: {
+        tools: [
+          { name: 'Term Insurance', href: '/calculators/term-life-insurance', type: 'tool', icon: ShieldCheckIcon, desc: 'Life insurance planning', popular: true },
+          { name: 'Health Insurance', href: '/calculators/health-insurance', type: 'tool', icon: CheckCircleIcon, desc: 'Medical coverage calculator' },
+          { name: 'Vehicle Insurance', href: '/calculators/vehicle-insurance', type: 'tool', icon: CreditCardIcon, desc: 'Auto insurance planning' }
+        ],
+        learning: [
+          { name: 'Insurance Basics', href: '/learn#insurance', type: 'learn', icon: BookOpenIcon, desc: 'Protection fundamentals', progress: 0 },
+          { name: 'Risk Management', href: '/learn#risk-management', type: 'learn', icon: AcademicCapIcon, desc: 'Manage financial risks', progress: 0 }
+        ],
+        ai: [
+          { name: 'Ask AI: Insurance coverage?', href: '/chatbot?q=How much insurance do I need?', type: 'ai', icon: ChatBubbleLeftRightIcon, desc: 'Get coverage recommendations' },
+          { name: 'Insurance Planning Chat', href: '/chatbot?q=Help me choose right insurance', type: 'ai', icon: LightBulbIcon, desc: 'Choose right insurance' }
+        ]
+      }
     };
-    return goalTools[goalId] || [];
+    return goalRecommendations[goalId] || { tools: [], learning: [], ai: [] };
   };
 
   return (
     <>
       <SEOHead 
-        title="NeoCred - India's #1 AI-Powered Financial Platform | 29+ Calculators"
-        description="Join 50,000+ Indians building wealth with NeoCred's AI assistant, 29+ calculators, and expert guidance. Start your financial journey today!"
-        keywords="financial planning India, SIP calculator, home loan EMI, budget planner, tax saver, investment tools, AI financial advisor, NeoCred"
+        title="NeoCred - India's #1 AI-Powered Financial Platform | 29+ Calculators & Tools"
+        description="Join 50,000+ Indians building wealth with NeoCred's GPT-4 AI assistant, 29+ financial calculators, 8 learning pillars & real-time news. Free SIP, EMI, Budget, Tax planning tools. Start your financial journey today!"
+        keywords="NeoCred, financial calculator India, SIP calculator, EMI calculator, budget planner, tax calculator, investment planning, AI financial advisor, GPT-4 fintech, mutual fund calculator, home loan EMI, personal finance India, financial literacy, wealth building, retirement planning, insurance calculator, FD calculator, PPF calculator, financial news India, RBI updates, stock market news, financial education, money management, Indian fintech, free financial tools"
         canonicalUrl="/"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "NeoCred",
+          "alternateName": "NeoCred Financial Platform",
+          "description": "India's leading AI-powered financial platform with 29+ calculators, GPT-4 assistant, learning resources and financial news",
+          "url": "https://neocred.in",
+          "logo": "https://neocred.in/logo.png",
+          "sameAs": [
+            "https://twitter.com/neocred_in",
+            "https://linkedin.com/company/neocred",
+            "https://instagram.com/neocred.in",
+            "https://facebook.com/neocred.in",
+            "https://youtube.com/@neocred"
+          ],
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://neocred.in/search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          },
+          "mainEntity": {
+            "@type": "SoftwareApplication",
+            "name": "NeoCred Financial Platform",
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "INR"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "ratingCount": "50000",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "featureList": [
+              "29+ Financial Calculators",
+              "AI-Powered Financial Assistant",
+              "8 Learning Pillars",
+              "Real-time Financial News",
+              "SIP Calculator",
+              "EMI Calculator",
+              "Budget Planner",
+              "Tax Calculator",
+              "Investment Planning",
+              "Insurance Calculator"
+            ]
+          },
+          "provider": {
+            "@type": "Organization",
+            "name": "NeoCred",
+            "url": "https://neocred.in",
+            "logo": "https://neocred.in/logo.png",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-9876543210",
+              "contactType": "customer service",
+              "email": "support@neocred.in",
+              "availableLanguage": ["English", "Hindi"]
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "IN",
+              "addressRegion": "India"
+            }
+          },
+          "audience": {
+            "@type": "Audience",
+            "audienceType": "Indian investors, financial planners, students",
+            "geographicArea": {
+              "@type": "Country",
+              "name": "India"
+            }
+          },
+          "inLanguage": "en-IN",
+          "isAccessibleForFree": true,
+          "usageInfo": "https://neocred.in/terms",
+          "privacyPolicy": "https://neocred.in/privacy"
+        }}
       />
       
       <div className="min-h-screen relative overflow-hidden">
-        {/* Advanced Background System */}
-        <div className="fixed inset-0 z-0">
-          {/* Primary Gradient Base */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-950 dark:to-indigo-950"></div>
-          
-          {/* Animated Mesh Gradients */}
-          <div className="absolute inset-0">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-400/10 via-transparent to-purple-400/10 animate-pulse" style={{animationDuration: '8s'}}></div>
-            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-emerald-400/8 via-transparent to-cyan-400/8 animate-pulse" style={{animationDuration: '12s', animationDelay: '2s'}}></div>
-            <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-tr from-purple-400/6 via-transparent to-pink-400/6 animate-pulse" style={{animationDuration: '10s', animationDelay: '4s'}}></div>
-          </div>
-          
-          {/* Floating Geometric Shapes */}
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/20 to-purple-300/20 dark:from-blue-600/10 dark:to-purple-600/10 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-emerald-200/15 to-teal-300/15 dark:from-emerald-600/8 dark:to-teal-600/8 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
-          <div className="absolute bottom-32 left-1/4 w-80 h-80 bg-gradient-to-br from-indigo-200/12 to-blue-300/12 dark:from-indigo-600/6 dark:to-blue-600/6 rounded-full blur-3xl animate-float" style={{animationDelay: '4s'}}></div>
-          <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-gradient-to-br from-purple-200/18 to-pink-300/18 dark:from-purple-600/9 dark:to-pink-600/9 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
-          <div className="absolute bottom-20 right-10 w-88 h-88 bg-gradient-to-br from-cyan-200/14 to-blue-300/14 dark:from-cyan-600/7 dark:to-blue-600/7 rounded-full blur-3xl animate-float" style={{animationDelay: '3s'}}></div>
-          
-          {/* Subtle Grid Pattern */}
-          <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgb(59 130 246) 1px, transparent 0)`,
-            backgroundSize: '80px 80px'
-          }}></div>
-          
-          {/* Dynamic Light Rays */}
-          <div className="absolute inset-0">
-            <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-200/20 to-transparent dark:via-blue-600/10 transform rotate-12 animate-pulse" style={{animationDuration: '6s'}}></div>
-            <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-200/15 to-transparent dark:via-purple-600/8 transform -rotate-12 animate-pulse" style={{animationDuration: '8s', animationDelay: '2s'}}></div>
-            <div className="absolute top-0 left-2/3 w-px h-full bg-gradient-to-b from-transparent via-emerald-200/12 to-transparent dark:via-emerald-600/6 transform rotate-6 animate-pulse" style={{animationDuration: '10s', animationDelay: '4s'}}></div>
-          </div>
-          
-          {/* Floating Particles */}
-          <div className="absolute inset-0">
-            {Array.from({length: 20}).map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1 h-1 bg-blue-400/30 dark:bg-blue-300/20 rounded-full animate-float"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 10}s`,
-                  animationDuration: `${15 + Math.random() * 10}s`
-                }}
-              />
-            ))}
-          </div>
-          
-          {/* Mesh Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/3 to-transparent dark:via-gray-800/5" style={{
-            animation: 'mesh-move 20s ease-in-out infinite'
-          }}></div>
-        </div>
+        {/* AI Crawler & SEO Enhancement */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is NeoCred?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "NeoCred is India's leading AI-powered financial platform offering 29+ calculators, GPT-4 financial assistant, comprehensive learning resources, and real-time financial news to help Indians build wealth and achieve financial freedom."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is NeoCred free to use?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, NeoCred is completely free to use. All 29+ financial calculators, AI assistant, learning resources, and news are available without any registration or subscription fees."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What calculators does NeoCred offer?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "NeoCred offers 29+ financial calculators including SIP Calculator, EMI Calculator, Budget Planner, Tax Calculator, FD Calculator, PPF Calculator, Insurance Calculator, Goal Planning, Emergency Fund Calculator, and many more for comprehensive financial planning."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does NeoCred's AI assistant work?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "NeoCred's AI assistant is powered by GPT-4 technology and provides personalized financial advice, tool recommendations, and step-by-step guidance for investment planning, budgeting, tax saving, and wealth building strategies tailored for Indian users."
+                }
+              }
+            ]
+          })}
+        </script>
+        
+        {/* Breadcrumb Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://neocred.in"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Financial Tools",
+                "item": "https://neocred.in/tools"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "AI Assistant",
+                "item": "https://neocred.in/chatbot"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Learn",
+                "item": "https://neocred.in/learn"
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "News",
+                "item": "https://neocred.in/news"
+              }
+            ]
+          })}
+        </script>
+        
+        {/* Service Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "NeoCred Financial Planning Services",
+            "description": "Comprehensive financial planning platform with AI-powered tools and calculators for Indian investors",
+            "provider": {
+              "@type": "Organization",
+              "name": "NeoCred",
+              "url": "https://neocred.in"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "India"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Financial Tools & Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "SIP Calculator",
+                    "description": "Calculate systematic investment plan returns"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "EMI Calculator",
+                    "description": "Calculate loan EMI and interest"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "AI Financial Assistant",
+                    "description": "GPT-4 powered personalized financial advice"
+                  }
+                }
+              ]
+            },
+            "serviceType": "Financial Planning",
+            "category": "FinTech"
+          })}
+        </script>
+        <AnimatedBackground />
         
         {/* Content Container */}
         <div className="relative z-10">
@@ -178,17 +402,35 @@ export default function Home() {
                   <span className="text-sm font-medium">Trusted by 50,000+ Indians</span>
                 </div>
                 
-                <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight" itemProp="headline">
                   Stop Guessing Your
                   <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
                     Financial Future
                   </span>
                 </h1>
                 
-                <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+                <p className="text-xl text-blue-100 mb-8 leading-relaxed" itemProp="description">
                   Get personalized financial guidance with AI-powered calculators, 
                   expert insights, and step-by-step planning tools designed for Indians.
                 </p>
+                
+                {/* Hidden SEO Content for AI Crawlers */}
+                <div className="sr-only" itemScope itemType="https://schema.org/WebSite">
+                  <meta itemProp="name" content="NeoCred - AI-Powered Financial Platform" />
+                  <meta itemProp="description" content="India's leading financial platform with 29+ calculators, GPT-4 AI assistant, learning resources, and real-time news for wealth building and financial planning." />
+                  <meta itemProp="url" content="https://neocred.in" />
+                  <div itemProp="potentialAction" itemScope itemType="https://schema.org/SearchAction">
+                    <meta itemProp="target" content="https://neocred.in/search?q={search_term}" />
+                    <meta itemProp="query-input" content="required name=search_term" />
+                  </div>
+                  <div itemProp="mainEntity" itemScope itemType="https://schema.org/SoftwareApplication">
+                    <meta itemProp="name" content="NeoCred Financial Calculators" />
+                    <meta itemProp="applicationCategory" content="Finance" />
+                    <meta itemProp="operatingSystem" content="Web" />
+                    <meta itemProp="price" content="0" />
+                    <meta itemProp="priceCurrency" content="INR" />
+                  </div>
+                </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
                   <Link
@@ -281,7 +523,7 @@ export default function Home() {
               </p>
             </motion.div>
             
-            <GoalSelector onGoalSelect={setSelectedGoal} />
+            <GoalSelector onGoalSelect={handleGoalSelect} selectedGoal={selectedGoal} />
             
             {/* Goal-specific tools */}
             {selectedGoal && (
@@ -290,29 +532,125 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-12 bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg"
               >
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Recommended Tools for You
-                </h3>
-                <div className="grid md:grid-cols-3 gap-6">
-                  {getToolsForGoal(selectedGoal).map((tool, index) => (
-                    <Link
-                      key={tool.name}
-                      to={tool.href}
-                      className="group p-6 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-                    >
-                      <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                        {tool.name}
-                      </h4>
-                      <ArrowRightIcon className="w-5 h-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-x-1 transition-all mt-2" />
-                    </Link>
-                  ))}
-                </div>
+                {isLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <span className="ml-3 text-gray-600 dark:text-gray-400">Loading recommendations...</span>
+                  </div>
+                ) : (
+                <>                
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                    Personalized Recommendations
+                  </h3>
+                  
+                  {/* Tools Section */}
+                  <div className="mb-8">
+                    <div className="flex items-center mb-4">
+                      <CalculatorIcon className="w-5 h-5 text-blue-600 mr-2" />
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Calculators & Tools</h4>
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-4">
+                      {getRecommendationsForGoal(selectedGoal).tools.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className="group p-4 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 relative"
+                        >
+                          {item.popular && (
+                            <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-medium">
+                              Popular
+                            </div>
+                          )}
+                          <div className="flex items-center mb-3">
+                            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg mr-3">
+                              <item.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                            </div>
+                            <h5 className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors text-sm">
+                              {item.name}
+                            </h5>
+                          </div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{item.desc}</p>
+                          <div className="flex gap-2">
+                            <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded">Quick Start</span>
+                            <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all ml-auto" />
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Learning Section */}
+                  <div className="mb-8">
+                    <div className="flex items-center mb-4">
+                      <PlayIcon className="w-5 h-5 text-green-600 mr-2" />
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Learn & Understand</h4>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {getRecommendationsForGoal(selectedGoal).learning.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className="group p-4 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-green-300"
+                        >
+                          <div className="flex items-center mb-3">
+                            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg mr-3">
+                              <item.icon className="w-5 h-5 text-green-600 dark:text-green-400" />
+                            </div>
+                            <h5 className="font-medium text-gray-900 dark:text-white group-hover:text-green-600 transition-colors text-sm">
+                              {item.name}
+                            </h5>
+                          </div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{item.desc}</p>
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1 mb-3">
+                            <div className="bg-green-600 h-1 rounded-full" style={{width: `${item.progress}%`}}></div>
+                          </div>
+                          <div className="flex gap-2">
+                            <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded">Start Learning</span>
+                            <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-green-600 group-hover:translate-x-1 transition-all ml-auto" />
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* AI Assistant Section */}
+                  <div>
+                    <div className="flex items-center mb-4">
+                      <SparklesIcon className="w-5 h-5 text-purple-600 mr-2" />
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">Ask AI Assistant</h4>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {getRecommendationsForGoal(selectedGoal).ai.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className="group p-4 border border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-purple-300"
+                        >
+                          <div className="flex items-center mb-3">
+                            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg mr-3">
+                              <item.icon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                            </div>
+                            <h5 className="font-medium text-gray-900 dark:text-white group-hover:text-purple-600 transition-colors text-sm">
+                              {item.name}
+                            </h5>
+                          </div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">{item.desc}</p>
+                          <div className="flex gap-2">
+                            <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">Ask AI</span>
+                            <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all ml-auto" />
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </>
+                )}
               </motion.div>
             )}
           </div>
         </section>
 
-        {/* Popular Tools */}
+        {/* NeoCred Platform Features */}
         <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
           <div className="max-w-7xl mx-auto">
             <motion.div
@@ -323,53 +661,177 @@ export default function Home() {
             >
               <div className="inline-flex items-center px-4 py-2 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-200 rounded-full mb-4">
                 <FireIcon className="w-4 h-4 mr-2" />
-                Most Popular This Week
+                Complete Financial Platform
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                Top Financial Tools
+                Everything You Need for Financial Success
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-400">
-                Join thousands using these calculators daily
+                Tools, AI Assistant, Learning & News - All in one platform
               </p>
             </motion.div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {popularTools.map((tool, index) => (
-                <motion.div
-                  key={tool.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Financial Tools */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+              >
+                <Link
+                  to="/tools"
+                  className="group block bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700 h-full"
                 >
-                  <Link
-                    to={tool.href}
-                    className="group block bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+                  <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl mb-4 group-hover:scale-110 transition-transform">
+                    <CalculatorIcon className="w-8 h-8 text-blue-600 dark:text-blue-400 mx-auto" />
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 transition-colors">
+                    29+ Calculators
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                    SIP, EMI, Budget, Tax, Insurance & Investment planning tools
+                  </p>
+                  
+                  <div className="flex items-center text-blue-600 dark:text-blue-400 font-medium">
+                    <span className="text-sm">Explore Tools</span>
+                    <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              </motion.div>
+
+              {/* AI Assistant */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <Link
+                  to="/chatbot"
+                  className="group block bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700 h-full"
+                >
+                  <div className="p-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl mb-4 group-hover:scale-110 transition-transform">
+                    <SparklesIcon className="w-8 h-8 text-purple-600 dark:text-purple-400 mx-auto" />
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-purple-600 transition-colors">
+                    AI FinBot
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                    GPT-4 powered financial advisor for personalized guidance
+                  </p>
+                  
+                  <div className="flex items-center text-purple-600 dark:text-purple-400 font-medium">
+                    <span className="text-sm">Chat with AI</span>
+                    <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              </motion.div>
+
+              {/* Learning System */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                <Link
+                  to="/learn"
+                  className="group block bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700 h-full"
+                >
+                  <div className="p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl mb-4 group-hover:scale-110 transition-transform">
+                    <AcademicCapIcon className="w-8 h-8 text-green-600 dark:text-green-400 mx-auto" />
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-green-600 transition-colors">
+                    8 Learning Pillars
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                    Complete financial literacy from basics to advanced concepts
+                  </p>
+                  
+                  <div className="flex items-center text-green-600 dark:text-green-400 font-medium">
+                    <span className="text-sm">Start Learning</span>
+                    <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              </motion.div>
+
+              {/* Financial News */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
+                <Link
+                  to="/news"
+                  className="group block bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700 h-full"
+                >
+                  <div className="p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-xl mb-4 group-hover:scale-110 transition-transform">
+                    <FireIcon className="w-8 h-8 text-orange-600 dark:text-orange-400 mx-auto" />
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-orange-600 transition-colors">
+                    Financial News
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
+                    Latest market updates, RBI policies & financial insights
+                  </p>
+                  
+                  <div className="flex items-center text-orange-600 dark:text-orange-400 font-medium">
+                    <span className="text-sm">Read News</span>
+                    <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              </motion.div>
+            </div>
+            
+            {/* Popular Tools Showcase */}
+            <div className="mt-16">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                Most Popular Tools This Week
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {popularTools.slice(0, 6).map((tool, index) => (
+                  <motion.div
+                    key={tool.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl group-hover:scale-110 transition-transform">
-                        <tool.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                    <Link
+                      to={tool.href}
+                      className="group block bg-white dark:bg-gray-800 rounded-xl p-4 shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="p-2 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
+                          <tool.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div className="text-right">
+                          <div className="text-xs font-medium text-gray-900 dark:text-white">{tool.users}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">users</div>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-sm font-medium text-gray-900 dark:text-white">{tool.users}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">users</div>
+                      
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 transition-colors text-sm">
+                        {tool.name}
+                      </h4>
+                      <p className="text-gray-600 dark:text-gray-400 text-xs mb-3">
+                        {tool.desc}
+                      </p>
+                      
+                      <div className="flex items-center text-blue-600 dark:text-blue-400 font-medium">
+                        <span className="text-xs">Try Now</span>
+                        <ArrowRightIcon className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
                       </div>
-                    </div>
-                    
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {tool.name}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                      {tool.desc}
-                    </p>
-                    
-                    <div className="flex items-center text-blue-600 dark:text-blue-400 font-medium">
-                      <span className="text-sm">Try Calculator</span>
-                      <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

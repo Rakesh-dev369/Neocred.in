@@ -41,6 +41,7 @@ import {
   CheckCircleIcon as CheckCircleSolid,
   StarIcon as StarSolid
 } from '@heroicons/react/24/solid';
+import { getNextPillar, getPreviousPillar } from '../../data/learningData';
 
 export default function InvestmentsCapitalMarkets() {
   const [activeSection, setActiveSection] = useState('introduction');
@@ -51,6 +52,11 @@ export default function InvestmentsCapitalMarkets() {
   const [showQuickNav, setShowQuickNav] = useState(false);
   const [completedSections, setCompletedSections] = useState(new Set());
   const [readingProgress, setReadingProgress] = useState(0);
+
+  // Get navigation data
+  const currentPillarId = 4; // Investment & Wealth Building is pillar 4
+  const nextPillar = getNextPillar(currentPillarId);
+  const previousPillar = getPreviousPillar(currentPillarId);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -284,26 +290,59 @@ export default function InvestmentsCapitalMarkets() {
               <p className="text-green-100">Pillar 4 of 8 • Wealth Creation • 11 Sections • 2025 Updated</p>
             </div>
             <div className="hidden md:flex items-center space-x-4">
-              <Link
-                to="/learn/corporate-finance"
-                className="flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
-              >
-                Next: Corporate Finance
-                <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
-              </Link>
+              {previousPillar && (
+                <Link
+                  to={previousPillar.path}
+                  className="flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+                >
+                  <ArrowLeftIcon className="h-4 w-4 mr-2" />
+                  Previous: {previousPillar.title}
+                </Link>
+              )}
+              {nextPillar && (
+                <Link
+                  to={nextPillar.path}
+                  className="flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+                >
+                  Next: {nextPillar.title}
+                  <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+                </Link>
+              )}
               <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
                 <PresentationChartLineIcon className="h-8 w-8" />
               </div>
             </div>
           </div>
+          
+          {/* Mobile Navigation Buttons */}
+          <div className="md:hidden mt-4 space-y-2">
+            {previousPillar && (
+              <Link
+                to={previousPillar.path}
+                className="flex items-center justify-center w-full px-4 py-3 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+              >
+                <ArrowLeftIcon className="h-4 w-4 mr-2" />
+                Previous: {previousPillar.title}
+              </Link>
+            )}
+            {nextPillar && (
+              <Link
+                to={nextPillar.path}
+                className="flex items-center justify-center w-full px-4 py-3 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+              >
+                Next Pillar: {nextPillar.title}
+                <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+              </Link>
+            )}
+          </div>
         </div>
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex gap-8">
+        <div className="lg:flex gap-8">
           {/* Sidebar */}
-          <div className="w-80">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 h-fit sticky top-8 border border-gray-200 dark:border-gray-700">
+          <div className="w-full lg:w-80 mb-8 lg:mb-0">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 h-fit lg:sticky top-8 border border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center">
                   <BookmarkIcon className="h-5 w-5 mr-2" />
@@ -2739,17 +2778,89 @@ export default function InvestmentsCapitalMarkets() {
                       <ArrowLeftIcon className="h-4 w-4 mr-2" />
                       Previous: Challenges
                     </button>
-                    <Link
-                      to="/learn/corporate-finance"
-                      className="flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                    >
-                      Next Pillar: Corporate Finance
-                      <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
-                    </Link>
+                    <div className="flex items-center space-x-4">
+                      <Link
+                        to="/learn"
+                        className="flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                      >
+                        Back to Learn Hub
+                      </Link>
+                      {nextPillar && (
+                        <div className="flex items-center space-x-2">
+                          <span className="text-sm text-gray-500 dark:text-gray-400">Next Pillar:</span>
+                          <Link
+                            to={nextPillar.path}
+                            className="flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-lg hover:from-green-600 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                          >
+                            <span className="mr-2">{nextPillar.icon}</span>
+                            {nextPillar.title}
+                            <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </motion.div>
             )}
+
+            {/* Next Pillar Navigation */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-r from-green-500 to-blue-600 rounded-2xl shadow-xl p-8 text-white relative overflow-hidden mb-8"
+            >
+              <div className="relative z-10">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold mb-4">🎉 Congratulations! You've completed Investment & Wealth Building</h3>
+                  <p className="text-green-100 mb-6">Ready to continue your financial learning journey?</p>
+                  
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    {previousPillar && (
+                      <div className="text-center">
+                        <p className="text-sm text-green-200 mb-2">Previous Pillar:</p>
+                        <Link
+                          to={previousPillar.path}
+                          className="inline-flex items-center px-6 py-3 bg-white/20 text-white font-semibold rounded-xl hover:bg-white/30 transition-colors border border-white/30"
+                        >
+                          <ArrowLeftIcon className="h-4 w-4 mr-2" />
+                          {previousPillar.title}
+                        </Link>
+                      </div>
+                    )}
+                    
+                    {nextPillar && (
+                      <div className="text-center">
+                        <p className="text-sm text-green-200 mb-2">Next Pillar:</p>
+                        <Link
+                          to={nextPillar.path}
+                          className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-bold rounded-xl hover:bg-green-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                        >
+                          <span className="text-2xl mr-3">🏛️</span>
+                          <div className="text-left">
+                            <div className="text-lg">{nextPillar.title}</div>
+                            <div className="text-sm opacity-75">Pillar 5 of 8</div>
+                          </div>
+                          <ArrowTopRightOnSquareIcon className="h-5 w-5 ml-3" />
+                        </Link>
+                      </div>
+                    )}
+                    
+                    <div className="text-center">
+                      <p className="text-sm text-green-200 mb-2">Or explore:</p>
+                      <Link
+                        to="/learn"
+                        className="inline-flex items-center px-6 py-3 bg-white/20 text-white font-semibold rounded-xl hover:bg-white/30 transition-colors border border-white/30"
+                      >
+                        All 8 Pillars
+                        <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
             {/* Tools Section */}
             <motion.div 

@@ -37,6 +37,7 @@ import {
   CheckCircleIcon as CheckCircleSolid,
   StarIcon as StarSolid
 } from '@heroicons/react/24/solid';
+import { getNextPillar, getPreviousPillar } from '../../data/learningData';
 
 export default function BankingPayments() {
   const [activeSection, setActiveSection] = useState('introduction');
@@ -47,6 +48,11 @@ export default function BankingPayments() {
   const [showQuickNav, setShowQuickNav] = useState(false);
   const [completedSections, setCompletedSections] = useState(new Set());
   const [readingProgress, setReadingProgress] = useState(0);
+
+  // Get navigation data
+  const currentPillarId = 2; // Banking & Payments is pillar 2
+  const nextPillar = getNextPillar(currentPillarId);
+  const previousPillar = getPreviousPillar(currentPillarId);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -197,28 +203,28 @@ export default function BankingPayments() {
 
   const relatedPillars = [
     { 
-      name: 'Personal Finance', 
+      name: 'Personal Finance Mastery', 
       path: '/learn/personal-finance', 
       icon: '💰',
-      description: 'Individual financial management'
+      description: 'Previous: Foundation of financial literacy'
     },
     { 
-      name: 'Investments & Capital Markets', 
-      path: '/learn/investments', 
-      icon: '📈',
-      description: 'Investment strategies and markets'
-    },
-    { 
-      name: 'Insurance & Risk Management', 
+      name: 'Insurance & Risk Shield', 
       path: '/learn/insurance', 
       icon: '🛡️',
-      description: 'Risk protection strategies'
+      description: 'Next: Risk management and protection'
     },
     { 
-      name: 'Alternative Finance & Emerging Tech', 
-      path: '/learn/alternative-finance', 
-      icon: '🚀',
-      description: 'Fintech and emerging technologies'
+      name: 'Investment & Wealth Building', 
+      path: '/learn/investments', 
+      icon: '📈',
+      description: 'Intermediate: Build wealth through investments'
+    },
+    { 
+      name: 'Tax & Government Finance', 
+      path: '/learn/government-finance', 
+      icon: '🏛️',
+      description: 'Intermediate: Tax planning and schemes'
     }
   ];
 
@@ -290,26 +296,50 @@ export default function BankingPayments() {
               <p className="text-blue-100">Pillar 2 of 8 • Financial Infrastructure • 12 Sections • 2025 Updated</p>
             </div>
             <div className="hidden md:flex items-center space-x-4">
-              <Link
-                to="/learn/insurance"
-                className="flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
-              >
-                Next: Insurance & Risk Management
-                <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
-              </Link>
+              {previousPillar && (
+                <Link
+                  to={previousPillar.path}
+                  className="flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+                >
+                  Previous: {previousPillar.title}
+                  <ArrowLeftIcon className="h-4 w-4 mr-2" />
+                </Link>
+              )}
+              {nextPillar && (
+                <Link
+                  to={nextPillar.path}
+                  className="flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+                >
+                  Next: {nextPillar.title}
+                  <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+                </Link>
+              )}
               <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
                 <BuildingLibraryIcon className="h-8 w-8" />
               </div>
             </div>
           </div>
+          
+          {/* Mobile Navigation Buttons */}
+          <div className="md:hidden mt-4">
+            {nextPillar && (
+              <Link
+                to={nextPillar.path}
+                className="flex items-center justify-center w-full px-4 py-3 bg-white/20 hover:bg-white/30 rounded-lg text-white transition-colors"
+              >
+                Next Pillar: {nextPillar.title}
+                <ArrowTopRightOnSquareIcon className="h-4 w-4 ml-2" />
+              </Link>
+            )}
+          </div>
         </div>
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex gap-8">
+        <div className="lg:flex gap-8">
           {/* Sidebar */}
-          <div className="w-80">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 h-fit sticky top-8 border border-gray-200 dark:border-gray-700">
+          <div className="w-full lg:w-80 mb-8 lg:mb-0">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 h-fit lg:sticky top-8 border border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center">
                   <BookmarkIcon className="h-5 w-5 mr-2" />

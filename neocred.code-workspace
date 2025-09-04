@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "amazonQ.persistChatHistory": true,
+    "workbench.startupEditor": "welcomePageInEmptyWorkbench"
+  }
+}

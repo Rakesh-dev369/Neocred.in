@@ -206,10 +206,10 @@ export default function BondsCompleteGuide() {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex gap-8">
+        <div className="lg:flex gap-8">
           {/* Sidebar */}
-          <div className="w-80">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 h-fit sticky top-8 border border-gray-200 dark:border-gray-700">
+          <div className="w-full lg:w-80 mb-8 lg:mb-0">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 h-fit lg:sticky lg:top-8 border border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-lg text-gray-800 dark:text-white flex items-center">
                   <BookmarkIcon className="h-5 w-5 mr-2" />

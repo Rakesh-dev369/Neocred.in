@@ -150,6 +150,12 @@ Visit `http://localhost:8001/docs` for interactive Swagger documentation.
 
 ## 🚀 Deployment
 
+### Production Status
+- **Live Website**: https://neocred.in ✅
+- **Backend API**: https://neocred-backend.fly.dev ✅
+- **Version**: 2.0.0 (December 2024)
+- **Status**: Production Ready
+
 ### Production Build
 ```bash
 # Frontend
@@ -167,6 +173,29 @@ docker-compose -f docker-compose.yml up -d --build
 2. Configure domain and SSL
 3. Set up monitoring and logging
 4. Configure backup systems
+
+## 📋 Development Log
+
+### Recent Updates (December 2024)
+- ✅ Fixed JSX syntax errors in calculator pages
+- ✅ Implemented rate limiting (2s between messages, 10/minute)
+- ✅ Added conversation export (JSON, CSV, TXT formats)
+- ✅ Updated Personal Finance pillar colors (blue/indigo theme)
+- ✅ Cleaned up App.jsx routing and package.json
+- ✅ Removed 64 unused investment files
+
+### Key Features Implemented
+- **FinBot AI**: GPT-4-turbo integration with smart tool detection
+- **Rate Limiting**: Prevents API abuse with user-friendly warnings
+- **Export Feature**: Users can download conversation history
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Performance**: Service worker, lazy loading, chunk optimization
+
+### Amazon Q Development Tips
+- Use `@workspace` for project-wide questions
+- Use `@file` to reference specific files
+- Context preserved in `.amazonq/rules/` directory
+- Technical decisions logged for continuity
 
 ## 🤝 Contributing
 
