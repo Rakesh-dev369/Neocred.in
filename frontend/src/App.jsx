@@ -12,11 +12,11 @@ import { useAnalytics } from './hooks/useAnalytics';
 const Home = lazy(() => import('./pages/Home'));
 const Learn = lazy(() => import('./pages/Learn'));
 const Tools = lazy(() => import('./pages/Tools'));
-const Chatbot = lazy(() => import('./pages/Chatbot'));
+const Chatbot = lazy(() => import('./pages/LockedChatbot'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
-const News = lazy(() => import('./pages/News'));
-const Explore = lazy(() => import('./pages/Explore'));
+const News = lazy(() => import('./pages/LockedNews'));
+const Explore = lazy(() => import('./pages/LockedExplore'));
 const CreditCards = lazy(() => import('./pages/CreditCards'));
 const SBICreditCards = lazy(() => import('./pages/SBICreditCards'));
 const BOBCreditCards = lazy(() => import('./pages/BOBCreditCards'));
@@ -123,7 +123,7 @@ function App() {
           <Route path="/" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/learn" element={<MainLayout><Learn /></MainLayout>} />
           <Route path="/tools" element={<MainLayout><Tools /></MainLayout>} />
-          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/chatbot" element={<MainLayout><Chatbot /></MainLayout>} />
           <Route path="/about" element={<MainLayout><About /></MainLayout>} />
           <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
           <Route path="/news" element={<MainLayout><News /></MainLayout>} />
