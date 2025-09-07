@@ -23,6 +23,8 @@ import { PILLAR_DATA, POPULAR_TOPICS } from '../data/learningData';
 import { safeJSONParse, safeJSONStringify, debounce } from '../utils/storageUtils';
 import { useAnalytics } from '../hooks/useAnalytics';
 import RealTimeStats from '../components/RealTimeStats';
+import { useRealTimeData } from '../hooks/useRealTimeData';
+import LearningProgressTracker from '../components/LearningProgressTracker';
 
 
 const Learn = () => {
@@ -35,6 +37,7 @@ const Learn = () => {
   const [completedPillars, setCompletedPillars] = useState(new Set());
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { trackLearningProgress, trackFeatureUse } = useAnalytics();
+  const { totalUsers, calculatorUses } = useRealTimeData();
   
   // Optimized localStorage loading with safe parsing
   useEffect(() => {

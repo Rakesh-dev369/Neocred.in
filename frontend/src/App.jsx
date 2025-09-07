@@ -4,6 +4,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './layouts/MainLayout';
 import LoadingSpinner from './components/LoadingSpinner';
 import ErrorBoundary from './components/ErrorBoundary';
+import GlobalAnalytics from './components/GlobalAnalytics';
 import { usePerformanceMonitoring } from './hooks/usePerformance';
 import { useAnalytics } from './hooks/useAnalytics';
 
@@ -118,6 +119,7 @@ function App() {
   return (
     <ThemeProvider>
       <ErrorBoundary>
+        <GlobalAnalytics />
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><LoadingSpinner size="lg" text="Loading page..." /></div>}>
           <Routes>
           <Route path="/" element={<MainLayout><Home /></MainLayout>} />

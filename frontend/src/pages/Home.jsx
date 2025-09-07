@@ -28,6 +28,8 @@ import {
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 import RealTimeStats from '../components/RealTimeStats';
 import { useAnalytics } from '../hooks/useAnalytics';
+import { useRealTimeData } from '../hooks/useRealTimeData';
+import AnalyticsDashboard from '../components/AnalyticsDashboard';
 
 // Goal selector component
 const GoalSelector = ({ onGoalSelect, selectedGoal }) => {
@@ -75,15 +77,37 @@ export default function Home() {
     setTimeout(() => setIsLoading(false), 300);
   }, [selectedGoal]);
 
-  // Memoized popular tools for performance
-  const popularTools = useMemo(() => [
-    { name: 'SIP Calculator', icon: ChartBarIcon, href: '/calculators/sip', users: '25K+', desc: 'Plan systematic investments' },
-    { name: 'Home Loan EMI', icon: BuildingOfficeIcon, href: '/calculators/home-loan-emi', users: '18K+', desc: 'Calculate monthly payments' },
-    { name: 'Budget Planner', icon: CalculatorIcon, href: '/calculators/budget-planner', users: '22K+', desc: '50/30/20 rule budgeting' },
-    { name: 'FD Calculator', icon: CurrencyDollarIcon, href: '/calculators/fd', users: '15K+', desc: 'Fixed deposit returns' },
-    { name: 'Tax Saver', icon: CheckCircleIcon, href: '/calculators/hra-exemption', users: '12K+', desc: '80C deduction optimizer' },
-    { name: 'Emergency Fund', icon: ShieldCheckIcon, href: '/calculators/emergency-fund', users: '10K+', desc: '6-month safety planning' }
-  ], []);
+  const { popularCalculators, loading: dataLoading } = useRealTimeData();
+  
+  // Memoized popular tools with real data
+  const popularTools = useMemo(() => {
+    if (dataLoading || !popularCalculators.length) {
+      return [
+        { name: 'SIP Calculator', icon: ChartBarIcon, href: '/calculators/sip', users: '1.2K+', desc: 'Plan systematic investments' },
+        { name: 'Home Loan EMI', icon: BuildingOfficeIcon, href: '/calculators/home-loan-emi', users: '950+', desc: 'Calculate monthly payments' },
+        { name: 'Budget Planner', icon: CalculatorIcon, href: '/calculators/budget-planner', users: '800+', desc: '50/30/20 rule budgeting' },
+        { name: 'FD Calculator', icon: CurrencyDollarIcon, href: '/calculators/fd', users: '750+', desc: 'Fixed deposit returns' },
+        { name: 'Tax Saver', icon: CheckCircleIcon, href: '/calculators/hra-exemption', users: '650+', desc: '80C deduction optimizer' },
+        { name: 'Emergency Fund', icon: ShieldCheckIcon, href: '/calculators/emergency-fund', users: '500+', desc: '6-month safety planning' }
+      ];
+    }
+    
+    return popularCalculators.slice(0, 6).map(calc => ({
+      name: calc.name,
+      icon: calc.name.includes('SIP') ? ChartBarIcon :
+            calc.name.includes('Home') ? BuildingOfficeIcon :
+            calc.name.includes('Budget') ? CalculatorIcon :
+            calc.name.includes('FD') ? CurrencyDollarIcon :
+            calc.name.includes('Tax') ? CheckCircleIcon : ShieldCheckIcon,
+      href: `/calculators/${calc.name.toLowerCase().replace(/\s+/g, '-')}`,
+      users: `${calc.uses}+`,
+      desc: calc.name.includes('SIP') ? 'Plan systematic investments' :
+            calc.name.includes('Home') ? 'Calculate monthly payments' :
+            calc.name.includes('Budget') ? '50/30/20 rule budgeting' :
+            calc.name.includes('FD') ? 'Fixed deposit returns' :
+            calc.name.includes('Tax') ? '80C deduction optimizer' : '6-month safety planning'
+    }));
+  }, [popularCalculators, dataLoading]);
 
   const successStories = useMemo(() => [
     { name: 'Priya S.', achievement: 'Built ₹5L emergency fund', time: '8 months', tool: 'Budget Planner' },
@@ -401,10 +425,10 @@ export default function Home() {
                 className="text-center lg:text-left"
               >
                 <div className="mb-6">
-                  <RealTimeStats className="mb-4" />
-                  <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                  <AnalyticsDashboard />
+                  <div className="mt-4 inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
                     <SparklesIcon className="w-5 h-5 mr-2" />
-                    <span className="text-sm font-medium">Real-time Analytics</span>
+                    <span className="text-sm font-medium">Live Analytics</span>
                   </div>
                 </div>
                 

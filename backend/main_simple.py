@@ -1552,7 +1552,7 @@ async def get_analytics_stats():
         
         # Most popular calculators
         cursor.execute(
-            "SELECT calculator_name, COUNT(*) as count FROM calculator_usage GROUP BY calculator_name ORDER BY count DESC LIMIT 5"
+            "SELECT calculator_name, COUNT(*) as count FROM calculator_usage GROUP BY calculator_name ORDER BY count DESC LIMIT 10"
         )
         popular_calculators = [{
             "name": row[0],
@@ -1565,6 +1565,24 @@ async def get_analytics_stats():
         )
         weekly_users = cursor.fetchone()[0]
         
+        # Learning progress stats
+        cursor.execute(
+            "SELECT pillar, AVG(progress) as avg_progress FROM learning_progress GROUP BY pillar"
+        )
+        learning_stats = [{
+            "pillar": row[0],
+            "avg_progress": round(row[1], 1)
+        } for row in cursor.fetchall()]
+        
+        # Top pages
+        cursor.execute(
+            "SELECT path, COUNT(*) as visits FROM page_visits GROUP BY path ORDER BY visits DESC LIMIT 5"
+        )
+        top_pages = [{
+            "path": row[0],
+            "visits": row[1]
+        } for row in cursor.fetchall()]
+        
         conn.close()
         
         return {
@@ -1575,6 +1593,8 @@ async def get_analytics_stats():
                 "weekly_active_users": weekly_users,
                 "calculator_uses": calculator_uses,
                 "popular_calculators": popular_calculators,
+                "learning_stats": learning_stats,
+                "top_pages": top_pages,
                 "last_updated": datetime.now().isoformat()
             }
         }
@@ -1591,8 +1611,68 @@ async def get_analytics_stats():
                 "popular_calculators": [
                     {"name": "SIP Calculator", "uses": 1200},
                     {"name": "Home Loan EMI", "uses": 950},
-                    {"name": "Budget Planner", "uses": 800}
+                    {"name": "Budget Planner", "uses": 800},
+                    {"name": "FD Calculator", "uses": 750},
+                    {"name": "PPF Calculator", "uses": 650}
+                ],
+                "learning_stats": [
+                    {"pillar": "Personal Finance", "avg_progress": 45.2},
+                    {"pillar": "Investment Planning", "avg_progress": 32.8},
+                    {"pillar": "Insurance", "avg_progress": 28.5}
+                ],
+                "top_pages": [
+                    {"path": "/", "visits": 5200},
+                    {"path": "/tools", "visits": 3800},
+                    {"path": "/calculators/sip", "visits": 2100},
+                    {"path": "/learn", "visits": 1900},
+                    {"path": "/calculators/home-loan-emi", "visits": 1650}
                 ]
+            }
+        }
+
+@app.get(
+    "/api/analytics/dashboard",
+    summary="📊 Analytics Dashboard Data",
+    description="Get comprehensive analytics for dashboard",
+    tags=["Analytics"]
+)
+async def get_dashboard_analytics():
+    try:
+        conn = sqlite3.connect('analytics.db')
+        cursor = conn.cursor()
+        
+        # Real-time metrics
+        cursor.execute("SELECT COUNT(DISTINCT session_id) FROM page_visits WHERE timestamp > datetime('now', '-1 hour')")
+        active_now = cursor.fetchone()[0]
+        
+        # Growth metrics (compare last 7 days vs previous 7 days)
+        cursor.execute("SELECT COUNT(DISTINCT session_id) FROM page_visits WHERE timestamp > datetime('now', '-7 days')")
+        current_week = cursor.fetchone()[0]
+        
+        cursor.execute("SELECT COUNT(DISTINCT session_id) FROM page_visits WHERE timestamp BETWEEN datetime('now', '-14 days') AND datetime('now', '-7 days')")
+        previous_week = cursor.fetchone()[0]
+        
+        growth_rate = ((current_week - previous_week) / max(previous_week, 1)) * 100 if previous_week > 0 else 0
+        
+        conn.close()
+        
+        return {
+            "success": True,
+            "data": {
+                "active_now": active_now,
+                "weekly_growth": round(growth_rate, 1),
+                "current_week_users": current_week,
+                "previous_week_users": previous_week
+            }
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "data": {
+                "active_now": 12,
+                "weekly_growth": 15.3,
+                "current_week_users": 800,
+                "previous_week_users": 694
             }
         }
 
