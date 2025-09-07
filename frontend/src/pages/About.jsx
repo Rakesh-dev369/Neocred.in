@@ -5,8 +5,8 @@ import { ROUTES } from '../utils/constants';
 export default function About() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   
-  // Fixed realistic stats
-  const stats = { users: 15247, tools: 29, lessons: 78 };
+  // Real platform stats
+  const stats = { tools: 29, lessons: 78 };
   
   // Auto scroll to top on page load
   useEffect(() => {
@@ -56,12 +56,8 @@ export default function About() {
             Empowering millions of Indians with financial literacy, one person at a time.
           </p>
           
-          {/* Impact Statistics */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <div className="glass-card text-center hover:scale-105 transition-all duration-300">
-              <div className="text-4xl font-bold text-blue-400 mb-2">{stats.users.toLocaleString()}+</div>
-              <div className="text-gray-600 dark:text-white/70">Users Educated</div>
-            </div>
+          {/* Platform Features */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <div className="glass-card text-center hover:scale-105 transition-all duration-300">
               <div className="text-4xl font-bold text-green-400 mb-2">{stats.tools}+</div>
               <div className="text-gray-600 dark:text-white/70">Financial Tools</div>
@@ -377,8 +373,8 @@ export default function About() {
                 </p>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="bg-blue-500/20 p-2 rounded">
-                    <div className="font-bold text-blue-400">15K+</div>
-                    <div className="text-gray-600 dark:text-gray-400">Users Impacted</div>
+                    <div className="font-bold text-blue-400">2025</div>
+                    <div className="text-gray-600 dark:text-gray-400">Founded</div>
                   </div>
                   <div className="bg-green-500/20 p-2 rounded">
                     <div className="font-bold text-green-400">29</div>
@@ -453,7 +449,7 @@ export default function About() {
                       </div>
                       <p className="text-gray-700 dark:text-gray-300 text-sm">Successfully launched NeoCred.in with 29 financial calculators, comprehensive learning modules, and AI-powered financial assistant</p>
                       <div className="flex items-center gap-4 mt-2 text-xs text-gray-600 dark:text-gray-400">
-                        <span>👥 15,247+ users</span>
+                        <span>🌟 Live Platform</span>
                         <span>🛠️ 29 tools</span>
                         <span>📚 78+ lessons</span>
                         <span>🤖 AI Assistant</span>
@@ -503,7 +499,7 @@ export default function About() {
                 🚀 Ready to Start Your <span className="text-green-400">Financial Journey</span>?
               </h3>
               <p className="text-xl text-gray-700 dark:text-gray-300 mb-8">
-                Join thousands of Indians who are already building their financial future with NeoCred.
+                Start building your financial future with NeoCred's comprehensive platform.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

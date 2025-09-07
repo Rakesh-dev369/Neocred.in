@@ -26,10 +26,7 @@ import {
   LightBulbIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
-import RealTimeStats from '../components/RealTimeStats';
 import { useAnalytics } from '../hooks/useAnalytics';
-import { useRealTimeData } from '../hooks/useRealTimeData';
-import AnalyticsDashboard from '../components/AnalyticsDashboard';
 
 // Goal selector component
 const GoalSelector = ({ onGoalSelect, selectedGoal }) => {
@@ -76,38 +73,16 @@ export default function Home() {
     // Simulate loading for better UX
     setTimeout(() => setIsLoading(false), 300);
   }, [selectedGoal]);
-
-  const { popularCalculators, loading: dataLoading } = useRealTimeData();
   
-  // Memoized popular tools with real data
-  const popularTools = useMemo(() => {
-    if (dataLoading || !popularCalculators.length) {
-      return [
-        { name: 'SIP Calculator', icon: ChartBarIcon, href: '/calculators/sip', users: '1.2K+', desc: 'Plan systematic investments' },
-        { name: 'Home Loan EMI', icon: BuildingOfficeIcon, href: '/calculators/home-loan-emi', users: '950+', desc: 'Calculate monthly payments' },
-        { name: 'Budget Planner', icon: CalculatorIcon, href: '/calculators/budget-planner', users: '800+', desc: '50/30/20 rule budgeting' },
-        { name: 'FD Calculator', icon: CurrencyDollarIcon, href: '/calculators/fd', users: '750+', desc: 'Fixed deposit returns' },
-        { name: 'Tax Saver', icon: CheckCircleIcon, href: '/calculators/hra-exemption', users: '650+', desc: '80C deduction optimizer' },
-        { name: 'Emergency Fund', icon: ShieldCheckIcon, href: '/calculators/emergency-fund', users: '500+', desc: '6-month safety planning' }
-      ];
-    }
-    
-    return popularCalculators.slice(0, 6).map(calc => ({
-      name: calc.name,
-      icon: calc.name.includes('SIP') ? ChartBarIcon :
-            calc.name.includes('Home') ? BuildingOfficeIcon :
-            calc.name.includes('Budget') ? CalculatorIcon :
-            calc.name.includes('FD') ? CurrencyDollarIcon :
-            calc.name.includes('Tax') ? CheckCircleIcon : ShieldCheckIcon,
-      href: `/calculators/${calc.name.toLowerCase().replace(/\s+/g, '-')}`,
-      users: `${calc.uses}+`,
-      desc: calc.name.includes('SIP') ? 'Plan systematic investments' :
-            calc.name.includes('Home') ? 'Calculate monthly payments' :
-            calc.name.includes('Budget') ? '50/30/20 rule budgeting' :
-            calc.name.includes('FD') ? 'Fixed deposit returns' :
-            calc.name.includes('Tax') ? '80C deduction optimizer' : '6-month safety planning'
-    }));
-  }, [popularCalculators, dataLoading]);
+  // Popular tools without fake user counts
+  const popularTools = useMemo(() => [
+    { name: 'SIP Calculator', icon: ChartBarIcon, href: '/calculators/sip', desc: 'Plan systematic investments' },
+    { name: 'Home Loan EMI', icon: BuildingOfficeIcon, href: '/calculators/home-loan-emi', desc: 'Calculate monthly payments' },
+    { name: 'Budget Planner', icon: CalculatorIcon, href: '/calculators/budget-planner', desc: '50/30/20 rule budgeting' },
+    { name: 'FD Calculator', icon: CurrencyDollarIcon, href: '/calculators/fd', desc: 'Fixed deposit returns' },
+    { name: 'Tax Saver', icon: CheckCircleIcon, href: '/calculators/hra-exemption', desc: '80C deduction optimizer' },
+    { name: 'Emergency Fund', icon: ShieldCheckIcon, href: '/calculators/emergency-fund', desc: '6-month safety planning' }
+  ], []);
 
   const successStories = useMemo(() => [
     { name: 'Priya S.', achievement: 'Built ₹5L emergency fund', time: '8 months', tool: 'Budget Planner' },
@@ -185,7 +160,7 @@ export default function Home() {
     <>
       <SEOHead 
         title="NeoCred - India's #1 AI-Powered Financial Platform | 29+ Calculators & Tools"
-        description="Join 50,000+ Indians building wealth with NeoCred's GPT-4 AI assistant, 29+ financial calculators, 8 learning pillars & real-time news. Free SIP, EMI, Budget, Tax planning tools. Start your financial journey today!"
+        description="Master your finances with NeoCred's GPT-4 AI assistant, 29+ financial calculators, 8 learning pillars & real-time news. Free SIP, EMI, Budget, Tax planning tools. Start your financial journey today!"
         keywords="NeoCred, financial calculator India, SIP calculator, EMI calculator, budget planner, tax calculator, investment planning, AI financial advisor, GPT-4 fintech, mutual fund calculator, home loan EMI, personal finance India, financial literacy, wealth building, retirement planning, insurance calculator, FD calculator, PPF calculator, financial news India, RBI updates, stock market news, financial education, money management, Indian fintech, free financial tools"
         canonicalUrl="/"
         structuredData={{
@@ -221,13 +196,7 @@ export default function Home() {
               "price": "0",
               "priceCurrency": "INR"
             },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.8",
-              "ratingCount": "50000",
-              "bestRating": "5",
-              "worstRating": "1"
-            },
+
             "featureList": [
               "29+ Financial Calculators",
               "AI-Powered Financial Assistant",
@@ -425,10 +394,9 @@ export default function Home() {
                 className="text-center lg:text-left"
               >
                 <div className="mb-6">
-                  <AnalyticsDashboard />
-                  <div className="mt-4 inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                  <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
                     <SparklesIcon className="w-5 h-5 mr-2" />
-                    <span className="text-sm font-medium">Live Analytics</span>
+                    <span className="text-sm font-medium">AI-Powered Platform</span>
                   </div>
                 </div>
                 
@@ -837,13 +805,9 @@ export default function Home() {
                       to={tool.href}
                       className="group block bg-white dark:bg-gray-800 rounded-xl p-4 shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
                     >
-                      <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center mb-3">
                         <div className="p-2 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
                           <tool.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                        </div>
-                        <div className="text-right">
-                          <div className="text-xs font-medium text-gray-900 dark:text-white">{tool.users}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">users</div>
                         </div>
                       </div>
                       
@@ -932,7 +896,7 @@ export default function Home() {
                 Ready to Master Your Money?
               </h2>
               <p className="text-xl text-blue-100 mb-10 leading-relaxed">
-                Join thousands of Indians who've transformed their financial lives with NeoCred's AI-powered platform.
+                Transform your financial life with NeoCred's comprehensive AI-powered platform.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">

@@ -22,8 +22,6 @@ import PillarsGrid from '../components/learn/PillarsGrid';
 import { PILLAR_DATA, POPULAR_TOPICS } from '../data/learningData';
 import { safeJSONParse, safeJSONStringify, debounce } from '../utils/storageUtils';
 import { useAnalytics } from '../hooks/useAnalytics';
-import RealTimeStats from '../components/RealTimeStats';
-import { useRealTimeData } from '../hooks/useRealTimeData';
 import LearningProgressTracker from '../components/LearningProgressTracker';
 
 
@@ -37,7 +35,6 @@ const Learn = () => {
   const [completedPillars, setCompletedPillars] = useState(new Set());
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { trackLearningProgress, trackFeatureUse } = useAnalytics();
-  const { totalUsers, calculatorUses } = useRealTimeData();
   
   // Optimized localStorage loading with safe parsing
   useEffect(() => {
@@ -328,15 +325,7 @@ const Learn = () => {
             Learn personal finance, investments, banking, insurance, and more with NeoCred's comprehensive guided journey.
           </motion.p>
           
-          {/* Real-time Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mb-8"
-          >
-            <RealTimeStats className="max-w-4xl mx-auto" />
-          </motion.div>
+
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}

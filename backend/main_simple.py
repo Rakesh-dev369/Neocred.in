@@ -13,7 +13,6 @@ import sqlite3
 import json
 import hashlib
 from collections import defaultdict
-# from news_routes import router as news_router
 
 load_dotenv()
 
@@ -22,7 +21,6 @@ def init_analytics_db():
     conn = sqlite3.connect('analytics.db')
     cursor = conn.cursor()
     
-    # Create analytics tables
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS page_visits (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,6 +67,104 @@ def init_analytics_db():
 # Initialize database on startup
 init_analytics_db()
 
+# RSS Feed URLs for Indian Financial News
+RSS_FEEDS = [
+    {'name': 'Economic Times', 'url': 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms'},
+    {'name': 'Business Standard', 'url': 'https://www.business-standard.com/rss/markets-106.rss'},
+    {'name': 'Moneycontrol', 'url': 'https://www.moneycontrol.com/rss/business.xml'},
+    {'name': 'LiveMint', 'url': 'https://www.livemint.com/rss/money'},
+    {'name': 'Financial Express', 'url': 'https://www.financialexpress.com/market/rss'},
+    {'name': 'NDTV Profit', 'url': 'https://www.ndtv.com/business/rss'},
+    {'name': 'Times of India Business', 'url': 'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'}
+]
+
+# Cache for RSS news
+news_cache = {
+    'articles': [],
+    'last_updated': None,
+    'cache_duration': 1800  # 30 minutes
+}
+
+def fetch_rss_news():
+    """Fetch news from RSS feeds with caching"""
+    now = datetime.now()
+    if (news_cache['last_updated'] and 
+        news_cache['articles'] and 
+        (now - news_cache['last_updated']).seconds < news_cache['cache_duration']):
+        return news_cache['articles']
+    
+    all_articles = []
+    priority_feeds = [
+        {'name': 'Economic Times', 'url': 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms'},
+        {'name': 'LiveMint', 'url': 'https://www.livemint.com/rss/money'},
+        {'name': 'Times of India Business', 'url': 'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'}
+    ]
+    
+    import concurrent.futures
+    
+    def fetch_single_feed(feed_info):
+        articles = []
+        try:
+            feed = feedparser.parse(feed_info['url'])
+            
+            if hasattr(feed, 'entries') and feed.entries:
+                for entry in feed.entries[:8]:
+                    try:
+                        published = datetime.now().isoformat()
+                        if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                            try:
+                                published = datetime(*entry.published_parsed[:6]).isoformat()
+                            except:
+                                pass
+                        
+                        summary = getattr(entry, 'summary', getattr(entry, 'description', 'No summary available'))
+                        if summary:
+                            import re
+                            summary = re.sub(r'<[^>]+>', '', summary)[:300] + '...'
+                        
+                        title = re.sub(r'<[^>]+>', '', str(getattr(entry, 'title', 'No Title'))).strip()
+                        link = getattr(entry, 'link', '#')
+                        
+                        if title and title != 'No Title':
+                            articles.append({
+                                'title': str(title),
+                                'summary': str(summary),
+                                'link': str(link),
+                                'published': str(published),
+                                'source': str(feed_info['name']),
+                                'tags': ['Finance', 'Markets', 'Business']
+                            })
+                    except:
+                        continue
+        except Exception as e:
+            print(f"Error fetching {feed_info['name']}: {e}")
+        
+        return articles
+    
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+            future_to_feed = {executor.submit(fetch_single_feed, feed): feed for feed in priority_feeds}
+            
+            for future in concurrent.futures.as_completed(future_to_feed, timeout=10):
+                try:
+                    articles = future.result(timeout=5)
+                    all_articles.extend(articles)
+                except:
+                    continue
+    except:
+        pass
+    
+    if all_articles:
+        all_articles.sort(key=lambda x: x['published'], reverse=True)
+        news_cache['articles'] = all_articles[:30]
+        news_cache['last_updated'] = now
+        return all_articles[:30]
+    
+    if news_cache['articles']:
+        return news_cache['articles']
+    
+    return []
+
 app = FastAPI(
     title="NeoCred FinBot API",
     version="2.0.0",
@@ -110,121 +206,14 @@ async def add_security_headers(request, call_next):
 # Include news routes
 # app.include_router(news_router)
 
-# OpenAI client
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# OpenAI client with error handling
+try:
+    client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+except Exception as e:
+    print(f"OpenAI client initialization error: {e}")
+    client = None
 
-# RSS Feed URLs for Indian Financial News
-RSS_FEEDS = [
-    {'name': 'Economic Times', 'url': 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms'},
-    {'name': 'Business Standard', 'url': 'https://www.business-standard.com/rss/markets-106.rss'},
-    {'name': 'Moneycontrol', 'url': 'https://www.moneycontrol.com/rss/business.xml'},
-    {'name': 'LiveMint', 'url': 'https://www.livemint.com/rss/money'},
-    {'name': 'Financial Express', 'url': 'https://www.financialexpress.com/market/rss'},
-    {'name': 'NDTV Profit', 'url': 'https://www.ndtv.com/business/rss'},
-    {'name': 'Times of India Business', 'url': 'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'}
-]
 
-# Cache for RSS news - longer cache to save API credits
-news_cache = {
-    'articles': [],
-    'last_updated': None,
-    'cache_duration': 1800  # 30 minutes
-}
-
-def fetch_rss_news():
-    """Fetch news from RSS feeds with caching"""
-    # Check cache first
-    now = datetime.now()
-    if (news_cache['last_updated'] and 
-        news_cache['articles'] and 
-        (now - news_cache['last_updated']).seconds < news_cache['cache_duration']):
-        print(f"Returning cached news: {len(news_cache['articles'])} articles")
-        return news_cache['articles']
-    
-    print("Fetching fresh news from RSS feeds...")
-    all_articles = []
-    
-    # Use only the fastest, most reliable feeds
-    priority_feeds = [
-        {'name': 'Economic Times', 'url': 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms'},
-        {'name': 'LiveMint', 'url': 'https://www.livemint.com/rss/money'},
-        {'name': 'Times of India Business', 'url': 'https://timesofindia.indiatimes.com/rssfeeds/1898055.cms'}
-    ]
-    
-    import concurrent.futures
-    import socket
-    
-    def fetch_single_feed(feed_info):
-        """Fetch articles from a single RSS feed"""
-        articles = []
-        try:
-            socket.setdefaulttimeout(5)  # 5 second timeout per feed
-            feed = feedparser.parse(feed_info['url'])
-            
-            if hasattr(feed, 'entries') and feed.entries:
-                for entry in feed.entries[:8]:  # Get top 8 from each feed
-                    try:
-                        # Quick processing
-                        published = datetime.now().isoformat()
-                        if hasattr(entry, 'published_parsed') and entry.published_parsed:
-                            try:
-                                published = datetime(*entry.published_parsed[:6]).isoformat()
-                            except:
-                                pass
-                        
-                        # Clean summary quickly
-                        summary = getattr(entry, 'summary', getattr(entry, 'description', 'No summary available'))
-                        if summary:
-                            import re
-                            summary = re.sub(r'<[^>]+>', '', summary)[:300] + '...'
-                        
-                        title = re.sub(r'<[^>]+>', '', str(getattr(entry, 'title', 'No Title'))).strip()
-                        link = getattr(entry, 'link', '#')
-                        
-                        if title and title != 'No Title':
-                            articles.append({
-                                'title': str(title),
-                                'summary': str(summary),
-                                'link': str(link),
-                                'published': str(published),
-                                'source': str(feed_info['name']),
-                                'tags': ['Finance', 'Markets', 'Business']
-                            })
-                    except:
-                        continue
-        except Exception as e:
-            print(f"Error fetching {feed_info['name']}: {e}")
-        
-        return articles
-    
-    # Fetch feeds in parallel with timeout
-    try:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
-            future_to_feed = {executor.submit(fetch_single_feed, feed): feed for feed in priority_feeds}
-            
-            for future in concurrent.futures.as_completed(future_to_feed, timeout=10):
-                try:
-                    articles = future.result(timeout=5)
-                    all_articles.extend(articles)
-                except:
-                    continue
-    except:
-        pass
-    
-    # Sort and cache
-    if all_articles:
-        all_articles.sort(key=lambda x: x['published'], reverse=True)
-        news_cache['articles'] = all_articles[:30]  # Keep top 30
-        news_cache['last_updated'] = now
-        print(f"Cached {len(all_articles)} fresh articles")
-        return all_articles[:30]
-    
-    # Return cached articles if fresh fetch failed
-    if news_cache['articles']:
-        print("Fresh fetch failed, returning cached articles")
-        return news_cache['articles']
-    
-    return []
 
 class ChatRequest(BaseModel):
     message: str = Field(..., description="User's financial question", example="How to start SIP investment?")
@@ -1334,7 +1323,6 @@ async def get_all_calculators():
 )
 async def get_news(page: int = 1, limit: int = 20, q: str = None):
     try:
-        # Fetch cached RSS news (fast)
         articles = fetch_rss_news()
         
         if not articles:
@@ -1352,11 +1340,9 @@ async def get_news(page: int = 1, limit: int = 20, q: str = None):
                 }
             }
         
-        # Filter by search query if provided
         if q:
             articles = [article for article in articles if q.lower() in article['title'].lower() or q.lower() in article['summary'].lower()]
         
-        # Pagination
         total_items = len(articles)
         start_idx = (page - 1) * limit
         end_idx = start_idx + limit
@@ -1390,7 +1376,7 @@ async def get_news(page: int = 1, limit: int = 20, q: str = None):
             }
         }
 
-# Cache for digest - longer cache to save API credits
+# Cache for digest
 digest_cache = {
     'data': None,
     'last_updated': None,
@@ -1405,14 +1391,12 @@ digest_cache = {
 )
 async def get_digest():
     try:
-        # Check cache first
         now = datetime.now()
         if (digest_cache['last_updated'] and 
             digest_cache['data'] and 
             (now - digest_cache['last_updated']).seconds < digest_cache['cache_duration']):
             return digest_cache['data']
         
-        # Get latest news from RSS feeds (fast cached version)
         articles = fetch_rss_news()
         
         if not articles:
@@ -1421,10 +1405,9 @@ async def get_digest():
                 "error": "No articles available"
             }
         
-        top_articles = articles[:6]  # Get top 6 articles for faster processing
+        top_articles = articles[:6]
         highlights = [article['title'][:80] + "..." if len(article['title']) > 80 else article['title'] for article in top_articles[:4]]
         
-        # Quick digest without AI for faster response
         digest_data = {
             "success": True,
             "date": now.strftime("%Y-%m-%d"),
@@ -1438,7 +1421,6 @@ async def get_digest():
             }
         }
         
-        # Cache the result
         digest_cache['data'] = digest_data
         digest_cache['last_updated'] = now
         
@@ -1536,21 +1518,17 @@ async def get_analytics_stats():
         conn = sqlite3.connect('analytics.db')
         cursor = conn.cursor()
         
-        # Total page views
         cursor.execute("SELECT COUNT(*) FROM page_visits")
         total_views = cursor.fetchone()[0]
         
-        # Unique sessions (last 30 days)
         cursor.execute(
             "SELECT COUNT(DISTINCT session_id) FROM page_visits WHERE timestamp > datetime('now', '-30 days')"
         )
         monthly_users = cursor.fetchone()[0]
         
-        # Calculator usage
         cursor.execute("SELECT COUNT(*) FROM calculator_usage")
         calculator_uses = cursor.fetchone()[0]
         
-        # Most popular calculators
         cursor.execute(
             "SELECT calculator_name, COUNT(*) as count FROM calculator_usage GROUP BY calculator_name ORDER BY count DESC LIMIT 10"
         )
@@ -1559,29 +1537,10 @@ async def get_analytics_stats():
             "uses": row[1]
         } for row in cursor.fetchall()]
         
-        # Daily active users (last 7 days)
         cursor.execute(
             "SELECT COUNT(DISTINCT session_id) FROM page_visits WHERE timestamp > datetime('now', '-7 days')"
         )
         weekly_users = cursor.fetchone()[0]
-        
-        # Learning progress stats
-        cursor.execute(
-            "SELECT pillar, AVG(progress) as avg_progress FROM learning_progress GROUP BY pillar"
-        )
-        learning_stats = [{
-            "pillar": row[0],
-            "avg_progress": round(row[1], 1)
-        } for row in cursor.fetchall()]
-        
-        # Top pages
-        cursor.execute(
-            "SELECT path, COUNT(*) as visits FROM page_visits GROUP BY path ORDER BY visits DESC LIMIT 5"
-        )
-        top_pages = [{
-            "path": row[0],
-            "visits": row[1]
-        } for row in cursor.fetchall()]
         
         conn.close()
         
@@ -1593,8 +1552,6 @@ async def get_analytics_stats():
                 "weekly_active_users": weekly_users,
                 "calculator_uses": calculator_uses,
                 "popular_calculators": popular_calculators,
-                "learning_stats": learning_stats,
-                "top_pages": top_pages,
                 "last_updated": datetime.now().isoformat()
             }
         }
@@ -1611,21 +1568,7 @@ async def get_analytics_stats():
                 "popular_calculators": [
                     {"name": "SIP Calculator", "uses": 1200},
                     {"name": "Home Loan EMI", "uses": 950},
-                    {"name": "Budget Planner", "uses": 800},
-                    {"name": "FD Calculator", "uses": 750},
-                    {"name": "PPF Calculator", "uses": 650}
-                ],
-                "learning_stats": [
-                    {"pillar": "Personal Finance", "avg_progress": 45.2},
-                    {"pillar": "Investment Planning", "avg_progress": 32.8},
-                    {"pillar": "Insurance", "avg_progress": 28.5}
-                ],
-                "top_pages": [
-                    {"path": "/", "visits": 5200},
-                    {"path": "/tools", "visits": 3800},
-                    {"path": "/calculators/sip", "visits": 2100},
-                    {"path": "/learn", "visits": 1900},
-                    {"path": "/calculators/home-loan-emi", "visits": 1650}
+                    {"name": "Budget Planner", "uses": 800}
                 ]
             }
         }
@@ -1641,11 +1584,9 @@ async def get_dashboard_analytics():
         conn = sqlite3.connect('analytics.db')
         cursor = conn.cursor()
         
-        # Real-time metrics
         cursor.execute("SELECT COUNT(DISTINCT session_id) FROM page_visits WHERE timestamp > datetime('now', '-1 hour')")
         active_now = cursor.fetchone()[0]
         
-        # Growth metrics (compare last 7 days vs previous 7 days)
         cursor.execute("SELECT COUNT(DISTINCT session_id) FROM page_visits WHERE timestamp > datetime('now', '-7 days')")
         current_week = cursor.fetchone()[0]
         
@@ -1683,7 +1624,6 @@ async def get_dashboard_analytics():
     tags=["News"]
 )
 async def generate_news_summary(request: NewsSummaryRequest):
-    # Validate CSRF protection headers
     try:
         title = request.title
         content = request.content
@@ -1691,7 +1631,7 @@ async def generate_news_summary(request: NewsSummaryRequest):
         if not title or not content:
             return {"success": False, "error": "Title and content required"}
         
-        if os.getenv("OPENAI_API_KEY"):
+        if client and os.getenv("OPENAI_API_KEY"):
             try:
                 response = client.chat.completions.create(
                     model="gpt-4-turbo-preview",
@@ -1723,7 +1663,6 @@ async def generate_news_summary(request: NewsSummaryRequest):
                     "summary": f"Key insights: {content[:200]}... This article discusses important financial developments that may impact market sentiment and investment decisions."
                 }
         
-        # Fallback summary
         return {
             "success": True,
             "summary": f"Summary: {content[:150]}... This financial news may have implications for investors and market participants."
