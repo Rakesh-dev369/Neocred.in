@@ -26,6 +26,8 @@ import {
   LightBulbIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
+import RealTimeStats from '../components/RealTimeStats';
+import { useAnalytics } from '../hooks/useAnalytics';
 
 // Goal selector component
 const GoalSelector = ({ onGoalSelect, selectedGoal }) => {
@@ -58,6 +60,7 @@ const GoalSelector = ({ onGoalSelect, selectedGoal }) => {
 export default function Home() {
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { trackFeatureUse } = useAnalytics();
 
   const handleGoalSelect = useCallback((goalId) => {
     if (selectedGoal === goalId) {
@@ -397,9 +400,12 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 className="text-center lg:text-left"
               >
-                <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6">
-                  <SparklesIcon className="w-5 h-5 mr-2" />
-                  <span className="text-sm font-medium">Trusted by 50,000+ Indians</span>
+                <div className="mb-6">
+                  <RealTimeStats className="mb-4" />
+                  <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full">
+                    <SparklesIcon className="w-5 h-5 mr-2" />
+                    <span className="text-sm font-medium">Real-time Analytics</span>
+                  </div>
                 </div>
                 
                 <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight" itemProp="headline">
@@ -902,7 +908,7 @@ export default function Home() {
                 Ready to Master Your Money?
               </h2>
               <p className="text-xl text-blue-100 mb-10 leading-relaxed">
-                Join 50,000+ Indians who've transformed their financial lives with NeoCred's AI-powered platform.
+                Join thousands of Indians who've transformed their financial lives with NeoCred's AI-powered platform.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
@@ -925,16 +931,16 @@ export default function Home() {
               
               <div className="flex items-center justify-center space-x-8 text-sm text-blue-200">
                 <div className="flex items-center">
-                  <UserGroupIcon className="w-4 h-4 mr-2" />
-                  <span>50,000+ Users</span>
-                </div>
-                <div className="flex items-center">
                   <CalculatorIcon className="w-4 h-4 mr-2" />
                   <span>29+ Tools</span>
                 </div>
                 <div className="flex items-center">
                   <CheckCircleIcon className="w-4 h-4 mr-2" />
                   <span>100% Free</span>
+                </div>
+                <div className="flex items-center">
+                  <SparklesIcon className="w-4 h-4 mr-2" />
+                  <span>AI Powered</span>
                 </div>
               </div>
             </motion.div>

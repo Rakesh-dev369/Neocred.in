@@ -21,6 +21,8 @@ import AnimatedBackground from '../components/AnimatedBackground';
 import PillarsGrid from '../components/learn/PillarsGrid';
 import { PILLAR_DATA, POPULAR_TOPICS } from '../data/learningData';
 import { safeJSONParse, safeJSONStringify, debounce } from '../utils/storageUtils';
+import { useAnalytics } from '../hooks/useAnalytics';
+import RealTimeStats from '../components/RealTimeStats';
 
 
 const Learn = () => {
@@ -32,6 +34,7 @@ const Learn = () => {
   const [userLevel, setUserLevel] = useState('Beginner');
   const [completedPillars, setCompletedPillars] = useState(new Set());
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const { trackLearningProgress, trackFeatureUse } = useAnalytics();
   
   // Optimized localStorage loading with safe parsing
   useEffect(() => {
@@ -140,7 +143,11 @@ const Learn = () => {
       lastAccessed: new Date().toISOString()
     };
     safeJSONStringify('pillarActivity', pillarActivity);
-  }, []);
+    
+    // Track learning progress with analytics
+    trackLearningProgress(pillar.title, 10); // 10% progress for starting
+    trackFeatureUse(`learning_pillar_${pillar.id}`);
+  }, [trackLearningProgress, trackFeatureUse]);
 
   const getRecommendedPillars = () => {
     return pillars.filter(pillar => pillar.recommended).slice(0, 3);
@@ -248,12 +255,7 @@ const Learn = () => {
 
   const weeklyTips = getCurrentWeekTips();
 
-  const stats = [
-    { label: "Active Learners", value: "50K+", icon: UserGroupIcon },
-    { label: "Completion Rate", value: "94%", icon: CheckCircleIcon },
-    { label: "Avg. Rating", value: "4.9", icon: StarIcon },
-    { label: "Total Lessons", value: "85+", icon: BookOpenIcon }
-  ];
+  // Remove hardcoded stats - will use RealTimeStats component instead
 
   return (
     <>
@@ -323,22 +325,14 @@ const Learn = () => {
             Learn personal finance, investments, banking, insurance, and more with NeoCred's comprehensive guided journey.
           </motion.p>
           
-          {/* Stats Row */}
+          {/* Real-time Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8"
+            className="mb-8"
           >
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="flex justify-center mb-1">
-                  <stat.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                </div>
-                <div className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">{stat.label}</div>
-              </div>
-            ))}
+            <RealTimeStats className="max-w-4xl mx-auto" />
           </motion.div>
           
           <motion.div
