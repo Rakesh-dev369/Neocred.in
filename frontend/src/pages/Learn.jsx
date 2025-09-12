@@ -14,7 +14,9 @@ import {
   UserGroupIcon,
   StarIcon,
   LightBulbIcon,
-  FireIcon
+  FireIcon,
+  ShareIcon,
+  LinkIcon
 } from '@heroicons/react/24/outline';
 import SEOHead from '../components/SEO/SEOHead';
 import AnimatedBackground from '../components/AnimatedBackground';
@@ -23,6 +25,7 @@ import { PILLAR_DATA, POPULAR_TOPICS } from '../data/learningData';
 import { safeJSONParse, safeJSONStringify, debounce } from '../utils/storageUtils';
 import { useAnalytics } from '../hooks/useAnalytics';
 import LearningProgressTracker from '../components/LearningProgressTracker';
+import { StatCard, CountingNumber, HeartButton, ShareButton, CopyButton } from '../components/ui';
 
 
 const Learn = () => {
@@ -378,32 +381,139 @@ const Learn = () => {
               Master every aspect of personal finance with our comprehensive learning path
             </p>
             
-            {/* Learning Path Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{pillars.filter(p => p.progress > 0).length}/8</div>
+            {/* Compact Learning Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto mb-10">
+              <div className="text-center p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm">
+                <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                  <CountingNumber value={pillars.filter(p => p.progress > 0).length} animate={true} />/8
+                </div>
                 <div className="text-xs text-gray-600 dark:text-gray-400">Started</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600 dark:text-green-400">{completedPillars.size}</div>
+              <div className="text-center p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm">
+                <div className="text-lg font-bold text-green-600 dark:text-green-400">
+                  <CountingNumber value={completedPillars.size} animate={true} />
+                </div>
                 <div className="text-xs text-gray-600 dark:text-gray-400">Completed</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{Math.round(pillars.reduce((acc, p) => acc + p.progress, 0) / 8)}%</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">Overall Progress</div>
+              <div className="text-center p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm">
+                <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                  <CountingNumber value={Math.round(pillars.reduce((acc, p) => acc + p.progress, 0) / 8)} suffix="%" animate={true} />
+                </div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Progress</div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{userLevel}</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">Your Level</div>
+              <div className="text-center p-3 bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm">
+                <div className="text-lg font-bold text-orange-600 dark:text-orange-400">
+                  {userLevel}
+                </div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Level</div>
               </div>
             </div>
             
-            {/* Next Recommended Pillar */}
-            {getNextPillar() && (
-              <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-medium">
-                <SparklesIcon className="w-4 h-4 mr-2" />
-                Next: {getNextPillar().title}
+            {/* Learning Path Progression Visualization */}
+            <motion.div 
+              className="max-w-4xl mx-auto mb-8"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="relative">
+                {/* Progress line */}
+                <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700 rounded-full transform -translate-y-1/2" />
+                <motion.div 
+                  className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transform -translate-y-1/2"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${Math.round(pillars.reduce((acc, p) => acc + p.progress, 0) / 8)}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 2, ease: "easeOut", delay: 0.7 }}
+                />
+                
+                {/* Progress percentage display */}
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-white dark:bg-gray-800 px-3 py-1 rounded-full shadow-lg border border-gray-200 dark:border-gray-700">
+                    <CountingNumber 
+                      value={Math.round(pillars.reduce((acc, p) => acc + p.progress, 0) / 8)}
+                      suffix="%"
+                      className="text-sm font-bold text-blue-600 dark:text-blue-400"
+                      animate={true}
+                    />
+                  </div>
+                </div>
+                
+                {/* Step indicators */}
+                <div className="flex justify-between items-center relative">
+                  {[1, 2, 3, 4, 5].map((step, index) => {
+                    const isCompleted = Math.round(pillars.reduce((acc, p) => acc + p.progress, 0) / 8) >= step * 20;
+                    const isActive = Math.round(pillars.reduce((acc, p) => acc + p.progress, 0) / 8) >= (step - 1) * 20 && Math.round(pillars.reduce((acc, p) => acc + p.progress, 0) / 8) < step * 20;
+                    
+                    return (
+                      <motion.div
+                        key={step}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold relative z-10 ${
+                          isCompleted 
+                            ? 'bg-green-500 text-white' 
+                            : isActive 
+                            ? 'bg-blue-500 text-white animate-pulse'
+                            : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-400'
+                        }`}
+                        initial={{ scale: 0, rotate: -180 }}
+                        whileInView={{ scale: 1, rotate: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.8 + index * 0.1, type: "spring", stiffness: 300 }}
+                        whileHover={{ scale: 1.2 }}
+                      >
+                        {isCompleted ? '✓' : step}
+                        
+                        {/* Achievement burst animation */}
+                        {isCompleted && (
+                          <motion.div
+                            className="absolute inset-0 rounded-full bg-green-400"
+                            initial={{ scale: 1, opacity: 0.8 }}
+                            animate={{ 
+                              scale: [1, 1.5, 1],
+                              opacity: [0.8, 0, 0.8]
+                            }}
+                            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                          />
+                        )}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+                
+                {/* Step labels */}
+                <div className="flex justify-between mt-3 text-xs text-gray-600 dark:text-gray-400">
+                  <span>Start</span>
+                  <span>25%</span>
+                  <span>50%</span>
+                  <span>75%</span>
+                  <span>Master</span>
+                </div>
               </div>
+            </motion.div>
+            
+            {/* Enhanced Next Recommended Pillar */}
+            {getNextPillar() && (
+              <motion.div 
+                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 text-green-800 dark:text-green-200 rounded-full text-sm font-medium"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1 }}
+                animate={{
+                  scale: [1, 1.05, 1],
+                  boxShadow: ['0 0 0 0 rgba(34, 197, 94, 0.4)', '0 0 0 4px rgba(34, 197, 94, 0)', '0 0 0 0 rgba(34, 197, 94, 0)']
+                }}
+                whileHover={{ scale: 1.1 }}
+              >
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                >
+                  <SparklesIcon className="w-4 h-4 mr-2" />
+                </motion.div>
+                Next: {getNextPillar().title}
+              </motion.div>
             )}
           </motion.div>
           
@@ -414,7 +524,7 @@ const Learn = () => {
             setHoveredPillar={setHoveredPillar}
           />
           
-          {/* Learning Path Recommendations */}
+          {/* Enhanced Learning Path Recommendations */}
           {getRecommendedPillars().length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -422,20 +532,56 @@ const Learn = () => {
               viewport={{ once: true }}
               className="mt-16 text-center"
             >
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <motion.h3 
+                className="text-2xl font-bold text-gray-900 dark:text-white mb-6"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
                 🎯 Recommended for You
-              </h3>
+              </motion.h3>
               <div className="flex flex-wrap justify-center gap-4">
-                {getRecommendedPillars().map((pillar) => (
-                  <Link
+                {getRecommendedPillars().map((pillar, index) => (
+                  <motion.div
                     key={pillar.id}
-                    to={pillar.path}
-                    onClick={() => startPillarLearning(pillar)}
-                    className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + index * 0.1, type: "spring", stiffness: 200 }}
+                    whileHover={{ scale: 1.05, y: -5 }}
                   >
-                    {pillar.icon} {pillar.title}
-                    <ArrowRightIcon className="w-4 h-4 ml-2" />
-                  </Link>
+                    <Link
+                      to={pillar.path}
+                      onClick={() => startPillarLearning(pillar)}
+                      className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden"
+                    >
+                      {/* Shimmer effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                        animate={{
+                          x: ['-100%', '100%'],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatDelay: 3,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      <span className="relative z-10 flex items-center">
+                        <motion.span
+                          animate={{ rotate: [0, 10, -10, 0] }}
+                          transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
+                          className="mr-2"
+                        >
+                          {pillar.icon}
+                        </motion.span>
+                        {pillar.title}
+                        <ArrowRightIcon className="w-4 h-4 ml-2" />
+                      </span>
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -598,11 +744,45 @@ const Learn = () => {
                 <Link 
                   to={topic.path}
                   onClick={() => markAsRead(topic.id)}
-                  className="block bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:-translate-y-1 h-full"
+                  className="block bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:-translate-y-1 h-full relative overflow-hidden"
                 >
-                  <div className="flex items-start justify-between mb-4">
+                  {/* Reading Progress Indicator */}
+                  {readTopics.has(topic.id) && (
+                    <motion.div
+                      className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-emerald-500"
+                      initial={{ width: 0 }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: 1, ease: "easeOut" }}
+                    />
+                  )}
+                  
+                  {/* Reading status indicator */}
+                  <motion.div 
+                    className={`absolute top-4 left-4 w-3 h-3 rounded-full ${
+                      readTopics.has(topic.id) 
+                        ? 'bg-green-500' 
+                        : bookmarkedTopics.has(topic.id)
+                        ? 'bg-yellow-500'
+                        : 'bg-gray-300 dark:bg-gray-600'
+                    }`}
+                    animate={readTopics.has(topic.id) ? {
+                      scale: [1, 1.2, 1],
+                      boxShadow: ['0 0 0 0 rgba(34, 197, 94, 0.4)', '0 0 0 4px rgba(34, 197, 94, 0)', '0 0 0 0 rgba(34, 197, 94, 0)']
+                    } : {}}
+                    transition={{ duration: 2, repeat: readTopics.has(topic.id) ? Infinity : 0 }}
+                  />
+                  <div className="flex items-start justify-between mb-4 pl-6">
                     <div className="flex items-center space-x-3">
-                      <div className="text-3xl">{topic.icon}</div>
+                      <motion.div 
+                        className="text-3xl"
+                        whileHover={{ 
+                          scale: 1.1,
+                          rotate: [0, -5, 5, 0],
+                          transition: { duration: 0.3 }
+                        }}
+                      >
+                        {topic.icon}
+                      </motion.div>
                       <div className="flex flex-wrap gap-2">
                         {topic.badge && (
                           <span className={`px-2 py-1 text-xs font-medium rounded-full ${
@@ -623,24 +803,50 @@ const Learn = () => {
                         )}
                       </div>
                     </div>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleBookmark(topic.id);
-                      }}
-                      className={`p-2 rounded-full transition-colors ${
-                        bookmarkedTopics.has(topic.id)
-                          ? 'text-yellow-500 bg-yellow-100 dark:bg-yellow-900/30'
-                          : 'text-gray-400 hover:text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20'
-                      }`}
-                    >
-                      {bookmarkedTopics.has(topic.id) ? '⭐' : '☆'}
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <HeartButton
+                        isLiked={bookmarkedTopics.has(topic.id)}
+                        onToggle={(liked) => {
+                          if (liked) {
+                            toggleBookmark(topic.id);
+                          } else {
+                            toggleBookmark(topic.id);
+                          }
+                        }}
+                        size="sm"
+                        className="opacity-70 hover:opacity-100"
+                      />
+                      <ShareButton
+                        onShare={() => navigator.share({ title: topic.title, url: `${window.location.origin}${topic.path}` })}
+                        icon={<ShareIcon className="w-3 h-3" />}
+                        className="p-1 text-xs opacity-70 hover:opacity-100 rounded"
+                      />
+                      <CopyButton
+                        textToCopy={`${window.location.origin}${topic.path}`}
+                        className="p-1 text-xs opacity-70 hover:opacity-100 rounded"
+                      >
+                        <LinkIcon className="w-3 h-3" />
+                      </CopyButton>
+                    </div>
                   </div>
                   
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight">
+                  <motion.h3 
+                    className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {readTopics.has(topic.id) && (
+                      <motion.span
+                        className="inline-block mr-2 text-green-500"
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                      >
+                        ✓
+                      </motion.span>
+                    )}
                     {topic.title}
-                  </h3>
+                  </motion.h3>
                   
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
@@ -664,11 +870,46 @@ const Learn = () => {
                   <div className="flex items-center justify-between">
                     <div className="text-xs text-gray-500 dark:text-gray-400">
                       <span className="font-medium">{topic.category}</span> • by {topic.author}
-                      {readTopics.has(topic.id) && <span className="ml-2 text-green-600 dark:text-green-400">✓ Read</span>}
+                      {readTopics.has(topic.id) && (
+                        <motion.span 
+                          className="ml-2 text-green-600 dark:text-green-400 inline-flex items-center"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          <motion.span
+                            animate={{ 
+                              scale: [1, 1.1, 1],
+                            }}
+                            transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
+                          >
+                            ✓
+                          </motion.span>
+                          <span className="ml-1">Read</span>
+                        </motion.span>
+                      )}
                     </div>
-                    <div className="flex items-center text-blue-600 dark:text-blue-400 font-medium group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-                      Read Guide
-                      <ArrowRightIcon className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    <div className="flex items-center justify-between">
+                      <motion.div 
+                        className="flex items-center text-blue-600 dark:text-blue-400 font-medium group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors"
+                        whileHover={{ x: 5 }}
+                      >
+                        {readTopics.has(topic.id) ? 'Read Again' : 'Read Guide'}
+                        <ArrowRightIcon className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </motion.div>
+                      <div className="flex items-center gap-1">
+                        <ShareButton
+                          onShare={() => navigator.share({ title: topic.title, url: `${window.location.origin}${topic.path}` })}
+                          icon={<ShareIcon className="w-3 h-3" />}
+                          className="p-1 text-xs opacity-60 hover:opacity-100 rounded"
+                        />
+                        <CopyButton
+                          textToCopy={`${window.location.origin}${topic.path}`}
+                          className="p-1 text-xs opacity-60 hover:opacity-100 rounded"
+                        >
+                          <LinkIcon className="w-3 h-3" />
+                        </CopyButton>
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -763,13 +1004,20 @@ const Learn = () => {
                   {tip.content}
                 </p>
                 
-                <Link
-                  to={tip.toolLink}
-                  className="inline-flex items-center w-full justify-center px-4 py-3 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl transition-all duration-300 group-hover:scale-105 border border-white/30 hover:border-white/50"
-                >
-                  <span className="mr-2">{tip.actionText}</span>
-                  <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <div className="flex gap-2">
+                  <Link
+                    to={tip.toolLink}
+                    className="flex-1 inline-flex items-center justify-center px-4 py-3 bg-white/20 hover:bg-white/30 text-white font-semibold rounded-xl transition-all duration-300 group-hover:scale-105 border border-white/30 hover:border-white/50"
+                  >
+                    <span className="mr-2">{tip.actionText}</span>
+                    <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <ShareButton
+                    onShare={() => navigator.share({ title: tip.title, url: `${window.location.origin}${tip.toolLink}` })}
+                    icon={<ShareIcon className="w-4 h-4" />}
+                    className="px-3 py-3 bg-white/20 hover:bg-white/30 text-white rounded-xl border border-white/30 hover:border-white/50"
+                  />
+                </div>
                 
                 <div className="mt-4 pt-4 border-t border-white/20">
                   <div className="flex items-center justify-between text-xs text-blue-200">

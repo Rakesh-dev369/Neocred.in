@@ -81,20 +81,25 @@ const SearchBar = ({ onSearch, loading }) => {
           {/* Search Suggestions */}
           {showSuggestions && suggestions.length > 0 && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10 overflow-hidden"
             >
               {suggestions.map((suggestion, index) => (
-                <button
+                <motion.button
                   key={suggestion}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.2 }}
+                  whileHover={{ backgroundColor: "rgba(59, 130, 246, 0.1)", x: 5 }}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors first:rounded-t-lg last:rounded-b-lg flex items-center"
+                  className="w-full text-left px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 first:rounded-t-lg last:rounded-b-lg flex items-center"
                 >
                   <Search className="w-4 h-4 text-gray-400 mr-3" />
                   <span className="text-gray-900 dark:text-white">{suggestion}</span>
-                </button>
+                </motion.button>
               ))}
             </motion.div>
           )}
@@ -135,10 +140,14 @@ const SearchBar = ({ onSearch, loading }) => {
           {POPULAR_TAGS.slice(0, 7).map((tag, index) => (
             <motion.button
               key={tag}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
-              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, scale: 0.8, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: index * 0.08, duration: 0.3, type: "spring" }}
+              whileHover={{ 
+                scale: 1.05, 
+                y: -2,
+                boxShadow: "0 4px 12px rgba(59, 130, 246, 0.3)"
+              }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
                 setQuery(tag);

@@ -1,163 +1,196 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AnimatedInput, AnimatedResults, AnimatedChart, CalculatorLayout } from '../components/calculator';
 
 const validationSchema = Yup.object({
-  yearlyInvestment: Yup.number()
-    .required('Yearly investment is required')
-    .min(500, 'Minimum amount is ₹500')
-    .max(150000, 'Maximum amount is ₹1,50,000'),
-  annualRate: Yup.number()
-    .min(1, 'Minimum rate is 1%')
-    .max(15, 'Maximum rate is 15%'),
-  tenureYears: Yup.number()
-    .min(15, 'PPF has a minimum lock-in period of 15 years')
-    .max(50, 'Maximum tenure is 50 years')
+  monthlyInvestment: Yup.number()
+    .required('Monthly investment is required')
+    .min(500, 'Minimum investment is ₹500')
+    .max(12500, 'Maximum monthly investment is ₹12,500 (₹1.5L annually)'),
+  currentAge: Yup.number()
+    .required('Current age is required')
+    .min(18, 'Minimum age is 18')
+    .max(50, 'Maximum age is 50 for new PPF account')
 });
-
-function calculatePPF({ yearlyInvestment, annualRate = 7.1, tenureYears = 15 }) {
-  let total = 0;
-  for (let i = 0; i < tenureYears; i++) {
-    total += yearlyInvestment * Math.pow(1 + annualRate / 100, tenureYears - i);
-  }
-  return total;
-}
 
 const PPFCalculator = () => {
   const [result, setResult] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const calculatePPFResult = (values) => {
-    const maturityAmount = calculatePPF(values);
-    const totalInvested = values.yearlyInvestment * values.tenureYears;
-    const interestEarned = maturityAmount - totalInvested;
+  const calculatePPF = async (values) => {
+    setIsCalculating(true);
+    setProgress(0);
+    
+    for (let i = 0; i <= 100; i += 20) {
+      setProgress(i);
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    
+    const { monthlyInvestment, currentAge } = values;
+    const annualInvestment = monthlyInvestment * 12;
+    const ppfRate = 7.1; // Current PPF rate
+    const tenure = 15; // PPF lock-in period
+    
+    // Calculate PPF maturity using compound interest
+    let maturityAmount = 0;
+    let yearlyData = [];
+    let totalInvested = 0;
+    
+    for (let year = 1; year <= tenure; year++) {
+      totalInvested += annualInvestment;
+      maturityAmount = (maturityAmount + annualInvestment) * (1 + ppfRate / 100);
+      
+      yearlyData.push({
+        year,
+        invested: totalInvested,
+        maturity: Math.round(maturityAmount),
+        age: currentAge + year
+      });
+    }
+    
+    const totalInterest = maturityAmount - totalInvested;
+    const taxSaved = totalInvested * 0.3; // Assuming 30% tax bracket
 
     setResult({
+      monthlyInvestment,
+      annualInvestment,
       totalInvested,
-      interestEarned,
-      maturityAmount,
+      maturityAmount: Math.round(maturityAmount),
+      totalInterest: Math.round(totalInterest),
+      taxSaved: Math.round(taxSaved),
+      maturityAge: currentAge + tenure,
+      yearlyData,
       data: [
-        { name: 'Invested', amount: totalInvested },
-        { name: 'Interest', amount: interestEarned },
-        { name: 'Maturity', amount: maturityAmount }
+        { name: 'Total Invested', amount: totalInvested },
+        { name: 'Interest Earned', amount: totalInterest },
+        { name: 'Tax Saved', amount: taxSaved }
       ]
     });
+    
+    setIsCalculating(false);
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 p-6 rounded-xl mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">PPF Calculator</h2>
+    <CalculatorLayout 
+      title="PPF Calculator" 
+      description="15-year tax-free wealth building"
+      isCalculating={isCalculating}
+      progress={progress}
+      result={result}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="bg-gray-200 dark:bg-white/5 p-6 rounded-xl">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">PPF Calculator</h3>
+        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">🏛️ PPF Calculator</h3>
           
           <Formik
             initialValues={{
-              yearlyInvestment: '',
-              annualRate: 7.1,
-              tenureYears: 15
+              monthlyInvestment: '',
+              currentAge: ''
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
-              calculatePPFResult(values);
+              calculatePPF(values);
               setSubmitting(false);
             }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Yearly Investment (₹)
-                  </label>
-                  <Field
-                    name="yearlyInvestment"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="150000"
-                  />
-                  <ErrorMessage name="yearlyInvestment" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="monthlyInvestment"
+                  label="Monthly Investment (₹)"
+                  type="number"
+                  placeholder="12500"
+                  helpText="Maximum ₹1.5 lakhs per year"
+                  icon="💰"
+                />
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Annual Interest Rate (%)
-                  </label>
-                  <Field
-                    name="annualRate"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    placeholder="7.1"
-                  />
-                  <ErrorMessage name="annualRate" component="div" className="text-red-500 text-sm mt-1" />
-                  <p className="text-xs text-gray-700 dark:text-gray-300 mt-1">Current PPF rate: 7.1%</p>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Tenure (Years)
-                  </label>
-                  <Field
-                    name="tenureYears"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="15"
-                  />
-                  <ErrorMessage name="tenureYears" component="div" className="text-red-500 text-sm mt-1" />
-                  <p className="text-xs text-gray-700 dark:text-gray-300 mt-1">Minimum: 15 years (lock-in period)</p>
-                </div>
+                <AnimatedInput
+                  name="currentAge"
+                  label="Current Age"
+                  type="number"
+                  placeholder="25"
+                  helpText="PPF matures when you turn (current age + 15)"
+                  icon="👤"
+                />
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isCalculating}
                   className="btn-primary w-full"
                 >
-                  Calculate PPF Returns
+                  {isCalculating ? 'Calculating...' : 'Calculate PPF Returns'}
                 </button>
               </Form>
             )}
           </Formik>
+
+          {/* PPF Benefits */}
+          <div className="mt-6 space-y-3">
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white">PPF Benefits:</h4>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="text-green-500">✓</span>
+                <span>Tax deduction under 80C</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-500">✓</span>
+                <span>Tax-free interest & maturity</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-500">✓</span>
+                <span>Government guaranteed returns</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-green-500">✓</span>
+                <span>Partial withdrawal after 7 years</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="bg-gray-200 dark:bg-white/5 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Results</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Total Invested:</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold">₹{result.totalInvested.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Interest Earned:</span>
-                  <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.interestEarned.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-700 dark:text-white/80">Maturity Amount:</span>
-                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-lg">₹{result.maturityAmount.toLocaleString()}</span>
-                </div>
-              </div>
-            </div>
+            <AnimatedResults
+              title="PPF Projection"
+              variant="success"
+              results={[
+                { label: 'Monthly Investment', value: `₹${result.monthlyInvestment.toLocaleString()}`, color: 'blue' },
+                { label: 'Total Invested (15 years)', value: `₹${result.totalInvested.toLocaleString()}`, color: 'purple' },
+                { label: 'Interest Earned', value: `₹${result.totalInterest.toLocaleString()}`, color: 'green' },
+                { label: 'Tax Saved', value: `₹${result.taxSaved.toLocaleString()}`, color: 'yellow' },
+                { label: 'Maturity Amount', value: `₹${result.maturityAmount.toLocaleString()}`, color: 'green', highlight: true },
+                { label: 'Maturity Age', value: `${result.maturityAge} years`, color: 'gray' }
+              ]}
+              tip={{
+                icon: '🏛️',
+                text: 'PPF offers triple tax benefit - deduction, tax-free growth, and tax-free withdrawal.'
+              }}
+            />
 
-            <div className="bg-gray-200 dark:bg-white/5 p-6 rounded-xl">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">PPF Breakdown</h3>
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">PPF Growth Over 15 Years</h3>
               <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
+                <LineChart data={result.yearlyData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
                   <XAxis 
-                    dataKey="name" 
+                    dataKey="year" 
                     tick={{ fill: 'currentColor', fontSize: 10 }}
                     axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
-                    className="text-gray-900 dark:text-white"
                   />
                   <YAxis 
                     tick={{ fill: 'currentColor', fontSize: 10 }}
                     axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
-                    tickFormatter={(val) => `₹${(val/1000).toFixed(0)}K`}
-                    className="text-gray-900 dark:text-white"
+                    tickFormatter={(val) => `₹${(val/100000).toFixed(1)}L`}
                   />
                   <Tooltip 
-                    formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
+                    formatter={(val, name) => [
+                      `₹${Number(val).toLocaleString()}`, 
+                      name === 'invested' ? 'Invested' : 'Maturity Value'
+                    ]}
                     contentStyle={{
                       backgroundColor: 'rgba(255, 255, 255, 0.95)',
                       border: '1px solid rgba(0, 0, 0, 0.1)',
@@ -166,25 +199,27 @@ const PPFCalculator = () => {
                     }}
                     labelStyle={{ color: '#000000' }}
                   />
-                  <Bar 
-                    dataKey="amount" 
-                    radius={[4, 4, 0, 0]}
-                    fill="url(#ppfGradient)"
+                  <Line 
+                    type="monotone" 
+                    dataKey="invested" 
+                    stroke="#8b5cf6" 
+                    strokeWidth={2}
+                    dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 3 }}
                   />
-                  <defs>
-                    <linearGradient id="ppfGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#f59e0b" />
-                      <stop offset="50%" stopColor="#d97706" />
-                      <stop offset="100%" stopColor="#b45309" />
-                    </linearGradient>
-                  </defs>
-                </BarChart>
+                  <Line 
+                    type="monotone" 
+                    dataKey="maturity" 
+                    stroke="#10b981" 
+                    strokeWidth={3}
+                    dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
+                  />
+                </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
         )}
       </div>
-    </div>
+    </CalculatorLayout>
   );
 };
 

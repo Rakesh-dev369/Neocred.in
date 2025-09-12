@@ -299,12 +299,12 @@ export default function Explore() {
           backgroundSize: '100px 100px'
         }}></div>
         
-        {/* Dynamic Discovery Symbols */}
-        <div className="absolute top-1/6 left-1/8 text-blue-200/12 dark:text-blue-600/6 text-6xl font-bold animate-pulse" style={{animationDelay: '2s'}}>🔍</div>
-        <div className="absolute top-3/5 right-1/6 text-purple-200/12 dark:text-purple-600/6 text-5xl font-bold animate-pulse" style={{animationDelay: '3.5s'}}>💳</div>
-        <div className="absolute bottom-1/5 left-1/3 text-emerald-200/12 dark:text-emerald-600/6 text-4xl font-bold animate-pulse" style={{animationDelay: '1s'}}>🛡️</div>
-        <div className="absolute top-2/5 right-1/8 text-indigo-200/12 dark:text-indigo-600/6 text-5xl font-bold animate-pulse" style={{animationDelay: '2.8s'}}>💰</div>
-        <div className="absolute bottom-2/5 right-2/5 text-cyan-200/12 dark:text-cyan-600/6 text-3xl font-bold animate-pulse" style={{animationDelay: '4s'}}>💼</div>
+        {/* Dynamic Discovery Symbols - Replaced with geometric shapes */}
+        <div className="absolute top-1/6 left-1/8 w-12 h-12 bg-blue-200/8 dark:bg-blue-600/4 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-3/5 right-1/6 w-10 h-10 bg-purple-200/8 dark:bg-purple-600/4 rounded-lg animate-pulse" style={{animationDelay: '3.5s'}}></div>
+        <div className="absolute bottom-1/5 left-1/3 w-8 h-8 bg-emerald-200/8 dark:bg-emerald-600/4 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-2/5 right-1/8 w-10 h-10 bg-indigo-200/8 dark:bg-indigo-600/4 rounded-lg animate-pulse" style={{animationDelay: '2.8s'}}></div>
+        <div className="absolute bottom-2/5 right-2/5 w-6 h-6 bg-cyan-200/8 dark:bg-cyan-600/4 rounded-full animate-pulse" style={{animationDelay: '4s'}}></div>
         
         {/* Floating Discovery Particles */}
         <div className="absolute inset-0">

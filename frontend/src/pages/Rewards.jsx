@@ -212,12 +212,12 @@ export default function Rewards() {
           backgroundSize: '120px 120px'
         }}></div>
         
-        {/* Dynamic Reward Symbols */}
-        <div className="absolute top-1/6 left-1/8 text-yellow-200/12 dark:text-yellow-600/6 text-6xl font-bold animate-pulse" style={{animationDelay: '2s'}}>🏆</div>
-        <div className="absolute top-3/5 right-1/6 text-purple-200/12 dark:text-purple-600/6 text-5xl font-bold animate-pulse" style={{animationDelay: '3.5s'}}>🎁</div>
-        <div className="absolute bottom-1/5 left-1/3 text-orange-200/12 dark:text-orange-600/6 text-4xl font-bold animate-pulse" style={{animationDelay: '1s'}}>🪙</div>
-        <div className="absolute top-2/5 right-1/8 text-green-200/12 dark:text-green-600/6 text-5xl font-bold animate-pulse" style={{animationDelay: '2.8s'}}>💰</div>
-        <div className="absolute bottom-2/5 right-2/5 text-blue-200/12 dark:text-blue-600/6 text-3xl font-bold animate-pulse" style={{animationDelay: '4s'}}>⭐</div>
+        {/* Dynamic Reward Symbols - Replaced with geometric shapes */}
+        <div className="absolute top-1/6 left-1/8 w-12 h-12 bg-yellow-200/8 dark:bg-yellow-600/4 rounded-lg animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-3/5 right-1/6 w-10 h-10 bg-purple-200/8 dark:bg-purple-600/4 rounded-full animate-pulse" style={{animationDelay: '3.5s'}}></div>
+        <div className="absolute bottom-1/5 left-1/3 w-8 h-8 bg-orange-200/8 dark:bg-orange-600/4 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-2/5 right-1/8 w-10 h-10 bg-green-200/8 dark:bg-green-600/4 rounded-lg animate-pulse" style={{animationDelay: '2.8s'}}></div>
+        <div className="absolute bottom-2/5 right-2/5 w-6 h-6 bg-blue-200/8 dark:bg-blue-600/4 rounded-full animate-pulse" style={{animationDelay: '4s'}}></div>
         
         {/* Floating Reward Particles */}
         <div className="absolute inset-0">

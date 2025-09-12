@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SearchBar from '../components/News/SearchBar';
 import NewsList from '../components/News/NewsList';
 import DigestCard from '../components/News/DigestCard';
+import { PullToRefresh, TouchButton, ScrollReveal, StickyProgress } from '../components/mobile';
 
 export default function News() {
   const [articles, setArticles] = useState([]);
@@ -237,7 +238,15 @@ export default function News() {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden transition-colors">
+    <>
+      <StickyProgress />
+      <PullToRefresh 
+        onRefresh={async () => {
+          await fetchNews(query, 1, false, true);
+        }}
+        className="min-h-screen"
+      >
+        <div className="min-h-screen relative overflow-hidden transition-colors">
       {/* Advanced News-Themed Background System */}
       <div className="fixed inset-0 z-0">
         {/* Primary Gradient Base */}
@@ -489,6 +498,8 @@ export default function News() {
           </motion.button>
         )}
       </AnimatePresence>
-    </div>
+        </div>
+      </PullToRefresh>
+    </>
   );
 }

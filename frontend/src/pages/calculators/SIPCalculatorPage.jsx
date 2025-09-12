@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeftIcon, CalculatorIcon, ChartBarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { AnimatedChart, ProgressBar, CountingNumber, StatCard, ComparisonTable, ShareButton, CopyButton } from '../../components/ui';
+import { ShareIcon, LinkIcon } from '@heroicons/react/24/outline';
+import { getToolNavigation, getToolDifficulty } from '../../utils/toolsNavigation';
 
 // Scroll to top when component mounts
 const useScrollToTop = () => {
@@ -6,10 +11,6 @@ const useScrollToTop = () => {
     window.scrollTo(0, 0);
   }, []);
 };
-import { Link } from 'react-router-dom';
-import { ArrowLeftIcon, CalculatorIcon, ChartBarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
-import { getToolNavigation, getToolDifficulty } from '../../utils/toolsNavigation';
 
 const SIPCalculatorPage = () => {
   useScrollToTop();
@@ -121,9 +122,9 @@ const SIPCalculatorPage = () => {
   ] : [];
 
   const barData = result ? [
-    { name: 'Invested Amount', amount: result.totalInvested, fill: '#3B82F6' },
-    { name: 'Returns', amount: result.estimatedReturns, fill: '#10B981' },
-    { name: 'Total Value', amount: result.maturityAmount, fill: '#F59E0B' }
+    { name: 'Total Invested', amount: result.totalInvested, fill: '#3B82F6' },
+    { name: 'Estimated Returns', amount: result.estimatedReturns, fill: '#10B981' },
+    { name: 'Maturity Amount', amount: result.maturityAmount, fill: '#F59E0B' }
   ] : [];
 
   return (
@@ -151,7 +152,7 @@ const SIPCalculatorPage = () => {
               </div>
             </div>
             
-            {/* Navigation */}
+            {/* Navigation & Actions */}
             {(() => {
               const navigation = getToolNavigation('sip-calculator');
               const difficulty = getToolDifficulty('sip-calculator');
@@ -188,6 +189,21 @@ const SIPCalculatorPage = () => {
                         <ChevronRightIcon className="h-3 w-3" />
                       </Link>
                     )}
+                  </div>
+                  
+                  {/* Share & Copy Actions */}
+                  <div className="flex items-center gap-2">
+                    <ShareButton
+                      onShare={() => navigator.share({ title: 'SIP Calculator', url: window.location.href })}
+                      icon={<ShareIcon className="w-4 h-4" />}
+                      className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-md hover:bg-blue-200 dark:hover:bg-blue-900/50"
+                    />
+                    <CopyButton
+                      textToCopy={window.location.href}
+                      className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600"
+                    >
+                      <LinkIcon className="w-4 h-4" />
+                    </CopyButton>
                   </div>
                 </div>
               ) : null;
@@ -419,106 +435,159 @@ const SIPCalculatorPage = () => {
               </div>
             ) : result ? (
               <>
-                {/* Results Summary */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                    <ChartBarIcon className="h-5 w-5 text-green-600" />
-                    Investment Results
-                  </h2>
+                {/* Results Summary with StatCards */}
+                <div className="grid grid-cols-1 gap-3">
+                  <StatCard
+                    title="Total Invested"
+                    value={result.totalInvested}
+                    prefix="₹"
+                    decimals={0}
+                    icon={<CalculatorIcon className="w-4 h-4" />}
+                    color="blue"
+                    size="sm"
+                    animated={true}
+                  />
                   
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
-                      <div className="text-sm text-blue-600 dark:text-blue-400 font-medium">Total Invested</div>
-                      <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">
-                        ₹{result.totalInvested.toLocaleString()}
-                      </div>
-                      <div className="text-xs text-blue-600 dark:text-blue-400 mt-1">
-                        ₹{monthlyInvestment.toLocaleString()} × {duration * 12} months
-                      </div>
-                    </div>
+                  <StatCard
+                    title="Estimated Returns"
+                    value={result.estimatedReturns}
+                    prefix="₹"
+                    decimals={0}
+                    trend={{ 
+                      value: ((result.estimatedReturns / result.totalInvested) * 100).toFixed(1), 
+                      direction: 'up' 
+                    }}
+                    icon={<ChartBarIcon className="w-4 h-4" />}
+                    color="green"
+                    size="sm"
+                    animated={true}
+                  />
+                  
+                  <StatCard
+                    title="Maturity Amount"
+                    value={result.maturityAmount}
+                    prefix="₹"
+                    decimals={0}
+                    icon={<span className="text-sm">🎯</span>}
+                    color="purple"
+                    size="sm"
+                    animated={true}
+                  />
+                </div>
+                
+                {/* Progress Bar showing investment completion */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4">
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-3">Investment Progress</h3>
+                  <ProgressBar 
+                    value={100} 
+                    label={`${duration} Year Journey`}
+                    color="blue"
+                    size="sm"
+                    animated={true}
+                    showPercentage={false}
+                  />
+                  <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+                    Monthly SIP of <CountingNumber value={monthlyInvestment} prefix="₹" className="font-semibold text-blue-600" /> for {duration} years
+                  </div>
+                </div>
 
-                    <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
-                      <div className="text-sm text-green-600 dark:text-green-400 font-medium">Estimated Returns</div>
-                      <div className="text-2xl font-bold text-green-700 dark:text-green-300">
-                        ₹{result.estimatedReturns.toLocaleString()}
-                      </div>
-                      <div className="text-xs text-green-600 dark:text-green-400 mt-1">
-                        {((result.estimatedReturns / result.totalInvested) * 100).toFixed(1)}% total return
-                      </div>
-                    </div>
-
-                    <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-4">
-                      <div className="text-sm text-yellow-600 dark:text-yellow-400 font-medium">Maturity Amount</div>
-                      <div className="text-3xl font-bold text-yellow-700 dark:text-yellow-300">
-                        ₹{result.maturityAmount.toLocaleString()}
-                      </div>
-                      <div className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
-                        After {duration} years
-                      </div>
+                {/* Animated Pie Chart */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4">
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-3">Investment Breakdown</h3>
+                  <div className="flex flex-col items-center">
+                    <AnimatedChart 
+                      data={pieData.map(item => ({ label: item.name, value: item.value }))}
+                      type="pie"
+                      width={250}
+                      height={160}
+                      animate={true}
+                    />
+                    {/* Legend */}
+                    <div className="mt-3 space-y-1.5 w-full">
+                      {pieData.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div 
+                              className="w-2.5 h-2.5 rounded-full" 
+                              style={{ backgroundColor: item.color }}
+                            ></div>
+                            <span className="text-xs text-gray-600 dark:text-gray-300">{item.name}</span>
+                          </div>
+                          <span className="text-xs font-semibold text-gray-900 dark:text-white">
+                            ₹{item.value.toLocaleString()}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Pie Chart */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Investment Breakdown</h3>
-                  <div className="w-full overflow-hidden">
-                    <ResponsiveContainer width="100%" height={250} minWidth={250}>
-                      <PieChart>
-                        <Pie
-                          data={pieData}
-                          cx="50%"
-                          cy="50%"
-                          innerRadius={50}
-                          outerRadius={90}
-                          paddingAngle={5}
-                          dataKey="value"
-                        >
-                          {pieData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip 
-                          formatter={(value) => [`₹${value.toLocaleString()}`, 'Amount']}
-                          contentStyle={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            border: '1px solid rgba(0, 0, 0, 0.1)',
-                            borderRadius: '8px'
-                          }}
-                        />
-                        <Legend />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
-
-                {/* Bar Chart */}
+                {/* Amount Comparison */}
                 <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Amount Comparison</h3>
-                  <div className="w-full overflow-x-auto">
-                    <ResponsiveContainer width="100%" height={250} minWidth={300}>
-                      <BarChart data={barData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                        <XAxis 
-                          dataKey="name" 
-                          tick={{ fill: 'currentColor', fontSize: 10 }}
-                          className="text-gray-600 dark:text-gray-300"
-                        />
-                        <YAxis 
-                          tick={{ fill: 'currentColor', fontSize: 10 }}
-                          tickFormatter={(val) => `₹${(val/100000).toFixed(1)}L`}
-                          className="text-gray-600 dark:text-gray-300"
-                        />
-                        <Tooltip 
-                          formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
-                          contentStyle={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            border: '1px solid rgba(0, 0, 0, 0.1)',
-                            borderRadius: '8px'
-                          }}
-                        />
-                        <Bar dataKey="amount" radius={[4, 4, 0, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
+                  <div className="space-y-6">
+                    {/* Visual Bars */}
+                    <div className="space-y-3">
+                      {barData.map((item, index) => (
+                        <div key={index} className="space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div 
+                                className="w-3 h-3 rounded" 
+                                style={{ backgroundColor: item.fill }}
+                              ></div>
+                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{item.name}</span>
+                            </div>
+                            <span className="text-sm font-bold text-gray-900 dark:text-white">
+                              ₹{item.amount.toLocaleString()}
+                            </span>
+                          </div>
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div 
+                              className="h-2 rounded-full transition-all duration-1000 ease-out"
+                              style={{ 
+                                backgroundColor: item.fill,
+                                width: `${(item.amount / result.maturityAmount) * 100}%`
+                              }}
+                            ></div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Comparison Stats */}
+                    <div className="grid grid-cols-2 gap-4 mt-6">
+                      <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                          {((result.estimatedReturns / result.totalInvested) * 100).toFixed(1)}%
+                        </div>
+                        <div className="text-xs text-blue-700 dark:text-blue-300">Total Growth</div>
+                      </div>
+                      <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                        <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                          {(result.estimatedReturns / result.totalInvested * 100 / duration).toFixed(1)}%
+                        </div>
+                        <div className="text-xs text-green-700 dark:text-green-300">Avg Annual Growth</div>
+                      </div>
+                    </div>
+                    
+                    {/* Key Insights */}
+                    <div className="p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg">
+                      <div className="text-sm text-purple-700 dark:text-purple-300 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span>💰</span>
+                          <span>Every ₹{monthlyInvestment.toLocaleString()} invested monthly becomes ₹{Math.round(result.maturityAmount / (duration * 12)).toLocaleString()}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span>📈</span>
+                          <span>Your ₹{result.totalInvested.toLocaleString()} grows to ₹{result.maturityAmount.toLocaleString()}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span>⏰</span>
+                          <span>Wealth multiplier: {(result.maturityAmount / result.totalInvested).toFixed(1)}x in {duration} years</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

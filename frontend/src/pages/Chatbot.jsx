@@ -7,10 +7,17 @@ import {
   DocumentArrowDownIcon,
   QuestionMarkCircleIcon,
   CommandLineIcon,
-  ArrowLeftIcon
+  ArrowLeftIcon,
+  HeartIcon,
+  ShareIcon
 } from '@heroicons/react/24/outline';
+import { HeartButton, ShareButton, CopyButton } from '../components/ui';
+import { motion, AnimatePresence } from 'framer-motion';
 import { sendChatMessage } from '../utils/apiClient';
 import { FINBOT_INTRO_MESSAGE, QUICK_SUGGESTIONS, CONVERSATION_STARTERS } from '../utils/constants';
+import MessageBubble from '../components/Chat/MessageBubble';
+import TypingIndicator from '../components/Chat/TypingIndicator';
+import ChatExport from '../components/Chat/ChatExport';
 import '../styles/chatbot.css';
 
 // Import available components (others will be created as needed)
@@ -299,10 +306,7 @@ export default function Chatbot() {
           e.preventDefault();
           setShowExport(true);
           break;
-        case 'd':
-          e.preventDefault();
-          toggleDarkMode();
-          break;
+
         case '/':
           e.preventDefault();
           setShowHelp(true);
@@ -438,10 +442,10 @@ export default function Chatbot() {
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   darkMode ? 'bg-gradient-to-r from-blue-600 to-purple-600' : 'bg-gradient-to-r from-blue-500 to-purple-500'
                 } shadow-lg`}>
-                  <span className="text-lg animate-pulse">🤖</span>
+                  <span className="text-lg">🤖</span>
                 </div>
                 {isOnline && (
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse" />
+                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
                 )}
               </div>
               <div>
@@ -476,15 +480,7 @@ export default function Chatbot() {
                 <DocumentArrowDownIcon className="h-5 w-5" />
               </button>
               
-              <button
-                onClick={toggleDarkMode}
-                className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
-                  darkMode ? 'hover:bg-gray-700 text-yellow-400' : 'hover:bg-gray-100 text-gray-600'
-                }`}
-                title="Toggle Theme (Ctrl+D)"
-              >
-                {darkMode ? '🌙' : '☀️'}
-              </button>
+
               
               <button
                 onClick={() => setShowHelp(true)}
@@ -525,9 +521,9 @@ export default function Chatbot() {
                         ? 'bg-gradient-to-r from-blue-600 to-purple-600 shadow-2xl shadow-blue-500/25' 
                         : 'bg-gradient-to-r from-blue-500 to-purple-500 shadow-2xl shadow-blue-500/25'
                     }`}>
-                      <span className="text-2xl animate-bounce">🤖</span>
+                      <span className="text-2xl">🤖</span>
                     </div>
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-20 animate-ping" />
+
                   </div>
                   
                   <h2 className={`text-2xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent`}>
@@ -552,10 +548,19 @@ export default function Chatbot() {
                         { icon: '🛡️', text: 'How much life insurance do I need?', category: 'Insurance' },
                         { icon: '🎯', text: 'Plan for retirement corpus', category: 'Retirement' }
                       ].map((item, idx) => (
-                        <button
+                        <motion.button
                           key={idx}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.1, duration: 0.3 }}
+                          whileHover={{ 
+                            scale: 1.05, 
+                            y: -5,
+                            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)"
+                          }}
+                          whileTap={{ scale: 0.98 }}
                           onClick={() => handleQuickQuestion(item.text)}
-                          className={`group p-4 text-left rounded-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 ${
+                          className={`group p-4 text-left rounded-xl transition-all duration-300 ${
                             darkMode 
                               ? 'bg-gray-800/50 hover:bg-gray-700/70 text-gray-300 border border-gray-700/50 hover:border-blue-500/50 backdrop-blur-sm' 
                               : 'bg-white/70 hover:bg-white text-gray-700 border border-gray-200 hover:border-blue-300 backdrop-blur-sm shadow-sm hover:shadow-lg'
@@ -568,7 +573,7 @@ export default function Chatbot() {
                               <p className={`text-xs mt-1 ${darkMode ? 'text-gray-500' : 'text-gray-500'}`}>{item.category}</p>
                             </div>
                           </div>
-                        </button>
+                        </motion.button>
                       ))}
                     </div>
                     
@@ -616,6 +621,28 @@ export default function Chatbot() {
                               </div>
                             </div>
                           )}
+                          
+                          {/* Message Actions */}
+                          {message.sender === 'bot' && (
+                            <div className="flex items-center gap-2 mt-3 pt-2 border-t border-gray-200 dark:border-gray-600">
+                              <HeartButton 
+                                size="sm" 
+                                onToggle={(liked) => handleMessageReact(message.id, liked ? 'like' : null)}
+                                className="opacity-70 hover:opacity-100"
+                              />
+                              <ShareButton
+                                onShare={() => navigator.share({ title: 'FinBot Response', text: message.text })}
+                                icon={<ShareIcon className="w-3 h-3" />}
+                                className="p-1 text-xs opacity-70 hover:opacity-100 rounded"
+                              />
+                              <CopyButton
+                                textToCopy={message.text}
+                                className="p-1 text-xs opacity-70 hover:opacity-100 rounded"
+                              >
+                                📋
+                              </CopyButton>
+                            </div>
+                          )}
                           {message.toolLink && (
                             <div className="mt-4">
                               <button
@@ -634,25 +661,15 @@ export default function Chatbot() {
                 </div>
               )}
               
-              {/* Enhanced typing indicator with better animation */}
-              {isTyping && (
-                <div className="flex justify-start pl-10 animate-fade-in">
-                  <div className={`px-4 py-3 rounded-2xl rounded-bl-md shadow-lg border backdrop-blur-sm ${
-                    darkMode ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'
-                  }`}>
-                    <div className="flex items-center space-x-3">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      </div>
-                      <span className={`text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                        FinBot is analyzing...
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* Enhanced typing indicator */}
+              <AnimatePresence>
+                {isTyping && (
+                  <TypingIndicator 
+                    darkMode={darkMode} 
+                    message="FinBot is analyzing your request..."
+                  />
+                )}
+              </AnimatePresence>
               
               {/* Error Display */}
               {error && (
@@ -806,14 +823,14 @@ export default function Chatbot() {
                   isOnline ? 'text-green-500' : 'text-red-500'
                 }`}>
                   <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
-                    isOnline ? 'bg-green-500 animate-pulse' : 'bg-red-500'
+                    isOnline ? 'bg-green-500' : 'bg-red-500'
                   }`} />
                   <span className="hidden sm:inline">{isOnline ? 'Online' : 'Offline'}</span>
                 </div>
                 
                 {rateLimitWarning && (
                   <div className="flex items-center space-x-1 text-yellow-500">
-                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-yellow-500 animate-pulse" />
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-yellow-500" />
                     <span className="hidden sm:inline">Rate Limited</span>
                   </div>
                 )}
@@ -846,22 +863,23 @@ export default function Chatbot() {
         </div>
       )}
       
-      {showExport && (
-        <div className={`fixed inset-0 bg-black/50 z-30 flex items-center justify-center`}>
-          <div className={`max-w-md w-full mx-4 p-6 rounded-xl ${
-            darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'
-          }`}>
-            <h3 className="text-lg font-semibold mb-4">Export Chat</h3>
-            <p className="text-sm mb-4">Export functionality coming soon!</p>
-            <button
-              onClick={() => setShowExport(false)}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {showExport && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ChatExport
+              messages={messages}
+              darkMode={darkMode}
+              isOpen={showExport}
+              onClose={() => setShowExport(false)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
         
       {/* Help Modal */}
       {showHelp && (
@@ -887,7 +905,7 @@ export default function Chatbot() {
                     {[
                       { key: 'Ctrl + K', desc: 'Search conversations' },
                       { key: 'Ctrl + E', desc: 'Export conversation' },
-                      { key: 'Ctrl + D', desc: 'Toggle dark mode' },
+
                       { key: 'Ctrl + /', desc: 'Show this help' },
                       { key: 'Escape', desc: 'Close modals' },
                       { key: 'Shift + Enter', desc: 'New line in message' }

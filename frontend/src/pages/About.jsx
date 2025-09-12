@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { ROUTES } from '../utils/constants';
 
 export default function About() {
@@ -7,11 +8,35 @@ export default function About() {
   
   // Real platform stats
   const stats = { tools: 29, lessons: 78 };
+  const [animatedStats, setAnimatedStats] = useState({ tools: 0, lessons: 0 });
+  const statsRef = useRef(null);
+  const isStatsInView = useInView(statsRef, { once: true });
   
   // Auto scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
+  // Animate counters when in view
+  useEffect(() => {
+    if (isStatsInView) {
+      const animateCounter = (key, target) => {
+        let current = 0;
+        const increment = target / 50;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          setAnimatedStats(prev => ({ ...prev, [key]: Math.floor(current) }));
+        }, 30);
+      };
+      
+      animateCounter('tools', stats.tools);
+      animateCounter('lessons', stats.lessons);
+    }
+  }, [isStatsInView, stats.tools, stats.lessons]);
   
   // Scroll to top button visibility
   useEffect(() => {
@@ -57,15 +82,37 @@ export default function About() {
           </p>
           
           {/* Platform Features */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div className="glass-card text-center hover:scale-105 transition-all duration-300">
-              <div className="text-4xl font-bold text-green-400 mb-2">{stats.tools}+</div>
+          <div ref={statsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="glass-card text-center hover:scale-105 transition-all duration-300"
+            >
+              <motion.div 
+                className="text-4xl font-bold text-green-400 mb-2"
+                animate={{ scale: isStatsInView ? [1, 1.2, 1] : 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                {animatedStats.tools}+
+              </motion.div>
               <div className="text-gray-600 dark:text-white/70">Financial Tools</div>
-            </div>
-            <div className="glass-card text-center hover:scale-105 transition-all duration-300">
-              <div className="text-4xl font-bold text-purple-400 mb-2">{stats.lessons}+</div>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="glass-card text-center hover:scale-105 transition-all duration-300"
+            >
+              <motion.div 
+                className="text-4xl font-bold text-purple-400 mb-2"
+                animate={{ scale: isStatsInView ? [1, 1.2, 1] : 1 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+              >
+                {animatedStats.lessons}+
+              </motion.div>
               <div className="text-gray-600 dark:text-white/70">Learning Modules</div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

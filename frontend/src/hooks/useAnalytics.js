@@ -18,9 +18,15 @@ export const trackPageView = (path) => {
 
 // Custom analytics API calls
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const ANALYTICS_ENABLED = import.meta.env.VITE_ENABLE_ANALYTICS === 'true';
 
 export const trackCustomEvent = async (eventType, data = {}) => {
+  if (!ANALYTICS_ENABLED) return;
+  
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
     await fetch(`${API_BASE}/api/analytics/track`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -30,11 +36,28 @@ export const trackCustomEvent = async (eventType, data = {}) => {
         user_agent: navigator.userAgent,
         url: window.location.href,
         ...data
-      })
+      }),
+      signal: controller.signal
     });
+    
+    clearTimeout(timeoutId);
   } catch (error) {
-    console.error('Analytics tracking error:', error);
+    // Silently fail for analytics - don't log errors to avoid console spam
   }
+};
+
+export const trackNewsClick = (article) => {
+  if (!ANALYTICS_ENABLED) return;
+  
+  trackEvent('news_click', {
+    article_title: article.title,
+    article_source: article.source
+  });
+  trackCustomEvent('news_click', {
+    article: article.title,
+    source: article.source,
+    session_id: getSessionId()
+  });
 };
 
 // Generate session ID for anonymous tracking
@@ -52,6 +75,8 @@ export const useAnalytics = () => {
   const location = useLocation();
 
   useEffect(() => {
+    if (!ANALYTICS_ENABLED) return;
+    
     // Track page views
     trackPageView(location.pathname);
     trackCustomEvent('page_view', { path: location.pathname });
@@ -62,6 +87,8 @@ export const useAnalytics = () => {
     trackPageView,
     trackCustomEvent,
     trackCalculatorUse: (calculatorName, inputs = {}) => {
+      if (!ANALYTICS_ENABLED) return;
+      
       trackEvent('calculator_use', {
         calculator_name: calculatorName,
         ...inputs
@@ -73,6 +100,8 @@ export const useAnalytics = () => {
       });
     },
     trackLearningProgress: (pillar, progress) => {
+      if (!ANALYTICS_ENABLED) return;
+      
       trackEvent('learning_progress', {
         pillar,
         progress_percentage: progress
@@ -84,9 +113,24 @@ export const useAnalytics = () => {
       });
     },
     trackFeatureUse: (feature) => {
+      if (!ANALYTICS_ENABLED) return;
+      
       trackEvent('feature_use', { feature_name: feature });
       trackCustomEvent('feature_use', { 
         feature,
+        session_id: getSessionId()
+      });
+    },
+    trackNewsClick: (article) => {
+      if (!ANALYTICS_ENABLED) return;
+      
+      trackEvent('news_click', {
+        article_title: article.title,
+        article_source: article.source
+      });
+      trackCustomEvent('news_click', {
+        article: article.title,
+        source: article.source,
         session_id: getSessionId()
       });
     }

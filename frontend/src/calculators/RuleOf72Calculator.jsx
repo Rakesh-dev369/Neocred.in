@@ -2,148 +2,120 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AnimatedInput, AnimatedResults, AnimatedChart, CalculatorLayout } from '../components/calculator';
 
 const validationSchema = Yup.object({
-  calcType: Yup.string().required('Calculation type is required'),
-  interestRate: Yup.number().when('calcType', {
-    is: 'time',
-    then: () => Yup.number()
-      .required('Interest rate is required')
-      .min(0.1, 'Minimum rate is 0.1%')
-      .max(50, 'Maximum rate is 50%'),
-    otherwise: () => Yup.number()
-  }),
-  years: Yup.number().when('calcType', {
-    is: 'rate',
-    then: () => Yup.number()
-      .required('Years is required')
-      .min(1, 'Minimum period is 1 year')
-      .max(100, 'Maximum period is 100 years'),
-    otherwise: () => Yup.number()
-  })
+  amount: Yup.number()
+    .required('Investment amount is required')
+    .min(1000, 'Minimum amount is ₹1,000')
+    .max(10000000, 'Maximum amount is ₹1 crore'),
+  rate: Yup.number()
+    .required('Interest rate is required')
+    .min(1, 'Minimum rate is 1%')
+    .max(30, 'Maximum rate is 30%')
 });
 
 const RuleOf72Calculator = () => {
   const [result, setResult] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const calculate72 = (values) => {
-    const { calcType, interestRate, years } = values;
+  const calculateRule72 = async (values) => {
+    setIsCalculating(true);
+    setProgress(0);
     
-    let calculatedValue, resultText, chartData;
-    
-    if (calcType === 'time') {
-      calculatedValue = 72 / interestRate;
-      resultText = `Your investment will double in approximately ${calculatedValue.toFixed(2)} years`;
-      
-      // Create chart data showing doubling progression
-      chartData = [];
-      for (let i = 1; i <= 5; i++) {
-        chartData.push({
-          name: `${i}x`,
-          years: (calculatedValue * i).toFixed(1),
-          amount: Math.pow(2, i)
-        });
-      }
-    } else {
-      calculatedValue = 72 / years;
-      resultText = `You need an annual interest rate of approximately ${calculatedValue.toFixed(2)}%`;
-      
-      // Create chart data showing different rates
-      chartData = [];
-      const rates = [calculatedValue * 0.5, calculatedValue * 0.75, calculatedValue, calculatedValue * 1.25, calculatedValue * 1.5];
-      rates.forEach((rate, index) => {
-        chartData.push({
-          name: `${rate.toFixed(1)}%`,
-          years: (72 / rate).toFixed(1),
-          rate: rate.toFixed(1)
-        });
-      });
+    for (let i = 0; i <= 100; i += 25) {
+      setProgress(i);
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
+    
+    const { amount, rate } = values;
+    
+    // Rule of 72: Time to double = 72 / interest rate
+    const timeToDouble = 72 / rate;
+    const doubledAmount = amount * 2;
+    
+    // Calculate actual compound interest for comparison
+    const actualTime = Math.log(2) / Math.log(1 + rate / 100);
+    const difference = Math.abs(timeToDouble - actualTime);
+    
+    // Show different investment scenarios
+    const scenarios = [
+      { name: 'FD (6%)', rate: 6, time: 72/6, amount: amount * Math.pow(1.06, 72/6) },
+      { name: 'Mutual Fund (12%)', rate: 12, time: 72/12, amount: amount * Math.pow(1.12, 72/12) },
+      { name: 'Equity (15%)', rate: 15, time: 72/15, amount: amount * Math.pow(1.15, 72/15) },
+      { name: 'Your Rate', rate: rate, time: timeToDouble, amount: doubledAmount }
+    ];
 
     setResult({
-      calcType,
-      interestRate,
-      years,
-      calculatedValue: calculatedValue.toFixed(2),
-      resultText,
-      chartData
+      amount,
+      rate,
+      timeToDouble: Math.round(timeToDouble * 10) / 10,
+      doubledAmount,
+      actualTime: Math.round(actualTime * 10) / 10,
+      difference: Math.round(difference * 10) / 10,
+      scenarios,
+      data: [
+        { name: 'Initial', amount: amount },
+        { name: 'Doubled', amount: doubledAmount },
+        { name: 'Rule of 72', amount: doubledAmount }
+      ]
     });
+    
+    setIsCalculating(false);
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Rule of 72 Calculator</h2>
+    <CalculatorLayout 
+      title="Rule of 72 Calculator" 
+      description="Quick doubling time estimation"
+      isCalculating={isCalculating}
+      progress={progress}
+      result={result}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
         <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">📊 Rule of 72 Calculator</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">⚡ Rule of 72 Calculator</h3>
           
           <Formik
             initialValues={{
-              calcType: 'time',
-              interestRate: '',
-              years: ''
+              amount: '',
+              rate: ''
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
-              calculate72(values);
+              calculateRule72(values);
               setSubmitting(false);
             }}
           >
-            {({ values, isSubmitting }) => (
+            {({ isSubmitting }) => (
               <Form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Choose Calculation Type
-                  </label>
-                  <Field
-                    name="calcType"
-                    as="select"
-                    className="input-field"
-                  >
-                    <option value="time">Find Time to Double</option>
-                    <option value="rate">Find Required Interest Rate</option>
-                  </Field>
-                  <ErrorMessage name="calcType" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="amount"
+                  label="Investment Amount (₹)"
+                  type="number"
+                  placeholder="100000"
+                  helpText="Amount you want to double"
+                  icon="💰"
+                />
                 
-                {values.calcType === 'time' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                      Annual Interest Rate (%)
-                    </label>
-                    <Field
-                      name="interestRate"
-                      type="number" onWheel={(e) => e.target.blur()}
-                      step="0.01"
-                      className="input-field"
-                      placeholder="8.5"
-                    />
-                    <ErrorMessage name="interestRate" component="div" className="text-red-500 text-sm mt-1" />
-                  </div>
-                )}
-                
-                {values.calcType === 'rate' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                      Years to Double
-                    </label>
-                    <Field
-                      name="years"
-                      type="number" onWheel={(e) => e.target.blur()}
-                      className="input-field"
-                      placeholder="10"
-                    />
-                    <ErrorMessage name="years" component="div" className="text-red-500 text-sm mt-1" />
-                  </div>
-                )}
+                <AnimatedInput
+                  name="rate"
+                  label="Expected Annual Return (%)"
+                  type="number"
+                  step="0.1"
+                  placeholder="12"
+                  helpText="Expected annual growth rate"
+                  icon="📈"
+                />
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isCalculating}
                   className="btn-primary w-full"
                 >
-                  Calculate
+                  {isCalculating ? 'Calculating...' : 'Calculate Doubling Time'}
                 </button>
               </Form>
             )}
@@ -151,111 +123,76 @@ const RuleOf72Calculator = () => {
 
           {/* Rule of 72 Explanation */}
           <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30 rounded-lg">
-            <h4 className="text-blue-700 dark:text-blue-300 font-semibold mb-2">📊 What is Rule of 72?</h4>
+            <h4 className="text-blue-700 dark:text-blue-300 font-semibold mb-2">📚 What is Rule of 72?</h4>
             <p className="text-blue-900 dark:text-blue-100 text-sm mb-2">
-              The Rule of 72 is a quick way to estimate how long it takes for an investment to double.
+              A quick way to estimate how long it takes for an investment to double.
             </p>
             <p className="text-blue-900 dark:text-blue-100 text-sm">
               <strong>Formula:</strong> Time to Double = 72 ÷ Interest Rate
             </p>
+          </div>
+
+          {/* Quick Examples */}
+          <div className="mt-4 space-y-2">
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Quick Examples:</h4>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded">6% → 12 years</div>
+              <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded">8% → 9 years</div>
+              <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded">12% → 6 years</div>
+              <div className="p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded">18% → 4 years</div>
+            </div>
           </div>
         </div>
 
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
+            <AnimatedResults
+              title="Doubling Time Analysis"
+              variant="info"
+              results={[
+                { label: 'Investment Amount', value: `₹${result.amount.toLocaleString()}`, color: 'blue' },
+                { label: 'Expected Return', value: `${result.rate}% per year`, color: 'purple' },
+                { label: 'Rule of 72 Time', value: `${result.timeToDouble} years`, color: 'green', highlight: true },
+                { label: 'Actual Time', value: `${result.actualTime} years`, color: 'yellow' },
+                { label: 'Difference', value: `${result.difference} years`, color: 'gray' },
+                { label: 'Doubled Amount', value: `₹${result.doubledAmount.toLocaleString()}`, color: 'green' }
+              ]}
+              tip={{
+                icon: '⚡',
+                text: 'Rule of 72 is most accurate for rates between 6-10%. Higher rates may have larger differences.'
+              }}
+            />
+
             <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Calculation Results</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Investment Scenarios</h3>
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Calculation Type:</span>
-                  <span className="text-gray-900 dark:text-white font-semibold capitalize">
-                    {result.calcType === 'time' ? 'Time to Double' : 'Required Rate'}
-                  </span>
-                </div>
-                
-                {result.calcType === 'time' ? (
-                  <>
-                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
-                      <span className="text-gray-700 dark:text-white/80">Interest Rate:</span>
-                      <span className="text-blue-600 dark:text-blue-400 font-semibold">{result.interestRate}%</span>
+                {result.scenarios.map((scenario, index) => (
+                  <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-white/5 rounded-lg">
+                    <div>
+                      <span className="font-medium text-gray-900 dark:text-white">{scenario.name}</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">({scenario.rate}%)</span>
                     </div>
-                    <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-700 dark:text-white/80">Time to Double:</span>
-                      <span className="text-green-600 dark:text-green-400 font-bold text-xl">{result.calculatedValue} years</span>
+                    <div className="text-right">
+                      <div className="font-semibold text-gray-900 dark:text-white">{Math.round(scenario.time * 10) / 10} years</div>
+                      <div className="text-sm text-green-600 dark:text-green-400">₹{Math.round(scenario.amount).toLocaleString()}</div>
                     </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
-                      <span className="text-gray-700 dark:text-white/80">Target Years:</span>
-                      <span className="text-blue-600 dark:text-blue-400 font-semibold">{result.years} years</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2">
-                      <span className="text-gray-700 dark:text-white/80">Required Rate:</span>
-                      <span className="text-green-600 dark:text-green-400 font-bold text-xl">{result.calculatedValue}%</span>
-                    </div>
-                  </>
-                )}
-              </div>
-              
-              <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-lg">
-                <p className="text-green-900 dark:text-green-100 text-sm font-medium">
-                  {result.resultText}
-                </p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">
-                {result.calcType === 'time' ? 'Doubling Progression' : 'Rate Comparison'}
-              </h3>
-              <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={result.chartData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
-                  <XAxis 
-                    dataKey="name" 
-                    tick={{ fill: 'currentColor', fontSize: 10 }}
-                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
-                  />
-                  <YAxis 
-                    tick={{ fill: 'currentColor', fontSize: 10 }}
-                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
-                    tickFormatter={(val) => `${val}${result.calcType === 'time' ? 'x' : 'y'}`}
-                  />
-                  <Tooltip 
-                    formatter={(val, name) => [
-                      result.calcType === 'time' 
-                        ? [`${val} years`, 'Time to Reach']
-                        : [`${val} years`, 'Doubling Time'],
-                      name
-                    ]}
-                    contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: '1px solid rgba(0, 0, 0, 0.1)',
-                      borderRadius: '8px',
-                      color: '#000000'
-                    }}
-                    labelStyle={{ color: '#000000' }}
-                  />
-                  <Bar 
-                    dataKey={result.calcType === 'time' ? 'years' : 'years'}
-                    radius={[4, 4, 0, 0]}
-                    fill="url(#rule72Gradient)"
-                  />
-                  <defs>
-                    <linearGradient id="rule72Gradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#6366f1" />
-                      <stop offset="50%" stopColor="#4f46e5" />
-                      <stop offset="100%" stopColor="#4338ca" />
-                    </linearGradient>
-                  </defs>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <AnimatedChart
+              title="Investment Growth"
+              data={result.data}
+              type="bar"
+              gradientId="rule72Gradient"
+              gradientColors={['#3b82f6', '#10b981', '#f59e0b']}
+            />
           </div>
         )}
       </div>
-    </div>
+    </CalculatorLayout>
   );
 };
 

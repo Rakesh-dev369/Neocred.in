@@ -1,15 +1,21 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   DocumentArrowDownIcon, 
   ShareIcon, 
   ClipboardDocumentIcon,
-  XMarkIcon 
+  XMarkIcon,
+  CheckIcon 
 } from '@heroicons/react/24/outline';
 
 export default function ChatExport({ messages, darkMode, isOpen, onClose }) {
   const [exportFormat, setExportFormat] = useState('text');
   const [includeTimestamps, setIncludeTimestamps] = useState(true);
   const [includeMetadata, setIncludeMetadata] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState(0);
+  const [exportComplete, setExportComplete] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const formatMessages = (format) => {
     const filteredMessages = messages.filter(m => m.text && m.text.trim());
@@ -68,7 +74,18 @@ export default function ChatExport({ messages, darkMode, isOpen, onClose }) {
     }
   };
 
-  const downloadFile = (content, filename, mimeType) => {
+  const downloadFile = async (content, filename, mimeType) => {
+    setIsExporting(true);
+    setExportProgress(0);
+    setExportComplete(false);
+    
+    // Simulate progress for better UX
+    const progressSteps = [20, 40, 60, 80, 100];
+    for (let i = 0; i < progressSteps.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      setExportProgress(progressSteps[i]);
+    }
+    
     const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -78,9 +95,16 @@ export default function ChatExport({ messages, darkMode, isOpen, onClose }) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    
+    setExportComplete(true);
+    setTimeout(() => {
+      setIsExporting(false);
+      setExportComplete(false);
+      setExportProgress(0);
+    }, 2000);
   };
 
-  const handleExport = () => {
+  const handleExport = async () => {
     const content = formatMessages(exportFormat);
     const timestamp = new Date().toISOString().split('T')[0];
     const filename = `finbot-conversation-${timestamp}.${exportFormat === 'text' ? 'txt' : exportFormat}`;
@@ -90,14 +114,15 @@ export default function ChatExport({ messages, darkMode, isOpen, onClose }) {
       csv: 'text/csv'
     }[exportFormat];
     
-    downloadFile(content, filename, mimeType);
+    await downloadFile(content, filename, mimeType);
   };
 
   const copyToClipboard = async () => {
     const content = formatMessages(exportFormat);
     try {
       await navigator.clipboard.writeText(content);
-      // Could show toast notification here
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
     }
@@ -227,29 +252,118 @@ export default function ChatExport({ messages, darkMode, isOpen, onClose }) {
 
           {/* Actions */}
           <div className="space-y-3">
-            <button
+            <motion.button
               onClick={handleExport}
-              className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+              disabled={isExporting}
+              whileHover={{ scale: isExporting ? 1 : 1.02 }}
+              whileTap={{ scale: isExporting ? 1 : 0.98 }}
+              className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 relative overflow-hidden ${
+                isExporting 
+                  ? 'bg-blue-400 cursor-not-allowed' 
+                  : exportComplete
+                    ? 'bg-green-500 hover:bg-green-600'
+                    : 'bg-blue-500 hover:bg-blue-600'
+              } text-white`}
             >
-              <DocumentArrowDownIcon className="h-5 w-5" />
-              <span>Download File</span>
-            </button>
+              {/* Progress bar background */}
+              <AnimatePresence>
+                {isExporting && (
+                  <motion.div
+                    initial={{ width: '0%' }}
+                    animate={{ width: `${exportProgress}%` }}
+                    exit={{ width: '100%' }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    className="absolute left-0 top-0 h-full bg-blue-600 opacity-50"
+                  />
+                )}
+              </AnimatePresence>
+              
+              <AnimatePresence mode="wait">
+                {exportComplete ? (
+                  <motion.div
+                    key="complete"
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    exit={{ scale: 0, rotate: 180 }}
+                    className="flex items-center space-x-2"
+                  >
+                    <CheckIcon className="h-5 w-5" />
+                    <span>Downloaded!</span>
+                  </motion.div>
+                ) : isExporting ? (
+                  <motion.div
+                    key="exporting"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center space-x-2"
+                  >
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                    />
+                    <span>Exporting... {exportProgress}%</span>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="download"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center space-x-2"
+                  >
+                    <DocumentArrowDownIcon className="h-5 w-5" />
+                    <span>Download File</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
 
             <div className="grid grid-cols-2 gap-3">
-              <button
+              <motion.button
                 onClick={copyToClipboard}
-                className={`flex items-center justify-center space-x-2 px-4 py-2 border rounded-lg font-medium transition-colors ${
-                  darkMode 
-                    ? 'border-gray-600 text-gray-300 hover:bg-gray-800' 
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`flex items-center justify-center space-x-2 px-4 py-2 border rounded-lg font-medium transition-all duration-200 ${
+                  copySuccess
+                    ? 'border-green-500 text-green-600 bg-green-50 dark:bg-green-900/20'
+                    : darkMode 
+                      ? 'border-gray-600 text-gray-300 hover:bg-gray-800' 
+                      : 'border-gray-300 text-gray-700 hover:bg-gray-50'
                 }`}
               >
-                <ClipboardDocumentIcon className="h-4 w-4" />
-                <span>Copy</span>
-              </button>
+                <AnimatePresence mode="wait">
+                  {copySuccess ? (
+                    <motion.div
+                      key="success"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: 180 }}
+                      className="flex items-center space-x-2"
+                    >
+                      <CheckIcon className="h-4 w-4" />
+                      <span>Copied!</span>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="copy"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center space-x-2"
+                    >
+                      <ClipboardDocumentIcon className="h-4 w-4" />
+                      <span>Copy</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
 
-              <button
+              <motion.button
                 onClick={shareConversation}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className={`flex items-center justify-center space-x-2 px-4 py-2 border rounded-lg font-medium transition-colors ${
                   darkMode 
                     ? 'border-gray-600 text-gray-300 hover:bg-gray-800' 
@@ -258,7 +372,7 @@ export default function ChatExport({ messages, darkMode, isOpen, onClose }) {
               >
                 <ShareIcon className="h-4 w-4" />
                 <span>Share</span>
-              </button>
+              </motion.button>
             </div>
           </div>
 

@@ -5,6 +5,7 @@ import MainLayout from './layouts/MainLayout';
 import LoadingSpinner from './components/LoadingSpinner';
 import ErrorBoundary from './components/ErrorBoundary';
 import GlobalAnalytics from './components/GlobalAnalytics';
+import MaintenancePage from './components/MaintenancePage';
 import { usePerformanceMonitoring } from './hooks/usePerformance';
 import { useAnalytics } from './hooks/useAnalytics';
 
@@ -13,11 +14,11 @@ import { useAnalytics } from './hooks/useAnalytics';
 const Home = lazy(() => import('./pages/Home'));
 const Learn = lazy(() => import('./pages/Learn'));
 const Tools = lazy(() => import('./pages/Tools'));
-const Chatbot = lazy(() => import('./pages/LockedChatbot'));
+const Chatbot = lazy(() => import('./pages/Chatbot'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
-const News = lazy(() => import('./pages/LockedNews'));
-const Explore = lazy(() => import('./pages/LockedExplore'));
+const News = lazy(() => import('./pages/News'));
+const Explore = lazy(() => import('./pages/Explore'));
 const CreditCards = lazy(() => import('./pages/CreditCards'));
 const SBICreditCards = lazy(() => import('./pages/SBICreditCards'));
 const BOBCreditCards = lazy(() => import('./pages/BOBCreditCards'));
@@ -125,11 +126,23 @@ function App() {
           <Route path="/" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/learn" element={<MainLayout><Learn /></MainLayout>} />
           <Route path="/tools" element={<MainLayout><Tools /></MainLayout>} />
-          <Route path="/chatbot" element={<MainLayout><Chatbot /></MainLayout>} />
+          <Route path="/chatbot" element={
+            import.meta.env.VITE_LOCK_FINBOT_AI === 'true' 
+              ? <MainLayout><MaintenancePage pageName="FinBot AI" /></MainLayout>
+              : <MainLayout><Chatbot /></MainLayout>
+          } />
           <Route path="/about" element={<MainLayout><About /></MainLayout>} />
           <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
-          <Route path="/news" element={<MainLayout><News /></MainLayout>} />
-          <Route path="/explore" element={<MainLayout><Explore /></MainLayout>} />
+          <Route path="/news" element={
+            import.meta.env.VITE_LOCK_NEWS_PAGE === 'true'
+              ? <MainLayout><MaintenancePage pageName="News" /></MainLayout>
+              : <MainLayout><News /></MainLayout>
+          } />
+          <Route path="/explore" element={
+            import.meta.env.VITE_LOCK_EXPLORE_PAGE === 'true'
+              ? <MainLayout><MaintenancePage pageName="Explore" /></MainLayout>
+              : <MainLayout><Explore /></MainLayout>
+          } />
           <Route path="/credit-cards" element={<MainLayout><CreditCards /></MainLayout>} />
           <Route path="/credit-cards/sbi" element={<MainLayout><SBICreditCards /></MainLayout>} />
           <Route path="/credit-cards/bob" element={<MainLayout><BOBCreditCards /></MainLayout>} />

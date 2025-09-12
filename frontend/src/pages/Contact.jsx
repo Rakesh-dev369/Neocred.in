@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ROUTES } from '../utils/constants';
 
 const ContactPage = () => {
@@ -260,17 +261,62 @@ const ContactPage = () => {
                 📝 Send Us a Message
               </h2>
               
-              {submitStatus === 'success' && (
-                <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-4 mb-6">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">✅</span>
-                    <div>
-                      <p className="text-green-300 font-medium">Message sent successfully!</p>
-                      <p className="text-green-200 text-sm">We'll get back to you within 24 hours.</p>
+              <AnimatePresence>
+                {submitStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8, y: -20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                    className="bg-green-600/20 border border-green-500/30 rounded-lg p-4 mb-6 relative overflow-hidden"
+                  >
+                    {/* Celebration particles */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {[...Array(6)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0, x: '50%', y: '50%' }}
+                          animate={{ 
+                            opacity: [0, 1, 0],
+                            scale: [0, 1, 0],
+                            x: `${50 + (Math.random() - 0.5) * 200}%`,
+                            y: `${50 + (Math.random() - 0.5) * 200}%`
+                          }}
+                          transition={{ delay: i * 0.1, duration: 1 }}
+                          className="absolute w-2 h-2 bg-green-400 rounded-full"
+                        />
+                      ))}
                     </div>
-                  </div>
-                </div>
-              )}
+                    
+                    <div className="flex items-center gap-3 relative z-10">
+                      <motion.span 
+                        className="text-2xl"
+                        animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.2, 1] }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        ✅
+                      </motion.span>
+                      <div>
+                        <motion.p 
+                          className="text-green-300 font-medium"
+                          initial={{ x: -20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          Message sent successfully!
+                        </motion.p>
+                        <motion.p 
+                          className="text-green-200 text-sm"
+                          initial={{ x: -20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: 0.4 }}
+                        >
+                          We'll get back to you within 24 hours.
+                        </motion.p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col">
                 {/* Name and Email */}
@@ -279,34 +325,62 @@ const ContactPage = () => {
                     <label className="block text-gray-900 dark:text-white font-medium mb-2">
                       Name <span className="text-red-400">*</span>
                     </label>
-                    <input
+                    <motion.input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 transition-colors ${
+                      whileFocus={{ scale: 1.02, borderColor: "#3B82F6" }}
+                      animate={errors.name ? { x: [-10, 10, -10, 10, 0] } : {}}
+                      transition={{ duration: 0.4 }}
+                      className={`w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-200 ${
                         errors.name ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-white/20 focus:ring-blue-500'
                       }`}
                       placeholder="Your full name"
                     />
-                    {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
+                    <AnimatePresence>
+                      {errors.name && (
+                        <motion.p 
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="text-red-400 text-sm mt-1"
+                        >
+                          {errors.name}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
                   </div>
                   
                   <div>
                     <label className="block text-gray-900 dark:text-white font-medium mb-2">
                       Email <span className="text-red-400">*</span>
                     </label>
-                    <input
+                    <motion.input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 transition-colors ${
+                      whileFocus={{ scale: 1.02, borderColor: "#3B82F6" }}
+                      animate={errors.email ? { x: [-10, 10, -10, 10, 0] } : {}}
+                      transition={{ duration: 0.4 }}
+                      className={`w-full px-4 py-3 bg-gray-100 dark:bg-white/10 border rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-200 ${
                         errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 dark:border-white/20 focus:ring-blue-500'
                       }`}
                       placeholder="your.email@example.com"
                     />
-                    {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+                    <AnimatePresence>
+                      {errors.email && (
+                        <motion.p 
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="text-red-400 text-sm mt-1"
+                        >
+                          {errors.email}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
 
@@ -374,24 +448,45 @@ const ContactPage = () => {
 
                 {/* Submit Button */}
                 <div className="mt-auto flex justify-end">
-                <button
+                <motion.button
                   type="submit"
                   disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
                   className={`py-2 px-6 rounded-lg font-medium text-sm transition-all duration-300 ${
                     isSubmitting
                       ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                       : 'bg-blue-600 hover:bg-blue-700 text-white'
                   }`}
                 >
-                  {isSubmitting ? (
-                    <div className="flex items-center gap-2">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      Sending...
-                    </div>
-                  ) : (
-                    'Send Message'
-                  )}
-                </button>
+                  <AnimatePresence mode="wait">
+                    {isSubmitting ? (
+                      <motion.div 
+                        key="submitting"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-center gap-2"
+                      >
+                        <motion.div 
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="rounded-full h-4 w-4 border-b-2 border-white"
+                        />
+                        Sending...
+                      </motion.div>
+                    ) : (
+                      <motion.span
+                        key="send"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        Send Message
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
                 </div>
               </form>
               

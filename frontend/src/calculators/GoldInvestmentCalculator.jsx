@@ -1,167 +1,198 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AnimatedInput, AnimatedResults, AnimatedChart, CalculatorLayout } from '../components/calculator';
 
 const validationSchema = Yup.object({
-  grams: Yup.number()
-    .required('Gold quantity is required')
-    .min(0.1, 'Minimum quantity is 0.1 grams')
-    .max(10000, 'Maximum quantity is 10,000 grams'),
-  buyPrice: Yup.number()
-    .required('Buy price is required')
-    .min(1000, 'Minimum price is ₹1,000 per gram')
-    .max(100000, 'Maximum price is ₹1,00,000 per gram'),
-  currentPrice: Yup.number()
-    .required('Current price is required')
-    .min(1000, 'Minimum price is ₹1,000 per gram')
-    .max(100000, 'Maximum price is ₹1,00,000 per gram')
+  amount: Yup.number()
+    .required('Investment amount is required')
+    .min(1000, 'Minimum amount is ₹1,000')
+    .max(10000000, 'Maximum amount is ₹1 crore'),
+  goldPrice: Yup.number()
+    .required('Current gold price is required')
+    .min(3000, 'Minimum price is ₹3,000/gram')
+    .max(10000, 'Maximum price is ₹10,000/gram'),
+  years: Yup.number()
+    .required('Investment period is required')
+    .min(1, 'Minimum period is 1 year')
+    .max(30, 'Maximum period is 30 years'),
+  expectedReturn: Yup.number()
+    .required('Expected return is required')
+    .min(1, 'Minimum return is 1%')
+    .max(20, 'Maximum return is 20%')
 });
 
 const GoldInvestmentCalculator = () => {
   const [result, setResult] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const calculateGoldReturns = (values) => {
-    const { grams, buyPrice, currentPrice } = values;
-    const totalInvestment = grams * buyPrice;
-    const currentValue = grams * currentPrice;
-    const absoluteReturn = currentValue - totalInvestment;
-    const percentageReturn = ((currentValue - totalInvestment) / totalInvestment) * 100;
+  const calculateGoldInvestment = async (values) => {
+    setIsCalculating(true);
+    setProgress(0);
     
+    for (let i = 0; i <= 100; i += 20) {
+      setProgress(i);
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    
+    const { amount, goldPrice, years, expectedReturn } = values;
+    
+    // Calculate gold quantity
+    const goldQuantity = amount / goldPrice;
+    
+    // Calculate future value
+    const futureValue = amount * Math.pow(1 + expectedReturn / 100, years);
+    const totalGains = futureValue - amount;
+    
+    // Calculate future gold price
+    const futureGoldPrice = goldPrice * Math.pow(1 + expectedReturn / 100, years);
+    
+    // Generate yearly data
+    const yearlyData = [];
+    for (let year = 0; year <= years; year++) {
+      const yearValue = amount * Math.pow(1 + expectedReturn / 100, year);
+      const yearGoldPrice = goldPrice * Math.pow(1 + expectedReturn / 100, year);
+      yearlyData.push({
+        year,
+        value: Math.round(yearValue),
+        goldPrice: Math.round(yearGoldPrice)
+      });
+    }
+
     setResult({
-      grams,
-      buyPrice,
-      currentPrice,
-      totalInvestment,
-      currentValue,
-      absoluteReturn,
-      percentageReturn: percentageReturn.toFixed(2),
+      amount,
+      goldPrice,
+      goldQuantity: goldQuantity.toFixed(2),
+      years,
+      expectedReturn,
+      futureValue: Math.round(futureValue),
+      totalGains: Math.round(totalGains),
+      futureGoldPrice: Math.round(futureGoldPrice),
+      yearlyData,
       data: [
-        { name: 'Investment', amount: totalInvestment },
-        { name: 'Current Value', amount: currentValue },
-        { name: absoluteReturn >= 0 ? 'Profit' : 'Loss', amount: Math.abs(absoluteReturn) }
+        { name: 'Investment', amount: amount },
+        { name: 'Gains', amount: totalGains },
+        { name: 'Future Value', amount: futureValue }
       ]
     });
+    
+    setIsCalculating(false);
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Gold Investment Calculator</h2>
+    <CalculatorLayout 
+      title="Gold Investment Calculator" 
+      description="Digital gold and SGB investment planning"
+      isCalculating={isCalculating}
+      progress={progress}
+      result={result}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
         <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">🏅 Gold Investment Calculator</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">🥇 Gold Investment Calculator</h3>
           
           <Formik
             initialValues={{
-              grams: '',
-              buyPrice: '',
-              currentPrice: ''
+              amount: '',
+              goldPrice: '6500',
+              years: '',
+              expectedReturn: '8'
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
-              calculateGoldReturns(values);
+              calculateGoldInvestment(values);
               setSubmitting(false);
             }}
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Quantity of Gold (Grams)
-                  </label>
-                  <Field
-                    name="grams"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    placeholder="10"
-                  />
-                  <ErrorMessage name="grams" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="amount"
+                  label="Investment Amount (₹)"
+                  type="number"
+                  placeholder="100000"
+                  icon="💰"
+                />
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Buy Price per Gram (₹)
-                  </label>
-                  <Field
-                    name="buyPrice"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="5000"
-                  />
-                  <ErrorMessage name="buyPrice" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="goldPrice"
+                  label="Current Gold Price (₹/gram)"
+                  type="number"
+                  placeholder="6500"
+                  helpText="Current market price per gram"
+                  icon="🥇"
+                />
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Current Price per Gram (₹)
-                  </label>
-                  <Field
-                    name="currentPrice"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="5500"
-                  />
-                  <ErrorMessage name="currentPrice" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="years"
+                  label="Investment Period (Years)"
+                  type="number"
+                  placeholder="10"
+                  icon="⏰"
+                />
+                
+                <AnimatedInput
+                  name="expectedReturn"
+                  label="Expected Annual Return (%)"
+                  type="number"
+                  step="0.1"
+                  placeholder="8"
+                  helpText="Historical gold returns: 8-10%"
+                  icon="📈"
+                />
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isCalculating}
                   className="btn-primary w-full"
                 >
-                  Calculate Gold Returns
+                  {isCalculating ? 'Calculating...' : 'Calculate Gold Returns'}
                 </button>
               </Form>
             )}
           </Formik>
+
+          {/* Gold Investment Options */}
+          <div className="mt-6 space-y-3">
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Gold Investment Options:</h4>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded">🥇 Digital Gold</div>
+              <div className="p-2 bg-orange-50 dark:bg-orange-900/20 rounded">📊 Gold ETFs</div>
+              <div className="p-2 bg-amber-50 dark:bg-amber-900/20 rounded">🏛️ Sovereign Gold Bonds</div>
+              <div className="p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded">💍 Physical Gold</div>
+            </div>
+          </div>
         </div>
 
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Gold Investment Analysis</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Gold Quantity:</span>
-                  <span className="text-gray-900 dark:text-white font-semibold">{result.grams} grams</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Total Investment:</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold">₹{result.totalInvestment.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Current Value:</span>
-                  <span className="text-gray-900 dark:text-white font-semibold">₹{result.currentValue.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Absolute Return:</span>
-                  <span className={`font-semibold ${result.absoluteReturn >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                    {result.absoluteReturn >= 0 ? '+' : ''}₹{result.absoluteReturn.toLocaleString()}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-700 dark:text-white/80">Percentage Return:</span>
-                  <span className={`font-bold text-lg ${result.absoluteReturn >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                    {result.absoluteReturn >= 0 ? '+' : ''}{result.percentageReturn}%
-                  </span>
-                </div>
-              </div>
-              
-              <div className={`mt-6 p-4 rounded-lg border ${result.absoluteReturn >= 0 ? 'bg-yellow-900/20 border-yellow-500/30' : 'bg-red-900/20 border-red-500/30'}`}>
-                <p className={`text-sm ${result.absoluteReturn >= 0 ? 'text-yellow-900 dark:text-yellow-100' : 'text-red-900 dark:text-red-100'}`}>
-                  {result.absoluteReturn >= 0 ? '📈' : '📉'} <strong>Gold Performance:</strong> Your {result.grams}g gold investment has {result.absoluteReturn >= 0 ? 'gained' : 'lost'} ₹{Math.abs(result.absoluteReturn).toLocaleString()} ({result.percentageReturn}%).
-                </p>
-              </div>
-            </div>
+            <AnimatedResults
+              title="Gold Investment Projection"
+              variant="success"
+              results={[
+                { label: 'Investment Amount', value: `₹${result.amount.toLocaleString()}`, color: 'blue' },
+                { label: 'Gold Quantity', value: `${result.goldQuantity} grams`, color: 'yellow' },
+                { label: 'Current Gold Price', value: `₹${result.goldPrice.toLocaleString()}/gram`, color: 'orange' },
+                { label: 'Future Gold Price', value: `₹${result.futureGoldPrice.toLocaleString()}/gram`, color: 'orange' },
+                { label: 'Total Gains', value: `₹${result.totalGains.toLocaleString()}`, color: 'green' },
+                { label: 'Future Value', value: `₹${result.futureValue.toLocaleString()}`, color: 'yellow', highlight: true }
+              ]}
+              tip={{
+                icon: '🥇',
+                text: 'Gold is a hedge against inflation. Consider SGBs for tax benefits and additional interest.'
+              }}
+            />
 
             <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Investment vs Current Value</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Gold Price & Investment Growth</h3>
               <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
+                <LineChart data={result.yearlyData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
                   <XAxis 
-                    dataKey="name" 
+                    dataKey="year" 
                     tick={{ fill: 'currentColor', fontSize: 10 }}
                     axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
                   />
@@ -171,7 +202,10 @@ const GoldInvestmentCalculator = () => {
                     tickFormatter={(val) => `₹${(val/1000).toFixed(0)}K`}
                   />
                   <Tooltip 
-                    formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
+                    formatter={(val, name) => [
+                      name === 'value' ? `₹${Number(val).toLocaleString()}` : `₹${Number(val).toLocaleString()}/gram`,
+                      name === 'value' ? 'Investment Value' : 'Gold Price'
+                    ]}
                     contentStyle={{
                       backgroundColor: 'rgba(255, 255, 255, 0.95)',
                       border: '1px solid rgba(0, 0, 0, 0.1)',
@@ -180,25 +214,27 @@ const GoldInvestmentCalculator = () => {
                     }}
                     labelStyle={{ color: '#000000' }}
                   />
-                  <Bar 
-                    dataKey="amount" 
-                    radius={[4, 4, 0, 0]}
-                    fill="url(#goldGradient)"
+                  <Line 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#f59e0b" 
+                    strokeWidth={3}
+                    dot={{ fill: '#f59e0b', strokeWidth: 2, r: 4 }}
                   />
-                  <defs>
-                    <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#fbbf24" />
-                      <stop offset="50%" stopColor="#f59e0b" />
-                      <stop offset="100%" stopColor="#d97706" />
-                    </linearGradient>
-                  </defs>
-                </BarChart>
+                  <Line 
+                    type="monotone" 
+                    dataKey="goldPrice" 
+                    stroke="#eab308" 
+                    strokeWidth={2}
+                    dot={{ fill: '#eab308', strokeWidth: 2, r: 3 }}
+                  />
+                </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
         )}
       </div>
-    </div>
+    </CalculatorLayout>
   );
 };
 

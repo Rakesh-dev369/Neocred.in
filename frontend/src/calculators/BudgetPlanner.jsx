@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+import { motion, AnimatePresence } from 'framer-motion';
+import { CalculatorLayout, AnimatedInput, AnimatedResults, AnimatedChart, AnimatedButton } from '../components/calculator';
 
 const COLORS = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#06b6d4", "#8b5cf6", "#ec4899", "#64748b"];
 
@@ -26,12 +20,20 @@ const BudgetPlanner = () => {
     { category: "Food", amount: 8000 },
     { category: "Transport", amount: 3000 },
   ]);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [status, setStatus] = useState(null);
 
-  const handleAddExpense = (values, { resetForm, setSubmitting }) => {
+  const handleAddExpense = async (values, { resetForm, setSubmitting }) => {
+    setIsCalculating(true);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
     const updated = [...expenses, { category: values.category, amount: parseFloat(values.amount) }];
     setExpenses(updated);
+    setStatus({ type: 'success', message: `Added ${values.category} expense successfully!` });
+    setTimeout(() => setStatus(null), 2000);
     resetForm();
     setSubmitting(false);
+    setIsCalculating(false);
   };
 
   const handleRemoveExpense = (index) => {
@@ -49,13 +51,29 @@ const BudgetPlanner = () => {
     : expenses;
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Monthly Budget Planner</h2>
+    <CalculatorLayout 
+      title="Monthly Budget Planner" 
+      status={status}
+      showProgress={true}
+      steps={['Set Income', 'Add Expenses', 'View Budget']}
+      currentStep={expenses.length > 0 ? 2 : income > 0 ? 1 : 0}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
-        <div className="space-y-6">
+        <motion.div 
+          className="space-y-6"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="bg-gray-200 dark:bg-white/5 p-6 rounded-xl">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Monthly Income</h3>
+            <motion.h3 
+              className="text-lg font-semibold mb-4 text-gray-900 dark:text-white"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              Monthly Income
+            </motion.h3>
             <Formik
               initialValues={{ income: income }}
               validationSchema={Yup.object({
@@ -72,32 +90,34 @@ const BudgetPlanner = () => {
             >
               {({ isSubmitting }) => (
                 <Form className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                      Monthly Income (₹)
-                    </label>
-                    <Field
-                      name="income"
-                      type="number" onWheel={(e) => e.target.blur()}
-                      className="input-field"
-                      placeholder="50000"
-                    />
-                    <ErrorMessage name="income" component="div" className="text-red-500 text-sm mt-1" />
-                  </div>
-                  <button
+                  <AnimatedInput
+                    name="income"
+                    label="Monthly Income"
+                    placeholder="50000"
+                    prefix="₹"
+                  />
+                  <AnimatedButton
                     type="submit"
                     disabled={isSubmitting}
-                    className="btn-primary w-full"
+                    className="w-full"
+                    variant="primary"
                   >
                     Update Income
-                  </button>
+                  </AnimatedButton>
                 </Form>
               )}
             </Formik>
           </div>
 
-          <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Add New Expense</h3>
+          <div className="bg-gray-200 dark:bg-white/5 p-6 rounded-xl">
+            <motion.h3 
+              className="text-lg font-semibold mb-4 text-gray-900 dark:text-white"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              Add New Expense
+            </motion.h3>
             <Formik
               initialValues={{ category: '', amount: '' }}
               validationSchema={expenseSchema}
@@ -105,132 +125,99 @@ const BudgetPlanner = () => {
             >
               {({ isSubmitting }) => (
                 <Form className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                      Category
-                    </label>
-                    <Field
-                      name="category"
-                      type="text"
-                      className="input-field"
-                      placeholder="Expense Category"
-                    />
-                    <ErrorMessage name="category" component="div" className="text-red-500 text-sm mt-1" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                      Amount (₹)
-                    </label>
-                    <Field
-                      name="amount"
-                      type="number" onWheel={(e) => e.target.blur()}
-                      className="input-field"
-                      placeholder="Amount"
-                    />
-                    <ErrorMessage name="amount" component="div" className="text-red-500 text-sm mt-1" />
-                  </div>
-                  <button
+                  <AnimatedInput
+                    name="category"
+                    label="Category"
+                    type="text"
+                    placeholder="Expense Category"
+                    prefix=""
+                  />
+                  <AnimatedInput
+                    name="amount"
+                    label="Amount"
+                    placeholder="Amount"
+                    prefix="₹"
+                  />
+                  <AnimatedButton
                     type="submit"
+                    loading={isCalculating}
                     disabled={isSubmitting}
-                    className="btn-primary w-full"
+                    className="w-full"
+                    variant="success"
                   >
-                    Add Expense
-                  </button>
+                    {isCalculating ? 'Adding...' : 'Add Expense'}
+                  </AnimatedButton>
                 </Form>
               )}
             </Formik>
           </div>
 
-          <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Current Expenses</h3>
-            <ul className="divide-y divide-gray-300 dark:divide-white/20">
-              {expenses.map((exp, idx) => (
-                <li
-                  key={idx}
-                  className="flex justify-between items-center py-3 hover:bg-gray-300 dark:hover:bg-white/5"
-                >
-                  <span className="text-gray-900 dark:text-white">{exp.category}</span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-semibold text-gray-900 dark:text-white">₹{exp.amount.toLocaleString()}</span>
-                    <button
-                      onClick={() => handleRemoveExpense(idx)}
-                      className="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-700 dark:text-red-300 hover:underline"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Results Section */}
-        <div className="space-y-6">
-          <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Budget Summary</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                <span className="text-gray-700 dark:text-white/80">Monthly Income:</span>
-                <span className="text-blue-600 dark:text-blue-400 font-semibold">₹{income.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                <span className="text-gray-700 dark:text-white/80">Total Expenses:</span>
-                <span className="text-orange-600 dark:text-orange-400 font-semibold">₹{totalExpenses.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between items-center py-2">
-                <span className="text-gray-700 dark:text-white/80">Remaining Balance:</span>
-                <span className={`font-bold text-lg ${
-                  remaining < 0 ? "text-red-600 dark:text-red-400" : "text-green-600 dark:text-green-400"
-                }`}>
-                  ₹{remaining.toLocaleString()}
-                </span>
-              </div>
+          <div className="bg-gray-200 dark:bg-white/5 p-6 rounded-xl">
+            <motion.h3 
+              className="text-lg font-semibold mb-4 text-gray-900 dark:text-white"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              Current Expenses
+            </motion.h3>
+            <div className="divide-y divide-gray-300 dark:divide-white/20">
+              <AnimatePresence>
+                {expenses.map((exp, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex justify-between items-center py-3 hover:bg-gray-300 dark:hover:bg-white/5 rounded-lg px-2"
+                  >
+                    <span className="text-gray-900 dark:text-white">{exp.category}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="font-semibold text-gray-900 dark:text-white">₹{exp.amount.toLocaleString()}</span>
+                      <motion.button
+                        onClick={() => handleRemoveExpense(idx)}
+                        className="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 hover:underline"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Delete
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           </div>
+        </motion.div>
 
-          <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Expense Distribution</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={chartData}
-                  dataKey="amount"
-                  nameKey="category"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  innerRadius={30}
-                  fill="#8884d8"
-                  label={({ percent }) => `${(percent * 100).toFixed(1)}%`}
-                  labelLine={false}
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  {chartData.map((_, idx) => (
-                    <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  formatter={(val) => [`₹${val.toLocaleString()}`, 'Amount']}
-                  contentStyle={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                    border: '1px solid rgba(0, 0, 0, 0.1)',
-                    borderRadius: '8px',
-                    color: '#000000'
-                  }}
-                  labelStyle={{ color: '#000000' }}
-                />
-                <Legend 
-                  wrapperStyle={{ paddingTop: '10px', color: 'currentColor' }}
-                  iconType="circle"
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        {/* Results Section */}
+        <motion.div 
+          className="space-y-6"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <AnimatedResults 
+            results={{
+              monthlyIncome: income,
+              totalExpenses: totalExpenses,
+              remainingBalance: remaining
+            }} 
+            isVisible={true} 
+            title="Budget Summary"
+          />
+          
+          <AnimatedChart
+            data={chartData}
+            type="pie"
+            title="Expense Distribution"
+            colors={COLORS}
+            height={300}
+          />
+        </motion.div>
       </div>
-    </div>
+    </CalculatorLayout>
   );
 };
 

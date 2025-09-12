@@ -2,62 +2,115 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AnimatedInput, AnimatedResults, AnimatedChart, CalculatorLayout } from '../components/calculator';
 
 const validationSchema = Yup.object({
-  emi: Yup.number()
-    .required('Affordable EMI is required')
-    .min(1000, 'Minimum EMI is ₹1,000')
+  income: Yup.number()
+    .required('Monthly income is required')
+    .min(20000, 'Minimum income is ₹20,000')
+    .max(1000000, 'Maximum income is ₹10 lakhs'),
+  expenses: Yup.number()
+    .required('Monthly expenses are required')
+    .min(5000, 'Minimum expenses is ₹5,000')
+    .max(500000, 'Maximum expenses is ₹5 lakhs'),
+  existingEMI: Yup.number()
+    .min(0, 'EMI cannot be negative')
     .max(200000, 'Maximum EMI is ₹2 lakhs'),
-  interest: Yup.number()
-    .required('Interest rate is required')
-    .min(1, 'Minimum rate is 1%')
-    .max(25, 'Maximum rate is 25%'),
-  years: Yup.number()
-    .required('Tenure is required')
-    .min(1, 'Minimum tenure is 1 year')
-    .max(30, 'Maximum tenure is 30 years')
+  desiredEMI: Yup.number()
+    .required('Desired EMI is required')
+    .min(1000, 'Minimum EMI is ₹1,000')
+    .max(100000, 'Maximum EMI is ₹1 lakh')
 });
 
 const LoanAffordabilityTool = () => {
   const [result, setResult] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const calculateAffordability = (values) => {
-    const { emi, interest, years } = values;
-    const months = years * 12;
-    const monthlyRate = interest / 12 / 100;
+  const calculateAffordability = async (values) => {
+    setIsCalculating(true);
+    setProgress(0);
     
-    const loanAmount = emi * (Math.pow(1 + monthlyRate, months) - 1) /
-                       (monthlyRate * Math.pow(1 + monthlyRate, months));
+    for (let i = 0; i <= 100; i += 25) {
+      setProgress(i);
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
     
-    const totalAmount = emi * months;
-    const totalInterest = totalAmount - loanAmount;
+    const { income, expenses, existingEMI, desiredEMI } = values;
+    
+    const totalEMI = (existingEMI || 0) + desiredEMI;
+    const disposableIncome = income - expenses;
+    const remainingIncome = disposableIncome - totalEMI;
+    
+    // Affordability ratios
+    const emiToIncomeRatio = (totalEMI / income) * 100;
+    const expenseToIncomeRatio = (expenses / income) * 100;
+    const savingsRatio = (remainingIncome / income) * 100;
+    
+    // Affordability status
+    let affordability = 'Not Affordable';
+    let affordabilityColor = 'red';
+    let recommendation = 'Reduce EMI amount or increase income';
+    
+    if (emiToIncomeRatio <= 40 && remainingIncome >= 10000) {
+      affordability = 'Highly Affordable';
+      affordabilityColor = 'green';
+      recommendation = 'Excellent! You can comfortably afford this EMI';
+    } else if (emiToIncomeRatio <= 50 && remainingIncome >= 5000) {
+      affordability = 'Affordable';
+      affordabilityColor = 'blue';
+      recommendation = 'Manageable, but keep emergency fund ready';
+    } else if (emiToIncomeRatio <= 60 && remainingIncome >= 0) {
+      affordability = 'Tight Budget';
+      affordabilityColor = 'yellow';
+      recommendation = 'Very tight budget, consider reducing EMI';
+    }
+    
+    const data = [
+      { name: 'Expenses', amount: expenses, percentage: expenseToIncomeRatio },
+      { name: 'Total EMI', amount: totalEMI, percentage: emiToIncomeRatio },
+      { name: 'Remaining', amount: Math.max(0, remainingIncome), percentage: Math.max(0, savingsRatio) }
+    ];
 
     setResult({
-      emi,
-      loanAmount: Math.round(loanAmount),
-      totalAmount: Math.round(totalAmount),
-      totalInterest: Math.round(totalInterest),
-      data: [
-        { name: 'Loan Amount', amount: Math.round(loanAmount) },
-        { name: 'Total Interest', amount: Math.round(totalInterest) },
-        { name: 'Total Payment', amount: Math.round(totalAmount) }
-      ]
+      income,
+      expenses,
+      existingEMI: existingEMI || 0,
+      desiredEMI,
+      totalEMI,
+      disposableIncome,
+      remainingIncome,
+      emiToIncomeRatio: Math.round(emiToIncomeRatio * 10) / 10,
+      expenseToIncomeRatio: Math.round(expenseToIncomeRatio * 10) / 10,
+      savingsRatio: Math.round(savingsRatio * 10) / 10,
+      affordability,
+      affordabilityColor,
+      recommendation,
+      data
     });
+    
+    setIsCalculating(false);
   };
 
   return (
-    <div className="max-w-6xl mx-auto glass-card mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-white">Loan Affordability Tool</h2>
+    <CalculatorLayout 
+      title="Loan Affordability Tool" 
+      description="Check if you can afford the EMI comfortably"
+      isCalculating={isCalculating}
+      progress={progress}
+      result={result}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
         <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-white">💰 Loan Affordability Tool</h3>
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">💰 Loan Affordability Tool</h3>
           
           <Formik
             initialValues={{
-              emi: '',
-              interest: '',
-              years: ''
+              income: '',
+              expenses: '',
+              existingEMI: '',
+              desiredEMI: ''
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
@@ -67,130 +120,108 @@ const LoanAffordabilityTool = () => {
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Affordable Monthly EMI (₹)
-                  </label>
-                  <Field
-                    name="emi"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="15000"
-                  />
-                  <ErrorMessage name="emi" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="income"
+                  label="Monthly Income (₹)"
+                  type="number"
+                  placeholder="60000"
+                  icon="💰"
+                />
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Interest Rate (% per annum)
-                  </label>
-                  <Field
-                    name="interest"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    placeholder="8"
-                  />
-                  <ErrorMessage name="interest" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="expenses"
+                  label="Monthly Expenses (₹)"
+                  type="number"
+                  placeholder="30000"
+                  helpText="Fixed expenses like rent, utilities, food"
+                  icon="💸"
+                />
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Loan Tenure (Years)
-                  </label>
-                  <Field
-                    name="years"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="5"
-                  />
-                  <ErrorMessage name="years" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="existingEMI"
+                  label="Existing EMI (₹)"
+                  type="number"
+                  placeholder="0"
+                  helpText="Current loan EMIs (optional)"
+                  icon="📋"
+                />
+                
+                <AnimatedInput
+                  name="desiredEMI"
+                  label="Desired New EMI (₹)"
+                  type="number"
+                  placeholder="15000"
+                  helpText="EMI for the new loan you want"
+                  icon="🎯"
+                />
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isCalculating}
                   className="btn-primary w-full"
                 >
-                  Calculate Loan Amount
+                  {isCalculating ? 'Analyzing...' : 'Check Affordability'}
                 </button>
               </Form>
             )}
           </Formik>
+
+          {/* Affordability Guidelines */}
+          <div className="mt-6 space-y-3">
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white">Affordability Guidelines:</h4>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="text-green-500">✓</span>
+                <span>EMI ≤ 40% of income: Highly Affordable</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-blue-500">✓</span>
+                <span>EMI ≤ 50% of income: Affordable</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-yellow-500">⚠</span>
+                <span>EMI ≤ 60% of income: Tight Budget</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-red-500">✗</span>
+                <span>EMI > 60% of income: Not Affordable</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-white mb-4">Affordability Analysis</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Monthly EMI:</span>
-                  <span className="text-blue-400 font-semibold">₹{result.emi.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Loan Amount You Can Afford:</span>
-                  <span className="text-green-400 font-bold text-xl">₹{result.loanAmount.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Total Interest:</span>
-                  <span className="text-red-400 font-semibold">₹{result.totalInterest.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-700 dark:text-white/80">Total Payment:</span>
-                  <span className="text-yellow-400 font-bold text-lg">₹{result.totalAmount.toLocaleString()}</span>
-                </div>
-              </div>
-              
-              <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 rounded-lg">
-                <p className="text-green-900 dark:text-green-100 text-sm">
-                  💰 <strong>Affordability Tip:</strong> Ensure your EMI doesn't exceed 40-50% of your monthly income for comfortable repayment.
-                </p>
-              </div>
-            </div>
+            <AnimatedResults
+              title="Affordability Analysis"
+              variant={result.affordability === 'Highly Affordable' ? 'success' : 
+                      result.affordability === 'Not Affordable' ? 'warning' : 'info'}
+              results={[
+                { label: 'Affordability Status', value: result.affordability, color: result.affordabilityColor, highlight: true },
+                { label: 'Monthly Income', value: `₹${result.income.toLocaleString()}`, color: 'green' },
+                { label: 'Total EMI', value: `₹${result.totalEMI.toLocaleString()}`, color: 'blue' },
+                { label: 'EMI to Income Ratio', value: `${result.emiToIncomeRatio}%`, color: result.emiToIncomeRatio <= 40 ? 'green' : result.emiToIncomeRatio <= 50 ? 'yellow' : 'red' },
+                { label: 'Remaining Income', value: `₹${result.remainingIncome.toLocaleString()}`, color: result.remainingIncome >= 10000 ? 'green' : result.remainingIncome >= 0 ? 'yellow' : 'red' },
+                { label: 'Savings Potential', value: `${result.savingsRatio}%`, color: result.savingsRatio >= 20 ? 'green' : result.savingsRatio >= 10 ? 'yellow' : 'red' }
+              ]}
+              tip={{
+                icon: '💰',
+                text: result.recommendation
+              }}
+            />
 
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-white mb-4 text-center">Loan Breakdown</h3>
-              <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
-                  <XAxis 
-                    dataKey="name" 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
-                  />
-                  <YAxis 
-                    tick={{ fill: '#ffffff', fontSize: 10 }}
-                    axisLine={{ stroke: '#ffffff', strokeWidth: 1 }}
-                    tickFormatter={(val) => `₹${(val/1000).toFixed(0)}K`}
-                  />
-                  <Tooltip 
-                    formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
-                    contentStyle={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '8px',
-                      color: '#ffffff'
-                    }}
-                  />
-                  <Bar 
-                    dataKey="amount" 
-                    radius={[4, 4, 0, 0]}
-                    fill="url(#affordabilityGradient)"
-                  />
-                  <defs>
-                    <linearGradient id="affordabilityGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#8b5cf6" />
-                      <stop offset="50%" stopColor="#7c3aed" />
-                      <stop offset="100%" stopColor="#6d28d9" />
-                    </linearGradient>
-                  </defs>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <AnimatedChart
+              title="Income Allocation"
+              data={result.data}
+              type="bar"
+              gradientId="affordabilityGradient"
+              gradientColors={['#ef4444', '#3b82f6', '#10b981']}
+            />
           </div>
         )}
       </div>
-    </div>
+    </CalculatorLayout>
   );
 };
 

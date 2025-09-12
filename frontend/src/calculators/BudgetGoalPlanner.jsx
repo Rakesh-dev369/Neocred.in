@@ -1,262 +1,278 @@
-import { useState } from "react";
-import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { AnimatedInput, AnimatedResults, AnimatedChart, CalculatorLayout, AnimatedButton } from '../components/calculator';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function BudgetGoalPlanner() {
-  const [goals, setGoals] = useState([
-    { id: 1, name: "", amount: "", months: "", saved: "", type: "short", monthly: 0, adjusted: 0, progress: 0 },
-  ]);
-  const [inflationRate, setInflationRate] = useState(6); // default 6% annual
+const validationSchema = Yup.object({
+  income: Yup.number()
+    .required('Monthly income is required')
+    .min(10000, 'Minimum income is ₹10,000')
+    .max(1000000, 'Maximum income is ₹10 lakhs')
+});
+
+const BudgetGoalPlanner = () => {
+  const [result, setResult] = useState(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [goals, setGoals] = useState([
+    { name: 'Emergency Fund', target: 0, priority: 'High', timeframe: '6 months' },
+    { name: 'Vacation', target: 0, priority: 'Medium', timeframe: '12 months' }
+  ]);
 
-  const handleChange = (id, field, value) => {
-    setGoals(prev =>
-      prev.map(goal =>
-        goal.id === id ? { ...goal, [field]: value } : goal
-      )
-    );
-  };
-
-  const addGoal = () => {
-    const newId = Math.max(...goals.map(g => g.id)) + 1;
-    setGoals([...goals, { id: newId, name: "", amount: "", months: "", saved: "", type: "short", monthly: 0, adjusted: 0, progress: 0 }]);
-  };
-
-  const removeGoal = (id) => {
-    if (goals.length > 1) {
-      setGoals(goals.filter(goal => goal.id !== id));
-    }
-  };
-
-  const calculateSavings = () => {
+  const calculateBudgetGoals = async (values) => {
     setIsCalculating(true);
-    const updatedGoals = goals.map(goal => {
-      const amount = parseFloat(goal.amount);
-      const months = parseInt(goal.months);
-      const saved = parseFloat(goal.saved) || 0;
-      const years = months / 12;
-      const inflation = parseFloat(inflationRate) / 100;
-
-      const adjusted = !isNaN(amount) && years > 0
-        ? amount * Math.pow(1 + inflation, years)
-        : 0;
-
-      const monthly = adjusted > 0 && months > 0
-        ? (adjusted - saved) / months
-        : 0;
-
-      const progress = adjusted > 0 ? (saved / adjusted) * 100 : 0;
-
+    setProgress(0);
+    
+    for (let i = 0; i <= 100; i += 20) {
+      setProgress(i);
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    
+    const { income } = values;
+    
+    // 50/30/20 base allocation
+    const needs = income * 0.5;
+    const wants = income * 0.3;
+    const savings = income * 0.2;
+    
+    // Calculate goal allocations
+    const totalGoalTarget = goals.reduce((sum, goal) => sum + Number(goal.target || 0), 0);
+    const goalsWithAllocation = goals.map(goal => {
+      const monthsToTarget = goal.timeframe === '6 months' ? 6 : 
+                           goal.timeframe === '12 months' ? 12 : 
+                           goal.timeframe === '24 months' ? 24 : 12;
+      const monthlyRequired = Number(goal.target || 0) / monthsToTarget;
+      const percentage = totalGoalTarget > 0 ? (Number(goal.target || 0) / totalGoalTarget) * 100 : 0;
+      
       return {
         ...goal,
-        adjusted: adjusted.toFixed(2),
-        monthly: Math.max(monthly, 0).toFixed(2),
-        progress: Math.min(progress.toFixed(1), 100)
+        monthlyRequired: Math.round(monthlyRequired),
+        percentage: Math.round(percentage * 10) / 10,
+        monthsToTarget
       };
     });
+    
+    const totalMonthlyGoals = goalsWithAllocation.reduce((sum, goal) => sum + goal.monthlyRequired, 0);
+    const remainingSavings = savings - totalMonthlyGoals;
+    
+    const data = [
+      { name: 'Needs (50%)', value: needs, color: '#ef4444' },
+      { name: 'Wants (30%)', value: wants, color: '#f59e0b' },
+      { name: 'Goals', value: totalMonthlyGoals, color: '#8b5cf6' },
+      { name: 'Other Savings', value: Math.max(remainingSavings, 0), color: '#10b981' }
+    ].filter(item => item.value > 0);
 
-    setGoals(updatedGoals);
+    setResult({
+      income,
+      needs: Math.round(needs),
+      wants: Math.round(wants),
+      savings: Math.round(savings),
+      totalMonthlyGoals: Math.round(totalMonthlyGoals),
+      remainingSavings: Math.round(remainingSavings),
+      goalsWithAllocation,
+      data,
+      feasible: remainingSavings >= 0
+    });
+    
     setIsCalculating(false);
   };
 
-  const totalMonthly = goals.reduce((sum, goal) => sum + parseFloat(goal.monthly || 0), 0);
-  const totalTarget = goals.reduce((sum, goal) => sum + parseFloat(goal.adjusted || 0), 0);
-  const totalSaved = goals.reduce((sum, goal) => sum + parseFloat(goal.saved || 0), 0);
+  const addGoal = () => {
+    setGoals([...goals, { name: '', target: 0, priority: 'Medium', timeframe: '12 months' }]);
+  };
 
-  const getTypeColor = (type) => {
-    switch(type) {
-      case 'short': return 'bg-green-500/20 text-green-700 dark:text-green-300 border-green-500/30';
-      case 'medium': return 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-300 border-yellow-500/30';
-      case 'long': return 'bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30';
-      default: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
+  const removeGoal = (index) => {
+    if (goals.length > 1) {
+      setGoals(goals.filter((_, i) => i !== index));
     }
   };
 
-  const getProgressColor = (progress) => {
-    if (progress >= 75) return 'bg-green-500';
-    if (progress >= 50) return 'bg-yellow-500';
-    if (progress >= 25) return 'bg-orange-500';
-    return 'bg-red-500';
+  const updateGoal = (index, field, value) => {
+    const updated = [...goals];
+    updated[index][field] = value;
+    setGoals(updated);
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Budget Goal Planner</h2>
-      
-      <div className="space-y-6">
-        {/* Inflation Rate Setting */}
-        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-          <div className="flex items-center gap-4">
-            <label className="text-gray-900 dark:text-white font-semibold">📈 Inflation Rate (annual %):</label>
-            <input
-              className="input-field w-24 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              type="number" onWheel={(e) => e.target.blur()}
-              value={inflationRate}
-              onChange={e => setInflationRate(e.target.value)}
-            />
-            <span className="text-gray-700 dark:text-white/80 text-sm">Used to adjust future goal values</span>
-          </div>
-        </div>
-
-        {/* Goals List */}
-        <div className="space-y-4">
-          {goals.map((goal, index) => (
-            <div key={goal.id} className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">🎯 Goal #{index + 1}</h3>
-                {goals.length > 1 && (
-                  <button
-                    onClick={() => removeGoal(goal.id)}
-                    className="p-2 text-red-400 hover:text-red-700 dark:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
-                  >
-                    <TrashIcon className="h-4 w-4" />
-                  </button>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Goal Name</label>
-                  <input
-                    className="input-field"
-                    placeholder="e.g., New Car, Vacation"
-                    value={goal.name}
-                    onChange={e => handleChange(goal.id, "name", e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Goal Type</label>
-                  <select
-                    className="input-field"
-                    value={goal.type}
-                    onChange={e => handleChange(goal.id, "type", e.target.value)}
-                  >
-                    <option value="short">Short-Term (&lt; 2 years)</option>
-                    <option value="medium">Medium-Term (2-5 years)</option>
-                    <option value="long">Long-Term (&gt; 5 years)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Target Amount (₹)</label>
-                  <input
-                    className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    placeholder="100000"
-                    value={goal.amount}
-                    onChange={e => handleChange(goal.id, "amount", e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Months to Save</label>
-                  <input
-                    className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    placeholder="24"
-                    value={goal.months}
-                    onChange={e => handleChange(goal.id, "months", e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Already Saved (₹)</label>
-                  <input
-                    className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    placeholder="10000"
-                    value={goal.saved}
-                    onChange={e => handleChange(goal.id, "saved", e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">Monthly Required</label>
-                  <div className="input-field bg-white/5 text-green-400 font-semibold">
-                    ₹ {goal.monthly}
-                  </div>
-                </div>
-              </div>
-
-              {/* Goal Details */}
-              {goal.adjusted > 0 && (
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getTypeColor(goal.type)}`}>
-                      {goal.type.charAt(0).toUpperCase() + goal.type.slice(1)}-Term Goal
-                    </span>
-                    <span className="text-gray-700 dark:text-white/80 text-sm">
-                      Inflation-adjusted: ₹ {parseFloat(goal.adjusted).toLocaleString()}
-                    </span>
-                  </div>
-
-                  {/* Progress Bar */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-700 dark:text-white/80">Progress: {goal.progress}%</span>
-                      <span className="text-gray-700 dark:text-white/80">
-                        ₹ {parseFloat(goal.saved || 0).toLocaleString()} / ₹ {parseFloat(goal.adjusted).toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="w-full bg-white/10 h-3 rounded-full overflow-hidden">
-                      <div
-                        className={`h-3 rounded-full transition-all duration-500 ${getProgressColor(parseFloat(goal.progress))}`}
-                        style={{ width: `${Math.min(parseFloat(goal.progress), 100)}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-wrap gap-4">
-          <button
-            onClick={addGoal}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-          >
-            <PlusIcon className="h-4 w-4" />
-            Add Another Goal
-          </button>
-
-          <button
-            onClick={calculateSavings}
-            disabled={isCalculating}
-            className="px-6 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 text-white rounded-lg transition-colors"
-          >
-            {isCalculating ? '⏳ Calculating...' : '📊 Calculate Savings Plan'}
-          </button>
-        </div>
-
-        {/* Summary */}
-        {totalMonthly > 0 && (
+    <CalculatorLayout 
+      title="Budget Goal Planner" 
+      description="Plan multiple financial goals systematically"
+      isCalculating={isCalculating}
+      progress={progress}
+      result={result}
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Input Section */}
+        <div className="space-y-6">
           <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">📊 Savings Summary</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-400">₹ {totalTarget.toLocaleString()}</div>
-                <div className="text-gray-700 dark:text-white/80 text-sm">Total Target (Inflation-Adjusted)</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-400">₹ {totalSaved.toLocaleString()}</div>
-                <div className="text-gray-700 dark:text-white/80 text-sm">Total Already Saved</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-yellow-400">₹ {totalMonthly.toLocaleString()}</div>
-                <div className="text-gray-700 dark:text-white/80 text-sm">Total Monthly Required</div>
-              </div>
-            </div>
+            <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">🎯 Budget Goal Planner</h3>
             
-            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30 rounded-lg">
-              <p className="text-blue-900 dark:text-blue-100 text-sm">
-                💡 <strong>Tip:</strong> Review and adjust your goals quarterly. Consider increasing savings when you get salary increments or bonuses.
-              </p>
+            <Formik
+              initialValues={{ income: '' }}
+              validationSchema={validationSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                calculateBudgetGoals(values);
+                setSubmitting(false);
+              }}
+            >
+              {({ isSubmitting }) => (
+                <Form className="space-y-4">
+                  <AnimatedInput
+                    name="income"
+                    label="Monthly Income (₹)"
+                    type="number"
+                    placeholder="50000"
+                    helpText="Enter your monthly take-home income"
+                    icon="💰"
+                  />
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || isCalculating}
+                    className="btn-primary w-full"
+                  >
+                    {isCalculating ? 'Planning...' : 'Plan Budget Goals'}
+                  </button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+
+          {/* Goals Section */}
+          <motion.div 
+            className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">🎯 Your Goals</h3>
+            <div className="space-y-4">
+              <AnimatePresence>
+                {goals.map((goal, index) => (
+                  <motion.div 
+                    key={index}
+                    className="p-4 bg-gray-50 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="grid grid-cols-1 gap-3">
+                      <input
+                        type="text"
+                        placeholder="Goal name (e.g., Emergency Fund)"
+                        className="input-field"
+                        value={goal.name}
+                        onChange={(e) => updateGoal(index, 'name', e.target.value)}
+                      />
+                      <div className="grid grid-cols-2 gap-2">
+                        <input
+                          type="number"
+                          placeholder="Target amount"
+                          className="input-field"
+                          value={goal.target || ''}
+                          onChange={(e) => updateGoal(index, 'target', e.target.value)}
+                        />
+                        <select
+                          className="input-field"
+                          value={goal.timeframe}
+                          onChange={(e) => updateGoal(index, 'timeframe', e.target.value)}
+                        >
+                          <option value="6 months">6 months</option>
+                          <option value="12 months">12 months</option>
+                          <option value="24 months">24 months</option>
+                        </select>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <select
+                          className="input-field flex-1 mr-2"
+                          value={goal.priority}
+                          onChange={(e) => updateGoal(index, 'priority', e.target.value)}
+                        >
+                          <option value="High">High Priority</option>
+                          <option value="Medium">Medium Priority</option>
+                          <option value="Low">Low Priority</option>
+                        </select>
+                        {goals.length > 1 && (
+                          <AnimatedButton
+                            onClick={() => removeGoal(index)}
+                            variant="danger"
+                            size="sm"
+                          >
+                            ✕
+                          </AnimatedButton>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+              
+              <AnimatedButton
+                onClick={addGoal}
+                variant="secondary"
+                className="w-full"
+              >
+                + Add Goal
+              </AnimatedButton>
             </div>
+          </motion.div>
+        </div>
+
+        {/* Results Section */}
+        {result && (
+          <div className="space-y-6">
+            <AnimatedResults
+              title="Budget Allocation"
+              variant={result.feasible ? 'success' : 'warning'}
+              results={[
+                { label: 'Monthly Income', value: `₹${result.income.toLocaleString()}`, color: 'blue' },
+                { label: 'Needs (50%)', value: `₹${result.needs.toLocaleString()}`, color: 'red' },
+                { label: 'Wants (30%)', value: `₹${result.wants.toLocaleString()}`, color: 'yellow' },
+                { label: 'Goal Savings', value: `₹${result.totalMonthlyGoals.toLocaleString()}`, color: 'purple', highlight: true },
+                { label: 'Other Savings', value: `₹${result.remainingSavings.toLocaleString()}`, color: result.remainingSavings >= 0 ? 'green' : 'red' }
+              ]}
+              tip={{
+                icon: result.feasible ? '✅' : '⚠️',
+                text: result.feasible 
+                  ? 'Your goals are achievable with current income allocation!'
+                  : 'Goals exceed available savings. Consider extending timeframes or reducing targets.'
+              }}
+            />
+
+            {/* Goals Breakdown */}
+            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Goal Breakdown</h3>
+              <div className="space-y-3">
+                {result.goalsWithAllocation.map((goal, index) => (
+                  <div key={index} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-white/5 rounded-lg">
+                    <div>
+                      <span className="font-medium text-gray-900 dark:text-white">{goal.name}</span>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                        {goal.priority} • {goal.timeframe}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-semibold text-gray-900 dark:text-white">₹{goal.monthlyRequired.toLocaleString()}/month</div>
+                      <div className="text-sm text-purple-600 dark:text-purple-400">Target: ₹{Number(goal.target).toLocaleString()}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <AnimatedChart
+              title="Budget Distribution"
+              data={result.data}
+              type="pie"
+            />
           </div>
         )}
       </div>
-    </div>
+    </CalculatorLayout>
   );
-}
+};
+
+export default BudgetGoalPlanner;

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { motion } from 'framer-motion';
 import { formatCurrency } from '../utils/formatCurrency';
+import { CalculatorLayout, AnimatedInput, AnimatedResults, AnimatedChart, AnimatedButton } from '../components/calculator';
 
 const validationSchema = Yup.object({
   principal: Yup.number()
@@ -22,44 +23,78 @@ const validationSchema = Yup.object({
 
 export default function FdCalculator() {
   const [result, setResult] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [status, setStatus] = useState(null);
 
-  const calculateFD = (values) => {
-    const { principal, rate, tenure, compounding } = values;
-    const P = parseFloat(principal);
-    const r = parseFloat(rate) / 100;
-    const t = parseFloat(tenure);
+  const calculateFD = async (values) => {
+    setIsCalculating(true);
+    setStatus({ type: 'info', message: 'Calculating your FD returns...' });
     
-    let n;
-    switch (compounding) {
-      case 'yearly': n = 1; break;
-      case 'half-yearly': n = 2; break;
-      case 'quarterly': n = 4; break;
-      case 'monthly': n = 12; break;
-      default: n = 4;
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    try {
+      const { principal, rate, tenure, compounding } = values;
+      const P = parseFloat(principal);
+      const r = parseFloat(rate) / 100;
+      const t = parseFloat(tenure);
+      
+      let n;
+      switch (compounding) {
+        case 'yearly': n = 1; break;
+        case 'half-yearly': n = 2; break;
+        case 'quarterly': n = 4; break;
+        case 'monthly': n = 12; break;
+        default: n = 4;
+      }
+
+      const maturityAmount = P * Math.pow((1 + r / n), n * t);
+      const interestEarned = maturityAmount - P;
+
+      setResult({
+        principal: P,
+        maturityAmount,
+        interestEarned,
+        tenure: t,
+        data: [
+          { name: 'Principal', amount: P },
+          { name: 'Interest', amount: interestEarned },
+          { name: 'Maturity', amount: maturityAmount }
+        ]
+      });
+      
+      setStatus({ type: 'success', message: 'FD calculation completed successfully!' });
+      setTimeout(() => setStatus(null), 3000);
+    } catch (error) {
+      setStatus({ type: 'error', message: 'Error calculating FD returns. Please try again.' });
+      setTimeout(() => setStatus(null), 3000);
+    } finally {
+      setIsCalculating(false);
     }
-
-    const maturityAmount = P * Math.pow((1 + r / n), n * t);
-    const interestEarned = maturityAmount - P;
-
-    setResult({
-      principal: P,
-      maturityAmount,
-      interestEarned,
-      tenure: t,
-      data: [
-        { name: 'Principal', amount: P },
-        { name: 'Interest', amount: interestEarned },
-        { name: 'Maturity', amount: maturityAmount }
-      ]
-    });
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">FD Calculator</h2>
+    <CalculatorLayout 
+      title="FD Calculator" 
+      status={status}
+      showProgress={true}
+      steps={['Enter Details', 'Calculate', 'View Results']}
+      currentStep={result ? 2 : isCalculating ? 1 : 0}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">FD Calculator</h3>
+        <motion.div 
+          className="bg-gray-200 dark:bg-white/5 p-6 rounded-xl"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.h3 
+            className="text-xl font-semibold mb-6 text-gray-900 dark:text-white"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            Fixed Deposit Calculator
+          </motion.h3>
           
           <Formik
             initialValues={{
@@ -75,143 +110,100 @@ export default function FdCalculator() {
             }}
           >
             {({ isSubmitting }) => (
-              <Form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Principal Amount (₹)
-                  </label>
-                  <Field
-                    name="principal"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="100000"
-                  />
-                  <ErrorMessage name="principal" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+              <Form className="space-y-6">
+                <AnimatedInput
+                  name="principal"
+                  label="Principal Amount"
+                  placeholder="100000"
+                  prefix="₹"
+                />
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Interest Rate (% per annum)
-                  </label>
-                  <Field
-                    name="rate"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    placeholder="7.5"
-                  />
-                  <ErrorMessage name="rate" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="rate"
+                  label="Interest Rate (per annum)"
+                  placeholder="7.5"
+                  suffix="%"
+                  step="0.1"
+                  prefix=""
+                />
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Tenure (Years)
-                  </label>
-                  <Field
-                    name="tenure"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="5"
-                  />
-                  <ErrorMessage name="tenure" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="tenure"
+                  label="Tenure"
+                  placeholder="5"
+                  suffix=" years"
+                  prefix=""
+                />
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.3 }}
+                >
+                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-2">
                     Compounding Frequency
                   </label>
                   <Field 
                     as="select" 
                     name="compounding" 
-                    className="w-full px-3 py-2 bg-white dark:bg-white/10 backdrop-blur-md border border-gray-300 dark:border-white/20 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-white/30 focus:border-blue-500 dark:focus:border-white/40 text-gray-900 dark:text-white transition-all duration-300 appearance-none cursor-pointer"
+                    className="w-full px-3 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 transition-all duration-300"
                   >
-                    <option value="yearly" className="bg-gray-800 text-white">Yearly</option>
-                    <option value="half-yearly" className="bg-gray-800 text-white">Half-Yearly</option>
-                    <option value="quarterly" className="bg-gray-800 text-white">Quarterly</option>
-                    <option value="monthly" className="bg-gray-800 text-white">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                    <option value="half-yearly">Half-Yearly</option>
+                    <option value="quarterly">Quarterly</option>
+                    <option value="monthly">Monthly</option>
                   </Field>
-                  <ErrorMessage name="compounding" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                </motion.div>
 
-                <button
+                <AnimatedButton
                   type="submit"
+                  loading={isCalculating}
                   disabled={isSubmitting}
-                  className="btn-primary w-full"
+                  className="w-full"
+                  size="lg"
+                  variant="success"
                 >
-                  Calculate FD Returns
-                </button>
+                  {isCalculating ? 'Calculating...' : 'Calculate FD Returns'}
+                </AnimatedButton>
               </Form>
             )}
           </Formik>
-        </div>
+        </motion.div>
 
-        {result && (
-          <div className="space-y-6">
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Results</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Principal Amount:</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold">{formatCurrency(result.principal)}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Interest Earned:</span>
-                  <span className="text-green-600 dark:text-green-400 font-semibold">{formatCurrency(result.interestEarned)}</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-700 dark:text-white/80">Maturity Amount:</span>
-                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-lg">{formatCurrency(result.maturityAmount)}</span>
-                </div>
-              </div>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <AnimatedResults 
+            results={result} 
+            isVisible={!!result} 
+            title="FD Investment Results"
+          />
+          
+          {result && (
+            <motion.div className="mt-6">
+              <AnimatedChart
+                data={result.data}
+                type="bar"
+                title="FD Breakdown"
+                colors={['#10b981', '#34d399', '#6ee7b7']}
+              />
               
-              <div className="mt-6 p-4 bg-blue-100 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-500/30 rounded-lg">
-                <p className="text-blue-800 dark:text-blue-900 dark:text-blue-100 text-sm">
+              <motion.div 
+                className="mt-6 p-4 bg-blue-100 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-500/30 rounded-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
+              >
+                <p className="text-blue-800 dark:text-blue-100 text-sm">
                   💰 <strong>FD Tip:</strong> Your FD will mature to <strong>{formatCurrency(result.maturityAmount)}</strong> after {result.tenure} years, earning <strong>{formatCurrency(result.interestEarned)}</strong> in interest.
                 </p>
-              </div>
-            </div>
-
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">FD Breakdown</h3>
-              <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
-                  <XAxis 
-                    dataKey="name" 
-                    tick={{ fill: 'currentColor', fontSize: 10 }}
-                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
-                  />
-                  <YAxis 
-                    tick={{ fill: 'currentColor', fontSize: 10 }}
-                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
-                    tickFormatter={(val) => `₹${(val/1000).toFixed(0)}K`}
-                  />
-                  <Tooltip 
-                    formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
-                    contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: '1px solid rgba(0, 0, 0, 0.1)',
-                      borderRadius: '8px',
-                      color: '#000000'
-                    }}
-                    labelStyle={{ color: '#000000' }}
-                  />
-                  <Bar 
-                    dataKey="amount" 
-                    radius={[4, 4, 0, 0]}
-                    fill="url(#fdGradient)"
-                  />
-                  <defs>
-                    <linearGradient id="fdGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#10b981" />
-                      <stop offset="50%" stopColor="#059669" />
-                      <stop offset="100%" stopColor="#047857" />
-                    </linearGradient>
-                  </defs>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        )}
+              </motion.div>
+            </motion.div>
+          )}
+        </motion.div>
       </div>
-    </div>
+    </CalculatorLayout>
   );
 }

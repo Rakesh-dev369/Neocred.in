@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ClipboardDocumentIcon, 
   HandThumbUpIcon, 
@@ -93,7 +94,11 @@ export default function MessageBubble({
   };
 
   return (
-    <div 
+    <motion.div 
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} group relative`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -108,8 +113,9 @@ export default function MessageBubble({
           </div>
         )}
 
-        <div
-          className={`px-4 py-3 rounded-lg shadow-sm relative ${
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          className={`px-4 py-3 rounded-lg shadow-sm relative transition-all duration-200 ${
             message.sender === 'user'
               ? `bg-blue-600 text-white ml-auto max-w-xs sm:max-w-md ${message.isError ? 'bg-red-600' : ''}`
               : `${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-800 border border-gray-200'} max-w-full`
@@ -152,41 +158,61 @@ export default function MessageBubble({
           )}
 
           {/* Multiple Tool Links for VS comparisons */}
-          {message.toolLinks && message.toolLinks.length > 0 && !isEditing && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {console.log('Rendering toolLinks:', message.toolLinks)}
-              {message.toolLinks.map((tool, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => onNavigateToTool(tool.url)}
-                  className={`inline-flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    darkMode 
-                      ? 'bg-blue-900/50 hover:bg-blue-900/70 text-blue-300' 
-                      : 'bg-blue-50 hover:bg-blue-100 text-blue-700'
-                  }`}
-                >
-                  <span>{tool.icon}</span>
-                  <ArrowTopRightOnSquareIcon className="h-3 w-3" />
-                  {tool.name}
-                </button>
-              ))}
-            </div>
-          )}
+          <AnimatePresence>
+            {message.toolLinks && message.toolLinks.length > 0 && !isEditing && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+                className="mt-4 flex flex-wrap gap-2"
+              >
+                {message.toolLinks.map((tool, idx) => (
+                  <motion.button
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ delay: idx * 0.1, duration: 0.2 }}
+                    onClick={() => onNavigateToTool(tool.url)}
+                    className={`inline-flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      darkMode 
+                        ? 'bg-blue-900/50 hover:bg-blue-900/70 text-blue-300 hover:shadow-lg' 
+                        : 'bg-blue-50 hover:bg-blue-100 text-blue-700 hover:shadow-md'
+                    }`}
+                  >
+                    <span>{tool.icon}</span>
+                    <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                    {tool.name}
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Single Tool Link Button */}
-          {message.toolLink && !message.toolLinks?.length && !isEditing && (
-            <button
-              onClick={() => onNavigateToTool(message.toolLink)}
-              className={`mt-4 inline-flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                darkMode 
-                  ? 'bg-blue-900/50 hover:bg-blue-900/70 text-blue-300' 
-                  : 'bg-blue-50 hover:bg-blue-100 text-blue-700'
-              }`}
-            >
-              <ArrowTopRightOnSquareIcon className="h-3 w-3" />
-              {message.toolName || 'Open Tool'}
-            </button>
-          )}
+          <AnimatePresence>
+            {message.toolLink && !message.toolLinks?.length && !isEditing && (
+              <motion.button
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+                onClick={() => onNavigateToTool(message.toolLink)}
+                className={`mt-4 inline-flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  darkMode 
+                    ? 'bg-blue-900/50 hover:bg-blue-900/70 text-blue-300 hover:shadow-lg' 
+                    : 'bg-blue-50 hover:bg-blue-100 text-blue-700 hover:shadow-md'
+                }`}
+              >
+                <ArrowTopRightOnSquareIcon className="h-3 w-3" />
+                {message.toolName || 'Open Tool'}
+              </motion.button>
+            )}
+          </AnimatePresence>
 
           {/* Smart Suggestions */}
           {message.suggestions && message.suggestions.length > 0 && !isEditing && (
@@ -334,8 +360,8 @@ export default function MessageBubble({
               )}
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

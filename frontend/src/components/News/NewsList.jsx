@@ -10,7 +10,14 @@ const NewsList = ({ articles, loading, error, query, pagination, onLoadMore, loa
     return (
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {[...Array(6)].map((_, index) => (
-          <NewsCardSkeleton key={index} />
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1, duration: 0.3 }}
+          >
+            <NewsCardSkeleton />
+          </motion.div>
         ))}
       </div>
     );
@@ -105,13 +112,16 @@ const NewsList = ({ articles, loading, error, query, pagination, onLoadMore, loa
               <motion.div 
                 key={`${article.link}-${index}`} 
                 layout
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                initial={{ opacity: 0, y: 30, scale: 0.9, rotateX: -15 }}
+                animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                exit={{ opacity: 0, y: -30, scale: 0.9, rotateX: 15 }}
+                whileHover={{ y: -5, scale: 1.02 }}
                 transition={{ 
-                  duration: 0.3, 
-                  delay: index * 0.05,
-                  layout: { duration: 0.3 }
+                  duration: 0.4, 
+                  delay: index * 0.08,
+                  layout: { duration: 0.3 },
+                  type: "spring",
+                  stiffness: 100
                 }}
                 className="md:contents"
               >

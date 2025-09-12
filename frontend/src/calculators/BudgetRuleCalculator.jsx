@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { AnimatedInput, AnimatedResults, AnimatedChart, CalculatorLayout } from '../components/calculator';
 
 const validationSchema = Yup.object({
   income: Yup.number()
@@ -14,8 +15,18 @@ const COLORS = ['#ef4444', '#f59e0b', '#10b981'];
 
 const BudgetRuleCalculator = () => {
   const [result, setResult] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const calculateBudget = (values) => {
+  const calculateBudget = async (values) => {
+    setIsCalculating(true);
+    setProgress(0);
+    
+    for (let i = 0; i <= 100; i += 25) {
+      setProgress(i);
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    
     const { income } = values;
     
     const needs = income * 0.5;
@@ -35,11 +46,18 @@ const BudgetRuleCalculator = () => {
       savings: Math.round(savings),
       data
     });
+    
+    setIsCalculating(false);
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">50/30/20 Rule Budgeter</h2>
+    <CalculatorLayout 
+      title="50/30/20 Rule Budgeter" 
+      description="Smart income allocation strategy"
+      isCalculating={isCalculating}
+      progress={progress}
+      result={result}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Input Section */}
         <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
@@ -57,26 +75,21 @@ const BudgetRuleCalculator = () => {
           >
             {({ isSubmitting }) => (
               <Form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Monthly Income (₹)
-                  </label>
-                  <Field
-                    name="income"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="50000"
-                  />
-                  <ErrorMessage name="income" component="div" className="text-red-500 text-sm mt-1" />
-                  <p className="text-xs text-gray-700 dark:text-gray-300 mt-1">Enter your after-tax monthly income</p>
-                </div>
+                <AnimatedInput
+                  name="income"
+                  label="Monthly Income (₹)"
+                  type="number"
+                  placeholder="50000"
+                  helpText="Enter your after-tax monthly income"
+                  icon="💰"
+                />
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isCalculating}
                   className="btn-primary w-full"
                 >
-                  Calculate Budget
+                  {isCalculating ? 'Calculating...' : 'Calculate Budget'}
                 </button>
               </Form>
             )}
@@ -104,74 +117,30 @@ const BudgetRuleCalculator = () => {
         {/* Results Section */}
         {result && (
           <div className="space-y-6">
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Budget Breakdown</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Monthly Income:</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold">₹{result.income.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">🧾 Needs (50%):</span>
-                  <span className="text-red-600 dark:text-red-400 font-bold text-lg">₹{result.needs.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">🎯 Wants (30%):</span>
-                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-lg">₹{result.wants.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-700 dark:text-white/80">💰 Savings (20%):</span>
-                  <span className="text-green-600 dark:text-green-400 font-bold text-lg">₹{result.savings.toLocaleString()}</span>
-                </div>
-              </div>
-              
-              <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/30 rounded-lg">
-                <p className="text-blue-900 dark:text-blue-100 text-sm">
-                  📊 <strong>Budget Tip:</strong> The 50/30/20 rule is a guideline. Adjust percentages based on your financial goals and situation.
-                </p>
-              </div>
-            </div>
+            <AnimatedResults
+              title="Budget Breakdown"
+              variant="info"
+              results={[
+                { label: 'Monthly Income', value: `₹${result.income.toLocaleString()}`, color: 'blue' },
+                { label: '🧾 Needs (50%)', value: `₹${result.needs.toLocaleString()}`, color: 'red' },
+                { label: '🎯 Wants (30%)', value: `₹${result.wants.toLocaleString()}`, color: 'yellow' },
+                { label: '💰 Savings (20%)', value: `₹${result.savings.toLocaleString()}`, color: 'green', highlight: true }
+              ]}
+              tip={{
+                icon: '📊',
+                text: 'The 50/30/20 rule is a guideline. Adjust percentages based on your financial goals and situation.'
+              }}
+            />
 
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Budget Distribution</h3>
-              <ResponsiveContainer width="100%" height={250}>
-                <PieChart>
-                  <Pie
-                    data={result.data}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                    innerRadius={30}
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    {result.data.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
-                    contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: '1px solid rgba(0, 0, 0, 0.1)',
-                      borderRadius: '8px',
-                      color: '#000000'
-                    }}
-                    labelStyle={{ color: '#000000' }}
-                  />
-                  <Legend 
-                    wrapperStyle={{ paddingTop: '10px', color: 'currentColor' }}
-                    iconType="circle"
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+            <AnimatedChart
+              title="Budget Distribution"
+              data={result.data}
+              type="pie"
+            />
           </div>
         )}
       </div>
-    </div>
+    </CalculatorLayout>
   );
 };
 

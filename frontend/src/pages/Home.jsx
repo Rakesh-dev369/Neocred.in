@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import SEOHead from '../components/SEO/SEOHead';
 import AnimatedBackground from '../components/AnimatedBackground';
+import { CountingNumber, StatCard, ProgressBar } from '../components/ui';
 import '../styles/animations.css';
 import {
   ArrowRightIcon,
@@ -27,6 +28,168 @@ import {
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 import { useAnalytics } from '../hooks/useAnalytics';
+
+// Use the new CountingNumber component
+const AnimatedCounter = ({ end, duration = 2, prefix = '₹', suffix = '' }) => {
+  return (
+    <CountingNumber 
+      value={end}
+      duration={duration}
+      prefix={prefix}
+      suffix={suffix}
+      className="font-bold text-lg"
+    />
+  );
+};
+
+// Floating Calculator Cards (Refined)
+const FloatingCalculatorCards = () => {
+  const calculators = [
+    { name: 'SIP', icon: '📈', amount: '₹50L', color: 'from-blue-500 to-blue-600' },
+    { name: 'EMI', icon: '🏠', amount: '₹25K', color: 'from-green-500 to-green-600' },
+    { name: 'Tax', icon: '💰', amount: '₹1.5L', color: 'from-purple-500 to-purple-600' },
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {calculators.map((calc, index) => (
+        <motion.div
+          key={calc.name}
+          className={`absolute bg-gradient-to-r ${calc.color} text-white p-3 rounded-xl shadow-lg opacity-80`}
+          initial={{ opacity: 0, y: 50, scale: 0.8 }}
+          animate={{ 
+            opacity: [0, 0.8, 0.8, 0],
+            y: [50, -10, -30, -60],
+            scale: [0.8, 1, 1, 0.9]
+          }}
+          transition={{
+            duration: 4,
+            delay: index * 1.5,
+            repeat: Infinity,
+            repeatDelay: 3,
+            ease: "easeInOut"
+          }}
+          style={{
+            left: `${15 + index * 25}%`,
+            top: '70%'
+          }}
+        >
+          <div className="text-center">
+            <div className="text-xl mb-1">{calc.icon}</div>
+            <div className="text-xs font-semibold">{calc.name}</div>
+            <div className="text-xs opacity-90">{calc.amount}</div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+// AI Chat Simulation (Improved)
+const AIChatSimulation = () => {
+  const [currentMessage, setCurrentMessage] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+
+  const messages = [
+    { type: 'user', text: 'I want to invest ₹5000 monthly' },
+    { type: 'ai', text: 'Great! With ₹5000 SIP for 20 years at 12% returns, you\'ll build ₹49.95 lakhs!' },
+    { type: 'user', text: 'Which mutual funds should I choose?' },
+    { type: 'ai', text: 'I recommend diversified equity funds. Let me show you the best options...' }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsTyping(true);
+      setTimeout(() => {
+        setCurrentMessage((prev) => (prev + 1) % messages.length);
+        setIsTyping(false);
+      }, 800);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="space-y-3 min-h-[120px]">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentMessage}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.3 }}
+          className={`p-3 rounded-2xl max-w-xs ${
+            messages[currentMessage].type === 'user'
+              ? 'bg-white/20 ml-auto text-right'
+              : 'bg-blue-500/30 mr-auto'
+          }`}
+        >
+          <p className="text-sm text-white">{messages[currentMessage].text}</p>
+        </motion.div>
+      </AnimatePresence>
+      
+      {isTyping && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex items-center space-x-1 p-3 bg-blue-500/30 rounded-2xl max-w-xs"
+        >
+          <div className="flex space-x-1">
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                className="w-2 h-2 bg-white rounded-full"
+                animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.2 }}
+              />
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+// Investment Growth Chart (Refined)
+const InvestmentGrowthChart = () => {
+  return (
+    <div className="relative h-24">
+      <svg width="180" height="80" className="overflow-visible">
+        <motion.path
+          d="M10,60 Q50,45 90,30 Q130,15 170,10"
+          stroke="#10B981"
+          strokeWidth="2"
+          fill="none"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
+        />
+        
+        {[0, 1, 2, 3].map((i) => (
+          <motion.circle
+            key={i}
+            cx={10 + i * 53}
+            cy={60 - i * 12}
+            r="3"
+            fill="#10B981"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ 
+              duration: 0.3, 
+              delay: 0.8 + i * 0.2
+            }}
+          />
+        ))}
+      </svg>
+      
+      <div className="absolute -bottom-4 left-0 text-xs text-green-300">Year 1</div>
+      <div className="absolute -bottom-4 right-0 text-xs text-green-300">Year 20</div>
+      <div className="absolute -top-2 right-0 text-sm font-semibold text-green-300">
+        <AnimatedCounter end={4995000} duration={2} />
+      </div>
+    </div>
+  );
+};
 
 // Goal selector component
 const GoalSelector = ({ onGoalSelect, selectedGoal }) => {
@@ -59,6 +222,8 @@ const GoalSelector = ({ onGoalSelect, selectedGoal }) => {
 export default function Home() {
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [toolsLoading, setToolsLoading] = useState(true);
+  const [currentStory, setCurrentStory] = useState(0);
   const { trackFeatureUse } = useAnalytics();
 
   const handleGoalSelect = useCallback((goalId) => {
@@ -73,6 +238,12 @@ export default function Home() {
     // Simulate loading for better UX
     setTimeout(() => setIsLoading(false), 300);
   }, [selectedGoal]);
+
+  // Simulate popular tools loading
+  useEffect(() => {
+    const timer = setTimeout(() => setToolsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
   
   // Popular tools without fake user counts
   const popularTools = useMemo(() => [
@@ -89,6 +260,14 @@ export default function Home() {
     { name: 'Rahul M.', achievement: 'Saved ₹85K in taxes', time: '1 year', tool: 'Tax Calculator' },
     { name: 'Anjali K.', achievement: 'Started ₹10K monthly SIP', time: '3 months', tool: 'SIP Calculator' }
   ], []);
+
+  // Auto-rotate success stories
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStory((prev) => (prev + 1) % successStories.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [successStories.length]);
 
   const getRecommendationsForGoal = (goalId) => {
     const goalRecommendations = {
@@ -464,41 +643,103 @@ export default function Home() {
                 </div>
               </motion.div>
               
-              {/* Right: Interactive Demo */}
+              {/* Right: Enhanced Interactive Demo */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
                 className="relative"
               >
-                <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
+                {/* Floating Calculator Cards */}
+                <FloatingCalculatorCards />
+                
+                <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 relative overflow-hidden">
+                  {/* Browser Header with Status */}
                   <div className="flex items-center mb-6">
                     <div className="w-3 h-3 bg-red-400 rounded-full mr-2"></div>
                     <div className="w-3 h-3 bg-yellow-400 rounded-full mr-2"></div>
                     <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                     <span className="ml-4 text-sm text-blue-200">NeoCred AI Assistant</span>
+                    <motion.div
+                      className="ml-auto w-2 h-2 bg-green-400 rounded-full"
+                      animate={{ opacity: [1, 0.4, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
                   </div>
                   
-                  <div className="space-y-4">
-                    <div className="bg-white/20 rounded-2xl p-4">
-                      <p className="text-sm text-blue-100 mb-2">"I want to start investing ₹5000 monthly"</p>
-                    </div>
-                    <div className="bg-blue-500/30 rounded-2xl p-4">
-                      <p className="text-sm text-white">Great! With ₹5000 monthly SIP for 20 years at 12% returns, you'll build ₹49.95 lakhs! Let me show you the best mutual funds...</p>
-                      <div className="mt-3 flex gap-2">
-                        <button className="px-3 py-1 bg-white/20 rounded-lg text-xs">SIP Calculator</button>
-                        <button className="px-3 py-1 bg-white/20 rounded-lg text-xs">Fund Selector</button>
-                      </div>
-                    </div>
-                  </div>
+                  {/* AI Chat Simulation */}
+                  <AIChatSimulation />
                   
+                  {/* Investment Growth Visualization */}
+                  <motion.div 
+                    className="mt-6 p-4 bg-white/5 rounded-2xl"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1 }}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs text-blue-200">SIP Growth Projection</span>
+                      <motion.span 
+                        className="text-xs text-green-300 font-semibold"
+                        animate={{ scale: [1, 1.05, 1] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      >
+                        +12% CAGR
+                      </motion.span>
+                    </div>
+                    <InvestmentGrowthChart />
+                  </motion.div>
+                  
+                  {/* Enhanced CTA Button */}
                   <Link
                     to="/chatbot"
-                    className="block w-full mt-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-semibold rounded-xl text-center hover:from-yellow-300 hover:to-orange-300 transition-all duration-300"
+                    className="group block w-full mt-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-semibold rounded-xl text-center hover:from-yellow-300 hover:to-orange-300 transition-all duration-300 relative overflow-hidden"
                   >
-                    Start Your Conversation
+                    <motion.div
+                      className="absolute inset-0 bg-white/20"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.6 }}
+                    />
+                    <span className="relative z-10 flex items-center justify-center">
+                      Start Your Conversation
+                      <motion.span
+                        className="ml-2"
+                        animate={{ x: [0, 3, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        →
+                      </motion.span>
+                    </span>
                   </Link>
                 </div>
+                
+                {/* Floating Stats Badges */}
+                <motion.div
+                  className="absolute -top-3 -right-3 bg-green-500 text-white p-2 rounded-lg shadow-lg text-center min-w-[60px]"
+                  animate={{ 
+                    y: [0, -8, 0],
+                    rotate: [0, 1, -1, 0]
+                  }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                >
+                  <div className="text-sm font-bold">
+                    <AnimatedCounter end={29} duration={2} prefix="" suffix="+" />
+                  </div>
+                  <div className="text-xs opacity-90">Tools</div>
+                </motion.div>
+                
+                <motion.div
+                  className="absolute -bottom-3 -left-3 bg-purple-500 text-white p-2 rounded-lg shadow-lg text-center min-w-[50px]"
+                  animate={{ 
+                    y: [0, 8, 0],
+                    rotate: [0, -1, 1, 0]
+                  }}
+                  transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
+                >
+                  <div className="text-sm font-bold">AI</div>
+                  <div className="text-xs opacity-90">GPT-4</div>
+                </motion.div>
               </motion.div>
             </div>
           </div>
@@ -793,44 +1034,63 @@ export default function Home() {
                 Most Popular Tools This Week
               </h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {popularTools.slice(0, 6).map((tool, index) => (
-                  <motion.div
-                    key={tool.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Link
-                      to={tool.href}
-                      className="group block bg-white dark:bg-gray-800 rounded-xl p-4 shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+                {toolsLoading ? (
+                  // Loading skeletons
+                  [...Array(6)].map((_, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow border border-gray-200 dark:border-gray-700"
                     >
                       <div className="flex items-center mb-3">
-                        <div className="p-2 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
-                          <tool.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        <div className="w-9 h-9 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+                      </div>
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2 animate-pulse" />
+                      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded mb-3 w-3/4 animate-pulse" />
+                      <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 animate-pulse" />
+                    </motion.div>
+                  ))
+                ) : (
+                  popularTools.slice(0, 6).map((tool, index) => (
+                    <motion.div
+                      key={tool.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Link
+                        to={tool.href}
+                        className="group block bg-white dark:bg-gray-800 rounded-xl p-4 shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700"
+                      >
+                        <div className="flex items-center mb-3">
+                          <div className="p-2 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
+                            <tool.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                          </div>
                         </div>
-                      </div>
-                      
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 transition-colors text-sm">
-                        {tool.name}
-                      </h4>
-                      <p className="text-gray-600 dark:text-gray-400 text-xs mb-3">
-                        {tool.desc}
-                      </p>
-                      
-                      <div className="flex items-center text-blue-600 dark:text-blue-400 font-medium">
-                        <span className="text-xs">Try Now</span>
-                        <ArrowRightIcon className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
+                        
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 transition-colors text-sm">
+                          {tool.name}
+                        </h4>
+                        <p className="text-gray-600 dark:text-gray-400 text-xs mb-3">
+                          {tool.desc}
+                        </p>
+                        
+                        <div className="flex items-center text-blue-600 dark:text-blue-400 font-medium">
+                          <span className="text-xs">Try Now</span>
+                          <ArrowRightIcon className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))
+                )}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Success Stories */}
+        {/* Success Stories Carousel */}
         <section className="py-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -847,39 +1107,64 @@ export default function Home() {
               </p>
             </motion.div>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              {successStories.map((story, index) => (
-                <motion.div
-                  key={story.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
-                >
-                  <div className="flex items-center mb-4">
-                    <div className="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <StarIconSolid key={i} className="w-4 h-4" />
-                      ))}
+            <div className="relative">
+              {/* Carousel Container */}
+              <div className="overflow-hidden rounded-2xl">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentStory}
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 max-w-2xl mx-auto"
+                  >
+                    <div className="flex items-center mb-6">
+                      <div className="flex text-yellow-400">
+                        {[...Array(5)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: i * 0.1, duration: 0.3 }}
+                          >
+                            <StarIconSolid className="w-5 h-5" />
+                          </motion.div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  
-                  <blockquote className="text-gray-700 dark:text-gray-300 mb-4 italic">
-                    "{story.achievement} in just {story.time} using NeoCred's {story.tool}. The step-by-step guidance made it so easy!"
-                  </blockquote>
-                  
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
-                      {story.name.charAt(0)}
+                    
+                    <blockquote className="text-gray-700 dark:text-gray-300 mb-6 italic text-lg leading-relaxed">
+                      "{successStories[currentStory].achievement} in just {successStories[currentStory].time} using NeoCred's {successStories[currentStory].tool}. The step-by-step guidance made it so easy!"
+                    </blockquote>
+                    
+                    <div className="flex items-center">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                        {successStories[currentStory].name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-900 dark:text-white text-lg">{successStories[currentStory].name}</div>
+                        <div className="text-gray-500 dark:text-gray-400">NeoCred User</div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="font-semibold text-gray-900 dark:text-white">{story.name}</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">NeoCred User</div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              
+              {/* Navigation Dots */}
+              <div className="flex justify-center mt-8 space-x-2">
+                {successStories.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentStory(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentStory
+                        ? 'bg-blue-600 scale-125'
+                        : 'bg-gray-300 dark:bg-gray-600 hover:bg-blue-400'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>

@@ -104,7 +104,13 @@ const SafeNewsCard = ({ article, isBookmarked, onBookmark, onShare }) => {
   }, [link]);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg transition-all duration-300 overflow-hidden">
+    <motion.div 
+      whileHover={{ 
+        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        borderColor: "rgb(59 130 246 / 0.3)"
+      }}
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg transition-all duration-300 overflow-hidden"
+    >
       {/* Thumbnail */}
       <div className="relative h-48 bg-gradient-to-br from-blue-500 to-purple-600">
         <div className="absolute inset-0 flex items-center justify-center">
@@ -123,20 +129,35 @@ const SafeNewsCard = ({ article, isBookmarked, onBookmark, onShare }) => {
         
         {/* Bookmark Button */}
         <div className="absolute top-3 right-12">
-          <button
+          <motion.button
             onClick={() => onBookmark?.(article)}
-            className={`p-2 rounded-full backdrop-blur-sm transition-colors ${
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            animate={isBookmarked ? { 
+              scale: [1, 1.3, 1],
+              rotate: [0, -10, 10, 0]
+            } : { scale: 1, rotate: 0 }}
+            transition={{ duration: 0.3 }}
+            className={`p-2 rounded-full backdrop-blur-sm transition-all duration-300 ${
               isBookmarked 
-                ? 'bg-yellow-500 text-white shadow-lg' 
+                ? 'bg-yellow-500 text-white shadow-lg shadow-yellow-500/30' 
                 : 'bg-black/20 text-white hover:bg-black/40'
             }`}
           >
-            {isBookmarked ? (
-              <BookmarkCheck className="w-4 h-4" />
-            ) : (
-              <Bookmark className="w-4 h-4" />
-            )}
-          </button>
+            <motion.div
+              animate={isBookmarked ? {
+                scale: [1, 0.8, 1.2, 1],
+                rotate: [0, 180, 360]
+              } : { scale: 1, rotate: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {isBookmarked ? (
+                <BookmarkCheck className="w-4 h-4" />
+              ) : (
+                <Bookmark className="w-4 h-4" />
+              )}
+            </motion.div>
+          </motion.button>
         </div>
         
         {/* Time Badge */}
@@ -237,7 +258,7 @@ const SafeNewsCard = ({ article, isBookmarked, onBookmark, onShare }) => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

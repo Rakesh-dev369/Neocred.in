@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { motion } from 'framer-motion';
+import { CalculatorLayout, AnimatedInput, AnimatedResults, AnimatedChart, AnimatedButton } from '../components/calculator';
 
 const validationSchema = Yup.object({
   monthlyInvestment: Yup.number()
@@ -29,31 +30,64 @@ function calculateRD({ monthlyInvestment, annualRate, tenureMonths }) {
 
 const RDCalculator = () => {
   const [result, setResult] = useState(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [status, setStatus] = useState(null);
 
-  const calculateRDResult = (values) => {
-    const maturityAmount = calculateRD(values);
-    const totalInvested = values.monthlyInvestment * values.tenureMonths;
-    const interestEarned = maturityAmount - totalInvested;
+  const calculateRDResult = async (values) => {
+    setIsCalculating(true);
+    setStatus({ type: 'info', message: 'Calculating your RD returns...' });
+    
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    try {
+      const maturityAmount = calculateRD(values);
+      const totalInvested = values.monthlyInvestment * values.tenureMonths;
+      const interestEarned = maturityAmount - totalInvested;
 
-    setResult({
-      totalInvested,
-      interestEarned,
-      maturityAmount,
-      data: [
-        { name: 'Invested', amount: totalInvested },
-        { name: 'Interest', amount: interestEarned },
-        { name: 'Maturity', amount: maturityAmount }
-      ]
-    });
+      setResult({
+        totalInvested,
+        interestEarned,
+        maturityAmount,
+        data: [
+          { name: 'Invested', amount: totalInvested },
+          { name: 'Interest', amount: interestEarned },
+          { name: 'Maturity', amount: maturityAmount }
+        ]
+      });
+      
+      setStatus({ type: 'success', message: 'RD calculation completed successfully!' });
+      setTimeout(() => setStatus(null), 3000);
+    } catch (error) {
+      setStatus({ type: 'error', message: 'Error calculating RD returns. Please try again.' });
+      setTimeout(() => setStatus(null), 3000);
+    } finally {
+      setIsCalculating(false);
+    }
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">RD Calculator</h2>
+    <CalculatorLayout 
+      title="RD Calculator" 
+      status={status}
+      showProgress={true}
+      steps={['Enter Details', 'Calculate', 'View Results']}
+      currentStep={result ? 2 : isCalculating ? 1 : 0}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">RD Calculator</h3>
+        <motion.div 
+          className="bg-gray-200 dark:bg-white/5 p-6 rounded-xl"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.h3 
+            className="text-xl font-semibold mb-6 text-gray-900 dark:text-white"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            Recurring Deposit Calculator
+          </motion.h3>
           
           <Formik
             initialValues={{
@@ -68,130 +102,81 @@ const RDCalculator = () => {
             }}
           >
             {({ isSubmitting }) => (
-              <Form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Monthly Investment (₹)
-                  </label>
-                  <Field
-                    name="monthlyInvestment"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="2000"
-                  />
-                  <ErrorMessage name="monthlyInvestment" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+              <Form className="space-y-6">
+                <AnimatedInput
+                  name="monthlyInvestment"
+                  label="Monthly Investment"
+                  placeholder="2000"
+                  prefix="₹"
+                />
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Annual Interest Rate (%)
-                  </label>
-                  <Field
-                    name="annualRate"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    step="0.1" className="input-field [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    placeholder="7"
-                  />
-                  <ErrorMessage name="annualRate" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="annualRate"
+                  label="Annual Interest Rate"
+                  placeholder="7"
+                  suffix="%"
+                  step="0.1"
+                  prefix=""
+                />
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-white/80 mb-1">
-                    Tenure (Months)
-                  </label>
-                  <Field
-                    name="tenureMonths"
-                    type="number" onWheel={(e) => e.target.blur()}
-                    className="input-field"
-                    placeholder="60"
-                  />
-                  <ErrorMessage name="tenureMonths" component="div" className="text-red-500 text-sm mt-1" />
-                </div>
+                <AnimatedInput
+                  name="tenureMonths"
+                  label="Tenure"
+                  placeholder="60"
+                  suffix=" months"
+                  prefix=""
+                />
 
-                <button
+                <AnimatedButton
                   type="submit"
+                  loading={isCalculating}
                   disabled={isSubmitting}
-                  className="btn-primary w-full"
+                  className="w-full"
+                  size="lg"
+                  variant="success"
                 >
-                  Calculate RD Returns
-                </button>
+                  {isCalculating ? 'Calculating...' : 'Calculate RD Returns'}
+                </AnimatedButton>
               </Form>
             )}
           </Formik>
-        </div>
+        </motion.div>
 
-        {/* Results Section */}
-        {result && (
-          <div className="space-y-6">
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Results</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Total Invested:</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold">₹{result.totalInvested.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-300 dark:border-white/20">
-                  <span className="text-gray-700 dark:text-white/80">Interest Earned:</span>
-                  <span className="text-green-600 dark:text-green-400 font-semibold">₹{result.interestEarned.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-gray-700 dark:text-white/80">Maturity Amount:</span>
-                  <span className="text-yellow-600 dark:text-yellow-400 font-bold text-lg">₹{result.maturityAmount.toLocaleString()}</span>
-                </div>
-              </div>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <AnimatedResults 
+            results={result} 
+            isVisible={!!result} 
+            title="RD Investment Results"
+          />
+          
+          {result && (
+            <motion.div className="mt-6">
+              <AnimatedChart
+                data={result.data}
+                type="bar"
+                title="RD Breakdown"
+                colors={['#10b981', '#34d399', '#6ee7b7']}
+              />
               
-              <div className="mt-6 p-4 bg-green-100 dark:bg-green-900/20 border border-green-300 dark:border-green-500/30 rounded-lg">
-                <p className="text-green-800 dark:text-green-900 dark:text-green-100 text-sm">
+              <motion.div 
+                className="mt-6 p-4 bg-green-100 dark:bg-green-900/20 border border-green-300 dark:border-green-500/30 rounded-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
+              >
+                <p className="text-green-800 dark:text-green-100 text-sm">
                   💰 <strong>RD Tip:</strong> Recurring Deposits offer guaranteed returns with quarterly compounding. Perfect for disciplined savings!
                 </p>
-              </div>
-            </div>
-
-            <div className="bg-gray-100 dark:bg-white/5 backdrop-blur-lg border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">RD Breakdown</h3>
-              <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={result.data} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
-                  <XAxis 
-                    dataKey="name" 
-                    tick={{ fill: 'currentColor', fontSize: 10 }}
-                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
-                    className="text-gray-900 dark:text-white"
-                  />
-                  <YAxis 
-                    tick={{ fill: 'currentColor', fontSize: 10 }}
-                    axisLine={{ stroke: 'currentColor', strokeWidth: 1 }}
-                    tickFormatter={(val) => `₹${(val/1000).toFixed(0)}K`}
-                    className="text-gray-900 dark:text-white"
-                  />
-                  <Tooltip 
-                    formatter={(val) => [`₹${Number(val).toLocaleString()}`, 'Amount']}
-                    contentStyle={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: '1px solid rgba(0, 0, 0, 0.1)',
-                      borderRadius: '8px',
-                      color: '#000000'
-                    }}
-                    labelStyle={{ color: '#000000' }}
-                  />
-                  <Bar 
-                    dataKey="amount" 
-                    radius={[4, 4, 0, 0]}
-                    fill="url(#rdGradient)"
-                  />
-                  <defs>
-                    <linearGradient id="rdGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#10b981" />
-                      <stop offset="50%" stopColor="#059669" />
-                      <stop offset="100%" stopColor="#047857" />
-                    </linearGradient>
-                  </defs>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        )}
+              </motion.div>
+            </motion.div>
+          )}
+        </motion.div>
       </div>
-    </div>
+    </CalculatorLayout>
   );
 };
 
