@@ -433,7 +433,7 @@ export default function Tools() {
             ? 'bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-700 dark:text-orange-300'
             : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
         }`}>
-          <CountingNumber value={tool.popularity} duration={1000} />% popular
+          <CountingNumber value={tool.popularity} duration={400} />% popular
         </div>
       </div>
       </motion.div>
@@ -537,10 +537,10 @@ export default function Tools() {
                 Make informed financial decisions with our comprehensive suite of <span className="font-semibold text-blue-600 dark:text-blue-400">{allTools.length}+ calculators</span> and planning tools.
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-8">
-                <span className="flex items-center gap-1">🟢 <CountingNumber value={allTools.filter(t => t.level === 'Beginner').length} duration={800} /> Beginner</span>
-                <span className="flex items-center gap-1">🟡 <CountingNumber value={allTools.filter(t => t.level === 'Intermediate').length} duration={1000} /> Intermediate</span>
-                <span className="flex items-center gap-1">🔴 <CountingNumber value={allTools.filter(t => t.level === 'Advanced').length} duration={1200} /> Advanced</span>
-                <span className="flex items-center gap-1">🔥 <CountingNumber value={allTools.filter(t => t.popularity > 85).length} duration={1400} /> Popular</span>
+                <span className="flex items-center gap-1">🟢 <CountingNumber value={allTools.filter(t => t.level === 'Beginner').length} duration={300} /> Beginner</span>
+                <span className="flex items-center gap-1">🟡 <CountingNumber value={allTools.filter(t => t.level === 'Intermediate').length} duration={400} /> Intermediate</span>
+                <span className="flex items-center gap-1">🔴 <CountingNumber value={allTools.filter(t => t.level === 'Advanced').length} duration={500} /> Advanced</span>
+                <span className="flex items-center gap-1">🔥 <CountingNumber value={allTools.filter(t => t.popularity > 85).length} duration={600} /> Popular</span>
               </div>
             </div>
             
@@ -549,7 +549,7 @@ export default function Tools() {
               <div className="mb-8 flex justify-center">
                 <div className="bg-gray-100 dark:bg-white/5 p-4 rounded-xl inline-flex items-center gap-2 px-4 py-2 relative">
                   <span className="text-2xl">🏆</span>
-                  <span className="text-yellow-600 dark:text-yellow-400 font-bold"><CountingNumber value={userPoints} duration={1500} /></span>
+                  <span className="text-yellow-600 dark:text-yellow-400 font-bold"><CountingNumber value={userPoints} duration={500} /></span>
                   <span className="text-gray-700 dark:text-white/70 text-sm">Learning Points</span>
                   {showPointsAnimation && (
                     <span className="text-green-400 font-bold absolute -top-2 right-0 animate-bounce">
@@ -762,7 +762,7 @@ export default function Tools() {
                   animate={{ scale: 1, color: "inherit" }}
                   transition={{ duration: 0.3 }}
                 >
-                  <CountingNumber value={filteredTools.length} duration={500} /> tools found
+                  <CountingNumber value={filteredTools.length} duration={200} /> tools found
                 </motion.span>
               </motion.div>
             </div>
