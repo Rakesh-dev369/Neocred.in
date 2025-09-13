@@ -25,10 +25,10 @@ const MaintenancePage = ({ pageName = "This page" }) => {
             </div>
             <div className="text-center">
               <a
-                href={import.meta.env.VITE_INSTAGRAM_URL}
+                href="https://www.instagram.com/rakesh.neocred?igsh=MW1tOXBjdG80a2o1eg=="
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 transition-colors"
+                className="inline-flex items-center text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 transition-colors cursor-pointer"
               >
                 <Instagram className="w-4 h-4 mr-1" />
                 Follow for updates

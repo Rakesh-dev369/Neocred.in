@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tab } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
-import { SwipeableCard, TouchButton, PullToRefresh, ScrollReveal } from '../components/mobile';
+import { SwipeableCard, TouchButton, ScrollReveal } from '../components/mobile';
 import { HeartButton } from '../components/ui/micro-interactions';
 import { CountingNumber } from '../components/ui';
 import {
@@ -441,18 +441,7 @@ export default function Tools() {
   );
 
   return (
-    <PullToRefresh 
-      onRefresh={async () => {
-        // Simulate refresh - could reload data, reset filters, etc.
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setSearchTerm('');
-        setSelectedLevel('All');
-        setSelectedTag('All');
-        setSelectedCategory('All');
-      }}
-      className="min-h-screen"
-    >
-      <div className="py-12 min-h-screen relative text-gray-900 dark:text-white transition-all duration-500" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <div className="py-12 min-h-screen relative text-gray-900 dark:text-white transition-all duration-500" style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-y' }}>
       {/* Advanced Background System */}
       <div className="fixed inset-0 z-0">
         {/* Primary Gradient Base */}
@@ -969,7 +958,6 @@ export default function Tools() {
             </motion.button>
           )}
         </AnimatePresence>
-      </div>
-    </PullToRefresh>
+    </div>
   );
 }
