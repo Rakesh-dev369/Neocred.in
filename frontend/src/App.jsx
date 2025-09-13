@@ -139,7 +139,7 @@ function App() {
               : <MainLayout><News /></MainLayout>
           } />
           <Route path="/explore" element={
-            (import.meta.env.VITE_LOCK_EXPLORE_PAGE === 'true' || true)
+            (import.meta.env.VITE_LOCK_EXPLORE_PAGE === 'true' || true) && window.location.hostname !== 'localhost'
               ? <MainLayout><MaintenancePage pageName="Explore" /></MainLayout>
               : <MainLayout><Explore /></MainLayout>
           } />
