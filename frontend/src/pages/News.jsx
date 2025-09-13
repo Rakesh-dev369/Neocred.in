@@ -246,7 +246,7 @@ export default function News() {
         }}
         className="min-h-screen"
       >
-        <div className="min-h-screen relative overflow-hidden transition-colors">
+        <div className="min-h-screen relative transition-colors" style={{ WebkitOverflowScrolling: 'touch' }}>
       {/* Advanced News-Themed Background System */}
       <div className="fixed inset-0 z-0">
         {/* Primary Gradient Base */}
@@ -368,7 +368,7 @@ export default function News() {
         </div>
       </motion.section>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10" style={{ WebkitOverflowScrolling: 'touch', transform: 'translateZ(0)' }}>
         {/* Daily Digest */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

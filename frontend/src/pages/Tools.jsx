@@ -452,7 +452,7 @@ export default function Tools() {
       }}
       className="min-h-screen"
     >
-      <div className="py-12 min-h-screen relative overflow-hidden text-gray-900 dark:text-white transition-all duration-500">
+      <div className="py-12 min-h-screen relative text-gray-900 dark:text-white transition-all duration-500" style={{ WebkitOverflowScrolling: 'touch' }}>
       {/* Advanced Background System */}
       <div className="fixed inset-0 z-0">
         {/* Primary Gradient Base */}
@@ -521,8 +521,22 @@ export default function Tools() {
           animation: fade-in-up 0.6s ease-out forwards;
           opacity: 0;
         }
+        
+        /* Mobile scrolling fixes */
+        @media (max-width: 768px) {
+          body {
+            -webkit-overflow-scrolling: touch;
+            overflow-scrolling: touch;
+          }
+          
+          .mobile-scroll-fix {
+            -webkit-overflow-scrolling: touch;
+            overflow-scrolling: touch;
+            transform: translateZ(0);
+          }
+        }
       `}</style>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-scroll-fix">
             <div className="text-center mb-12 relative">
               {/* Enhanced Header Background */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-transparent to-purple-50/40 dark:from-blue-900/20 dark:via-transparent dark:to-purple-900/15 rounded-3xl blur-3xl"></div>
@@ -849,6 +863,7 @@ export default function Tools() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => setSelectedTool(null)}
+                style={{ WebkitOverflowScrolling: 'touch' }}
               >
                 <motion.div 
                   className="bg-white dark:bg-gray-900 rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto"
@@ -870,6 +885,7 @@ export default function Tools() {
                     transition: { duration: 0.2 }
                   }}
                   onClick={(e) => e.stopPropagation()}
+                  style={{ WebkitOverflowScrolling: 'touch' }}
                 >
                   <motion.div 
                     className="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-white/10 p-6 flex items-center justify-between"

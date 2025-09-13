@@ -127,19 +127,19 @@ function App() {
           <Route path="/learn" element={<MainLayout><Learn /></MainLayout>} />
           <Route path="/tools" element={<MainLayout><Tools /></MainLayout>} />
           <Route path="/chatbot" element={
-            import.meta.env.VITE_LOCK_FINBOT_AI === 'true' 
+            (import.meta.env.VITE_LOCK_FINBOT_AI === 'true' || true)
               ? <MainLayout><MaintenancePage pageName="FinBot AI" /></MainLayout>
               : <MainLayout><Chatbot /></MainLayout>
           } />
           <Route path="/about" element={<MainLayout><About /></MainLayout>} />
           <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
           <Route path="/news" element={
-            import.meta.env.VITE_LOCK_NEWS_PAGE === 'true'
+            (import.meta.env.VITE_LOCK_NEWS_PAGE === 'true' || true)
               ? <MainLayout><MaintenancePage pageName="News" /></MainLayout>
               : <MainLayout><News /></MainLayout>
           } />
           <Route path="/explore" element={
-            import.meta.env.VITE_LOCK_EXPLORE_PAGE === 'true'
+            (import.meta.env.VITE_LOCK_EXPLORE_PAGE === 'true' || true)
               ? <MainLayout><MaintenancePage pageName="Explore" /></MainLayout>
               : <MainLayout><Explore /></MainLayout>
           } />
