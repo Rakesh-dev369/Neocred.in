@@ -1,70 +1,34 @@
-# Dependencies
+# NeoCred Enterprise - Git Ignore
+# Comprehensive gitignore for both frontend and backend
+
+# ==========================================
+# NODE.JS & NPM
+# ==========================================
 node_modules/
-*/node_modules/
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.production
-backend/.env
-frontend/.env
-frontend/.env.production
-
-# API Keys and Secrets
-*.key
-*.pem
-ssl/
-
-# Build outputs
-dist/
-build/
-*/dist/
-*/build/
-
-# Logs
-*.log
-logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+.npm
+.eslintcache
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-finbot.db
-
-# Cache
-.cache/
-.vite/
+# ==========================================
+# NEXT.JS FRONTEND
+# ==========================================
 .next/
-.nuxt/
+out/
+build/
+dist/
+.vercel
+.env*.local
+.env.production
+.env.development
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Python
+# ==========================================
+# PYTHON BACKEND
+# ==========================================
 __pycache__/
 *.py[cod]
 *$py.class
@@ -75,15 +39,100 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Testing
+# ==========================================
+# ENVIRONMENT & SECRETS
+# ==========================================
+.env
+.env.local
+.env.production
+.env.staging
+.env.development
+.env.enterprise
+*.pem
+*.key
+secrets/
+
+# ==========================================
+# DATABASES
+# ==========================================
+*.db
+*.sqlite
+*.sqlite3
+mlflow.db
+test.db
+
+# ==========================================
+# LOGS
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# ==========================================
+# ML & DATA SCIENCE
+# ==========================================
+models/
+*.pkl
+*.joblib
+*.h5
+*.pb
+data/
+datasets/
+notebooks/.ipynb_checkpoints/
+.ipynb_checkpoints/
+mlruns/
+artifacts/
+
+# ==========================================
+# TESTING
+# ==========================================
 coverage/
-.nyc_output
+.nyc_output/
 .coverage
 htmlcov/
+.tox/
+.pytest_cache/
+test-results/
+playwright-report/
 
-# Temporary files
+# ==========================================
+# IDEs & EDITORS
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# DEPLOYMENT & BUILD
+# ==========================================
+.vercel/
+.fly/
+docker-compose.override.yml
+Dockerfile.local
+.dockerignore
+
+# ==========================================
+# MONITORING & ANALYTICS
+# ==========================================
+.sentry-cli/
+sentry.properties
+
+# ==========================================
+# TEMPORARY FILES
+# ==========================================
+tmp/
+temp/
 *.tmp
 *.temp
-test_connection.js
-.vercel
+.cache/
