@@ -139,7 +139,7 @@ export default function AuthPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: process.env.NEXT_PUBLIC_FRONTEND_URL ? `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth/callback` : `${window.location.origin}/auth/callback`
         }
       })
       if (error) throw error
