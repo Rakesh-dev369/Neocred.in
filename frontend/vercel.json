@@ -20,7 +20,9 @@
   "env": {
     "NEXT_PUBLIC_API_URL": "https://neocred-backend.fly.dev",
     "NEXT_PUBLIC_FRONTEND_URL": "https://neocred.in",
-    "NEXT_PUBLIC_ENVIRONMENT": "production"
+    "NEXT_PUBLIC_ENVIRONMENT": "production",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://fmkebuojiwsjmkjhbgka.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZta2VidW9qaXdzam1ramhiZ2thIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2OTU4OTAsImV4cCI6MjA3NjI3MTg5MH0.DvFLiRUs5MprW41jjglQjDBaMy4jaPrHF2QMVzrrsG8"
   },
   "headers": [
     {
