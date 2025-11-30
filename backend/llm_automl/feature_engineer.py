@@ -294,6 +294,56 @@ class ClaudeFeatureEngineer:
                     df[f'poly_{name.replace(" ", "_")}'] = poly_features[:, i]
         
         return df
+    
+    # Missing transformation methods referenced in __init__
+    def _log_transform(self, df: pd.DataFrame, column: str) -> pd.DataFrame:
+        """Apply log transformation to a specific column"""
+        if column in df.columns and (df[column] > 0).all():
+            df[f'{column}_log'] = np.log1p(df[column])
+        return df
+    
+    def _sqrt_transform(self, df: pd.DataFrame, column: str) -> pd.DataFrame:
+        """Apply square root transformation to a specific column"""
+        if column in df.columns and (df[column] >= 0).all():
+            df[f'{column}_sqrt'] = np.sqrt(df[column])
+        return df
+    
+    def _reciprocal_transform(self, df: pd.DataFrame, column: str) -> pd.DataFrame:
+        """Apply reciprocal transformation to a specific column"""
+        if column in df.columns and (df[column] != 0).all():
+            df[f'{column}_reciprocal'] = 1 / (df[column] + 1e-8)
+        return df
+    
+    def _polynomial_features(self, df: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
+        """Apply polynomial features to specified columns"""
+        from sklearn.preprocessing import PolynomialFeatures
+        available_cols = [col for col in columns if col in df.columns]
+        if available_cols:
+            poly = PolynomialFeatures(degree=2, include_bias=False)
+            poly_features = poly.fit_transform(df[available_cols])
+            feature_names = poly.get_feature_names_out(available_cols)
+            for i, name in enumerate(feature_names):
+                if name not in available_cols:  # Skip original features
+                    df[f'poly_{name}'] = poly_features[:, i]
+        return df
+    
+    def _ratio_features(self, df: pd.DataFrame, numerator: str, denominator: str) -> pd.DataFrame:
+        """Create ratio feature between two columns"""
+        if numerator in df.columns and denominator in df.columns:
+            df[f'{numerator}_{denominator}_ratio'] = df[numerator] / (df[denominator] + 1e-8)
+        return df
+    
+    def _binning(self, df: pd.DataFrame, column: str, bins: int = 5) -> pd.DataFrame:
+        """Apply binning to a specific column"""
+        if column in df.columns:
+            df[f'{column}_binned'] = pd.qcut(df[column], q=bins, duplicates='drop')
+        return df
+    
+    def _interaction_features(self, df: pd.DataFrame, col1: str, col2: str) -> pd.DataFrame:
+        """Create interaction feature between two columns"""
+        if col1 in df.columns and col2 in df.columns:
+            df[f'{col1}_{col2}_interaction'] = df[col1] * df[col2]
+        return df
 
 # Global feature engineer
 claude_feature_engineer = ClaudeFeatureEngineer()

@@ -20,6 +20,10 @@ Follow the folder layout, naming conventions, and component hierarchy already pr
 
 **Follow existing style** (indentation, naming, Tailwind design, etc.) — ensure a uniform code aesthetic.
 
+**CRITICAL: When asked to "fix errors" - ONLY fix the specific errors, do NOT remove or rewrite existing code.**
+
+**CRITICAL: Follow the instruction "Just fix it. Don't edit or update or rewrite the code. Follow the AI_CODING_RULES.md" - make minimal targeted fixes only.**
+
 ## 📂 2. File Creation Rules
 
 **Before creating a file:**

@@ -11,11 +11,11 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 @router.post("/register", response_model=Token)
 @limiter.limit("5/minute")
 async def register(request, user: UserCreate):
-    # Try Supabase first
+    # Try Supabase signup
     supabase_response = await sign_up_with_email(user.email, user.password)
     
     if "error" not in supabase_response:
-        # Create JWT token
+        # Create JWT token for immediate access
         access_token = create_access_token(data={"sub": user.email})
         return {"access_token": access_token, "token_type": "bearer"}
     

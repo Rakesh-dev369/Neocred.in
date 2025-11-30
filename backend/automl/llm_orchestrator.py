@@ -1,11 +1,12 @@
 """LLM Orchestration with LangChain for NeoCred Intelligence"""
 import os
 from typing import Dict, Any, List, Optional
-from langchain.llms import OpenAI
-from langchain.chat_models import ChatOpenAI, ChatAnthropic
-from langchain.prompts import PromptTemplate, ChatPromptTemplate
-from langchain.chains import LLMChain
-from langchain.schema import BaseOutputParser
+from langchain_openai import OpenAI
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+# from langchain.chains import LLMChain  # Deprecated in newer versions
+from langchain_core.output_parsers import BaseOutputParser
 import openai
 import anthropic
 from pydantic import BaseModel, Field
@@ -37,18 +38,27 @@ class LLMOrchestrator:
         self.anthropic_client = None
         self.setup_clients()
         
-        # LangChain models
-        self.openai_llm = ChatOpenAI(
-            model="gpt-4-turbo-preview",
-            temperature=0.1,
-            openai_api_key=os.getenv("OPENAI_API_KEY")
-        )
+        # Only initialize OpenAI if API key is available
+        openai_key = os.getenv("OPENAI_API_KEY")
+        if openai_key and openai_key != "your-actual-openai-api-key":
+            self.openai_llm = ChatOpenAI(
+                model="gpt-4-turbo-preview",
+                temperature=0.1,
+                openai_api_key=openai_key
+            )
+        else:
+            self.openai_llm = None
         
-        self.claude_llm = ChatAnthropic(
-            model="claude-3-sonnet-20240229",
-            temperature=0.1,
-            anthropic_api_key=os.getenv("ANTHROPIC_API_KEY")
-        )
+        # Only initialize Claude if API key is available
+        anthropic_key = os.getenv("ANTHROPIC_API_KEY")
+        if anthropic_key and anthropic_key != "your-actual-anthropic-api-key":
+            self.claude_llm = ChatAnthropic(
+                model="claude-3-sonnet-20240229",
+                temperature=0.1,
+                anthropic_api_key=anthropic_key
+            )
+        else:
+            self.claude_llm = None
     
     def setup_clients(self):
         """Setup LLM clients"""

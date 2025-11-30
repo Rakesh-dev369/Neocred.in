@@ -12,8 +12,14 @@ async def sign_up_with_email(email: str, password: str):
         return {"error": "Supabase not configured"}
     
     try:
-        response = supabase.auth.sign_up({"email": email, "password": password})
+        # Sign up without email confirmation for now
+        response = supabase.auth.sign_up({
+            "email": email, 
+            "password": password
+        })
+        
         return response
+            
     except Exception as e:
         return {"error": str(e)}
 

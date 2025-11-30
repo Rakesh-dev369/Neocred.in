@@ -28,11 +28,30 @@ from monitoring.logging import setup_logging
 from monitoring.tracing import setup_tracing
 from monitoring.middleware import MonitoringMiddleware
 from monitoring.health_check import router as health_router
-from realtime.websocket_routes import router as websocket_router
-from realtime.sse_routes import router as sse_router
+from neocred_realtime.websocket_routes import router as websocket_router
+from neocred_realtime.sse_routes import router as sse_router
 from credit_analysis.routes import router as credit_router
-from automl.routes import router as intelligence_router
-from llm_automl.routes import router as llm_automl_router
+try:
+    from automl.routes import router as intelligence_router
+    AUTOML_AVAILABLE = True
+except ImportError as e:
+    print(f"AutoML module not available: {e}")
+    intelligence_router = None
+    AUTOML_AVAILABLE = False
+try:
+    from llm_automl.routes import router as llm_automl_router
+    LLM_AUTOML_AVAILABLE = True
+except ImportError as e:
+    print(f"LLM AutoML module not available: {e}")
+    llm_automl_router = None
+    LLM_AUTOML_AVAILABLE = False
+from supabase_client import get_supabase_client
+from api.graphql_schema import schema
+from strawberry.fastapi import GraphQLRouter
+from analytics.routes import router as analytics_router
+from users.routes import router as users_router
+from webhooks.supabase_webhooks import router as webhooks_router
+from api.anthropic_chat import router as chat_router
 
 # Load environment variables
 load_dotenv()
@@ -125,8 +144,16 @@ app.include_router(health_router)
 app.include_router(websocket_router, prefix="/realtime")
 app.include_router(sse_router, prefix="/realtime")
 app.include_router(credit_router)
-app.include_router(intelligence_router)
-app.include_router(llm_automl_router)
+if AUTOML_AVAILABLE and intelligence_router:
+    app.include_router(intelligence_router)
+if LLM_AUTOML_AVAILABLE and llm_automl_router:
+    app.include_router(llm_automl_router)
+
+# New integration routes
+app.include_router(analytics_router, prefix="/analytics")
+app.include_router(users_router, prefix="/users")
+app.include_router(webhooks_router, prefix="/webhooks")
+app.include_router(chat_router)
 
 # Optional GraphQL endpoint
 graphql_app = GraphQLRouter(schema)
@@ -164,6 +191,25 @@ if config.is_development():
             "database_pool_size": config.database.pool_size,
             "monitoring_enabled": config.monitoring.enable_prometheus,
             "log_level": config.monitoring.log_level.value
+        }
+
+# Supabase test endpoint
+@app.get("/test-supabase")
+async def test_supabase():
+    """Test Supabase connection"""
+    try:
+        supabase = get_supabase_client()
+        # Simple health check
+        response = supabase.table('_realtime_schema').select('*').limit(1).execute()
+        return {
+            "status": "connected",
+            "message": "Supabase connection successful",
+            "url": os.getenv("SUPABASE_URL")
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"Supabase connection failed: {str(e)}"
         }
 
 # Root endpoint

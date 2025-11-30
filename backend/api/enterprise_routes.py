@@ -30,22 +30,6 @@ router = APIRouter(
     }
 )
 
-# Middleware for request logging
-@router.middleware("http")
-async def log_requests(request: Request, call_next):
-    start_time = datetime.utcnow()
-    
-    # Log request
-    logger.info(f"Request: {request.method} {request.url}")
-    
-    response = await call_next(request)
-    
-    # Log response
-    process_time = (datetime.utcnow() - start_time).total_seconds()
-    logger.info(f"Response: {response.status_code} - {process_time:.3f}s")
-    
-    return response
-
 # Health and Status Endpoints
 @router.get("/health", response_model=APIResponse)
 async def health_check():

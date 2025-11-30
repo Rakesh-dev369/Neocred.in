@@ -7,17 +7,23 @@ import os
 
 def setup_sentry():
     """Initialize Sentry error tracking"""
+    # Check if Sentry is enabled
+    enable_sentry = os.getenv("ENABLE_SENTRY", "true").lower() == "true"
+    if not enable_sentry:
+        return
+    
     sentry_dsn = os.getenv("SENTRY_DSN")
     environment = os.getenv("ENVIRONMENT", "development")
     
-    if sentry_dsn:
+    # Only initialize if DSN is provided and valid
+    if sentry_dsn and not sentry_dsn.startswith("https://your-actual-sentry"):
         sentry_sdk.init(
             dsn=sentry_dsn,
             environment=environment,
             traces_sample_rate=0.1,
             profiles_sample_rate=0.1,
             integrations=[
-                FastApiIntegration(auto_enabling_integrations=True),
+                FastApiIntegration(),
                 SqlalchemyIntegration(),
                 RedisIntegration(),
             ],

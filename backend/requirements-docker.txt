@@ -1,0 +1,76 @@
+# NeoCred Docker Requirements - Simplified for Python 3.11
+# Core FastAPI dependencies
+fastapi>=0.108.0
+uvicorn[standard]>=0.24.0
+gunicorn>=21.2.0
+pydantic[email]>=2.5.0
+python-multipart>=0.0.6
+python-dotenv>=1.0.0
+email-validator
+
+# Authentication & Security
+python-jose[cryptography]
+passlib[bcrypt]
+slowapi
+supabase>=2.0.0
+bcrypt
+
+# Database & ORM
+sqlalchemy>=2.0.0
+alembic
+asyncpg
+psycopg2-binary
+aiosqlite
+redis
+motor
+pymongo
+
+# HTTP & API
+httpx
+aiohttp
+strawberry-graphql[fastapi]
+requests>=2.31.0
+
+# Monitoring (optional imports)
+prometheus-client
+prometheus-fastapi-instrumentator
+sentry-sdk[fastapi]
+structlog
+psutil
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+opentelemetry-exporter-jaeger
+
+# Real-time features
+websockets
+sse-starlette
+
+# AI & LLM
+openai
+anthropic
+transformers
+torch
+langchain
+langchain-openai
+langchain-anthropic
+instructor
+
+# Document processing (with system dependencies)
+pytesseract
+Pillow
+PyPDF2
+opencv-python
+
+# Basic ML/Data Science
+pandas
+numpy
+scikit-learn
+xgboost
+lightgbm
+statsmodels
+tpot
+
+# Testing
+pytest
+pytest-asyncio

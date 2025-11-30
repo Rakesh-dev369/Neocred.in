@@ -1,0 +1,1 @@
+# Purpose: Webhooks module for Supabase integration

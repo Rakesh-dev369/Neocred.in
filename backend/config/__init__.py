@@ -165,6 +165,10 @@ class EnterpriseConfig:
     def is_production(self) -> bool:
         """Check if running in production"""
         return self.environment == Environment.PRODUCTION
+    
+    def is_development(self) -> bool:
+        """Check if running in development"""
+        return self.environment == Environment.DEVELOPMENT
 
 # Global configuration instance
 config = EnterpriseConfig()

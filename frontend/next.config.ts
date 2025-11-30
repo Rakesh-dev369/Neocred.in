@@ -53,7 +53,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.vercel-analytics.com *.hotjar.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://neocred-backend.fly.dev *.vercel-analytics.com *.hotjar.com;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' *.vercel-analytics.com *.hotjar.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' http://localhost:8001 https://neocred-backend.fly.dev https://fmkebuojiwsjmkjhbgka.supabase.co *.vercel-analytics.com *.hotjar.com;"
           },
         ],
       },
