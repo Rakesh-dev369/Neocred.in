@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
   
   // Performance optimizations
   experimental: {
-    suppressHydrationWarning: true,
     optimizeCss: true,
     scrollRestoration: true,
   },

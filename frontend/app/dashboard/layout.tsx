@@ -2,19 +2,15 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { usePathname, useRouter } from "next/navigation"
 import { SidebarNav } from "@/components/dashboard/SidebarNav"
 import { HeaderBar } from "@/components/dashboard/HeaderBar"
 import { ReactNode } from "react"
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
-  const router = useRouter()
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-blue-950 to-cyan-900 text-white">
       {/* Sidebar */}
-      <SidebarNav pathname={pathname} router={router} />
+      <SidebarNav />
 
       {/* Main Dashboard Content */}
       <div className="md:ml-52 flex flex-col min-h-screen relative">
